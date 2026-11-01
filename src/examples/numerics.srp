@@ -1,0 +1,5 @@
+bind weights = tile([1.0, 2.0, -1.0, 3.0], 2, 2);
+bind input = [2.0, 1.0];
+
+print(matvec(weights, input));
+print(norm([3.0, 4.0]));

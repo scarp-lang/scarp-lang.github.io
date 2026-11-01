@@ -1,0 +1,49 @@
+name: Deploy official website
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: official-website-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - uses: actions/checkout@v4
+        with:
+          repository: scarp-lang/scarp
+          ref: afe8b5380c9d6c4774162e51c6c9bc8b90901671
+          path: .compiler
+          persist-credentials: false
+      - run: cargo build --manifest-path .compiler/Cargo.toml --locked --offline
+      - run: npm run test:examples
+        env:
+          SCARP_BIN: .compiler/target/debug/scarp
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/deploy-pages@v4
+        id: deployment

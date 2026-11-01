@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://scarp-lang.github.io/sitemap.xml

@@ -1,0 +1,19 @@
+{
+  "name": "@scarp-lang/website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Official Scarp Programming Language project website",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview --host 0.0.0.0",
+    "typecheck": "astro check",
+    "check:site": "node scripts/check-site.mjs",
+    "check": "npm run typecheck && npm run build && npm run check:site",
+    "test:examples": "node scripts/test-examples.mjs"
+  },
+  "dependencies": { "astro": "7.4.4" },
+  "devDependencies": { "@astrojs/check": "0.9.12", "typescript": "5.9.3" },
+  "engines": { "node": ">=22.12.0" }
+}
