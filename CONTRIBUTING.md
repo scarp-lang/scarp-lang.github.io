@@ -19,6 +19,22 @@ and update both workflow compiler SHAs. Never silently follow compiler `main`.
 Pages use shared Astro layouts, TypeScript data, and Markdown. Keep CSS in the
 shared stylesheet and avoid duplicating page scaffolding.
 
+## TypeScript conventions
+
+Write application logic, configuration, scripts, and tests in `.ts` files.
+Astro component scripts also use TypeScript. Keep written page content in Markdown
+and presentation styles in CSS.
+
+`npm run typecheck` checks the Astro/app project and the separate strict Node
+tooling project. Node scripts use explicit `.ts` import extensions and erasable
+TypeScript syntax, so Node 22.12+ can execute them with the type-stripping flag
+provided by the npm commands. Type stripping does not replace type checking.
+
+Keep `src/scripts/theme-init.ts` self-contained: the shared layout serializes its
+compiled function into an early head script. `check:site` exercises that actual
+generated JavaScript with stored preferences, system preferences, and blocked
+local storage.
+
 ## Examples
 
 Example `.srp` and `.stdout` files in `src/examples` are used by the rendered
