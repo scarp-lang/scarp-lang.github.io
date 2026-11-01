@@ -1,0 +1,4 @@
+import { news, project } from '../data/project';
+const xml = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+export const GET = () => new Response(`<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel><title>Scarp project news</title><link>${project.origin}/news/</link><description>Updates from the Scarp Programming Language project.</description><language>en</language>${news.map(item => `<item><title>${xml(item.title)}</title><link>${project.origin}${item.href}</link><guid isPermaLink="true">${project.origin}${item.href}</guid><pubDate>${new Date(item.date + 'T00:00:00Z').toUTCString()}</pubDate><description>${xml(item.description)}</description></item>`).join('')}</channel></rss>`, { headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' } });

@@ -1,0 +1,6 @@
+pure funcra square(value: integer) -> integer {
+    return value * value;
+}
+
+bind result = square(value: 7);
+print(result);

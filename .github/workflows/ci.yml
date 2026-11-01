@@ -1,0 +1,31 @@
+name: Website validation
+on:
+  push:
+    branches: [main, development, 'feat/**']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Check out the published compiler source
+        uses: actions/checkout@v4
+        with:
+          repository: scarp-lang/scarp
+          ref: afe8b5380c9d6c4774162e51c6c9bc8b90901671
+          path: .compiler
+          persist-credentials: false
+      - name: Build the pinned interpreter without external crates
+        run: cargo build --manifest-path .compiler/Cargo.toml --locked --offline
+      - name: Verify the displayed Scarp programs
+        run: npm run test:examples
+        env:
+          SCARP_BIN: .compiler/target/debug/scarp

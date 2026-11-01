@@ -1,0 +1,14 @@
+---
+import { examples } from '../data/examples';
+import CodeBlock from './CodeBlock.astro';
+---
+<div class="code-explorer" data-code-explorer>
+  <div class="example-tabs" aria-label="Scarp examples" data-tabs hidden>
+    {examples.map(example => <button type="button" id={`tab-${example.id}`} aria-controls={`example-${example.id}`} data-tab={example.id}>{example.label}</button>)}
+  </div>
+  {examples.map(example => <section class="example-panel" id={`example-${example.id}`} aria-labelledby={`tab-${example.id}`} data-panel={example.id}>
+    <CodeBlock code={example.code} filename={example.filename} />
+    <div class="code-output"><span class="output-label">Expected output</span><pre><code>{example.output.trimEnd()}</code></pre></div>
+  </section>)}
+  <div class="code-caption"><span class="status-dot" aria-hidden="true"></span>Scarp v0.0.5-alpha.1 <span>·</span> CLI examples</div>
+</div>

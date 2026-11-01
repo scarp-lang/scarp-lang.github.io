@@ -1,0 +1,11 @@
+---
+interface Props { code: string; filename?: string }
+const { code, filename = 'terminal' } = Astro.props;
+// Render tokens as escaped text nodes. No generated HTML or evaluation of Scarp.
+const parts = code.trimEnd().split(/(\/\/[^\n]*|"(?:\\.|[^"\\])*"|\b(?:bind|var|pure|funcra|return|repeat|as|print|integer)\b|\b\d+(?:\.\d+)?\b)/g);
+const kind = (token: string) => token.startsWith('//') ? 'comment' : token.startsWith('"') ? 'string' : /^\d/.test(token) ? 'number' : /^(bind|var|pure|funcra|return|repeat|as|integer)$/.test(token) ? 'keyword' : token === 'print' ? 'function' : undefined;
+---
+<div class="code-block">
+  <div class="code-title"><span><span class="file-dot" aria-hidden="true"></span>{filename}</span><button type="button" class="copy-button" data-copy hidden aria-label={`Copy ${filename}`}>Copy</button></div>
+  <pre tabindex="0"><code>{parts.map(part => <span class={kind(part)}>{part}</span>)}</code></pre>
+</div>

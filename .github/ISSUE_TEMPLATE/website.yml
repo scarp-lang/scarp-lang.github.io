@@ -1,0 +1,16 @@
+name: Website correction or bug
+description: Report a broken interaction, content claim, or accessibility issue.
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page URL
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened, and what should happen?
+      description: Include steps, browser/device details, or source evidence for a content correction.
+    validations:
+      required: true

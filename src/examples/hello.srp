@@ -1,0 +1,7 @@
+// A small start. An open-ended journey.
+bind language = "Scarp";
+print("Hello from", language);
+
+var total = 0;
+repeat 5 as index { total += 2; }
+print("Total:", total);

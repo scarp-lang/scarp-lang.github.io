@@ -1,0 +1,8 @@
+---
+interface Props { large?: boolean }
+const { large = false } = Astro.props;
+---
+<a href="/" class:list={['brand', { large }]} aria-label="Scarp home">
+  <span class="brand-icon" aria-hidden="true"><img src="/brand/scarp-logo.png" width="1254" height="1254" alt="" /></span>
+  <span>Scarp<span class="brand-period">.</span></span>
+</a>

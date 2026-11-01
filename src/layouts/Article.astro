@@ -1,0 +1,11 @@
+---
+import Base from './Base.astro';
+interface Props { frontmatter: { title: string; description: string; eyebrow?: string; date?: string } }
+const { title, description, eyebrow = 'Explore Scarp', date } = Astro.props.frontmatter;
+---
+<Base title={title} description={description}>
+  <div class="article-wrapper wrap">
+    <header class="page-heading"><p class="eyebrow">{eyebrow}</p><h1>{title}</h1><p class="lead">{description}</p>{date && <time datetime={date}>{new Date(date + 'T00:00:00Z').toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric', timeZone:'UTC'})}</time>}</header>
+    <article class="prose"><slot /></article>
+  </div>
+</Base>
