@@ -10,7 +10,8 @@
     "preview": "astro preview --host 0.0.0.0",
     "typecheck": "astro check",
     "check:site": "node scripts/check-site.mjs",
-    "check": "npm run typecheck && npm run build && npm run check:site",
+    "check": "npm run test:support && npm run typecheck && npm run build && npm run check:site",
+    "test:support": "node --experimental-strip-types --test scripts/test-support-report.mjs",
     "test:examples": "node scripts/test-examples.mjs"
   },
   "dependencies": { "astro": "7.4.4" },

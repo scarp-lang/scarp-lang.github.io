@@ -1,4 +1,4 @@
-import { project } from './project';
+import { project } from './project.ts';
 
 export const helpTopics = [
   { id: 'installation', title: 'Install and run Scarp', description: 'Choose the right package, verify its checksum, and run the executable from its extracted folder.', path: 'guide/installation', label: 'Installation guide' },
