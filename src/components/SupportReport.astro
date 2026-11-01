@@ -1,0 +1,34 @@
+---
+import { project } from '../data/project';
+import { supportRoutes } from '../data/support';
+---
+<section class="support-builder" id="draft-builder" aria-labelledby="builder-title" data-report-builder>
+  <div class="support-builder-heading"><p class="eyebrow">A little structure helps</p><h3 id="builder-title">Prepare a report for GitHub.</h3><p>Choose the destination, add the details you want to share, and review your draft. You submit the issue on GitHub.</p></div>
+  <noscript><p>Use the checklist and issue trackers above to write a report. The optional draft builder needs JavaScript.</p></noscript>
+  <form data-support-form hidden>
+    <div class="support-fields">
+      <div><label for="support-target">Where is the problem?</label><select id="support-target" name="target">{supportRoutes.map(route => <option value={route.id}>{route.title}</option>)}</select></div>
+      <div><label for="support-kind">What would you like to share?</label><select id="support-kind" name="kind"><option value="bug">A bug</option><option value="question">A question</option><option value="feature">A feature idea</option></select></div>
+      <div class="full"><label for="support-summary">Short summary <span>(required)</span></label><input id="support-summary" name="summary" required minlength="3" maxlength="100" placeholder="Describe the problem or question" /></div>
+      <div><label for="support-version">Scarp version</label><input id="support-version" name="version" value={project.version} maxlength="80" aria-describedby="support-version-help" /><p id="support-version-help" class="field-help">Use your executable’s <code>--version</code> output.</p></div>
+      <div><label for="support-environment">Operating system, CPU, and browser</label><input id="support-environment" name="environment" maxlength="160" placeholder="For example: Windows 11, x64, Firefox" /></div>
+      <div class="full"><label for="support-page">Affected page URL <span>(website or docs)</span></label><input id="support-page" type="url" name="page" maxlength="400" placeholder="https://scarp-lang.github.io/…" /></div>
+    </div>
+    <details class="support-technical"><summary>Add a command, example, or diagnostic</summary><div class="support-fields">
+      <div class="full"><label for="support-command">Exact command</label><input id="support-command" name="command" maxlength="200" placeholder="For example: ./scarp run hello.srp" /></div>
+      <div class="full"><label for="support-reproducer">Smallest example or steps to reproduce</label><textarea id="support-reproducer" name="reproducer" rows="5" maxlength="1200" placeholder="Paste a small .srp program or list the steps."></textarea></div>
+      <div><label for="support-expected">Expected behavior or proposed improvement</label><textarea id="support-expected" name="expected" rows="4" maxlength="600"></textarea></div>
+      <div><label for="support-actual">Actual behavior, diagnostic, or question</label><textarea id="support-actual" name="actual" rows="4" maxlength="600"></textarea></div>
+    </div></details>
+    <p class="field-help">This builder works in your browser. Details are not saved on this website. GitHub issues are public, so review the draft before continuing.</p>
+    <div class="actions"><button class="button primary" type="submit">Prepare draft <span aria-hidden="true">→</span></button><button class="button secondary" type="reset">Clear form</button></div>
+  </form>
+  <p class="support-report-status" role="status" aria-live="polite" data-report-status></p>
+  <div class="support-draft" data-report-output hidden>
+    <h4 tabindex="-1" data-draft-heading>Review your draft</h4><p class="support-draft-title" data-draft-title></p>
+    <label for="support-draft-body">Report details <span>(you can edit this draft)</span></label><textarea id="support-draft-body" rows="17" data-report-draft spellcheck="false"></textarea>
+    <p class="field-help" data-issue-note></p>
+    <div class="actions"><button type="button" class="button secondary" data-copy-report hidden>Copy report details</button><button type="button" class="button secondary" data-select-report>Select draft text</button><a class="button primary" data-issue-link>Continue on GitHub ↗</a></div>
+  </div>
+</section>
+<script>import '../scripts/support';</script>

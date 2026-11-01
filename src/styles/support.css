@@ -23,5 +23,29 @@
 .support-contact p:not(.eyebrow) { color: var(--muted); font-size: .85rem; margin-top: 22px; }
 .support-contact p.small { font-size: .74rem; }
 .support-contact > div:last-child { display: flex; flex-direction: column; gap: 22px; flex-shrink: 0; align-items: flex-start; }
+.support-builder-wrap { margin-block: 0 80px; }
+.support-builder { border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 38px; }
+.support-builder-heading { max-width: 700px; margin-bottom: 28px; }
+.support-builder-heading h3 { font-size: 1.9rem; }
+.support-builder-heading p:not(.eyebrow) { margin-top: 16px; color: var(--muted); font-size: .87rem; }
+.support-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; }
+.support-fields .full { grid-column: 1 / -1; }
+.support-builder label { display: block; font-size: .78rem; font-weight: 600; margin-bottom: 8px; }
+.support-builder label span { color: var(--muted); font-weight: 400; }
+.support-builder input, .support-builder select, .support-builder textarea { display: block; width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 5px; background: var(--bg); color: var(--ink); font: inherit; font-size: .85rem; padding: 12px; }
+.support-builder input, .support-builder select { min-height: 46px; }
+.support-builder textarea { resize: vertical; line-height: 1.6; }
+.support-builder textarea[data-report-draft] { font-family: Consolas, monospace; font-size: .78rem; }
+.support-builder .field-help { color: var(--muted); font-size: .74rem; margin-top: 10px; }
+.support-builder .actions { margin-top: 22px; }
+.support-technical { margin-block: 25px; border-block: 1px solid var(--line); }
+.support-technical summary { padding-block: 18px; font-size: .8rem; font-weight: 600; }
+.support-technical .support-fields { padding-bottom: 24px; }
+.support-report-status { color: var(--blue); font-size: .8rem; margin-top: 20px; }
+.support-report-status:empty { display: none; }
+.support-draft { border-top: 1px solid var(--line); margin-top: 25px; padding-top: 25px; }
+.support-draft h4 { font-size: 1.3rem; font-weight: 600; margin: 0; }
+.support-draft-title { font-size: .9rem; color: var(--muted); margin-block: 12px 22px; overflow-wrap: anywhere; }
 @media (max-width: 950px) { .support-topic-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .support-split { gap: 35px; } .support-route { padding: 22px; } .support-contact { align-items: flex-start; flex-direction: column; padding: 32px; } }
 @media (max-width: 650px) { .support-topic-grid, .support-route-grid, .support-split { grid-template-columns: 1fr; } .support-topic, .support-route { padding: 24px; } .support-language a { display: block; margin: 8px 0 0; } .support-common { padding-block: 50px; } .support-contact { padding: 26px; margin-bottom: 50px; } .support-contact h2 { font-size: 2rem; } }
+@media (max-width: 650px) { .support-builder { padding: 24px; } .support-fields { grid-template-columns: 1fr; } .support-builder-wrap { margin-bottom: 50px; } .support-builder-heading h3 { font-size: 1.6rem; } }
