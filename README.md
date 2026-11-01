@@ -1,7 +1,7 @@
 # Scarp official website
 
 The project hub for the **Scarp Programming Language**, built with Astro,
-TypeScript, and Markdown. Intended URL: <https://scarp-lang.github.io/>.
+TypeScript, and Markdown. Official website: <https://scarp-lang.github.io/>.
 Detailed learning material remains at [Scarp Docs](https://scarp-lang.github.io/scarp-docs/).
 
 ## Local development
@@ -14,13 +14,35 @@ npm run dev
 npm run check
 ```
 
-`check` runs Astro/TypeScript diagnostics, creates the static site, and validates
+`check` runs Astro diagnostics and strict TypeScript checks for Node tooling, creates the static site, and validates
 all generated local links, fragments, assets, metadata, sitemap, RSS, and baseline
 data. `npm run preview` serves the built output.
 
 `npm run test:support` exercises report routing, Unicode, nested code fences,
 edited drafts, and long-report fallback. It is included in `npm run check` and
 requires Node's TypeScript stripping flag (supplied by the npm script).
+
+## TypeScript source architecture
+
+Application logic, project data, configuration, validation scripts, and tests are
+authored in TypeScript. Astro templates and Markdown provide the page structure
+and written content; CSS provides styling.
+
+| Area | Source |
+| --- | --- |
+| Browser interactions and theme initialization | `src/scripts/*.ts` |
+| Shared logic and project data | `src/lib/*.ts`, `src/data/*.ts` |
+| Static data, RSS, and sitemap endpoints | `src/pages/*.ts` |
+| Astro configuration | `astro.config.ts` |
+| Site validation and tests | `scripts/*.ts` |
+| App and tooling type checks | `tsconfig.json`, `tsconfig.tools.json` |
+
+Astro compiles TypeScript and renders templates into the HTML, CSS, and JavaScript
+served by GitHub Pages. The early theme initializer is authored in TypeScript and
+inlined from its compiled function so it can run before the first paint.
+
+All npm script entry points use `.ts` files. Node scripts use native type stripping;
+`npm run typecheck` separately verifies types, since stripping alone does not.
 
 ## Content map
 
