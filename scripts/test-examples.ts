@@ -5,7 +5,8 @@ import { spawnSync } from 'node:child_process';
 
 const executable = process.env.SCARP_BIN;
 assert(executable, 'Set SCARP_BIN to the v0.0.5-alpha.1 Scarp executable');
-const run = args => spawnSync(resolve(executable), args, { encoding: 'utf8', timeout: 15000 });
+const executablePath = resolve(executable);
+const run = (args: readonly string[]) => spawnSync(executablePath, args, { encoding: 'utf8', timeout: 15000 });
 const version = run(['--version']);
 assert.equal(version.status, 0, version.stderr);
 assert.match(version.stdout, /0\.0\.5-alpha\.1\b/, 'Examples must target the pinned release');

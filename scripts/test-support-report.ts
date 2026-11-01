@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildSupportReport, issueLink } from '../src/lib/support-report.ts';
+import type { ReportInput, ReportKind, SupportTarget } from '../src/lib/support-report.ts';
 
-const input = {
+const input: ReportInput = {
   target: 'compiler', kind: 'bug', summary: 'An example reports a diagnostic',
   version: '0.0.5-alpha.1', environment: 'Windows 11, x64', page: '',
   command: './scarp.exe run hello.srp', reproducer: 'print("नमस्ते & hello");',
@@ -10,7 +11,7 @@ const input = {
 };
 
 test('routes each report to its official repository and round-trips Unicode', () => {
-  for (const [target, repo] of [['compiler', 'scarp'], ['docs', 'scarp-docs'], ['website', 'scarp-lang.github.io']]) {
+  for (const [target, repo] of [['compiler', 'scarp'], ['docs', 'scarp-docs'], ['website', 'scarp-lang.github.io']] as const) {
     const result = buildSupportReport({ ...input, target });
     const url = new URL(result.url);
     assert.equal(url.origin, 'https://github.com');
@@ -41,8 +42,9 @@ test('rebuilds an issue URL from the reviewed draft', () => {
 });
 
 test('rejects unknown destinations, types, and missing summaries', () => {
-  assert.throws(() => buildSupportReport({ ...input, target: 'https://example.com' }), TypeError);
-  assert.throws(() => buildSupportReport({ ...input, kind: '__proto__' }), TypeError);
+  // Deliberately bypass static types to exercise the runtime input boundary.
+  assert.throws(() => buildSupportReport({ ...input, target: 'https://example.com' as SupportTarget }), TypeError);
+  assert.throws(() => buildSupportReport({ ...input, kind: '__proto__' as ReportKind }), TypeError);
   assert.throws(() => buildSupportReport({ ...input, summary: '  ' }), TypeError);
 });
 
