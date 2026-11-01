@@ -23,7 +23,7 @@ data. `npm run preview` serves the built output.
 - Home, features, development status, and roadmap
 - Release notes and platform downloads with SHA-256 values
 - Learning paths to English and Hindi Scarp Docs
-- AI direction, community, contribution guide, and FAQ
+- AI direction, community, support hub, contribution guide, and FAQ
 - Markdown project news, RSS, sitemap, and machine-readable `project.json`
 
 The website is a **reviewed snapshot**, not a live compiler-development feed.

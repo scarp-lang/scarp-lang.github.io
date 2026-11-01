@@ -20,6 +20,7 @@ export const navigation = [
   ['Features', '/features/'], ['Development', '/development/'],
   ['Roadmap', '/roadmap/'], ['Releases', '/releases/'],
   ['News', '/news/'], ['Docs ↗', project.docs], ['Community', '/community/'],
+  ['Support', '/support/'],
 ] as const;
 
 export const capabilities = [
