@@ -4,6 +4,11 @@ Start at the [Scarp support hub](https://scarp-lang.github.io/support/).
 It links installation, diagnostics, compatibility, module, and execution-budget
 guides, plus English and Hindi troubleshooting material.
 
+The [guided report builder](https://scarp-lang.github.io/support/#draft-builder)
+prepares an editable draft in your browser. It routes to the language, docs, or
+website repository; you review and submit the final issue on GitHub. Long drafts
+can be copied into the issue form instead of encoded into a link.
+
 Choose the tracker that matches the problem:
 
 - Language, CLI, or runtime: <https://github.com/scarp-lang/scarp/issues>

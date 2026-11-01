@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Scarp support hub
+    url: https://scarp-lang.github.io/support/
+    about: Start with a guide or prepare a report for the right project.
+  - name: Language and runtime issues
+    url: https://github.com/scarp-lang/scarp/issues
+    about: Report Scarp programs, interpreter, or CLI behavior in the language repository.
+  - name: Documentation and translation issues
+    url: https://github.com/scarp-lang/scarp-docs/issues
+    about: Report tutorial, reference, or Hindi translation problems in the docs repository.
