@@ -18,6 +18,10 @@ npm run check
 all generated local links, fragments, assets, metadata, sitemap, RSS, and baseline
 data. `npm run preview` serves the built output.
 
+`npm run test:support` exercises report routing, Unicode, nested code fences,
+edited drafts, and long-report fallback. It is included in `npm run check` and
+requires Node's TypeScript stripping flag (supplied by the npm script).
+
 ## Content map
 
 - Home, features, development status, and roadmap

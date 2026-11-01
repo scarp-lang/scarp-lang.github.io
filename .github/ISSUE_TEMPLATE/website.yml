@@ -1,6 +1,13 @@
 name: Website correction or bug
 description: Report a broken interaction, content claim, or accessibility issue.
+title: '[Website] '
 body:
+  - type: markdown
+    attributes:
+      value: |
+        For language or runtime problems, use https://github.com/scarp-lang/scarp/issues.
+        For detailed documentation or translations, use https://github.com/scarp-lang/scarp-docs/issues.
+        You can prepare a report at https://scarp-lang.github.io/support/#draft-builder.
   - type: input
     id: url
     attributes:
@@ -11,6 +18,21 @@ body:
     id: problem
     attributes:
       label: What happened, and what should happen?
-      description: Include steps, browser/device details, or source evidence for a content correction.
+      description: Include the actual result and the expected behavior, or source evidence for a content correction.
     validations:
       required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the smallest set of steps that shows the problem.
+  - type: input
+    id: environment
+    attributes:
+      label: Browser, operating system, and device or viewport
+      placeholder: 'For example: Firefox, Windows 11, desktop'
+  - type: textarea
+    id: draft
+    attributes:
+      label: Additional report details
+      description: Paste a reviewed support-builder draft or other relevant context. Remove credentials and private information.
