@@ -44,3 +44,7 @@ The language implementation is **Apache-2.0**. This website is **MIT**. Both rep
 ## How can I help?
 
 [Start with a focused contribution](/contribute/): test a program, improve an explanation, or open a reproducible bug report.
+
+## Where can I get help?
+
+The [support hub](/support/) points to installation, diagnostics, compatibility, and troubleshooting guides, including Hindi help. It also explains which issue tracker to use and what information makes a report reproducible.
