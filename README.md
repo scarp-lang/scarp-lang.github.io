@@ -1,79 +1,81 @@
 # Scarp official website
 
-The project hub for the **Scarp Programming Language**, built with Astro,
-TypeScript, and Markdown. Official website: <https://scarp-lang.github.io/>.
-Detailed learning material remains at [Scarp Docs](https://scarp-lang.github.io/scarp-docs/).
+The official project hub for the **Scarp Programming Language**:
+<https://scarp-lang.github.io/>. Detailed tutorials remain at
+[Scarp Docs](https://scarp-lang.github.io/scarp-docs/).
+
+## TypeScript implementation
+
+All website pages, components, rendering, configuration, browser behavior,
+build scripts, and tests are authored in **TypeScript (`.ts` / `.tsx`)**.
+React renders the TSX components into complete static HTML during the build.
+The published site uses the small TypeScript browser modules for interactions;
+it does not hydrate a browser React application.
+
+Native CSS provides styling, Scarp `.srp` fixtures provide language examples,
+and Markdown is used for these repository guides. The build generates the HTML,
+CSS, and JavaScript that browsers consume.
+
+| Area | Source |
+| --- | --- |
+| Pages and articles | `src/pages/**/*.tsx` |
+| Shared layouts and components | `src/layouts/*.tsx`, `src/components/*.tsx` |
+| Route registry and static renderer | `src/site/pages.ts`, `src/site/render.tsx` |
+| Browser interactions and early theme initialization | `src/scripts/*.ts` |
+| Project data and shared logic | `src/data/*.ts`, `src/lib/*.ts` |
+| RSS, sitemap, and project snapshot | `src/pages/*.ts` |
+| Build and development configuration | `scripts/build.ts`, `vite.config.ts` |
+| Styles and static assets | `src/styles/*.css`, `public/` |
 
 ## Local development
 
-Node.js 22.12+ (Node 22 LTS recommended) and npm are required.
+Use Node.js **22.12+** and npm.
 
 ```sh
 npm ci
 npm run dev
 npm run check
+npm run preview
 ```
 
-`check` runs Astro diagnostics and strict TypeScript checks for Node tooling, creates the static site, and validates
-all generated local links, fragments, assets, metadata, sitemap, RSS, and baseline
-data. `npm run preview` serves the built output.
+`npm run check` runs the support and rendering tests, both strict TypeScript
+projects, the production build, and generated-site validation. `preview` serves
+that built output. The build uses the tsx loader through `node --import tsx`.
+Node-only validation tools use native type stripping; type checking runs
+separately because stripping does not validate types.
 
-`npm run test:support` exercises report routing, Unicode, nested code fences,
-edited drafts, and long-report fallback. It is included in `npm run check` and
-requires Node's TypeScript stripping flag (supplied by the npm script).
+The production build bundles only the browser entry points with Vite, fingerprints
+scripts and styles, renders every registered page, and writes RSS, sitemap, and
+project JSON. Existing page URLs and the root GitHub Pages base are retained.
 
-## TypeScript source architecture
+## Validation
 
-Application logic, project data, configuration, validation scripts, and tests are
-authored in TypeScript. Astro templates and Markdown provide the page structure
-and written content; CSS provides styling.
+- `npm run typecheck`: application/render/build types and strict Node tooling.
+- `npm run test:support`: repository routing, Unicode, code fences, and long drafts.
+- `npm run test:render`: static documents, route aliases, escaping, no-JavaScript
+  content, data routes, and the not-found response.
+- `npm run check:site`: generated links, fragments, assets, metadata, sitemap,
+  RSS, release snapshot, and six early-theme scenarios.
+- `SCARP_BIN=/path/to/scarp npm run test:examples`: exact-output checks against
+  the published interpreter used by the website baseline.
 
-| Area | Source |
-| --- | --- |
-| Browser interactions and theme initialization | `src/scripts/*.ts` |
-| Shared logic and project data | `src/lib/*.ts`, `src/data/*.ts` |
-| Static data, RSS, and sitemap endpoints | `src/pages/*.ts` |
-| Astro configuration | `astro.config.ts` |
-| Site validation and tests | `scripts/*.ts` |
-| App and tooling type checks | `tsconfig.json`, `tsconfig.tools.json` |
+## Content and publication
 
-Astro compiles TypeScript and renders templates into the HTML, CSS, and JavaScript
-served by GitHub Pages. The early theme initializer is authored in TypeScript and
-inlined from its compiled function so it can run before the first paint.
-
-All npm script entry points use `.ts` files. Node scripts use native type stripping;
-`npm run typecheck` separately verifies types, since stripping alone does not.
-
-## Content map
-
-- Home, features, development status, and roadmap
-- Release notes and platform downloads with SHA-256 values
-- Learning paths to English and Hindi Scarp Docs
-- AI direction, community, support hub, contribution guide, and FAQ
-- Markdown project news, RSS, sitemap, and machine-readable `project.json`
-
-The website is a **reviewed snapshot**, not a live compiler-development feed.
-Current baseline: **v0.0.5-alpha.1**, source commit
+The hub includes features, development status, roadmap, releases/downloads,
+learning paths, AI direction, community, support, contribution guidance, FAQ,
+and project news. It is a **reviewed snapshot**, not a live compiler feed.
+Baseline: **v0.0.5-alpha.1**, source
 `afe8b5380c9d6c4774162e51c6c9bc8b90901671`, reviewed 1 November 2026.
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before updating claims or examples.
 
-## Deploying to GitHub Pages
-
-The `Deploy official website` workflow validates and builds main, tests its
-Scarp examples against the exact published compiler source, then deploys the
-static artifact through GitHub Actions. Pull requests run the same site checks
-without deployment privileges.
-
-Repository Settings → Pages should use **GitHub Actions**. The deployment action
-requests first-time enablement; if the repository token cannot enable Pages,
-an organization/repository administrator must select that source once. No custom
-domain is configured. The organization site uses `/` as its base, while
-Scarp Docs keeps `/scarp-docs/`.
+GitHub Actions validates PRs and deploys `dist/` from main to GitHub Pages after
+checks and the pinned Scarp example tests pass. No custom domain is configured.
+The main site uses `/`; the independent documentation site uses `/scarp-docs/`.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for source and evidence conventions.
 
 ## Branding and licenses
 
-`public/brand/scarp-logo.png` is the project's original permanent blue geometric
-S and wordmark. Navigation displays the icon area through CSS while preserving
-the source image. Do not substitute a different S logo.
+`public/brand/scarp-logo.png` is the permanent blue geometric S and wordmark.
+Navigation displays the icon area through CSS while preserving the original image.
 
-Website: [MIT](LICENSE). Scarp implementation: [Apache-2.0](https://github.com/scarp-lang/scarp/blob/main/LICENSE).
+Website: [MIT](LICENSE). Scarp implementation:
+[Apache-2.0](https://github.com/scarp-lang/scarp/blob/main/LICENSE).

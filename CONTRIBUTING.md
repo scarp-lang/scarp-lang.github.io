@@ -1,56 +1,60 @@
 # Contributing
 
-Use a current Node.js 22 LTS (22.12 or later) and npm. Install with `npm ci`,
-develop with `npm run dev`, and validate with `npm run check`.
+Use Node.js 22.12+ and npm. Run `npm ci`, develop with `npm run dev`, and validate
+with `npm run check`. `npm run preview` serves the production build.
+
+## TypeScript source
+
+Write pages, components, article content, and shared layouts in `.tsx`; write
+logic, configuration, build scripts, and tests in `.ts` or `.tsx` as appropriate.
+Use native CSS for presentation and keep static files in `public/`.
+
+Register a new page in `src/site/pages.ts` with its canonical URL and component.
+The build and sitemap use that registry. Keep directory/index-file aliases and
+not-found behavior consistent. Shared TSX layouts provide metadata, navigation,
+and browser entry points. React runs during rendering; browser interactions stay
+in `src/scripts/` without React hydration.
+
+`npm run typecheck` covers the app, static renderer, and build, plus a separate
+strict Node tooling project. Node-only tools use explicit `.ts` imports and
+erasable syntax. The TSX build and rendering tests use the tsx loader.
+
+Keep `src/scripts/theme-init.ts` self-contained: its compiled function is inlined
+before first paint. Generated-site validation executes that actual script with
+stored/system preferences and blocked local storage. Styles and browser modules
+are fingerprinted during the production build.
+
+`src/data/examples.ts` reads fixtures only during build/dev rendering. Browser
+modules must not import server-only filesystem or rendering code.
 
 ## Content and evidence
 
-This is the official Scarp project hub. Detailed tutorials live in
-[scarp-docs](https://github.com/scarp-lang/scarp-docs). Keep claims tied to a
-published release or exact compiler source commit. Distinguish available
-capabilities, planned priorities, and longer-term ambition. Do not invent dates,
-performance comparisons, completion percentages, accounts, or adoption numbers.
+This is the official project hub. Detailed tutorials live in
+[scarp-docs](https://github.com/scarp-lang/scarp-docs). Tie language claims to a
+published release or exact compiler commit. Distinguish available capabilities,
+planned priorities, and longer-term ambition. Avoid invented dates, completion
+percentages, adoption numbers, or performance comparisons.
 
-The reviewed baseline and release assets live in `src/data/project.ts`.
-When updating that baseline, check upstream publication status, dereference the
-release tag, verify asset filenames/digests, update related Markdown and news,
-and update both workflow compiler SHAs. Never silently follow compiler `main`.
+The reviewed baseline and assets live in `src/data/project.ts`. A baseline update
+must check publication status, dereference the release tag, verify filenames and
+digests, update relevant copy, and update both workflows' compiler SHAs. Do not
+silently follow compiler main.
 
-Pages use shared Astro layouts, TypeScript data, and Markdown. Keep CSS in the
-shared stylesheet and avoid duplicating page scaffolding.
+## Examples and validation
 
-## TypeScript conventions
-
-Write application logic, configuration, scripts, and tests in `.ts` files.
-Astro component scripts also use TypeScript. Keep written page content in Markdown
-and presentation styles in CSS.
-
-`npm run typecheck` checks the Astro/app project and the separate strict Node
-tooling project. Node scripts use explicit `.ts` import extensions and erasable
-TypeScript syntax, so Node 22.12+ can execute them with the type-stripping flag
-provided by the npm commands. Type stripping does not replace type checking.
-
-Keep `src/scripts/theme-init.ts` self-contained: the shared layout serializes its
-compiled function into an early head script. `check:site` exercises that actual
-generated JavaScript with stored preferences, system preferences, and blocked
-local storage.
-
-## Examples
-
-Example `.srp` and `.stdout` files in `src/examples` are used by the rendered
-explorer and exact-output runner. Verify changes with the pinned interpreter:
+The `.srp` and `.stdout` files in `src/examples` feed the rendered explorer and
+exact-output runner. Verify changes with the pinned interpreter:
 
 ```sh
 SCARP_BIN=/absolute/path/to/scarp npm run test:examples
 ```
 
-CI builds the exact published source commit without external Rust crates and
-runs every example through both `run` and `check`.
+CI builds the exact published interpreter source without external Rust crates
+and tests each example with both `run` and `check`.
 
-## Review
-
-Use one focused branch/PR, explain the resulting behavior, and include validation.
-Check desktop/mobile layouts, both themes, keyboard navigation, and JavaScript
-disabled behavior for interaction work. Keep the original blue S branding.
+Run `npm run check` before a PR. Interaction changes also need keyboard,
+mobile/responsive, light/dark, and no-JavaScript review. Use focused commits and
+explain the resulting behavior and validation. Preserve existing URLs, article
+dates, original blue S branding, and reviewed source evidence during refactors.
 
 Website code is MIT licensed. The compiler is independently Apache-2.0 licensed.
