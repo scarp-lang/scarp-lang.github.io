@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.vite/
 .astro/
 .DS_Store
 .openai/

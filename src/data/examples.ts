@@ -1,12 +1,10 @@
-import hello from '../examples/hello.srp?raw';
-import helloOutput from '../examples/hello.stdout?raw';
-import functions from '../examples/functions.srp?raw';
-import functionsOutput from '../examples/functions.stdout?raw';
-import numerics from '../examples/numerics.srp?raw';
-import numericsOutput from '../examples/numerics.stdout?raw';
+import { readFileSync } from 'node:fs';
 
-export const examples = [
-  { id: 'hello', label: 'The basics', filename: 'hello.srp', code: hello, output: helloOutput },
-  { id: 'functions', label: 'Functions', filename: 'functions.srp', code: functions, output: functionsOutput },
-  { id: 'numerics', label: 'Numerics', filename: 'numerics.srp', code: numerics, output: numericsOutput },
-];
+/** Build/dev-server data only. Browser bundles never import filesystem APIs. */
+export function getExamples() {
+  return [['hello', 'The basics'], ['functions', 'Functions'], ['numerics', 'Numerics']].map(([id, label]) => ({
+    id, label, filename: `${id}.srp`,
+    code: readFileSync(new URL(`../examples/${id}.srp`, import.meta.url), 'utf8'),
+    output: readFileSync(new URL(`../examples/${id}.stdout`, import.meta.url), 'utf8'),
+  }));
+}

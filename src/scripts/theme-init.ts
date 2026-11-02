@@ -1,4 +1,4 @@
-/** Self-contained so Astro can inline its compiled JavaScript before first paint. */
+/** Self-contained so the static renderer can inline it before first paint. */
 export function initializeTheme(): void {
   let preference: string | null = null;
   try { preference = localStorage.getItem('scarp-theme'); } catch {}
