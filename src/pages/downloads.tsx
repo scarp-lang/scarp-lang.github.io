@@ -80,7 +80,11 @@ export default function DownloadsPage() {
           historical <code>run</code> commands. Download that specific version
           for exact reproductions. The{" "}
           <a href={verification}>baseline verification record</a> describes its
-          tested archives. The latest compiler's newer CLI is documented above.
+          tested archives. The three homepage source fixtures also pass against{" "}
+          <a href={publishedCompiler.release}>{publishedCompiler.tag}</a> with the
+          newer <code>exec</code> and <code>verify</code> commands. Read the{" "}
+          <a href="/compatibility/">exact compatibility evidence</a> before
+          assuming other code works unchanged.
         </p>
         <h2>Prefer building from source?</h2>
         <p>

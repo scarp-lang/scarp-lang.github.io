@@ -42,7 +42,7 @@ export default function CodeExplorer() {
       ))}
       <div className="code-caption">
         <span className="status-dot" aria-hidden="true"></span>Scarp
-        v0.0.5-alpha.1 <span>·</span> CLI examples
+        v0.0.5-alpha.1 <span>·</span> also checked with alpha.4
       </div>
     </div>
   );

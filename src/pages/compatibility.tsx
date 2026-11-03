@@ -18,6 +18,7 @@ export default function CompatibilityPage() {
         exactly the checked-in stdout fixture, and pass its version-appropriate
         source validation command without unexpected output.
       </p>
+      <div className="compat-table-wrap" role="region" aria-label="Compiler version compatibility" tabIndex={0}>
       <table>
         <thead>
           <tr>
@@ -41,6 +42,7 @@ export default function CompatibilityPage() {
           ))}
         </tbody>
       </table>
+      </div>
       <p>
         <strong>Important:</strong> the historical <code>check</code> command in{" "}
         {project.tag} can evaluate program statements; it is not the same

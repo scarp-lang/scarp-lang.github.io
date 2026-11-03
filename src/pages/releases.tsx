@@ -73,7 +73,9 @@ export default function ReleasesPage() {
           <p>
             Use the matching version for reproducing the featured examples. Newer
             compiler packages use updated CLI commands and may change behavior;
-            we have not re-certified every website snippet against them.
+            three homepage fixtures have also passed their exact-output checks
+            under {publishedCompiler.tag}; that does not certify every Scarp
+            program or page example. <a href="/compatibility/">See the compatibility evidence</a>.
           </p>
           <div className="actions">
             <a className="button secondary" href={project.release}>Older baseline release ↗</a>
