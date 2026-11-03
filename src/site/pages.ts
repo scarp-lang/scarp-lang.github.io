@@ -15,6 +15,7 @@ import News from "../pages/news/index.tsx";
 import SourceModules from "../pages/news/source-modules.tsx";
 import OfficialWebsite from "../pages/news/official-website.tsx";
 import NotFound from "../pages/404.tsx";
+import Search from "../pages/search.tsx";
 
 export interface SitePage {
   path: `/${string}`;
@@ -36,6 +37,7 @@ export const pages: readonly SitePage[] = [
   { path: "/contribute/", Component: Contribute },
   { path: "/faq/", Component: Faq },
   { path: "/support/", Component: Support },
+  { path: "/search/", Component: Search },
   { path: "/news/", Component: News },
   { path: "/news/source-modules/", Component: SourceModules },
   { path: "/news/official-website/", Component: OfficialWebsite },
