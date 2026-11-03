@@ -9,9 +9,10 @@ import { searchEntries } from '../src/data/search.ts';
 import { ecosystemProjects, ecosystemReviewedOn } from '../src/data/ecosystem.ts';
 import { publishedCompiler, publishedDownloads, publishedDownloadUrl } from '../src/data/releases.ts';
 import { project } from '../src/data/project.ts';
+import { exampleCompatibility } from '../src/data/compatibility.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 18);
+  assert.equal(pages.length, 19);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -132,4 +133,35 @@ test('published alpha.4 is distinct from the pinned alpha.1 example baseline', a
   assert.equal(data.latestPublished?.sourceCommit, publishedCompiler.sourceCommit);
   assert.equal(data.downloads?.length, 3);
   assert.equal(data.latestDownloads?.length, 3);
+});
+
+
+test('compiler compatibility guide exposes only CI-backed fixture coverage', async () => {
+  const page = findPage('/compatibility/');
+  assert(page);
+  const html = renderPage(page, developmentAssets);
+  for (const id of ['versions', 'fixtures', 'reproducibility', 'limits']) {
+    assert(html.includes('id="' + id + '"'), 'Missing compatibility section ' + id);
+  }
+  assert(html.includes('href="/releases/"'));
+  assert(html.includes('href="/downloads/"'));
+  assert(html.includes('github.com/scarp-lang/scarp-lang.github.io/actions/workflows/ci.yml'));
+  for (const version of exampleCompatibility.versions) {
+    assert(html.includes(version.tag), 'Missing compiler version');
+    assert(html.includes(version.sourceCommit), 'Missing source pin');
+    assert(html.includes('scarp ' + version.executionCommand + ' hello.srp'));
+    assert(html.includes('scarp ' + version.validationCommand + ' hello.srp'));
+  }
+  for (const fixture of exampleCompatibility.fixtureNames) {
+    assert(html.includes('/src/examples/' + fixture));
+    assert(html.includes('/src/examples/' + fixture.replace('.srp', '.stdout')));
+  }
+  const response = await renderRequest('/project.json', developmentAssets);
+  assert(response);
+  const snapshot = JSON.parse(response.body) as {
+    exampleCompatibility?: { fixtureNames?: string[]; versions?: { tag: string }[] };
+  };
+  assert.deepEqual(snapshot.exampleCompatibility?.fixtureNames, [...exampleCompatibility.fixtureNames]);
+  assert.deepEqual(snapshot.exampleCompatibility?.versions?.map(v => v.tag),
+    exampleCompatibility.versions.map(v => v.tag));
 });

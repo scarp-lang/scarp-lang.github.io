@@ -4,6 +4,7 @@ import { resolve, join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { project } from "../src/data/project.ts";
 import { publishedCompiler } from "../src/data/releases.ts";
+import { exampleCompatibility } from "../src/data/compatibility.ts";
 
 /**
  * Compile the official interpreter outside this script. Every website .srp fixture
@@ -29,7 +30,7 @@ assert.match(version.stdout, new RegExp(`\\b${expectedVersion.replaceAll(".", "\
 
 const directory = resolve("src/examples");
 const sources = (await readdir(directory)).filter(name => name.endsWith(".srp")).sort();
-assert(sources.length > 0, "No website fixtures were discovered");
+assert.deepEqual(sources, [...exampleCompatibility.fixtureNames].sort(), "Compatibility index must include every website source fixture");
 for (const file of sources) {
   const source = join(directory, file);
   const expected = await readFile(source.replace(/\.srp$/, ".stdout"), "utf8");

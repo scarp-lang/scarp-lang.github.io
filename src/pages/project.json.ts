@@ -1,5 +1,6 @@
 import { project, downloads, verification } from "../data/project.ts";
 import { publishedCompiler, publishedDownloads } from "../data/releases.ts";
+import { exampleCompatibility } from "../data/compatibility.ts";
 
 export const GET = () => Response.json({
   schemaVersion: 1,
@@ -24,5 +25,6 @@ export const GET = () => Response.json({
     execution: "interpreter",
   },
   latestDownloads: publishedDownloads,
+  exampleCompatibility,
   policy: "Reviewed snapshots, not a live feed. The pinned website example baseline differs from the latest published prerelease; no stable release is implied.",
 });
