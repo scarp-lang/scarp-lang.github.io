@@ -141,6 +141,7 @@ export default function Base({
               <h2>Explore</h2>
               <a href="/learn/">Learn Scarp</a>
               <a href="/downloads/">Downloads</a>
+              <a href="/ecosystem/">Scarp ecosystem</a>
               <a href="/ai/">AI development</a>
               <a href="/faq/">FAQ</a>
             </div>

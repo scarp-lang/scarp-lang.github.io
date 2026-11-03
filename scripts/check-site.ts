@@ -64,11 +64,17 @@ for (const page of pages.filter(path => !path.endsWith('/404.html'))) {
 }
 assert(!sitemap.includes('/404'), '404 must not be indexed');
 assert.match(await readFile(join(root, 'feed.xml'), 'utf8'), /<rss version="2.0">/);
-assert(pages.length >= 17, 'Missing planned website sections and search');
+assert(pages.length >= 18, 'Missing planned website sections, ecosystem, and search');
 const searchHtml = await readFile(join(root, 'search/index.html'), 'utf8');
 assert.match(searchHtml, /data-search-results/);
 assert.match(searchHtml, /data-search-input/);
 assert(searchHtml.includes('href="/downloads/"'));
+const ecosystemHtml = await readFile(join(root, 'ecosystem/index.html'), 'utf8');
+for (const name of ['Scarp compiler', 'Scarp Docs', 'Scarp Playground', 'Scarp by Example', 'Scarp for VS Code']) {
+  assert(ecosystemHtml.includes(name), 'Missing ecosystem project: ' + name);
+}
+assert(ecosystemHtml.includes('2026-11-03'), 'Ecosystem snapshot date is missing');
+assert(ecosystemHtml.includes('releases/tag/v0.0.5-alpha.3'), 'Missing published compiler release evidence');
 
 // Exercise the actual compiled head script, including the storage-blocked case.
 const representativePage = pages[0];

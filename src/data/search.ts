@@ -9,6 +9,7 @@ export interface SearchEntry {
 /** Reviewed website routes, not a crawler or a live compiler feature feed. */
 export const searchEntries: readonly SearchEntry[] = [
   { path: "/", title: "Scarp home", section: "Overview", summary: "Introduction, verified language examples, current status, and next steps.", keywords: ["start", "programming", "language", "official"] },
+  { path: "/ecosystem/", title: "Scarp ecosystem", section: "Projects", summary: "Find the compiler, official docs, browser Playground, Scarp by Example, and VS Code extension.", keywords: ["projects", "tools", "vscode", "playground", "docs", "editor", "learn", "wasm", "examples"] },
   { path: "/features/", title: "Language features", section: "Language", summary: "Variables, typed functions, source modules, vectors, and numerical foundations.", keywords: ["syntax", "bind", "var", "funcra", "modules", "tiles"] },
   { path: "/development/", title: "Development status", section: "Project", summary: "What is implemented, what is experimental, and what is still planned.", keywords: ["progress", "compiler", "limitations", "status", "verification"] },
   { path: "/roadmap/", title: "Roadmap", section: "Project", summary: "Milestones, priorities, and the path toward the first stable Scarp release.", keywords: ["future", "planned", "milestones", "stable", "progress"] },

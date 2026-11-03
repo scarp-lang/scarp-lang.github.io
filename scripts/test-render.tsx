@@ -6,9 +6,10 @@ import { developmentAssets } from '../src/site/context.ts';
 import { findPage, outputPath, pages } from '../src/site/pages.ts';
 import { renderPage, renderRequest } from '../src/site/render.tsx';
 import { searchEntries } from '../src/data/search.ts';
+import { ecosystemProjects, ecosystemReviewedOn } from '../src/data/ecosystem.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 17);
+  assert.equal(pages.length, 18);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -72,4 +73,24 @@ test('search directory lists all canonical, public pages without JavaScript', ()
   assert.match(html, /<form[^>]*data-search-form=""[^>]*hidden/);
   for (const entry of searchEntries) assert(html.includes('href="' + entry.path + '"'));
   assert(html.includes('data-search-results=""'));
+});
+
+
+test('ecosystem route renders all verified project cards and evidence links', () => {
+  const ecosystem = findPage('/ecosystem/');
+  const home = findPage('/');
+  assert(ecosystem && home);
+  assert.equal(findPage('/ecosystem/index.html')?.path, '/ecosystem/');
+  const html = renderPage(ecosystem, developmentAssets);
+  assert(html.includes('id="ecosystem-projects-title"'));
+  assert(html.includes(`dateTime="${ecosystemReviewedOn}"`) || html.includes(`datetime="${ecosystemReviewedOn}"`));
+  for (const project of ecosystemProjects) {
+    assert(html.includes(`id="${project.id}"`));
+    assert(html.includes(`href="${project.website}"`));
+    assert(html.includes(`href="${project.source}"`));
+    assert(html.includes(`href="${project.evidence}"`));
+    if (project.version) assert(html.includes(project.version));
+  }
+  assert(!html.includes('v0.0.5-alpha.4</strong>'), 'unpublished compiler candidate must not be presented as released');
+  assert(renderPage(home, developmentAssets).includes('href="/ecosystem/"'));
 });
