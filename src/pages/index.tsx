@@ -50,7 +50,7 @@ export default function IndexPage() {
             <CodeExplorer />
             <p className="code-footnote">
               Real syntax. Expected output.{" "}
-              <a href="/development/#evidence">See the baseline ↗</a>
+              <a href="/compatibility/">Verified on two releases ↗</a>
             </p>
           </div>
         </div>

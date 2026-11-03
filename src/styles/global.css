@@ -393,3 +393,11 @@
     .ecosystem-teaser { padding: 24px; margin-bottom: 40px; }
   }
 }
+
+
+/* Scrolling comparison table on narrow screens, including keyboard focus. */
+@layer pages {
+  .compat-table-wrap { overflow-x: auto; max-width: 100%; border: 1px solid var(--line); border-radius: 10px; }
+  .compat-table-wrap table { min-width: 620px; margin: 0; }
+  .compat-table-wrap small { display: block; margin-top: 6px; font-size: .74rem; color: var(--muted); }
+}

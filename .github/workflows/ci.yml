@@ -29,3 +29,17 @@ jobs:
         run: npm run test:examples
         env:
           SCARP_BIN: .compiler/target/debug/scarp
+      - name: Check out the latest published interpreter source (alpha.4)
+        uses: actions/checkout@v4
+        with:
+          repository: scarp-lang/scarp
+          ref: 79141329176f5dce51457e90a6652902f6432135
+          path: .compiler-alpha4
+          persist-credentials: false
+      - name: Build the published alpha.4 interpreter
+        run: cargo build --manifest-path .compiler-alpha4/Cargo.toml --locked --offline
+      - name: Verify website fixtures against published alpha.4
+        run: npm run test:examples
+        env:
+          SCARP_BIN: .compiler-alpha4/target/debug/scarp
+          SCARP_EXAMPLE_TARGET: published

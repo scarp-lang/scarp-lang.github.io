@@ -17,6 +17,7 @@ import OfficialWebsite from "../pages/news/official-website.tsx";
 import NotFound from "../pages/404.tsx";
 import Search from "../pages/search.tsx";
 import Ecosystem from "../pages/ecosystem.tsx";
+import Compatibility from "../pages/compatibility.tsx";
 
 export interface SitePage {
   path: `/${string}`;
@@ -32,6 +33,7 @@ export const pages: readonly SitePage[] = [
   { path: "/development/", Component: Development },
   { path: "/roadmap/", Component: Roadmap },
   { path: "/releases/", Component: Releases },
+  { path: "/compatibility/", Component: Compatibility },
   { path: "/downloads/", Component: Downloads },
   { path: "/learn/", Component: Learn },
   { path: "/ai/", Component: Ai },

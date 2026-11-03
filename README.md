@@ -57,6 +57,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:search`: search ranking, multi-term matching, and empty queries.
 - `npm run test:ecosystem`: audited ecosystem links, versions, and release-stage labels.
 - `npm run test:releases`: pinned example baseline versus published compiler release, exact archive hashes, and download URLs.
+- `npm run test:compatibility`: fixture coverage and expected commands for both verified compiler source pins.
 - `npm run check:site`: generated links, fragments, assets, metadata, sitemap,
   RSS, release snapshot, and six early-theme scenarios.
 - `SCARP_BIN=/path/to/scarp npm run test:examples`: exact-output checks against
@@ -67,11 +68,15 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 The hub includes features, development status, roadmap, releases/downloads,
 learning paths, AI direction, community, support, contribution guidance, FAQ,
 project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
-and a local, privacy-friendly site search at `/search/`.
+a source-verified compatibility guide at `/compatibility/`, and a local,
+privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering and the `/` or Ctrl/⌘+K keyboard shortcut. It is a **reviewed snapshot**, not a live compiler feed.
-The featured website programs stay pinned to the older verified compiler
-baseline. The Downloads and Releases pages show the published
+The featured website programs keep their older verified compiler baseline,
+and the same three homepage fixtures also run under the pinned alpha.4 compiler
+with byte-exact expected output. The two compiler sources and distinct CLI
+commands are tested in both CI and the Pages workflow. The compatibility page
+does **not** promise that all user programs work across versions. The Downloads and Releases pages show the published
 **v0.0.5-alpha.4** prerelease, released on 3 November 2026, with exact
 GitHub archive digests. The ecosystem page independently records project
 versions; these are reviewed snapshots, not a live GitHub feed.

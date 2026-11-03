@@ -86,7 +86,7 @@ for (const page of pages.filter(path => !path.endsWith('/404.html'))) {
 }
 assert(!sitemap.includes('/404'), '404 must not be indexed');
 assert.match(await readFile(join(root, 'feed.xml'), 'utf8'), /<rss version="2.0">/);
-assert(pages.length >= 18, 'Missing planned website sections, ecosystem, and search');
+assert(pages.length >= 19, 'Missing planned website sections, ecosystem, compatibility, and search');
 const searchHtml = await readFile(join(root, 'search/index.html'), 'utf8');
 assert.match(searchHtml, /data-search-results/);
 assert.match(searchHtml, /data-search-input/);
@@ -97,6 +97,16 @@ for (const name of ['Scarp compiler', 'Scarp Docs', 'Scarp Playground', 'Scarp b
 }
 assert(ecosystemHtml.includes('2026-11-03'), 'Ecosystem snapshot date is missing');
 assert(ecosystemHtml.includes('releases/tag/v0.0.5-alpha.4'), 'Missing latest published compiler release evidence');
+const compatibilityHtml = await readFile(join(root, 'compatibility/index.html'), 'utf8');
+for (const token of ['functions.srp', 'hello.srp', 'numerics.srp', 'v0.0.5-alpha.1',
+  'v0.0.5-alpha.4', 'static-only', 'scarp exec hello.srp', 'scarp verify hello.srp']) {
+  assert(compatibilityHtml.includes(token), 'Compatibility page missing ' + token);
+}
+const compatibility: unknown = snapshot.exampleCompatibility;
+assert(isRecord(compatibility), 'Missing machine-readable example compatibility');
+assert(Array.isArray(compatibility.fixtureNames) && compatibility.fixtureNames.length === 3);
+assert(Array.isArray(compatibility.versions) && compatibility.versions.length === 2);
+assert(searchHtml.includes('href="/compatibility/"'), 'Compatibility guide absent from the search directory');
 
 // Exercise the actual compiled head script, including the storage-blocked case.
 const representativePage = pages[0];

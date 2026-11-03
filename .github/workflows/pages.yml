@@ -29,6 +29,20 @@ jobs:
       - run: npm run test:examples
         env:
           SCARP_BIN: .compiler/target/debug/scarp
+      - name: Check out published Scarp alpha.4 source
+        uses: actions/checkout@v4
+        with:
+          repository: scarp-lang/scarp
+          ref: 79141329176f5dce51457e90a6652902f6432135
+          path: .compiler-alpha4
+          persist-credentials: false
+      - name: Build published alpha.4 interpreter
+        run: cargo build --manifest-path .compiler-alpha4/Cargo.toml --locked --offline
+      - name: Test the website examples under alpha.4
+        run: npm run test:examples
+        env:
+          SCARP_BIN: .compiler-alpha4/target/debug/scarp
+          SCARP_EXAMPLE_TARGET: published
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
