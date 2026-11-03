@@ -10,8 +10,11 @@ export default function ArticlePage() {
     >
       <h2 id={"01--get-the-interpreter"}>01 · Get the interpreter</h2>
       <p>
-        <a href={"/downloads/"}>Download the published alpha</a> for Windows
-        x64, Linux x64 GNU, or macOS ARM64. Follow the{" "}
+        For these pinned example commands, use{" "}
+        <a href={"https://github.com/scarp-lang/scarp/releases/tag/v0.0.5-alpha.1"}>the verified v0.0.5-alpha.1 interpreter</a>.
+        The <a href={"/downloads/"}>latest published prerelease</a> provides newer
+        <code>exec</code>, <code>create</code> and <code>launch</code> commands.
+        Follow the{" "}
         <a href={"https://scarp-lang.github.io/scarp-docs/guide/installation"}>
           installation guide
         </a>{" "}
