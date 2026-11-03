@@ -17,7 +17,7 @@ export const sourceUrl = (path: string) => `${project.repo}/blob/${project.sourc
 export const verification = `${project.repo}/blob/${project.evidenceSource}/docs/releases/v0.0.5-alpha.1-validation.md`;
 
 export const navigation = [
-  ['Features', '/features/'], ['Development', '/development/'],
+  ['Features', '/features/'], ['Ecosystem', '/ecosystem/'], ['Development', '/development/'],
   ['Roadmap', '/roadmap/'], ['Releases', '/releases/'],
   ['News', '/news/'], ['Docs ↗', project.docs], ['Community', '/community/'],
   ['Support', '/support/'],

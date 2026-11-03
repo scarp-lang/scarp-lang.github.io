@@ -343,3 +343,53 @@
     .site-search-form { padding: 18px; }
   }
 }
+
+/* A responsive ecosystem index; all links remain accessible without JavaScript. */
+@layer pages {
+  .ecosystem-heading { padding-bottom: 38px; }
+  .ecosystem-reviewed { margin-top: 22px; }
+  .ecosystem-section { padding-bottom: 75px; }
+  .ecosystem-section .section-heading > p { max-width: 440px; line-height: 1.7; }
+  .ecosystem-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .ecosystem-card { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 30px; display: flex; flex-direction: column; min-width: 0; scroll-margin-top: 130px; }
+  .ecosystem-card-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .ecosystem-number { font-size: .78rem; color: var(--muted); }
+  .ecosystem-status { border-radius: 30px; border: 1px solid var(--line); color: var(--ink); background: var(--soft); font-size: .7rem; padding: 4px 10px; }
+  .ecosystem-card .eyebrow { margin-bottom: 12px; }
+  .ecosystem-card h3 { font-size: 1.65rem; }
+  .ecosystem-version { color: var(--muted); margin-top: 15px; font-size: .8rem; }
+  .ecosystem-version strong { color: var(--ink); }
+  .ecosystem-summary { color: var(--muted); font-size: .92rem; margin-top: 20px; }
+  .ecosystem-limit { background: var(--soft); color: var(--muted); font-size: .78rem; margin: 24px 0; border-left: 3px solid var(--blue); padding: 12px 14px; }
+  .ecosystem-limit strong { color: var(--ink); }
+  .ecosystem-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: auto; }
+  .ecosystem-links > a:not(.button) { font-size: .79rem; font-weight: 600; }
+  .ecosystem-path { background: var(--blue-soft); border: 1px solid var(--line); border-radius: 13px; padding: 36px; margin-bottom: 70px; }
+  .ecosystem-path h2 { font-size: 2.1rem; }
+  .ecosystem-path ol { margin: 22px 0; padding-left: 25px; }
+  .ecosystem-path li { margin: 12px 0; line-height: 1.75; color: var(--muted); }
+  .ecosystem-path li strong { color: var(--ink); }
+  .ecosystem-teaser { display: flex; align-items: center; justify-content: space-between; gap: 35px; background: var(--blue-soft); border: 1px solid var(--line); border-radius: 13px; padding: 37px; margin-bottom: 70px; }
+  .ecosystem-teaser h2 { font-size: clamp(1.8rem, 3vw, 2.65rem); }
+  .ecosystem-teaser p:not(.eyebrow) { color: var(--muted); max-width: 650px; margin-top: 14px; font-size: .89rem; }
+  .ecosystem-teaser > a { flex-shrink: 0; }
+}
+@layer responsive {
+  @media (max-width: 1350px) and (min-width: 951px) {
+    .header-inner { gap: 16px; }
+    #main-nav { gap: 14px; }
+  }
+  @media (max-width: 750px) {
+    .ecosystem-grid { grid-template-columns: 1fr; }
+    .ecosystem-teaser { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 650px) {
+    .ecosystem-section { padding-bottom: 45px; }
+    .ecosystem-card { padding: 22px; }
+    .ecosystem-card-top { margin-bottom: 18px; }
+    .ecosystem-card h3 { font-size: 1.45rem; }
+    .ecosystem-path { padding: 24px; margin-bottom: 50px; }
+    .ecosystem-path h2 { font-size: 1.7rem; }
+    .ecosystem-teaser { padding: 24px; margin-bottom: 40px; }
+  }
+}

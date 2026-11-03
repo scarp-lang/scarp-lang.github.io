@@ -10,7 +10,7 @@ export default function IndexPage() {
         <a className="release-pill" href="/releases/">
           <span className="status-dot" aria-hidden="true"></span>v
           {project.version}
-          <span className="pill-label">Experimental prerelease</span>
+          <span className="pill-label">Verified site baseline</span>
           <span aria-hidden="true">↗</span>
         </a>
         <div className="hero-grid">
@@ -126,12 +126,12 @@ export default function IndexPage() {
           </div>
           <div className="status-board">
             <div className="status-board-header">
-              <span className="status-badge">Published alpha</span>
+              <span className="status-badge">Reviewed alpha.1</span>
               <span className="mono">v{project.version}</span>
             </div>
             <h3>Source modules</h3>
             <p>
-              The latest published milestone brings relative imports and
+              The verified website baseline brings relative imports and
               explicit public exports to multi-file programs.
             </p>
             <ol className="milestone-list">
@@ -213,6 +213,15 @@ export default function IndexPage() {
             Windows PowerShell: use <code>./scarp.exe</code>.
           </p>
         </div>
+      </section>
+
+      <section className="wrap ecosystem-teaser" aria-labelledby="ecosystem-teaser-title">
+        <div>
+          <p className="eyebrow">Beyond the compiler</p>
+          <h2 id="ecosystem-teaser-title">Explore the Scarp ecosystem.</h2>
+          <p>Documentation, a browser playground, tested examples, and editor support are growing alongside the language. Find the right tool and check its prerelease status.</p>
+        </div>
+        <a className="button primary" href="/ecosystem/">Explore all tools <span aria-hidden="true">→</span></a>
       </section>
 
       <section
