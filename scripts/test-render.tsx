@@ -5,9 +5,10 @@ import CodeBlock from '../src/components/CodeBlock.tsx';
 import { developmentAssets } from '../src/site/context.ts';
 import { findPage, outputPath, pages } from '../src/site/pages.ts';
 import { renderPage, renderRequest } from '../src/site/render.tsx';
+import { searchEntries } from '../src/data/search.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 16);
+  assert.equal(pages.length, 17);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -58,4 +59,17 @@ test('data routes and not-found responses remain distinct from normal pages', as
   const sitemap = await renderRequest('/sitemap.xml', developmentAssets);
   assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io/support/</loc>'));
   assert(!sitemap?.body.includes('/404.html'));
+});
+
+
+test('search directory lists all canonical, public pages without JavaScript', () => {
+  const searchable = pages.filter(page => !page.noindex).map(page => page.path);
+  assert.deepEqual(new Set(searchEntries.map(entry => entry.path)), new Set(searchable));
+  const search = findPage('/search/');
+  assert(search);
+  const html = renderPage(search, developmentAssets);
+  assert(html.includes('role="search"'));
+  assert.match(html, /<form[^>]*data-search-form=""[^>]*hidden/);
+  for (const entry of searchEntries) assert(html.includes('href="' + entry.path + '"'));
+  assert(html.includes('data-search-results=""'));
 });

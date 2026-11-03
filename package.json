@@ -10,10 +10,11 @@
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.tools.json",
     "check:site": "node --experimental-strip-types scripts/check-site.ts",
-    "check": "npm run test:support && npm run test:render && npm run typecheck && npm run build && npm run check:site",
+    "check": "npm run test:support && npm run test:render && npm run test:search && npm run typecheck && npm run build && npm run check:site",
     "test:render": "node --import tsx --test scripts/test-render.tsx",
     "test:support": "node --experimental-strip-types --test scripts/test-support-report.ts",
-    "test:examples": "node --experimental-strip-types scripts/test-examples.ts"
+    "test:examples": "node --experimental-strip-types scripts/test-examples.ts",
+    "test:search": "node --experimental-strip-types --test scripts/test-search.ts"
   },
   "dependencies": {
     "react": "19.3.1",
