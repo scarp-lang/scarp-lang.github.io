@@ -1,13 +1,28 @@
-import { project, downloads, verification } from '../data/project';
+import { project, downloads, verification } from "../data/project.ts";
+import { publishedCompiler, publishedDownloads } from "../data/releases.ts";
+
 export const GET = () => Response.json({
   schemaVersion: 1,
-  name: 'Scarp Programming Language',
+  name: "Scarp Programming Language",
   website: project.origin,
   docs: project.docs,
   repository: project.repo,
   reviewed: project.reviewed,
-  baseline: { version: project.version, tag: project.tag, sourceCommit: project.source, release: project.release, status: 'experimental-prerelease', execution: 'interpreter' },
+  baseline: {
+    version: project.version,
+    tag: project.tag,
+    sourceCommit: project.source,
+    release: project.release,
+    status: "experimental-prerelease",
+    execution: "interpreter",
+  },
   evidence: { sourceCommit: project.evidenceSource, verification },
+  // Preserve previous v1 fields for existing consumers; these checksums belong to alpha.1.
   downloads,
-  policy: 'Reviewed snapshot. Not a live development feed. No stable release or future date is implied.',
+  latestPublished: {
+    ...publishedCompiler,
+    execution: "interpreter",
+  },
+  latestDownloads: publishedDownloads,
+  policy: "Reviewed snapshots, not a live feed. The pinned website example baseline differs from the latest published prerelease; no stable release is implied.",
 });
