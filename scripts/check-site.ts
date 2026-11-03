@@ -64,7 +64,11 @@ for (const page of pages.filter(path => !path.endsWith('/404.html'))) {
 }
 assert(!sitemap.includes('/404'), '404 must not be indexed');
 assert.match(await readFile(join(root, 'feed.xml'), 'utf8'), /<rss version="2.0">/);
-assert(pages.length >= 15, 'Missing planned website sections');
+assert(pages.length >= 17, 'Missing planned website sections and search');
+const searchHtml = await readFile(join(root, 'search/index.html'), 'utf8');
+assert.match(searchHtml, /data-search-results/);
+assert.match(searchHtml, /data-search-input/);
+assert(searchHtml.includes('href="/downloads/"'));
 
 // Exercise the actual compiled head script, including the storage-blocked case.
 const representativePage = pages[0];
