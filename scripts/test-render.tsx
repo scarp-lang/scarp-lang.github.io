@@ -63,7 +63,7 @@ test('data routes and not-found responses remain distinct from normal pages', as
 
 
 test('search directory lists all canonical, public pages without JavaScript', () => {
-  const searchable = pages.filter(page => !page.noindex).map(page => page.path);
+  const searchable = pages.filter(page => !page.noindex && page.path !== '/search/').map(page => page.path);
   assert.deepEqual(new Set(searchEntries.map(entry => entry.path)), new Set(searchable));
   const search = findPage('/search/');
   assert(search);
