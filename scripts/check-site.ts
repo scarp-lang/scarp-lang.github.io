@@ -52,6 +52,28 @@ assert(typeof baseline.sourceCommit === 'string', 'Source commit must be a strin
 assert.match(baseline.sourceCommit, /^[0-9a-f]{40}$/);
 assert(Array.isArray(snapshot.downloads), 'Downloads must be an array');
 assert.equal(snapshot.downloads.length, 3);
+const published: unknown = snapshot.latestPublished;
+assert(isRecord(published), "Missing latest separately reviewed public release");
+assert.equal(published.tag, "v0.0.5-alpha.4");
+assert.equal(published.sourceCommit, "79141329176f5dce51457e90a6652902f6432135");
+assert.equal(published.status, "experimental-prerelease");
+const latestAssets: unknown = snapshot.latestDownloads;
+assert(Array.isArray(latestAssets) && latestAssets.length === 3, "Published release must carry three archives");
+const releaseHtml = await readFile(join(root, "releases/index.html"), "utf8");
+const downloadsHtml = await readFile(join(root, "downloads/index.html"), "utf8");
+for (const html of [releaseHtml, downloadsHtml]) {
+  assert(html.includes("v0.0.5-alpha.4"), "Newest release absent");
+  assert(html.includes("v0.0.5-alpha.1"), "Pinned example baseline absent");
+}
+for (const item of latestAssets) {
+  assert(isRecord(item) && typeof item.file === "string" && typeof item.hash === "string");
+  assert.match(item.hash, /^[0-9a-f]{64}$/);
+  assert(downloadsHtml.includes(item.file), "Missing public release asset link");
+  assert(downloadsHtml.includes(item.hash), "Missing public release archive digest");
+}
+assert(downloadsHtml.includes("create hello-world"));
+assert(downloadsHtml.includes("launch hello-world"));
+
 const downloads: unknown[] = snapshot.downloads;
 for (const item of downloads) {
   assert(isRecord(item) && typeof item.hash === 'string', 'Download checksum must be a string');
@@ -74,7 +96,7 @@ for (const name of ['Scarp compiler', 'Scarp Docs', 'Scarp Playground', 'Scarp b
   assert(ecosystemHtml.includes(name), 'Missing ecosystem project: ' + name);
 }
 assert(ecosystemHtml.includes('2026-11-03'), 'Ecosystem snapshot date is missing');
-assert(ecosystemHtml.includes('releases/tag/v0.0.5-alpha.3'), 'Missing published compiler release evidence');
+assert(ecosystemHtml.includes('releases/tag/v0.0.5-alpha.4'), 'Missing latest published compiler release evidence');
 
 // Exercise the actual compiled head script, including the storage-blocked case.
 const representativePage = pages[0];
