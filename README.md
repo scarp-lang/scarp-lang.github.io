@@ -56,6 +56,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
   content, data routes, the searchable page directory, and the not-found response.
 - `npm run test:search`: search ranking, multi-term matching, and empty queries.
 - `npm run test:ecosystem`: audited ecosystem links, versions, and release-stage labels.
+- `npm run test:releases`: pinned example baseline versus published compiler release, exact archive hashes, and download URLs.
 - `npm run check:site`: generated links, fragments, assets, metadata, sitemap,
   RSS, release snapshot, and six early-theme scenarios.
 - `SCARP_BIN=/path/to/scarp npm run test:examples`: exact-output checks against
@@ -69,10 +70,11 @@ project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
 and a local, privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering and the `/` or Ctrl/⌘+K keyboard shortcut. It is a **reviewed snapshot**, not a live compiler feed.
-The featured website programs and download packages intentionally use the older
-verified baseline; the ecosystem page links newer, independently published
-prereleases and marks them explicitly as experimental. Its manually reviewed
-project information is dated **3 November 2026**.
+The featured website programs stay pinned to the older verified compiler
+baseline. The Downloads and Releases pages show the published
+**v0.0.5-alpha.4** prerelease, released on 3 November 2026, with exact
+GitHub archive digests. The ecosystem page independently records project
+versions; these are reviewed snapshots, not a live GitHub feed.
 Baseline: **v0.0.5-alpha.1**, source
 `afe8b5380c9d6c4774162e51c6c9bc8b90901671`, reviewed 1 November 2026.
 

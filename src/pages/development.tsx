@@ -1,5 +1,6 @@
 import Base from "../layouts/Base.tsx";
 import { project, sourceUrl, verification } from "../data/project";
+import { publishedCompiler } from "../data/releases.ts";
 
 export default function DevelopmentPage() {
   return (
@@ -15,13 +16,15 @@ export default function DevelopmentPage() {
           of where we are.
         </h1>
         <p className="lead">
-          An experimental language, developed in public. Reviewed on 1 November
-          2026.
+          An experimental language, developed in public. This page documents
+          the website's verified examples as of 1 November 2026;{" "}
+          <a href={publishedCompiler.release}>{publishedCompiler.tag}</a> is the
+          newer published prerelease reviewed 3 November 2026.
         </p>
       </section>
       <section className="wrap status-summary">
         <div>
-          <span className="eyebrow">Published baseline</span>
+          <span className="eyebrow">Verified website example baseline</span>
           <h2>v{project.version}</h2>
           <p>Source modules · Experimental prerelease</p>
         </div>
@@ -36,6 +39,14 @@ export default function DevelopmentPage() {
       </section>
       <section className="wrap section prose">
         <h2>What you can use</h2>
+        <p>
+          The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>{" "}
+          release adds an explicit offline project workflow with{" "}
+          <code>create</code>, directory <code>verify</code> and{" "}
+          <code>launch</code>. See <a href="/releases/">version-aware release notes</a>{" "}
+          and <a href="/downloads/">current packages</a>. The information below
+          describes the separately tested older example baseline.
+        </p>
         <p>
           The published interpreter includes scalar values, typed functions and
           contracts, control flow, numerical vectors and tiles, relative source
@@ -91,10 +102,12 @@ export default function DevelopmentPage() {
           release record are authoritative when development moves ahead.
         </p>
         <dl className="evidence-list">
-          <dt>Published version</dt>
+          <dt>Verified example version</dt>
           <dd>
             <a href={project.release}>{project.tag}</a>
           </dd>
+          <dt>Newest reviewed public release</dt>
+          <dd><a href={publishedCompiler.release}>{publishedCompiler.tag}</a></dd>
           <dt>Source commit</dt>
           <dd>
             <a

@@ -7,6 +7,8 @@ import { findPage, outputPath, pages } from '../src/site/pages.ts';
 import { renderPage, renderRequest } from '../src/site/render.tsx';
 import { searchEntries } from '../src/data/search.ts';
 import { ecosystemProjects, ecosystemReviewedOn } from '../src/data/ecosystem.ts';
+import { publishedCompiler, publishedDownloads, publishedDownloadUrl } from '../src/data/releases.ts';
+import { project } from '../src/data/project.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
   assert.equal(pages.length, 18);
@@ -91,6 +93,43 @@ test('ecosystem route renders all verified project cards and evidence links', ()
     assert(html.includes(`href="${project.evidence}"`));
     if (project.version) assert(html.includes(project.version));
   }
-  assert(!html.includes('v0.0.5-alpha.4</strong>'), 'unpublished compiler candidate must not be presented as released');
+  assert(html.includes('v0.0.5-alpha.4</strong>'), 'latest published compiler version must be visible');
+  assert(!html.includes('not a published release'), 'stale unpublished compiler claim');
   assert(renderPage(home, developmentAssets).includes('href="/ecosystem/"'));
+});
+
+
+test('published alpha.4 is distinct from the pinned alpha.1 example baseline', async () => {
+  const downloadsPage = findPage('/downloads/');
+  const releasesPage = findPage('/releases/');
+  const home = findPage('/');
+  assert(downloadsPage && releasesPage && home);
+  const downloadsHtml = renderPage(downloadsPage, developmentAssets);
+  const releasesHtml = renderPage(releasesPage, developmentAssets);
+  const homeHtml = renderPage(home, developmentAssets);
+  for (const html of [downloadsHtml, releasesHtml, homeHtml]) {
+    assert(html.includes(publishedCompiler.tag));
+    assert(html.includes(project.tag));
+  }
+  assert(downloadsHtml.includes('create hello-world'));
+  assert(downloadsHtml.includes('verify hello-world'));
+  assert(downloadsHtml.includes('launch hello-world'));
+  for (const item of publishedDownloads) {
+    assert(downloadsHtml.includes(publishedDownloadUrl(item.file)), item.file);
+    assert(downloadsHtml.includes(publishedDownloadUrl(item.file + '.sha256')), item.file);
+    assert(downloadsHtml.includes(item.hash), item.file);
+  }
+  const response = await renderRequest('/project.json', developmentAssets);
+  assert(response);
+  const data = JSON.parse(response.body) as {
+    baseline?: { tag?: string };
+    downloads?: unknown[];
+    latestPublished?: { tag?: string; sourceCommit?: string };
+    latestDownloads?: unknown[];
+  };
+  assert.equal(data.baseline?.tag, project.tag);
+  assert.equal(data.latestPublished?.tag, publishedCompiler.tag);
+  assert.equal(data.latestPublished?.sourceCommit, publishedCompiler.sourceCommit);
+  assert.equal(data.downloads?.length, 3);
+  assert.equal(data.latestDownloads?.length, 3);
 });

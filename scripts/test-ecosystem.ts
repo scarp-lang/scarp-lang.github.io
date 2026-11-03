@@ -24,7 +24,7 @@ test("all projects link to the verified organization and public evidence", () =>
 
 test("published versions are recorded only where source evidence supports them", () => {
   const versions = new Map(ecosystemProjects.map(project => [project.id, project.version]));
-  assert.equal(versions.get("compiler"), "v0.0.5-alpha.3");
+  assert.equal(versions.get("compiler"), "v0.0.5-alpha.4");
   assert.equal(versions.get("docs"), null);
   assert.equal(versions.get("playground"), "v0.0.1");
   assert.equal(versions.get("examples"), "v0.1.0-alpha.1");

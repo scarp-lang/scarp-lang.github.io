@@ -2,15 +2,16 @@ import Base from "../layouts/Base.tsx";
 import CodeExplorer from "../components/CodeExplorer.tsx";
 import CodeBlock from "../components/CodeBlock.tsx";
 import { capabilities, news, project, sourceUrl } from "../data/project";
+import { publishedCompiler } from "../data/releases.ts";
 
 export default function IndexPage() {
   return (
     <Base title="Home">
       <section className="hero wrap">
         <a className="release-pill" href="/releases/">
-          <span className="status-dot" aria-hidden="true"></span>v
-          {project.version}
-          <span className="pill-label">Verified site baseline</span>
+          <span className="status-dot" aria-hidden="true"></span>
+          {publishedCompiler.tag}
+          <span className="pill-label">Latest published alpha</span>
           <span aria-hidden="true">↗</span>
         </a>
         <div className="hero-grid">
@@ -200,7 +201,8 @@ export default function IndexPage() {
         <div className="quickstart">
           <p className="eyebrow">01 / Get the interpreter</p>
           <p>
-            <a href="/downloads/">Download a package</a> for your platform.
+            For this tested example, use the <a href={project.release}>{project.tag} interpreter</a>.
+            The <a href="/downloads/">latest alpha downloads</a> use newer CLI commands.
           </p>
           <p className="eyebrow">02 / Save hello.srp</p>
           <CodeBlock
@@ -210,7 +212,8 @@ export default function IndexPage() {
           <p className="eyebrow">03 / Run from its folder</p>
           <CodeBlock filename="terminal" code={"./scarp run hello.srp"} />
           <p className="small muted">
-            Windows PowerShell: use <code>./scarp.exe</code>.
+            Verified against {project.tag}. Windows PowerShell: use <code>./scarp.exe</code>.
+            Newer versions offer <code>exec</code> and project commands; see the <a href="/downloads/">current setup guide</a>.
           </p>
         </div>
       </section>
