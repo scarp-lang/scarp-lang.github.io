@@ -41,6 +41,15 @@ test("sync rejects malformed, missing or duplicate checkout definitions", () => 
   assert.throws(() => synchronizeCompilerPins(original, { ...pins, published: "not-a-sha" }), /Invalid published/);
 });
 
+test("Pages artifact retains dotfiles with modern GitHub actions", async () => {
+  const pagesWorkflow = await readFile(".github/workflows/pages.yml", "utf8");
+  assert.match(pagesWorkflow, /uses: actions\/upload-pages-artifact@v5/);
+  assert.match(pagesWorkflow, /uses: actions\/configure-pages@v6/);
+  assert.match(pagesWorkflow, /include-hidden-files: true/);
+  assert.match(pagesWorkflow, /path: dist/);
+  assert.match(pagesWorkflow, /id-token: write/);
+});
+
 test("CI and Pages workflow source commits match the reviewed TypeScript snapshots", async () => {
   for (const path of [".github/workflows/ci.yml", ".github/workflows/pages.yml"]) {
     const text = await readFile(path, "utf8");

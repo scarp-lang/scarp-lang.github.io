@@ -91,6 +91,11 @@ SCARP_BIN=/absolute/path/to/scarp npm run test:examples
 CI builds the exact published interpreter source without external Rust crates
 and tests each example with both `run` and `check`.
 
+GitHub Pages uses `public/.nojekyll` in the published artifact. When upgrading
+`actions/upload-pages-artifact`, preserve `include-hidden-files: true`:
+modern versions exclude leading-dot files by default. The generated-site
+check verifies the marker exists in `dist` before deployment.
+
 Run `npm run check` before a PR. Interaction changes also need keyboard,
 mobile/responsive, light/dark, and no-JavaScript review. Use focused commits and
 explain the resulting behavior and validation. Preserve existing URLs, article
