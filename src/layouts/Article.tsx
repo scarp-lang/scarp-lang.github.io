@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Base from "./Base.tsx";
+import { formatNewsDate } from "../lib/date.ts";
 
 interface ArticleProps {
   title: string;
@@ -25,12 +26,7 @@ export default function Article({
           <p className="lead">{description}</p>
           {date && (
             <time dateTime={date}>
-              {new Date(date + "T00:00:00Z").toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-                timeZone: "UTC",
-              })}
+              {formatNewsDate(date)}
             </time>
           )}
         </header>

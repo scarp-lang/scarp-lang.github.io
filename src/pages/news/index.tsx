@@ -1,4 +1,5 @@
 import Base from "../../layouts/Base.tsx";
+import { formatNewsDate } from "../../lib/date.ts";
 import { news } from "../../data/project";
 
 export default function NewsIndexPage() {
@@ -26,7 +27,7 @@ export default function NewsIndexPage() {
           <a key={item.href} className="news-card" href={item.href}>
             <div className="news-meta">
               <span>{item.category}</span>
-              <time dateTime={item.date}>1 November 2026</time>
+              <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
             </div>
             <h2>{item.title}</h2>
             <p>{item.description}</p>
