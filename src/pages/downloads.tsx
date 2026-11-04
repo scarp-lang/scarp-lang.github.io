@@ -2,6 +2,7 @@ import Base from "../layouts/Base.tsx";
 import CodeBlock from "../components/CodeBlock.tsx";
 import { project, verification } from "../data/project.ts";
 import { publishedCompiler, publishedDownloads, publishedDownloadUrl } from "../data/releases.ts";
+import { checksumCommand } from "../data/download-guidance.ts";
 
 export default function DownloadsPage() {
   return (
@@ -35,6 +36,9 @@ export default function DownloadsPage() {
             <a className="inline-link" href={publishedDownloadUrl(item.file + ".sha256")}>
               SHA-256 file ↗
             </a>
+            <a className="inline-link" href={`#verify-${item.platform}`}>
+              How to verify this archive ↓
+            </a>
             <details>
               <summary>Archive checksum</summary>
               <code className="checksum">{item.hash}</code>
@@ -43,8 +47,41 @@ export default function DownloadsPage() {
         ))}
       </section>
 
-      <section className="wrap section prose">
-        <h2>Verify, extract, run</h2>
+      <section className="wrap section prose" id="verify-download">
+        <h2>Verify your download before extracting</h2>
+        <p>
+          Save the archive and its matching <code>.sha256</code> file into the
+          same folder. Open a terminal in that folder, then use the command for
+          your operating system. Do not extract or run an archive if verification fails.
+        </p>
+        <div className="download-verify-panels">
+          {publishedDownloads.map((item) => (
+            <details key={item.file} id={`verify-${item.platform}`}>
+              <summary>{item.name}: verify {item.file.endsWith(".zip") ? "ZIP" : ".tar.gz"}</summary>
+              <p>
+                File: <code>{item.file}</code>. Use the download links above
+                for this exact {publishedCompiler.tag} archive and checksum file.
+              </p>
+              <CodeBlock
+                filename={item.platform === "windows" ? "PowerShell" : "Terminal"}
+                code={checksumCommand(item)}
+              />
+              <p>
+                {item.platform === "windows"
+                  ? "PowerShell prints Checksum OK on a match and raises an error on a mismatch."
+                  : "A valid download prints the archive filename followed by OK. A mismatch or missing checksum file produces an error."}
+              </p>
+            </details>
+          ))}
+        </div>
+        <p className="small muted">
+          The checks use the published SHA-256 values reviewed for {publishedCompiler.tag}.
+          On Windows, the command compares the archive directly against the pinned hash
+          displayed above. Linux and macOS validate against the release sidecar;
+          confirm that it agrees with the hash displayed on this page.
+          SHA-256 verifies file integrity, not whether the prerelease is production-ready.
+        </p>
+        <h2>Extract and run the verified interpreter</h2>
         <ol>
           <li>Download the archive and its matching <code>.sha256</code> file. Compare the archive digest against the published checksum before extraction.</li>
           <li>Extract the archive into a directory you control, including any bundled example files.</li>
@@ -68,10 +105,16 @@ export default function DownloadsPage() {
           are explicit.
         </p>
         <p>
-          For platform-specific setup and checksum commands, follow the{" "}
-          <a href={project.docs + "guide/installation"}>installation guide</a>.
+          For the exact {publishedCompiler.tag} project commands and manifest details,
+          see the{" "}
+          <a href={`${project.repo}/blob/${publishedCompiler.sourceCommit}/docs/project-workflow.md`}>
+            release-pinned project workflow guide
+          </a>.
           Get the <a href={publishedDownloadUrl("SHA256SUMS")}>combined SHA-256 checksums</a>{" "}
           or review the <a href={publishedCompiler.release}>official release record</a>.
+          The <a href={project.docs + "guide/installation"}>older installation guide</a>
+          has separate instructions pinned to {project.tag}; do not use its old
+          CLI commands with the new package.
         </p>
         <h2>Using examples from this website?</h2>
         <p>
