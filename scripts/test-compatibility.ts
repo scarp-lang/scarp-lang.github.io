@@ -16,7 +16,7 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
     assert(program.length > 0, name + " is blank");
     assert(expectedOutput.length > 0, name + " has no expected output");
   }
-  assert.equal(exampleCompatibility.reviewed, "2026-11-03");
+  assert.equal(exampleCompatibility.reviewed, "2026-11-04");
   assert.match(exampleCompatibility.workflow, /github\.com\/scarp-lang\/scarp-lang\.github\.io\/actions\/workflows\/ci\.yml/);
 });
 

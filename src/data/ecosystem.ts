@@ -28,7 +28,7 @@ export const ecosystemProjects = [
     status: "Experimental prerelease",
     version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
-    limitation: "Published alpha.4 supports offline project create, verify and launch commands. Syntax, project manifests and APIs remain experimental.",
+    limitation: "Published alpha.5 adds explicit project module inspection and an experimental scalar C11 emitter for Rust embedding hosts. There is no native .srp compile command; syntax, manifests and APIs remain experimental.",
     website: `${project.repo}/releases`,
     source: project.repo,
     evidence: publishedCompiler.release,

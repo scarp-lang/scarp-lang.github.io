@@ -1,7 +1,7 @@
 import { project } from "./project.ts";
 import { publishedCompiler } from "./releases.ts";
 
-/** Release-documented CLI milestones; only alpha.1/alpha.4 website fixtures have CI execution evidence. */
+/** Published CLI milestones. Only the baseline and latest release are in current website CI. */
 export const cliMilestones = [
   {
     tag: project.tag,
@@ -37,13 +37,24 @@ export const cliMilestones = [
     fixtureTested: false,
   },
   {
-    tag: publishedCompiler.tag,
-    sourceCommit: publishedCompiler.sourceCommit,
+    tag: "v0.0.5-alpha.4",
+    sourceCommit: "79141329176f5dce51457e90a6652902f6432135",
     title: "Explicit offline project workflow",
     execution: "scarp exec hello.srp",
     validation: "scarp verify hello.srp",
     inspection: "scarp inspect modules --json hello.srp",
     additional: "scarp create DIRECTORY, verify DIRECTORY and launch DIRECTORY",
+    evidence: project.repo + "/releases/tag/v0.0.5-alpha.4",
+    fixtureTested: false,
+  },
+  {
+    tag: publishedCompiler.tag,
+    sourceCommit: publishedCompiler.sourceCommit,
+    title: "Project inspection and experimental C11 embedding API",
+    execution: "scarp exec hello.srp",
+    validation: "scarp verify hello.srp",
+    inspection: "scarp inspect modules --json PROJECT_DIRECTORY",
+    additional: "Project module inspection via CLI; experimental scalar C11 generator only via Rust embedding API (no compile CLI)",
     evidence: publishedCompiler.release,
     fixtureTested: true,
   },
