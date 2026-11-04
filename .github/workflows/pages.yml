@@ -43,7 +43,7 @@ jobs:
         env:
           SCARP_BIN: .compiler-published/target/debug/scarp
           SCARP_EXAMPLE_TARGET: published
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
   deploy:
