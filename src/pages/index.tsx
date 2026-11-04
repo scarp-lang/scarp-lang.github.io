@@ -1,6 +1,7 @@
 import Base from "../layouts/Base.tsx";
 import CodeExplorer from "../components/CodeExplorer.tsx";
 import CodeBlock from "../components/CodeBlock.tsx";
+import { formatNewsDate } from "../lib/date.ts";
 import { capabilities, news, project, sourceUrl } from "../data/project";
 import { publishedCompiler } from "../data/releases.ts";
 
@@ -245,7 +246,7 @@ export default function IndexPage() {
             <a key={item.href} className="news-card" href={item.href}>
               <div className="news-meta">
                 <span>{item.category}</span>
-                <time dateTime={item.date}>01 Nov 2026</time>
+                <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
               </div>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
