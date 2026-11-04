@@ -76,16 +76,16 @@ The hub includes features, development status, roadmap, releases/downloads,
 learning paths, AI direction, community, support, contribution guidance, FAQ,
 project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
 a source-verified compatibility guide at `/compatibility/`, an evidence-linked
-published CLI migration guide at `/migration/` (alpha.1–alpha.4), and a local,
+published CLI migration guide at `/migration/` (alpha.1–alpha.5), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering and the `/` or Ctrl/⌘+K keyboard shortcut. It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs keep their older verified compiler baseline,
-and the same three homepage fixtures also run under the pinned alpha.4 compiler
+and the same three homepage fixtures also run under the pinned alpha.5 compiler
 with byte-exact expected output. The two compiler sources and distinct CLI
 commands are tested in both CI and the Pages workflow. The compatibility page
 does **not** promise that all user programs work across versions. The Downloads and Releases pages show the published
-**v0.0.5-alpha.4** prerelease, released on 3 November 2026, with exact
+**v0.0.5-alpha.5** prerelease, released on 4 November 2026, with exact
 GitHub archive digests. The ecosystem page independently records project
 versions; these are reviewed snapshots, not a live GitHub feed.
 Baseline: **v0.0.5-alpha.1**, source

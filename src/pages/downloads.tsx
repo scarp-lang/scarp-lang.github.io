@@ -103,7 +103,9 @@ export default function DownloadsPage() {
           <code>create</code> needs a new destination directory;
           <code>verify</code> checks it without normal runtime execution, and
           <code>launch</code> executes its manifest entrypoint. All project paths
-          are explicit.
+          are explicit. This release also supports{" "}
+          <code>inspect modules --json PROJECT_DIRECTORY</code>, which inspects
+          project modules without executing source statements.
         </p>
         <p>
           For the exact {publishedCompiler.tag} project commands and manifest details,
@@ -138,8 +140,12 @@ export default function DownloadsPage() {
           compiled from a <code>.srp</code> program.
         </p>
         <p>
-          Native Scarp executable generation, one-click installers and package
-          registry installation are not advertised as available.
+          Alpha.5 includes an <strong>experimental scalar C11 emitter</strong> in
+          the Rust embedding API only. It does not offer a{" "}
+          <code>scarp compile</code> command or manage a C compiler. General native
+          Scarp executable generation, one-click installers and package registry
+          installation are not available.
+          See <a href="/news/alpha5-project-inspection/">the release overview</a>.
         </p>
       </section>
       <section className="wrap prose">

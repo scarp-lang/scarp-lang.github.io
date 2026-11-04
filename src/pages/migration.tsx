@@ -38,7 +38,7 @@ export default function MigrationPage() {
               <tr key={item.tag}>
                 <td>
                   <a href={item.evidence}>{item.tag}</a>
-                  <small>{item.fixtureTested ? "3 website fixtures CI-tested" : "Release-documented; not website-fixture-tested"}</small>
+                  <small>{item.fixtureTested ? "3 website fixtures in current CI" : "Release-documented; not in current CI fixtures"}</small>
                 </td>
                 <td><code>{item.execution}</code></td>
                 <td><code>{item.validation}</code></td>
@@ -60,8 +60,10 @@ export default function MigrationPage() {
         "CI-tested" here means only the {exampleCompatibility.fixtureNames.length}{" "}
         <a href="/compatibility/#fixtures">website fixtures</a> passed their
         exact-output and version-specific validation checks under that version.
-        Alpha.2 and alpha.3 entries are based on their published source and
-        release history, <strong>not</strong> this website's executable tests.
+        Alpha.2 through alpha.4 entries are based on their published source
+        and release history, <strong>not</strong> this website's current
+        executable fixture tests. The alpha.4 fixtures passed in an earlier
+        website CI run; the current suite tests the baseline and alpha.5.
       </p>
 
       <h2 id="commands">Translate old commands carefully</h2>
@@ -98,7 +100,7 @@ export default function MigrationPage() {
         <li>
           If you are using alpha.1 or alpha.2, start with legacy{" "}
           <code>run</code> and <code>check</code> commands. For alpha.3 or
-          alpha.4, prefer <code>exec</code> to run a file and{" "}
+          later, prefer <code>exec</code> to run a file and{" "}
           <code>verify FILE.srp</code> for static checking.
         </li>
         <li>
@@ -116,8 +118,11 @@ export default function MigrationPage() {
       <h3 id="alpha4-example">Published alpha.4 project commands</h3>
       <CodeBlock filename="terminal" code={"scarp version\nscarp create hello-world\nscarp verify hello-world\nscarp launch hello-world"} />
       <p>
-        These project commands require {publishedCompiler.tag}; alpha.3 does not
-        offer the project-directory workflow. The manifest is experimental:
+        These project commands were introduced in alpha.4 and remain available
+        in {publishedCompiler.tag}; alpha.3 does not offer project-directory
+        execution. In alpha.5, you can additionally use{" "}
+        <code>scarp inspect modules --json hello-world</code> to inspect
+        the project's modules without running it. The manifest is experimental:
         there is no package registry, dependency lockfile or native{" "}
         <code>.srp</code> executable generator.
         Read the{" "}
