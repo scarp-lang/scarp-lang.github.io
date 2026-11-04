@@ -8,11 +8,12 @@ import { renderPage, renderRequest } from '../src/site/render.tsx';
 import { searchEntries } from '../src/data/search.ts';
 import { ecosystemProjects, ecosystemReviewedOn } from '../src/data/ecosystem.ts';
 import { publishedCompiler, publishedDownloads, publishedDownloadUrl } from '../src/data/releases.ts';
-import { project } from '../src/data/project.ts';
+import { news, project } from '../src/data/project.ts';
+import { formatNewsDate } from '../src/lib/date.ts';
 import { exampleCompatibility } from '../src/data/compatibility.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 19);
+  assert.equal(pages.length, 20);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -164,4 +165,37 @@ test('compiler compatibility guide exposes only CI-backed fixture coverage', asy
   assert.deepEqual(snapshot.exampleCompatibility?.fixtureNames, [...exampleCompatibility.fixtureNames]);
   assert.deepEqual(snapshot.exampleCompatibility?.versions?.map(v => v.tag),
     exampleCompatibility.versions.map(v => v.tag));
+});
+
+test('published alpha.4 news appears with correct dates on pages and in RSS', async () => {
+  const announcement = news[0];
+  assert(announcement);
+  assert.equal(announcement.href, '/news/offline-projects/');
+  assert.equal(announcement.date, publishedCompiler.reviewed);
+  assert.equal(formatNewsDate('2026-11-03'), '3 November 2026');
+  assert.throws(() => formatNewsDate('not-a-date'), RangeError);
+
+  for (const route of ['/', '/news/']) {
+    const page = findPage(route);
+    assert(page, 'Missing news listing route: ' + route);
+    const html = renderPage(page, developmentAssets);
+    assert(html.includes('href="' + announcement.href + '"'), 'Announcement missing from ' + route);
+    assert(html.includes('>3 November 2026</time>'), 'Visible announcement date is incorrect on ' + route);
+    assert(!html.includes('>01 Nov 2026</time>'), 'Old hardcoded date remains on ' + route);
+  }
+
+  const article = findPage(announcement.href);
+  assert(article, 'Missing alpha.4 news page');
+  const html = renderPage(article, developmentAssets);
+  for (const claim of ['v0.0.5-alpha.4', 'Scarp.project', 'scarp create hello-world',
+    'scarp verify hello-world', 'scarp launch hello-world',
+    publishedCompiler.sourceCommit, '/compatibility/']) {
+    assert(html.includes(claim), 'News article missing reviewed detail: ' + claim);
+  }
+  assert(html.includes('>3 November 2026</time>'), 'Article and listing dates differ');
+  assert(searchEntries.some(entry => entry.path === announcement.href), 'New announcement missing from search directory');
+
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/offline-projects/</link>'));
+  assert(feed?.body.includes('<pubDate>' + new Date(announcement.date + 'T00:00:00Z').toUTCString() + '</pubDate>'));
 });
