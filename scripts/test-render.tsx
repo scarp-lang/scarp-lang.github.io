@@ -116,6 +116,14 @@ test('published alpha.4 is distinct from the pinned alpha.1 example baseline', a
   assert(downloadsHtml.includes('create hello-world'));
   assert(downloadsHtml.includes('verify hello-world'));
   assert(downloadsHtml.includes('launch hello-world'));
+  assert(downloadsHtml.includes('Get-FileHash'));
+  assert(downloadsHtml.includes('sha256sum --check'));
+  assert(downloadsHtml.includes('shasum -a ')); // Numeric 256 is highlighted separately.
+  assert(downloadsHtml.includes(publishedCompiler.sourceCommit + '/docs/project-workflow.md'));
+  for (const item of publishedDownloads) {
+    assert(downloadsHtml.includes('id="verify-' + item.platform + '"'));
+    assert(downloadsHtml.includes('href="#verify-' + item.platform + '"'));
+  }
   for (const item of publishedDownloads) {
     assert(downloadsHtml.includes(publishedDownloadUrl(item.file)), item.file);
     assert(downloadsHtml.includes(publishedDownloadUrl(item.file + '.sha256')), item.file);
