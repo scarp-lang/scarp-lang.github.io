@@ -5,7 +5,7 @@
 import { project } from "./project.ts";
 import { publishedCompiler } from "./releases.ts";
 
-export const ecosystemReviewedOn = "2026-11-03";
+export const ecosystemReviewedOn = "2026-11-04";
 
 export interface EcosystemProject {
   id: string;
