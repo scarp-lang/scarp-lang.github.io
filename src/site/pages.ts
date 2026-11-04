@@ -12,6 +12,7 @@ import Contribute from "../pages/contribute.tsx";
 import Faq from "../pages/faq.tsx";
 import Support from "../pages/support.tsx";
 import News from "../pages/news/index.tsx";
+import OfflineProjects from "../pages/news/offline-projects.tsx";
 import SourceModules from "../pages/news/source-modules.tsx";
 import OfficialWebsite from "../pages/news/official-website.tsx";
 import NotFound from "../pages/404.tsx";
@@ -43,6 +44,7 @@ export const pages: readonly SitePage[] = [
   { path: "/support/", Component: Support },
   { path: "/search/", Component: Search },
   { path: "/news/", Component: News },
+  { path: "/news/offline-projects/", Component: OfflineProjects },
   { path: "/news/source-modules/", Component: SourceModules },
   { path: "/news/official-website/", Component: OfficialWebsite },
   { path: "/404.html", Component: NotFound, noindex: true, status: 404 },
