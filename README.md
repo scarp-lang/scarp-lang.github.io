@@ -57,6 +57,8 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:search`: search ranking, multi-term matching, and empty queries.
 - `npm run test:ecosystem`: audited ecosystem links, versions, and release-stage labels.
 - `npm run test:releases`: pinned example baseline versus published compiler release, exact archive hashes, and download URLs.
+- `npm run test:release-audit`: isolated tests for upstream publication drift, annotated tags, sidecar and archive tampering.
+- `npm run audit:release`: optional **online, read-only** release audit against GitHub (requires network); verifies current public release tag, commit, three binary hashes, sidecars, and combined checksums.
 - `npm run test:compatibility`: fixture coverage and expected commands for both verified compiler source pins.
 - `npm run check:site`: generated links, fragments, assets, metadata, sitemap,
   RSS, release snapshot, and six early-theme scenarios.
@@ -82,6 +84,14 @@ GitHub archive digests. The ecosystem page independently records project
 versions; these are reviewed snapshots, not a live GitHub feed.
 Baseline: **v0.0.5-alpha.1**, source
 `afe8b5380c9d6c4774162e51c6c9bc8b90901671`, reviewed 1 November 2026.
+
+A separate [release audit workflow](.github/workflows/release-audit.yml) runs daily,
+can be run manually, and checks PRs that change release evidence. It never
+publishes a release, changes website content, or merges a PR. A newer upstream
+public release intentionally fails the audit with a request for human review;
+`npm run check` remains offline and always includes the audit's unit tests.
+Use [the release review checklist](CONTRIBUTING.md#reviewing-new-compiler-releases)
+to update versioned content and both compiler CI pins together.
 
 GitHub Actions validates PRs and deploys `dist/` from main to GitHub Pages after
 checks and the pinned Scarp example tests pass. No custom domain is configured.

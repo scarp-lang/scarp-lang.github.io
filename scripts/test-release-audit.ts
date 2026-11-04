@@ -28,7 +28,15 @@ function asset(name: string) {
       snapshot.tag + "/" + name,
   };
 }
-function upstream() {
+interface TestRelease {
+  tag_name: string;
+  published_at: string;
+  draft: boolean;
+  prerelease?: boolean;
+  html_url?: string;
+  assets?: ReturnType<typeof asset>[];
+}
+function upstream(): TestRelease[] {
   return [
     {
       tag_name: snapshot.tag,
@@ -61,12 +69,12 @@ test("a newer published release requires a human website review", () => {
 test("missing or tampered downloads cannot pass audit metadata", () => {
   const changed = upstream();
   const release = changed[0];
-  assert(release);
+  assert(release?.assets);
   release.assets = release.assets.filter(entry => entry.name !== "SHA256SUMS");
   assert.throws(() => validatePublicationIndex(changed, snapshot, archives), /Missing combined SHA256SUMS/);
   const duplicate = upstream();
   const next = duplicate[0];
-  assert(next);
+  assert(next?.assets);
   next.assets.push(asset("SHA256SUMS"));
   assert.throws(() => validatePublicationIndex(duplicate, snapshot, archives), /Duplicate release asset/);
 });

@@ -40,6 +40,34 @@ must check publication status, dereference the release tag, verify filenames and
 digests, update relevant copy, and update both workflows' compiler SHAs. Do not
 silently follow compiler main.
 
+## Reviewing new compiler releases
+
+The website intentionally separates the historical example baseline in
+`src/data/project.ts` from the latest manually reviewed public release in
+`src/data/releases.ts`. Never automatically follow the compiler's `main`
+branch, release API, or an unverified development tag.
+
+1. Inspect the **published** GitHub release and its exact annotated tag commit,
+   platform archives, individual checksum files and `SHA256SUMS`.
+2. Run `npm run audit:release` (or the read-only GitHub Actions release audit)
+   to verify the published release, the source SHA and downloaded archive hashes.
+   A newer release triggers an **expected audit failure** until it is reviewed.
+3. Update the reviewed release snapshot, platform hashes, the compiler entry in
+   `src/data/ecosystem.ts`, feature/limitation text, and any relevant news
+   article only after checking the new implementation and CLI behavior.
+4. Keep the older example baseline unless it is independently revalidated.
+   When adding a newer example-compatibility pin, update the exact source
+   commits and commands in both `.github/workflows/ci.yml` and
+   `.github/workflows/pages.yml`, then run real interpreter tests.
+5. Refresh release, ecosystem, compatibility, rendering and site tests. Run
+   `npm run check` and wait for PR validation and deployment gates. Do not
+   treat a green website build as proof of full language compatibility.
+
+The audit requires public GitHub API and release download access; it is
+read-only, requires no additional third-party packages, does not create issues
+or PRs, and never changes site files. It is a gate for human review, not an
+automatic release updater.
+
 ## Examples and validation
 
 The `.srp` and `.stdout` files in `src/examples` feed the rendered explorer and
