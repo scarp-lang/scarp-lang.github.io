@@ -57,6 +57,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:search`: search ranking, multi-term matching, and empty queries.
 - `npm run test:ecosystem`: audited ecosystem links, versions, and release-stage labels.
 - `npm run test:releases`: pinned example baseline versus published compiler release, exact archive hashes, and download URLs.
+- `npm run test:download-guide`: ensure OS-specific checksum commands, archive names, and the release-pinned project guide render correctly.
 - `npm run test:release-audit`: isolated tests for upstream publication drift, annotated tags, sidecar and archive tampering.
 - `npm run audit:release`: optional **online, read-only** release audit against GitHub (requires network); verifies current public release tag, commit, three binary hashes, sidecars, and combined checksums.
 - `npm run test:compatibility`: fixture coverage and expected commands for both verified compiler source pins.
