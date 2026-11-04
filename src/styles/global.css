@@ -197,6 +197,12 @@
   .download-card .inline-link { display: flex; margin-top: 20px; }
   .download-card details { border-top: 1px solid var(--line); margin-top: 26px; padding-top: 18px; font-size: .7rem; color: var(--muted); }
   .checksum { display: block; overflow-wrap: anywhere; margin-top: 15px; line-height: 1.7; }
+  .download-verify-panels { display: grid; gap: 14px; margin: 24px 0 32px; }
+  .download-verify-panels details { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 18px 22px; min-width: 0; }
+  .download-verify-panels summary { font-weight: 650; color: var(--ink); }
+  .download-verify-panels details[open] summary { margin-bottom: 18px; }
+  .download-verify-panels p { overflow-wrap: anywhere; }
+  .download-verify-panels .code-block { max-width: 100%; }
   .release-entry { display: grid; grid-template-columns: 1fr 2fr; gap: 70px; border-block: 1px solid var(--line); padding-block: 45px; }
   .release-entry .mono { margin: 22px 0 16px; color: var(--muted); font-size: .72rem; }
   .release-entry h2 { font-size: 2rem; }

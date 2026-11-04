@@ -18,23 +18,28 @@ export const publishedCompiler = {
 export const publishedDownloads = [
   {
     name: "Windows",
+    platform: "windows",
     architecture: "x64 · MSVC",
     file: "scarp-0.0.5-alpha.4-x86_64-pc-windows-msvc.zip",
     hash: "6be1c56ec475041c6c7d2658bb807d4903e35d8ac433d95841c47f8812ae6d0f",
   },
   {
     name: "Linux",
+    platform: "linux",
     architecture: "x64 · GNU",
     file: "scarp-0.0.5-alpha.4-x86_64-unknown-linux-gnu.tar.gz",
     hash: "b8a3431467a2fa4e5baf253fe421645d2f257e422c80ad2ab059e6c9b180df45",
   },
   {
     name: "macOS",
+    platform: "macos",
     architecture: "ARM64 · Apple Silicon",
     file: "scarp-0.0.5-alpha.4-aarch64-apple-darwin.tar.gz",
     hash: "20a0fdc01c2da07db0cde45db02fd63a56b0907a826530e43c39cba750ddc94f",
   },
 ] as const;
+
+export type PublishedDownload = (typeof publishedDownloads)[number];
 
 export const publishedDownloadUrl = (file: string) =>
   `${project.repo}/releases/download/${publishedCompiler.tag}/${file}`;
