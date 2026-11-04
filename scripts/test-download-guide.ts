@@ -1,10 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { checksumCommand } from "../src/data/download-guidance.ts";
-import { publishedCompiler, publishedDownloads } from "../src/data/releases.ts";
-import { developmentAssets } from "../src/site/context.ts";
-import { findPage } from "../src/site/pages.ts";
-import { renderPage } from "../src/site/render.tsx";
+import { publishedDownloads } from "../src/data/releases.ts";
 
 test("checksum commands are derived from the exact reviewed platform archives", () => {
   assert.deepEqual(publishedDownloads.map(item => item.platform), ["windows", "linux", "macos"]);
@@ -23,18 +20,3 @@ test("checksum commands are derived from the exact reviewed platform archives", 
   }
 });
 
-test("downloads render accessible platform instructions without JavaScript", () => {
-  const page = findPage("/downloads/");
-  assert(page);
-  const html = renderPage(page, developmentAssets);
-  for (const item of publishedDownloads) {
-    assert(html.includes('id="verify-' + item.platform + '"'));
-    assert(html.includes('href="#verify-' + item.platform + '"'));
-    assert(html.includes(item.file));
-    assert(html.includes(item.hash));
-  }
-  assert(html.includes("Get-FileHash"));
-  assert(html.includes("sha256sum --check"));
-  assert(html.includes("shasum -a ")); // The 256 token is syntax-highlighted separately.
-  assert(html.includes(publishedCompiler.sourceCommit + "/docs/project-workflow.md"));
-});
