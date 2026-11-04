@@ -31,13 +31,20 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Offline project workflow</h3>
+          <h3>Inspect projects. Experiment with scalar C11 output.</h3>
           <p>
-            The Rust-based Scarp interpreter now supports <code>create DIRECTORY</code> to
-            generate a starter project, <code>verify DIRECTORY</code> for static
-            verification, and <code>launch DIRECTORY</code> to execute its declared
-            entrypoint. These commands operate on a bounded <code>Scarp.project</code>{" "}
-            manifest and do not download dependencies.
+            Published alpha.5 extends the alpha.4 project workflow with{" "}
+            <code>inspect modules --json DIRECTORY</code>. It resolves an explicit{" "}
+            <code>Scarp.project</code> and reports checked module metadata without
+            executing program statements. Earlier <code>create</code>,{" "}
+            <code>verify</code> and <code>launch</code> project commands remain available.
+          </p>
+          <p>
+            An experimental Rust embedding API can emit a constrained C11 translation
+            unit for supported scalar programs and counted loops. It does{" "}
+            <strong>not</strong> add <code>scarp compile</code> or produce native
+            executables through the Scarp CLI; a host must provide its own C compiler.
+            Many Scarp constructs remain unsupported by this backend.
           </p>
           <p>
             Pre-built archives are published for Windows x64, Linux x64 GNU and
@@ -96,7 +103,8 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version command differences and the alpha.4 project workflow.
+          version-by-version command differences and the alpha.4–alpha.5
+          project and module-inspection workflows.
         </p>
         <p>
           See <a href="/ecosystem/">the ecosystem directory</a> to find Scarp Docs,

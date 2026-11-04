@@ -46,7 +46,7 @@ export default function CompatibilityPage() {
       <p>
         <strong>Important:</strong> the historical <code>check</code> command in{" "}
         {project.tag} can evaluate program statements; it is not the same
-        as alpha.4's static-only <code>verify</code> command.
+        as the static-only <code>verify</code> command shipped since alpha.3.
       </p>
 
       <p>

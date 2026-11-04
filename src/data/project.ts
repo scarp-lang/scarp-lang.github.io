@@ -49,6 +49,7 @@ export const socials = [
 ] as const;
 
 export const news = [
+  { date: '2026-11-04', category: 'Language release', title: 'Scarp alpha.5: project inspection and experimental C11 emitter', description: 'Inspect explicit Scarp projects from the CLI and explore restricted scalar C11 code generation through a Rust embedding API.', href: '/news/alpha5-project-inspection/' },
   { date: '2026-11-03', category: 'Language release', title: 'Scarp alpha.4: projects you can create and launch', description: 'Create offline Scarp projects, verify them statically, and launch a manifest entrypoint with the published prerelease.', href: '/news/offline-projects/' },
   { date: '2026-11-01', category: 'Language release', title: 'Source modules arrive in v0.0.5-alpha.1', description: 'Relative imports, explicit exports, and a verified three-platform prerelease.', href: '/news/source-modules/' },
   { date: '2026-11-01', category: 'Project', title: 'A home for the language, and the work ahead', description: 'Introducing the official project hub and its connection to Scarp Docs.', href: '/news/official-website/' },
