@@ -85,8 +85,18 @@ for (const page of pages.filter(path => !path.endsWith('/404.html'))) {
   assert(sitemap.includes(`<loc>https://scarp-lang.github.io${route}</loc>`), `Sitemap missing ${route}`);
 }
 assert(!sitemap.includes('/404'), '404 must not be indexed');
-assert.match(await readFile(join(root, 'feed.xml'), 'utf8'), /<rss version="2.0">/);
-assert(pages.length >= 19, 'Missing planned website sections, ecosystem, compatibility, and search');
+const feedXml = await readFile(join(root, 'feed.xml'), 'utf8');
+assert.match(feedXml, /<rss version="2.0">/);
+assert(feedXml.includes('<link>https://scarp-lang.github.io/news/offline-projects/</link>'), 'RSS missing alpha.4 announcement');
+const alpha4News = await readFile(join(root, 'news/offline-projects/index.html'), 'utf8');
+assert(alpha4News.includes('v0.0.5-alpha.4'), 'Alpha.4 news page missing');
+assert(alpha4News.includes('3 November 2026'), 'Article publication date missing');
+for (const newsView of ['index.html', 'news/index.html']) {
+  const newsHtml = await readFile(join(root, newsView), 'utf8');
+  assert(newsHtml.includes('href="/news/offline-projects/"'), 'News listing missing from ' + newsView);
+  assert(newsHtml.includes('3 November 2026'), 'News listing date is stale in ' + newsView);
+}
+assert(pages.length >= 20, 'Missing planned website sections, ecosystem, compatibility, search, and alpha.4 news');
 const searchHtml = await readFile(join(root, 'search/index.html'), 'utf8');
 assert.match(searchHtml, /data-search-results/);
 assert.match(searchHtml, /data-search-input/);
