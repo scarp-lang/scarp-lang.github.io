@@ -98,7 +98,7 @@ for (const newsView of ['index.html', 'news/index.html']) {
   assert(newsHtml.includes('href="/news/offline-projects/"'), 'News listing missing from ' + newsView);
   assert(newsHtml.includes('3 November 2026'), 'News listing date is stale in ' + newsView);
 }
-assert(pages.length >= 20, 'Missing planned website sections, ecosystem, compatibility, search, and alpha.4 news');
+assert(pages.length >= 21, 'Missing migration guide or an existing website section');
 const searchHtml = await readFile(join(root, 'search/index.html'), 'utf8');
 assert.match(searchHtml, /data-search-results/);
 assert.match(searchHtml, /data-search-input/);
@@ -119,6 +119,17 @@ assert(isRecord(compatibility), 'Missing machine-readable example compatibility'
 assert(Array.isArray(compatibility.fixtureNames) && compatibility.fixtureNames.length === 3);
 assert(Array.isArray(compatibility.versions) && compatibility.versions.length === 2);
 assert(searchHtml.includes('href="/compatibility/"'), 'Compatibility guide absent from the search directory');
+assert(searchHtml.includes('href="/migration/"'), 'Migration guide absent from the search directory');
+const migrationHtml = await readFile(join(root, 'migration/index.html'), 'utf8');
+for (const command of ['scarp check hello.srp', 'scarp verify hello.srp',
+  'scarp exec hello.srp', 'scarp create hello-world', 'scarp launch hello-world']) {
+  assert(migrationHtml.includes(command), 'Migration guide missing command: ' + command);
+}
+for (const evidence of ['v0.0.5-alpha.1', 'v0.0.5-alpha.2', 'v0.0.5-alpha.3',
+  publishedCompiler.tag, publishedCompiler.sourceCommit]) {
+  assert(migrationHtml.includes(evidence), 'Missing released version evidence: ' + evidence);
+}
+assert(migrationHtml.includes('Not equivalent'), 'Misleading check/verify migration guidance');
 
 // Exercise the actual compiled head script, including the storage-blocked case.
 const representativePage = pages[0];

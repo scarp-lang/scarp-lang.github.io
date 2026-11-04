@@ -407,3 +407,8 @@
   .compat-table-wrap table { min-width: 620px; margin: 0; }
   .compat-table-wrap small { display: block; margin-top: 6px; font-size: .74rem; color: var(--muted); }
 }
+
+@layer pages {
+  .migration-table-wrap table { min-width: 860px; }
+  .compat-table-wrap code { white-space: nowrap; }
+}

@@ -22,7 +22,7 @@ export default function MigrationPage() {
       </p>
 
       <h2 id="release-matrix">Which commands shipped in each version?</h2>
-      <div className="compat-table-wrap" role="region" aria-label="Published Scarp CLI release comparison" tabIndex={0}>
+      <div className="compat-table-wrap migration-table-wrap" role="region" aria-label="Published Scarp CLI release comparison" tabIndex={0}>
         <table>
           <thead>
             <tr>

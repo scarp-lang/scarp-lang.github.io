@@ -11,9 +11,10 @@ import { publishedCompiler, publishedDownloads, publishedDownloadUrl } from '../
 import { news, project } from '../src/data/project.ts';
 import { formatNewsDate } from '../src/lib/date.ts';
 import { exampleCompatibility } from '../src/data/compatibility.ts';
+import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 20);
+  assert.equal(pages.length, 21);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -173,6 +174,35 @@ test('compiler compatibility guide exposes only CI-backed fixture coverage', asy
   assert.deepEqual(snapshot.exampleCompatibility?.fixtureNames, [...exampleCompatibility.fixtureNames]);
   assert.deepEqual(snapshot.exampleCompatibility?.versions?.map(v => v.tag),
     exampleCompatibility.versions.map(v => v.tag));
+});
+
+test('migration route displays source-backed version guidance with no JavaScript', () => {
+  const page = findPage('/migration/');
+  assert(page);
+  assert.equal(findPage('/migration/index.html')?.path, '/migration/');
+  const html = renderPage(page, developmentAssets);
+  for (const id of ['release-matrix', 'commands', 'workflow', 'alpha4-example', 'what-to-retest']) {
+    assert(html.includes('id="' + id + '"'), 'Missing migration section: ' + id);
+  }
+  for (const item of cliMilestones) {
+    assert(html.includes(item.tag), 'Missing published version');
+    assert(html.includes(item.sourceCommit), 'Missing release source commit');
+    assert(html.includes(item.evidence), 'Missing published release link');
+  }
+  for (const entry of cliMigrations) {
+    assert(html.includes(entry.previous), 'Missing older command: ' + entry.id);
+    assert(html.includes(entry.current), 'Missing new command: ' + entry.id);
+  }
+  assert(html.includes('Do not automatically substitute'));
+  assert(html.includes('not website-fixture-tested'));
+  assert(html.includes(migrationEvidence.projectWorkflow));
+  assert(html.includes('scarp launch hello-world'));
+  for (const route of ['/compatibility/', '/releases/']) {
+    const linkedPage = findPage(route);
+    assert(linkedPage);
+    assert(renderPage(linkedPage, developmentAssets).includes('href="/migration/"'));
+  }
+  assert(renderPage(findPage('/faq/')!, developmentAssets).includes('href="/migration/"'));
 });
 
 test('published alpha.4 news appears with correct dates on pages and in RSS', async () => {
