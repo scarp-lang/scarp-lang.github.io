@@ -49,6 +49,13 @@ export default function CompatibilityPage() {
         as alpha.4's static-only <code>verify</code> command.
       </p>
 
+      <p>
+        Changing CLI versions? The <a href="/migration/">version-by-version
+        migration guide</a> explains which spellings are available in each
+        published alpha and why <code>check</code> is not interchangeable
+        with static-only <code>verify</code>.
+      </p>
+
       <h2 id="fixtures">Exactly what was tested</h2>
       <ul>
         {exampleCompatibility.fixtureNames.map(name => (

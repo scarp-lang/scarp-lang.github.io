@@ -64,8 +64,12 @@ branch, release API, or an unverified development tag.
    `npm run check:compiler-pins` and `npm run test:compiler-pins` guard
    against missing, duplicate or stale checkouts. Review the resulting diff
    and execute real interpreter tests under both exact source commits.
-5. Recheck the CLI semantics in `src/data/compatibility.ts` and version-bound
-   download commands; do not infer compatibility from matching compiler SHAs.
+5. Recheck the CLI semantics in `src/data/compatibility.ts`,
+   `src/data/migration.ts` and version-bound download commands. The migration
+   table contains source-documented published CLI milestones and explicitly
+   labels versions that have not run this website's fixture suite; never
+   turn documentation evidence into an unearned CI coverage claim.
+   Do not infer compatibility from matching compiler SHAs.
    Refresh release, ecosystem, compatibility, rendering and site tests, then
    run `npm run check`. Wait for PR validation and deployment gates. A green
    build does **not** prove full language compatibility.

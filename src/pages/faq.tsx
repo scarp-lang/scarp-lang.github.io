@@ -1,4 +1,6 @@
 import Article from "../layouts/Article.tsx";
+import { project } from "../data/project.ts";
+import { publishedCompiler } from "../data/releases.ts";
 
 export default function ArticlePage() {
   return (
@@ -11,9 +13,13 @@ export default function ArticlePage() {
     >
       <h2 id={"is-scarp-stable"}>Is Scarp stable?</h2>
       <p>
-        The reviewed baseline is <strong>v0.0.5-alpha.1</strong>, an
-        experimental prerelease. Syntax and APIs can change. A stable v1.0.0
-        date has not been announced.
+        The latest reviewed public release is{" "}
+        <a href={publishedCompiler.release}><strong>{publishedCompiler.tag}</strong></a>.
+        The website's older example baseline is{" "}
+        <a href={project.release}>{project.tag}</a>. Both are experimental
+        prereleases; syntax, CLI commands and APIs can change. A stable v1.0.0
+        date has not been announced. Compare them in the{" "}
+        <a href="/migration/">migration guide</a>.
       </p>
       <h2 id={"is-scarp-a-compiler-or-an-interpreter"}>
         Is Scarp a compiler or an interpreter?
@@ -37,9 +43,13 @@ export default function ArticlePage() {
         Is there a browser playground?
       </h2>
       <p>
-        This website shows runnable CLI examples and their expected output. It
-        does not execute Scarp code in the browser. An interactive execution
-        playground would require a separate runtime integration.
+        This project hub shows tested CLI examples and expected output; it
+        does not execute code inside this page. The separate{" "}
+        <a href="https://scarp-lang.github.io/scarp-playground/">
+          experimental Scarp Playground
+        </a>{" "}
+        supports browser-based editing and interpreter execution, with its own
+        prerelease compatibility limits.
       </p>
       <h2 id={"can-i-train-ai-models-with-scarp"}>
         Can I train AI models with Scarp?
@@ -69,7 +79,9 @@ export default function ArticlePage() {
       <p>
         It also evaluates the selected program path in fresh local storage,
         without program output. Reachable arithmetic and execution-budget
-        failures can therefore be reported by <code>check</code>.
+        failures can therefore be reported by <code>check</code>. The newer{" "}
+        <code>verify</code> performs static-only checking; they are not
+        interchangeable. See <a href="/migration/#commands">the migration guide</a>.
       </p>
       <h2 id={"where-are-the-detailed-docs"}>Where are the detailed docs?</h2>
       <p>
