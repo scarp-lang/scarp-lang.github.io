@@ -95,7 +95,7 @@ test('ecosystem route renders all verified project cards and evidence links', ()
     assert(html.includes(`href="${project.evidence}"`));
     if (project.version) assert(html.includes(project.version));
   }
-  assert(html.includes('v0.0.5-alpha.4</strong>'), 'latest published compiler version must be visible');
+  assert(html.includes(publishedCompiler.tag + '</strong>'), 'latest published compiler version must be visible');
   assert(!html.includes('not a published release'), 'stale unpublished compiler claim');
   assert(renderPage(home, developmentAssets).includes('href="/ecosystem/"'));
 });

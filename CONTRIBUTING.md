@@ -52,16 +52,23 @@ branch, release API, or an unverified development tag.
 2. Run `npm run audit:release` (or the read-only GitHub Actions release audit)
    to verify the published release, the source SHA and downloaded archive hashes.
    A newer release triggers an **expected audit failure** until it is reviewed.
-3. Update the reviewed release snapshot, platform hashes, the compiler entry in
-   `src/data/ecosystem.ts`, feature/limitation text, and any relevant news
-   article only after checking the new implementation and CLI behavior.
-4. Keep the older example baseline unless it is independently revalidated.
-   When adding a newer example-compatibility pin, update the exact source
-   commits and commands in both `.github/workflows/ci.yml` and
-   `.github/workflows/pages.yml`, then run real interpreter tests.
-5. Refresh release, ecosystem, compatibility, rendering and site tests. Run
-   `npm run check` and wait for PR validation and deployment gates. Do not
-   treat a green website build as proof of full language compatibility.
+3. Update the reviewed `src/data/releases.ts` snapshot (single version
+   value, source SHA, timestamp, review date and per-platform SHA-256 hashes).
+   Download filenames, ecosystem compiler version/evidence, page metadata and
+   displayed release dates are derived from this source; still manually
+   review the language feature/limitation copy and relevant news articles.
+4. Keep the older example baseline in `src/data/project.ts` unless independently
+   revalidated. If the published compiler source pin changes, run
+   `npm run sync:compiler-pins` to update **only** the Scarp checkout SHAs
+   in both `.github/workflows/ci.yml` and `.github/workflows/pages.yml`.
+   `npm run check:compiler-pins` and `npm run test:compiler-pins` guard
+   against missing, duplicate or stale checkouts. Review the resulting diff
+   and execute real interpreter tests under both exact source commits.
+5. Recheck the CLI semantics in `src/data/compatibility.ts` and version-bound
+   download commands; do not infer compatibility from matching compiler SHAs.
+   Refresh release, ecosystem, compatibility, rendering and site tests, then
+   run `npm run check`. Wait for PR validation and deployment gates. A green
+   build does **not** prove full language compatibility.
 
 The audit requires public GitHub API and release download access; it is
 read-only, requires no additional third-party packages, does not create issues

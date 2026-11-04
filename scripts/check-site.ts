@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { runInNewContext } from 'node:vm';
+import { project } from '../src/data/project.ts';
+import { publishedCompiler } from '../src/data/releases.ts';
 
 const root = resolve('dist');
 async function walk(directory: string): Promise<string[]> {
@@ -54,16 +56,16 @@ assert(Array.isArray(snapshot.downloads), 'Downloads must be an array');
 assert.equal(snapshot.downloads.length, 3);
 const published: unknown = snapshot.latestPublished;
 assert(isRecord(published), "Missing latest separately reviewed public release");
-assert.equal(published.tag, "v0.0.5-alpha.4");
-assert.equal(published.sourceCommit, "79141329176f5dce51457e90a6652902f6432135");
+assert.equal(published.tag, publishedCompiler.tag);
+assert.equal(published.sourceCommit, publishedCompiler.sourceCommit);
 assert.equal(published.status, "experimental-prerelease");
 const latestAssets: unknown = snapshot.latestDownloads;
 assert(Array.isArray(latestAssets) && latestAssets.length === 3, "Published release must carry three archives");
 const releaseHtml = await readFile(join(root, "releases/index.html"), "utf8");
 const downloadsHtml = await readFile(join(root, "downloads/index.html"), "utf8");
 for (const html of [releaseHtml, downloadsHtml]) {
-  assert(html.includes("v0.0.5-alpha.4"), "Newest release absent");
-  assert(html.includes("v0.0.5-alpha.1"), "Pinned example baseline absent");
+  assert(html.includes(publishedCompiler.tag), "Newest release absent");
+  assert(html.includes(project.tag), "Pinned example baseline absent");
 }
 for (const item of latestAssets) {
   assert(isRecord(item) && typeof item.file === "string" && typeof item.hash === "string");
@@ -106,10 +108,10 @@ for (const name of ['Scarp compiler', 'Scarp Docs', 'Scarp Playground', 'Scarp b
   assert(ecosystemHtml.includes(name), 'Missing ecosystem project: ' + name);
 }
 assert(ecosystemHtml.includes('2026-11-03'), 'Ecosystem snapshot date is missing');
-assert(ecosystemHtml.includes('releases/tag/v0.0.5-alpha.4'), 'Missing latest published compiler release evidence');
+assert(ecosystemHtml.includes(publishedCompiler.release), 'Missing latest published compiler release evidence');
 const compatibilityHtml = await readFile(join(root, 'compatibility/index.html'), 'utf8');
-for (const token of ['functions.srp', 'hello.srp', 'numerics.srp', 'v0.0.5-alpha.1',
-  'v0.0.5-alpha.4', 'static-only', 'scarp exec hello.srp', 'scarp verify hello.srp']) {
+for (const token of ['functions.srp', 'hello.srp', 'numerics.srp', project.tag,
+  publishedCompiler.tag, 'static-only', 'scarp exec hello.srp', 'scarp verify hello.srp']) {
   assert(compatibilityHtml.includes(token), 'Compatibility page missing ' + token);
 }
 const compatibility: unknown = snapshot.exampleCompatibility;
