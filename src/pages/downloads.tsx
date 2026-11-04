@@ -3,6 +3,7 @@ import CodeBlock from "../components/CodeBlock.tsx";
 import { project, verification } from "../data/project.ts";
 import { publishedCompiler, publishedDownloads, publishedDownloadUrl } from "../data/releases.ts";
 import { checksumCommand } from "../data/download-guidance.ts";
+import { formatNewsDate } from "../lib/date.ts";
 
 export default function DownloadsPage() {
   return (
@@ -20,7 +21,7 @@ export default function DownloadsPage() {
           Choose the archive matching your operating system and CPU.
         </p>
         <p className="notice">
-          Experimental alpha · Reviewed <time dateTime={publishedCompiler.reviewed}>3 November 2026</time> · Not a stable release.
+          Experimental alpha · Reviewed <time dateTime={publishedCompiler.reviewed}>{formatNewsDate(publishedCompiler.reviewed)}</time> · Not a stable release.
         </p>
       </section>
 

@@ -2,6 +2,9 @@
  * Manually reviewed links and release facts, not a real-time GitHub status feed.
  * Recheck the linked repositories before updating this public snapshot.
  */
+import { project } from "./project.ts";
+import { publishedCompiler } from "./releases.ts";
+
 export const ecosystemReviewedOn = "2026-11-03";
 
 export interface EcosystemProject {
@@ -23,12 +26,12 @@ export const ecosystemProjects = [
     name: "Scarp compiler",
     category: "Language foundation",
     status: "Experimental prerelease",
-    version: "v0.0.5-alpha.4",
+    version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
     limitation: "Published alpha.4 supports offline project create, verify and launch commands. Syntax, project manifests and APIs remain experimental.",
-    website: "https://github.com/scarp-lang/scarp/releases",
-    source: "https://github.com/scarp-lang/scarp",
-    evidence: "https://github.com/scarp-lang/scarp/releases/tag/v0.0.5-alpha.4",
+    website: `${project.repo}/releases`,
+    source: project.repo,
+    evidence: publishedCompiler.release,
   },
   {
     id: "docs",
