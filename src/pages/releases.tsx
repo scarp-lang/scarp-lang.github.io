@@ -1,12 +1,13 @@
 import Base from "../layouts/Base.tsx";
 import { project, sourceUrl, verification } from "../data/project.ts";
 import { publishedCompiler } from "../data/releases.ts";
+import { formatNewsDate } from "../lib/date.ts";
 
 export default function ReleasesPage() {
   return (
     <Base
       title="Releases"
-      description="Compare the latest published Scarp v0.0.5-alpha.4 prerelease with the verified v0.0.5-alpha.1 website example baseline."
+      description={`Compare the latest published Scarp ${publishedCompiler.tag} prerelease with the verified ${project.tag} website example baseline.`}
     >
       <section className="wrap page-heading">
         <p className="eyebrow">Releases & changelog</p>
@@ -18,7 +19,7 @@ export default function ReleasesPage() {
           the version used to test this website's examples are listed separately.
         </p>
         <p className="small muted">
-          Published release information reviewed <time dateTime={publishedCompiler.reviewed}>3 November 2026</time>.
+          Published release information reviewed <time dateTime={publishedCompiler.reviewed}>{formatNewsDate(publishedCompiler.reviewed)}</time>.
           The <a href={`${project.repo}/releases`}>GitHub release archive</a> is authoritative if another version ships.
         </p>
       </section>
@@ -26,7 +27,7 @@ export default function ReleasesPage() {
       <section className="wrap release-entry" id="latest-release">
         <div>
           <span className="status-badge">Latest published prerelease</span>
-          <p className="mono"><time dateTime={publishedCompiler.publishedAt}>3 November 2026</time></p>
+          <p className="mono"><time dateTime={publishedCompiler.publishedAt}>{formatNewsDate(publishedCompiler.publishedAt.slice(0, 10))}</time></p>
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
@@ -59,7 +60,7 @@ export default function ReleasesPage() {
       <section className="wrap release-entry" id="example-baseline">
         <div>
           <span className="status-badge">Website example baseline</span>
-          <p className="mono"><time dateTime={project.reviewed}>1 November 2026</time></p>
+          <p className="mono"><time dateTime={project.reviewed}>{formatNewsDate(project.reviewed)}</time></p>
           <h2>{project.tag}</h2>
         </div>
         <div className="prose">
