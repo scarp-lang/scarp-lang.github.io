@@ -94,6 +94,11 @@ export default function ReleasesPage() {
           prereleases, so match examples to the compiler version shown with them.
         </p>
         <p>
+          To update scripts and existing programs, read the{" "}
+          <a href="/migration/">published CLI migration guide</a> for the
+          version-by-version command differences and the alpha.4 project workflow.
+        </p>
+        <p>
           See <a href="/ecosystem/">the ecosystem directory</a> to find Scarp Docs,
           the browser Playground, Scarp by Example and editor tooling. Each project
           publishes its own compatibility information.

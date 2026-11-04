@@ -74,7 +74,8 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 The hub includes features, development status, roadmap, releases/downloads,
 learning paths, AI direction, community, support, contribution guidance, FAQ,
 project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
-a source-verified compatibility guide at `/compatibility/`, and a local,
+a source-verified compatibility guide at `/compatibility/`, an evidence-linked
+published CLI migration guide at `/migration/` (alpha.1–alpha.4), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering and the `/` or Ctrl/⌘+K keyboard shortcut. It is a **reviewed snapshot**, not a live compiler feed.
