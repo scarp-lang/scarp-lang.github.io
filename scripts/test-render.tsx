@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 21);
+  assert.equal(pages.length, 22);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -102,7 +102,7 @@ test('ecosystem route renders all verified project cards and evidence links', ()
 });
 
 
-test('published alpha.4 is distinct from the pinned alpha.1 example baseline', async () => {
+test('published alpha.5 is distinct from the pinned alpha.1 example baseline', async () => {
   const downloadsPage = findPage('/downloads/');
   const releasesPage = findPage('/releases/');
   const home = findPage('/');
@@ -194,7 +194,7 @@ test('migration route displays source-backed version guidance with no JavaScript
     assert(html.includes(entry.current), 'Missing new command: ' + entry.id);
   }
   assert(html.includes('Do not automatically substitute'));
-  assert(html.includes('not website-fixture-tested'));
+  assert(html.includes('not in current CI fixtures'));
   assert(html.includes(migrationEvidence.projectWorkflow));
   assert(html.includes('scarp launch hello-world'));
   for (const route of ['/compatibility/', '/releases/']) {
@@ -205,35 +205,61 @@ test('migration route displays source-backed version guidance with no JavaScript
   assert(renderPage(findPage('/faq/')!, developmentAssets).includes('href="/migration/"'));
 });
 
-test('published alpha.4 news appears with correct dates on pages and in RSS', async () => {
+test('current alpha.5 announcement is dated, sourced and included in the RSS feed', async () => {
   const announcement = news[0];
   assert(announcement);
-  assert.equal(announcement.href, '/news/offline-projects/');
+  assert.equal(announcement.href, '/news/alpha5-project-inspection/');
   assert.equal(announcement.date, publishedCompiler.reviewed);
-  assert.equal(formatNewsDate('2026-11-03'), '3 November 2026');
+  assert.equal(formatNewsDate('2026-11-04'), '4 November 2026');
   assert.throws(() => formatNewsDate('not-a-date'), RangeError);
 
   for (const route of ['/', '/news/']) {
     const page = findPage(route);
-    assert(page, 'Missing news listing route: ' + route);
+    assert(page);
     const html = renderPage(page, developmentAssets);
-    assert(html.includes('href="' + announcement.href + '"'), 'Announcement missing from ' + route);
-    assert(html.includes('>3 November 2026</time>'), 'Visible announcement date is incorrect on ' + route);
-    assert(!html.includes('>01 Nov 2026</time>'), 'Old hardcoded date remains on ' + route);
+    assert(html.includes('href="' + announcement.href + '"'), 'Alpha.5 announcement absent from ' + route);
+    assert(html.includes('>4 November 2026</time>'), 'Latest announcement has stale date on ' + route);
   }
 
   const article = findPage(announcement.href);
-  assert(article, 'Missing alpha.4 news page');
+  assert(article, 'Alpha.5 article not registered');
   const html = renderPage(article, developmentAssets);
-  for (const claim of ['v0.0.5-alpha.4', 'Scarp.project', 'scarp create hello-world',
-    'scarp verify hello-world', 'scarp launch hello-world',
-    publishedCompiler.sourceCommit, '/compatibility/']) {
-    assert(html.includes(claim), 'News article missing reviewed detail: ' + claim);
+  for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, 'Scarp.project',
+    'emit_c', 'C11', 'scarp compile', '/compatibility/', '/migration/']) {
+    assert(html.includes(token), 'Alpha.5 article missing release-backed detail: ' + token);
   }
-  assert(html.includes('>3 November 2026</time>'), 'Article and listing dates differ');
-  assert(searchEntries.some(entry => entry.path === announcement.href), 'New announcement missing from search directory');
+  assert(html.includes('4 November 2026'), 'Alpha.5 article has stale publication date');
+  assert(searchEntries.some(entry => entry.path === announcement.href), 'Alpha.5 article absent from search');
 
   const feed = await renderRequest('/feed.xml', developmentAssets);
-  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/offline-projects/</link>'));
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha5-project-inspection/</link>'));
   assert(feed?.body.includes('<pubDate>' + new Date(announcement.date + 'T00:00:00Z').toUTCString() + '</pubDate>'));
+});
+
+test('historical alpha.4 article retains original release date and source evidence', async () => {
+  const historical = news[1];
+  assert(historical);
+  assert.equal(historical.href, '/news/offline-projects/');
+  assert.equal(historical.date, '2026-11-03');
+  assert.equal(formatNewsDate(historical.date), '3 November 2026');
+
+  for (const route of ['/', '/news/']) {
+    const page = findPage(route);
+    assert(page);
+    const html = renderPage(page, developmentAssets);
+    assert(html.includes('href="' + historical.href + '"'), 'Historical article absent from ' + route);
+  }
+
+  const article = findPage(historical.href);
+  assert(article, 'Missing historical alpha.4 page');
+  const html = renderPage(article, developmentAssets);
+  for (const token of ['v0.0.5-alpha.4', 'Scarp.project', 'scarp create hello-world',
+    'scarp verify hello-world', 'scarp launch hello-world',
+    '79141329176f5dce51457e90a6652902f6432135', '/compatibility/']) {
+    assert(html.includes(token), 'Historical article changed unexpectedly: ' + token);
+  }
+  assert(html.includes('3 November 2026'), 'Historical publication date changed');
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/offline-projects/</link>'));
+  assert(feed?.body.includes('<pubDate>' + new Date(historical.date + 'T00:00:00Z').toUTCString() + '</pubDate>'));
 });
