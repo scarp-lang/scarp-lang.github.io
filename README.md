@@ -103,6 +103,11 @@ filenames from its reviewed TypeScript release snapshot. Both workflows use
 version-independent compiler build paths; the pin synchronizer keeps their exact
 source commits aligned without following moving tags.
 
+The Pages artifact explicitly includes hidden files, retaining `public/.nojekyll`;
+generated-site validation fails if that marker disappears. Keep
+`include-hidden-files: true` when updating `actions/upload-pages-artifact`
+(v4 and later exclude leading-dot files by default).
+
 GitHub Actions validates PRs and deploys `dist/` from main to GitHub Pages after
 checks and the pinned Scarp example tests pass. No custom domain is configured.
 The main site uses `/`; the independent documentation site uses `/scarp-docs/`.

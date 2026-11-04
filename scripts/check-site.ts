@@ -11,6 +11,7 @@ async function walk(directory: string): Promise<string[]> {
   return (await Promise.all(entries.map(entry => entry.isDirectory() ? walk(join(directory, entry.name)) : join(directory, entry.name)))).flat();
 }
 const files = await walk(root);
+assert(files.includes(join(root, '.nojekyll')), 'Missing GitHub Pages .nojekyll marker in the static build');
 const pages = files.filter(path => path.endsWith('.html'));
 const ids = new Map<string, Set<string>>();
 for (const page of pages) {
