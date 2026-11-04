@@ -61,6 +61,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:release-audit`: isolated tests for upstream publication drift, annotated tags, sidecar and archive tampering.
 - `npm run audit:release`: optional **online, read-only** release audit against GitHub (requires network); verifies current public release tag, commit, three binary hashes, sidecars, and combined checksums.
 - `npm run test:compatibility`: fixture coverage and expected commands for both verified compiler source pins.
+- `npm run test:migration`: release-tag evidence, CLI migration semantics and source-backed fixture labels.
 - `npm run test:compiler-pins`: check that the pin synchronizer rejects accidental or ambiguous workflow changes.
 - `npm run check:compiler-pins`: ensure CI and Pages both use the exact commits declared by the reviewed compiler snapshots.
 - `npm run sync:compiler-pins`: update only the two Scarp checkout SHAs in both workflows after a manually reviewed release change.
