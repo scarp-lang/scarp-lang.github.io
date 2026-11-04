@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { searchEntries, searchEntriesFor } from "../src/data/search.ts";
 
 test("site search data contains distinct, canonical page paths", () => {
-  assert.equal(searchEntries.length, 17);
+  assert.equal(searchEntries.length, 18);
   assert.equal(new Set(searchEntries.map(entry => entry.path)).size, searchEntries.length);
   for (const entry of searchEntries) {
     assert(entry.path.startsWith("/"));
@@ -21,6 +21,7 @@ test("keywords, casing, prefixes, and multiple terms find relevant pages", () =>
   assert.equal(searchEntriesFor("INSTALL")[0]?.path, "/downloads/");
   assert.equal(searchEntriesFor("playground")[0]?.path, "/ecosystem/");
   assert.equal(searchEntriesFor("compatibility")[0]?.path, "/compatibility/");
+  assert.equal(searchEntriesFor("offline project")[0]?.path, "/news/offline-projects/");
   assert.equal(searchEntriesFor("roadmap")[0]?.path, "/roadmap/");
   assert.equal(searchEntriesFor("module import")[0]?.path, "/news/source-modules/");
   assert.equal(searchEntriesFor("bug report")[0]?.path, "/support/");
