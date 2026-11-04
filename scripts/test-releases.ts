@@ -14,6 +14,9 @@ test("latest public prerelease is separate from the verified website baseline", 
   assert(publishedCompiler.release.endsWith("/" + publishedCompiler.tag));
   assert.equal(publishedCompiler.status, "experimental-prerelease");
   assert.equal(ecosystemProjects.find(item => item.id === "compiler")?.version, publishedCompiler.tag);
+  assert.equal(ecosystemProjects.find(item => item.id === "compiler")?.evidence, publishedCompiler.release);
+  assert.equal(publishedCompiler.tag, "v" + publishedCompiler.version);
+  assert.equal(publishedCompiler.release, project.repo + "/releases/tag/" + publishedCompiler.tag);
 });
 
 test("all three public archive SHA-256 digests and links match the release", () => {
@@ -26,6 +29,7 @@ test("all three public archive SHA-256 digests and links match the release", () 
   assert.equal(new Set(publishedDownloads.map(item => item.file)).size, 3);
   for (const item of publishedDownloads) {
     assert.equal(item.hash, expected.get(item.file), item.file);
+    assert(item.file.startsWith("scarp-" + publishedCompiler.version + "-"), item.file);
     assert.match(item.hash, /^[0-9a-f]{64}$/);
     assert.equal(publishedDownloadUrl(item.file), "https://github.com/scarp-lang/scarp/releases/download/v0.0.5-alpha.4/" + item.file);
     assert(publishedDownloadUrl(item.file + ".sha256").endsWith(item.file + ".sha256"));

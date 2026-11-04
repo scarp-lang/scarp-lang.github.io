@@ -61,6 +61,9 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:release-audit`: isolated tests for upstream publication drift, annotated tags, sidecar and archive tampering.
 - `npm run audit:release`: optional **online, read-only** release audit against GitHub (requires network); verifies current public release tag, commit, three binary hashes, sidecars, and combined checksums.
 - `npm run test:compatibility`: fixture coverage and expected commands for both verified compiler source pins.
+- `npm run test:compiler-pins`: check that the pin synchronizer rejects accidental or ambiguous workflow changes.
+- `npm run check:compiler-pins`: ensure CI and Pages both use the exact commits declared by the reviewed compiler snapshots.
+- `npm run sync:compiler-pins`: update only the two Scarp checkout SHAs in both workflows after a manually reviewed release change.
 - `npm run check:site`: generated links, fragments, assets, metadata, sitemap,
   RSS, release snapshot, and six early-theme scenarios.
 - `SCARP_BIN=/path/to/scarp npm run test:examples`: exact-output checks against
@@ -92,7 +95,11 @@ publishes a release, changes website content, or merges a PR. A newer upstream
 public release intentionally fails the audit with a request for human review;
 `npm run check` remains offline and always includes the audit's unit tests.
 Use [the release review checklist](CONTRIBUTING.md#reviewing-new-compiler-releases)
-to update versioned content and both compiler CI pins together.
+to update versioned content and both compiler CI pins together. The site derives
+compiler ecosystem version/evidence, page metadata, release dates, and download
+filenames from its reviewed TypeScript release snapshot. Both workflows use
+version-independent compiler build paths; the pin synchronizer keeps their exact
+source commits aligned without following moving tags.
 
 GitHub Actions validates PRs and deploys `dist/` from main to GitHub Pages after
 checks and the pinned Scarp example tests pass. No custom domain is configured.
