@@ -62,7 +62,7 @@ test("published release index is complete and ignores unshipped drafts", () => {
 
 test("a newer published release requires a human website review", () => {
   const changed = upstream();
-  changed[1] = { ...changed[1], tag_name: "v0.0.5-alpha.5", published_at: "2026-11-04T10:00:00Z" };
+  changed[1] = { tag_name: "v0.0.5-alpha.5", published_at: "2026-11-04T10:00:00Z", draft: false };
   assert.throws(() => validatePublicationIndex(changed, snapshot, archives), /Published release changed/);
 });
 
