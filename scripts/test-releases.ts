@@ -6,10 +6,10 @@ import { ecosystemProjects } from "../src/data/ecosystem.ts";
 
 test("latest public prerelease is separate from the verified website baseline", () => {
   assert.equal(project.tag, "v0.0.5-alpha.1");
-  assert.equal(publishedCompiler.tag, "v0.0.5-alpha.5");
+  assert.equal(publishedCompiler.tag, "v0.0.6-alpha.1");
   assert.notEqual(project.source, publishedCompiler.sourceCommit);
-  assert.equal(publishedCompiler.reviewed, "2026-11-04");
-  assert.equal(publishedCompiler.publishedAt, "2026-11-04T11:59:57Z");
+  assert.equal(publishedCompiler.reviewed, "2026-11-05");
+  assert.equal(publishedCompiler.publishedAt, "2026-11-05T11:39:49Z");
   assert.match(publishedCompiler.sourceCommit, /^[0-9a-f]{40}$/);
   assert(publishedCompiler.release.endsWith("/" + publishedCompiler.tag));
   assert.equal(publishedCompiler.status, "experimental-prerelease");
@@ -21,9 +21,9 @@ test("latest public prerelease is separate from the verified website baseline", 
 
 test("all three public archive SHA-256 digests and links match the release", () => {
   const expected = new Map([
-    ["scarp-0.0.5-alpha.5-x86_64-pc-windows-msvc.zip", "bda472096e64ccaa33d277e28e3206d727ab0cdc4f9a681feeaf9ecb35539f68"],
-    ["scarp-0.0.5-alpha.5-x86_64-unknown-linux-gnu.tar.gz", "07f62d23c2902b03071286b5fceef1bb7896374f8345b42f85cb0fd1b6478375"],
-    ["scarp-0.0.5-alpha.5-aarch64-apple-darwin.tar.gz", "feeaa8216bb2fed7017794c5f6e0b8278ead5544b383990667c0862488089d28"],
+    ["scarp-0.0.5-alpha.5-x86_64-pc-windows-msvc.zip", "80242b4c1152c4a1c5f3238fb13a7ace881b826ff6faab462e25baf1b039d602"],
+    ["scarp-0.0.5-alpha.5-x86_64-unknown-linux-gnu.tar.gz", "d3756492c632a97fba1e317a7523dece1566040a53b10a98c7494567e042e018"],
+    ["scarp-0.0.5-alpha.5-aarch64-apple-darwin.tar.gz", "17f447e33580e4fb618803e2cbf01d92e406beed92f5a8229e78f43a6a8933bf"],
   ]);
   assert.equal(publishedDownloads.length, 3);
   assert.equal(new Set(publishedDownloads.map(item => item.file)).size, 3);
