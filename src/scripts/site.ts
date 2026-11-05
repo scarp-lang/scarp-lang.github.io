@@ -1,4 +1,5 @@
 import { searchEntriesFor } from "../data/search.ts";
+import { enhanceMobileNavigation } from "./mobile-navigation.ts";
 
 const announcement = document.querySelector<HTMLElement>('[data-announcement]');
 const announce = (text: string) => { if (announcement) announcement.textContent = text; };
@@ -21,16 +22,12 @@ if (theme) {
   });
 }
 
-const menu = document.querySelector<HTMLButtonElement>('[data-menu]');
-const nav = document.getElementById('main-nav');
-if (menu && nav) {
-  menu.hidden = false;
-  document.documentElement.classList.add('has-js');
-  const close = () => { menu.setAttribute('aria-expanded', 'false'); nav.classList.remove('is-open'); };
-  menu.addEventListener('click', () => { const open = menu.getAttribute('aria-expanded') !== 'true'; menu.setAttribute('aria-expanded', String(open)); nav.classList.toggle('is-open', open); });
-  nav.addEventListener('click', event => { if ((event.target as HTMLElement).closest('a')) close(); });
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') { close(); menu.focus(); } });
-}
+enhanceMobileNavigation({
+  menu: document.querySelector<HTMLButtonElement>("[data-menu]"),
+  nav: document.getElementById("main-nav"),
+  doc: document,
+  viewport: matchMedia("(max-width: 950px)"),
+});
 
 document.querySelectorAll<HTMLElement>('[data-code-explorer]').forEach(explorer => {
   const tabs = [...explorer.querySelectorAll<HTMLButtonElement>('[data-tab]')];
