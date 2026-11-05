@@ -91,10 +91,15 @@ assert(!sitemap.includes('/404'), '404 must not be indexed');
 const feedXml = await readFile(join(root, 'feed.xml'), 'utf8');
 assert.match(feedXml, /<rss version="2.0">/);
 assert(feedXml.includes('<link>https://scarp-lang.github.io/news/offline-projects/</link>'), 'RSS missing historical alpha.4 announcement');
-assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha5-project-inspection/</link>'), 'RSS missing current alpha.5 release');
+assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha5-project-inspection/</link>'), 'RSS missing historical alpha.5 release');
+assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-symbol-navigation/</link>'), 'RSS missing published alpha.6 release');
 const alpha5News = await readFile(join(root, 'news/alpha5-project-inspection/index.html'), 'utf8');
-for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, '4 November 2026', 'C11', 'scarp compile']) {
-  assert(alpha5News.includes(token), 'Latest release article missing ' + token);
+for (const token of ['v0.0.5-alpha.5', '2eeed0aa52ccb59523307841ad8ffbd83f8911a8', '4 November 2026', 'C11', 'scarp compile']) {
+  assert(alpha5News.includes(token), 'Historical alpha.5 release article missing ' + token);
+}
+const alpha6News = await readFile(join(root, 'news/alpha6-symbol-navigation/index.html'), 'utf8');
+for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, '5 November 2026', 'rms', 'inspect symbols', 'inspect references']) {
+  assert(alpha6News.includes(token), 'Latest alpha.6 release article missing ' + token);
 }
 const alpha4News = await readFile(join(root, 'news/offline-projects/index.html'), 'utf8');
 assert(alpha4News.includes('v0.0.5-alpha.4'), 'Alpha.4 news page missing');
@@ -103,10 +108,12 @@ for (const newsView of ['index.html', 'news/index.html']) {
   const newsHtml = await readFile(join(root, newsView), 'utf8');
   assert(newsHtml.includes('href="/news/offline-projects/"'), 'News listing missing from ' + newsView);
   assert(newsHtml.includes('3 November 2026'), 'Historical news date changed in ' + newsView);
-  assert(newsHtml.includes('href="/news/alpha5-project-inspection/"'), 'Latest release absent from ' + newsView);
-  assert(newsHtml.includes('4 November 2026'), 'Latest news date is missing in ' + newsView);
+  assert(newsHtml.includes('href="/news/alpha5-project-inspection/"'), 'Historical alpha.5 release absent from ' + newsView);
+  assert(newsHtml.includes('4 November 2026'), 'Alpha.5 historical date is missing in ' + newsView);
+  assert(newsHtml.includes('href="/news/alpha6-symbol-navigation/"'), 'Latest release absent from ' + newsView);
+  assert(newsHtml.includes('5 November 2026'), 'Latest news date is missing in ' + newsView);
 }
-assert(pages.length >= 22, 'Missing alpha.5 release article or an existing website section');
+assert(pages.length >= 23, 'Missing alpha.6 release article or an existing website section');
 const searchHtml = await readFile(join(root, 'search/index.html'), 'utf8');
 assert.match(searchHtml, /data-search-results/);
 assert.match(searchHtml, /data-search-input/);
@@ -115,7 +122,7 @@ const ecosystemHtml = await readFile(join(root, 'ecosystem/index.html'), 'utf8')
 for (const name of ['Scarp compiler', 'Scarp Docs', 'Scarp Playground', 'Scarp by Example', 'Scarp for VS Code']) {
   assert(ecosystemHtml.includes(name), 'Missing ecosystem project: ' + name);
 }
-assert(ecosystemHtml.includes('2026-11-04'), 'Ecosystem snapshot date is missing');
+assert(ecosystemHtml.includes('2026-11-05'), 'Ecosystem snapshot date is missing');
 assert(ecosystemHtml.includes(publishedCompiler.release), 'Missing latest published compiler release evidence');
 const compatibilityHtml = await readFile(join(root, 'compatibility/index.html'), 'utf8');
 for (const token of ['functions.srp', 'hello.srp', 'numerics.srp', project.tag,
@@ -126,6 +133,7 @@ const compatibility: unknown = snapshot.exampleCompatibility;
 assert(isRecord(compatibility), 'Missing machine-readable example compatibility');
 assert(Array.isArray(compatibility.fixtureNames) && compatibility.fixtureNames.length === 3);
 assert(Array.isArray(compatibility.versions) && compatibility.versions.length === 2);
+assert(Array.isArray(compatibility.publishedOnlyFixtureNames) && compatibility.publishedOnlyFixtureNames.includes('rms.srp'), 'Missing published-only RMS fixture');
 assert(searchHtml.includes('href="/compatibility/"'), 'Compatibility guide absent from the search directory');
 assert(searchHtml.includes('href="/migration/"'), 'Migration guide absent from the search directory');
 const migrationHtml = await readFile(join(root, 'migration/index.html'), 'utf8');
@@ -134,10 +142,15 @@ for (const command of ['scarp check hello.srp', 'scarp verify hello.srp',
   assert(migrationHtml.includes(command), 'Migration guide missing command: ' + command);
 }
 for (const evidence of ['v0.0.5-alpha.1', 'v0.0.5-alpha.2', 'v0.0.5-alpha.3',
-  'v0.0.5-alpha.4', publishedCompiler.tag, publishedCompiler.sourceCommit]) {
+  'v0.0.5-alpha.4', 'v0.0.5-alpha.5', publishedCompiler.tag, publishedCompiler.sourceCommit]) {
   assert(migrationHtml.includes(evidence), 'Missing released version evidence: ' + evidence);
 }
 assert(migrationHtml.includes('Not equivalent'), 'Misleading check/verify migration guidance');
+const learnHtml = await readFile(join(root, 'learn/index.html'), 'utf8');
+for (const command of ['scarp version', 'scarp verify hello.srp', 'scarp exec hello.srp',
+  'scarp run hello.srp', 'scarp check hello.srp', 'scarp inspect symbols --json hello.srp']) {
+  assert(learnHtml.includes(command), 'Getting started missing version-specific command: ' + command);
+}
 
 // Exercise the actual compiled head script, including the storage-blocked case.
 const representativePage = pages[0];
