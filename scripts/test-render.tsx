@@ -26,6 +26,22 @@ test('every registered page renders a complete, distinct static document', () =>
   }
 });
 
+test('mobile navigation has disclosure semantics and works as static links without JavaScript', () => {
+  for (const route of ['/', '/downloads/', '/support/']) {
+    const page = findPage(route);
+    assert(page);
+    const html = renderPage(page, developmentAssets);
+    const nav = html.match(/<nav id="main-nav"[\s\S]*?<\/nav>/)?.[0];
+    assert(nav, 'Main navigation missing from ' + route);
+    assert(!/\shidden(?:=|\s|>)/.test(nav), 'Static navigation must not be hidden');
+    assert(html.includes('aria-controls="main-nav"'));
+    assert(html.includes('aria-expanded="false"'));
+    assert(html.includes('aria-label="Open navigation menu"'));
+    assert(html.includes('class="menu-toggle"'));
+    assert(html.includes('class="skip-link"'));
+  }
+});
+
 test('directory and index-file aliases resolve to the canonical page', () => {
   for (const path of ['/', '/index.html', '/?source=test']) assert.equal(findPage(path)?.path, '/');
   for (const path of ['/support', '/support/', '/support/index.html', '/support/?source=test']) assert.equal(findPage(path)?.path, '/support/');
