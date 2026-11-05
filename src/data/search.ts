@@ -1,3 +1,5 @@
+import { hindiSearchAliases } from "./search-hi.ts";
+
 export interface SearchEntry {
   path: string;
   title: string;
@@ -30,11 +32,11 @@ export const searchEntries: readonly SearchEntry[] = [
   { path: "/news/official-website/", title: "Introducing the official website", section: "News", summary: "How the project hub connects to the documentation and community.", keywords: ["launch", "website", "docs", "introduction"] },
 ];
 
-/** Normalization preserves non-Latin letters while making common Latin accents searchable. */
+/** Preserve Indic vowel signs while folding Latin accents for search. */
 function normalizeSearchText(value: string): string {
   return value.normalize("NFKD").toLowerCase()
-    .replace(/\p{M}/gu, "")
-    .replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+    .replace(/(\p{Script=Latin})\p{M}+/gu, "$1")
+    .replace(/[^\p{L}\p{N}\p{M}]+/gu, " ").trim();
 }
 
 function wordMatch(haystack: string, term: string): number {
@@ -60,6 +62,7 @@ export function searchEntriesFor(
       const strength = Math.max(
         wordMatch(entry.title, term) * 6,
         wordMatch(entry.keywords.join(" "), term) * 5,
+        wordMatch(hindiSearchAliases[entry.path]?.join(" ") ?? "", term) * 5,
         wordMatch(entry.summary, term) * 2,
         wordMatch(entry.section, term) * 2,
         wordMatch(entry.path, term),
