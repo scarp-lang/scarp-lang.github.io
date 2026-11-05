@@ -47,4 +47,30 @@ for (const file of sources) {
   assert.equal(validated.stderr, "", `${file}: unexpected validation stderr`);
   console.log(`PASS ${file}: ${executeCommand} stdout + ${validateCommand} under ${expectedVersion}`);
 }
+if (target === "published") {
+  const alpha6Directory = resolve("src/examples/published");
+  const alpha6Sources = (await readdir(alpha6Directory)).filter(name => name.endsWith(".srp")).sort();
+  assert.deepEqual(alpha6Sources, ["rms.srp"], "Review new published-only fixtures before adding them");
+  for (const file of alpha6Sources) {
+    const source = join(alpha6Directory, file);
+    const expected = await readFile(source.replace(/\\.srp$/, ".stdout"), "utf8");
+    const executed = run(["exec", source]);
+    assert.equal(executed.error, undefined, String(executed.error));
+    assert.equal(executed.status, 0, `${file}: ${executed.stderr}`);
+    assert.equal(executed.stdout, expected, `${file}: unexpected RMS output`);
+    assert.equal(executed.stderr, "", `${file}: unexpected runtime stderr`);
+    const verified = run(["verify", source]);
+    assert.equal(verified.status, 0, `${file}: static verification failed: ${verified.stderr}`);
+    assert.equal(verified.stdout, "", `${file}: verify must be silent`);
+    for (const kind of ["symbols", "references"]) {
+      const inspected = run(["inspect", kind, "--json", source]);
+      assert.equal(inspected.status, 0, `${file}: inspect ${kind}: ${inspected.stderr}`);
+      assert.equal(inspected.stderr, "", `${file}: unexpected inspection stderr`);
+      const result = JSON.parse(inspected.stdout) as { schema_version?: number; kind?: string };
+      assert.equal(result.schema_version, 1, `${file}: unsupported inspection schema`);
+      assert.equal(result.kind, "scarp." + kind, `${file}: inspection kind mismatch`);
+    }
+    console.log(`PASS ${file}: alpha.6 exec, static verify and schema-v1 symbol navigation`);
+  }
+}
 console.log(`Verified ${sources.length} real website examples using Scarp ${expectedVersion} (${target}).`);
