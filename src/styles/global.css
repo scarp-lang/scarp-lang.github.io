@@ -54,6 +54,10 @@
   #main-nav a[aria-current] { box-shadow: 0 2px var(--blue); }
   .theme-toggle { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 50%; flex-shrink: 0; }
   .menu-toggle { display: none; }
+  .menu-toggle:focus-visible, #main-nav a:focus-visible, .site-search-link:focus-visible, .theme-toggle:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+  }
   .actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
   .button { display: inline-flex; align-items: center; justify-content: center; gap: 18px; font-size: .8rem; line-height: 1.4; font-weight: 600; padding: 15px 20px; border: 1px solid transparent; border-radius: 7px; text-decoration: none; transition: background .15s, transform .15s; }
   .button:hover { text-decoration: none; transform: translateY(-1px); }
@@ -225,6 +229,11 @@
     .has-js .menu-toggle { display: flex; gap: 10px; align-items: center; margin-left: auto; color: var(--ink); font-size: .75rem; border: 1px solid var(--line); padding: 7px 11px; border-radius: 5px; background: var(--surface); }
     #main-nav { order: 5; width: 100%; margin: 0; flex-wrap: wrap; gap: 0; padding-bottom: 16px; }
     #main-nav a { padding: 12px 18px; font-size: .8rem; }
+    /* A contained, touch-friendly disclosure that can scroll on short screens. */
+    #main-nav { max-height: min(65vh, 420px); overflow-y: auto; overscroll-behavior: contain; border-top: 1px solid var(--line); padding-top: 8px; }
+    #main-nav a { display: flex; align-items: center; min-height: 44px; border-radius: 6px; white-space: normal; }
+    #main-nav a:hover, #main-nav a:focus-visible { background: var(--soft); }
+    #main-nav a[aria-current] { box-shadow: inset 3px 0 var(--blue); }
     .has-js #main-nav { display: none; }
     .has-js #main-nav.is-open { display: flex; }
     .theme-toggle { margin-left: auto; }
