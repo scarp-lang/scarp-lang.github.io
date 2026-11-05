@@ -84,11 +84,13 @@ Search also works as a complete page directory without JavaScript; with JavaScri
 it supports live filtering, curated Hindi search terms for English-language website
 pages, and the `/` or Ctrl/⌘+K keyboard shortcut. It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs keep their older verified compiler baseline,
-and the same three homepage fixtures also run under the pinned alpha.5 compiler
-with byte-exact expected output. The two compiler sources and distinct CLI
+and the same three homepage fixtures also run under the pinned alpha.6 compiler
+with byte-exact expected output. An additional alpha.6-only RMS program and the
+schema-v1 symbol/reference inspection outputs are checked only against the
+latest published compiler. The two compiler sources and distinct CLI
 commands are tested in both CI and the Pages workflow. The compatibility page
-does **not** promise that all user programs work across versions. The Downloads and Releases pages show the published
-**v0.0.5-alpha.5** prerelease, released on 4 November 2026, with exact
+does **not** promise that all user programs work across versions. The Downloads and Releases pages show the reviewed published
+**v0.0.6-alpha.1** prerelease, released on 5 November 2026, with exact
 GitHub archive digests. The ecosystem page independently records project
 versions; these are reviewed snapshots, not a live GitHub feed.
 Baseline: **v0.0.5-alpha.1**, source
