@@ -53,7 +53,7 @@ if (target === "published") {
   assert.deepEqual(alpha6Sources, ["rms.srp"], "Review new published-only fixtures before adding them");
   for (const file of alpha6Sources) {
     const source = join(alpha6Directory, file);
-    const expected = await readFile(source.replace(/\\.srp$/, ".stdout"), "utf8");
+    const expected = await readFile(source.replace(/\.srp$/, ".stdout"), "utf8");
     const executed = run(["exec", source]);
     assert.equal(executed.error, undefined, String(executed.error));
     assert.equal(executed.status, 0, `${file}: ${executed.stderr}`);
