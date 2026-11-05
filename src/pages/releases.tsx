@@ -31,20 +31,21 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Inspect projects. Experiment with scalar C11 output.</h3>
+          <h3>Navigate across source files. Measure vector RMS.</h3>
           <p>
-            Published alpha.5 extends the alpha.4 project workflow with{" "}
-            <code>inspect modules --json DIRECTORY</code>. It resolves an explicit{" "}
-            <code>Scarp.project</code> and reports checked module metadata without
-            executing program statements. Earlier <code>create</code>,{" "}
-            <code>verify</code> and <code>launch</code> project commands remain available.
+            Published alpha.6 adds opt-in <code>inspect symbols</code> and{" "}
+            <code>inspect references</code> commands for static source indexing
+            across files and explicit project directories. Their schema-v1
+            JSON output exposes original locations without running statements.
+            This is not a language server, rename engine or incremental index.
           </p>
           <p>
-            An experimental Rust embedding API can emit a constrained C11 translation
-            unit for supported scalar programs and counted loops. It does{" "}
-            <strong>not</strong> add <code>scarp compile</code> or produce native
-            executables through the Scarp CLI; a host must provide its own C compiler.
-            Many Scarp constructs remain unsupported by this backend.
+            The new <code>rms(vector)</code> builtin computes a compensated,
+            scaled root mean square for finite nonempty vectors. Project{" "}
+            <code>create</code>, <code>verify</code>, <code>launch</code> and
+            module inspection remain available. The restricted C11 emitter
+            introduced in alpha.5 remains a Rust embedding API, not a
+            <code>scarp compile</code> CLI or native executable generator.
           </p>
           <p>
             Pre-built archives are published for Windows x64, Linux x64 GNU and
@@ -103,8 +104,8 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version command differences and the alpha.4–alpha.5
-          project and module-inspection workflows.
+          version-by-version command differences through alpha.6,
+          including project workflows and the new read-only symbol index.
         </p>
         <p>
           See <a href="/ecosystem/">the ecosystem directory</a> to find Scarp Docs,
