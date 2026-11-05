@@ -19,7 +19,7 @@ export default function DevelopmentPage() {
           An experimental language, developed in public. This page documents
           the website's verified examples as of 1 November 2026;{" "}
           <a href={publishedCompiler.release}>{publishedCompiler.tag}</a> is the
-          newer published prerelease reviewed 3 November 2026.
+          newer published prerelease reviewed 5 November 2026.
         </p>
       </section>
       <section className="wrap status-summary">
@@ -41,10 +41,12 @@ export default function DevelopmentPage() {
         <h2>What you can use</h2>
         <p>
           The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>{" "}
-          release adds an explicit offline project workflow with{" "}
+          release adds opt-in source symbol/reference inspection and finite
+          vector <code>rms</code>. Earlier offline project commands{" "}
           <code>create</code>, directory <code>verify</code> and{" "}
-          <code>launch</code>. See <a href="/releases/">version-aware release notes</a>{" "}
-          and <a href="/downloads/">current packages</a>. The information below
+          <code>launch</code> remain available. See{" "}
+          <a href="/releases/">release notes</a> and{" "}
+          <a href="/downloads/">current packages</a>. The information below
           describes the separately tested older example baseline.
         </p>
         <p>
@@ -90,9 +92,10 @@ export default function DevelopmentPage() {
         </ul>
         <h2>Next development priorities</h2>
         <p>
-          The source roadmap prioritizes module tooling, additional conformance,
-          and source navigation, followed by constant-expression and library
-          organization design.{" "}
+          Read-only symbol navigation and constant-expression work have
+          progressed beyond the original alpha.1 baseline. Further editor
+          integration, language conformance and user-defined types require
+          separate implementation and tests.{" "}
           <a href="/roadmap/">Explore the longer path toward v1.0.0</a>.
         </p>
         <h2 id="evidence">Evidence and freshness</h2>
