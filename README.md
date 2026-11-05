@@ -79,7 +79,8 @@ a source-verified compatibility guide at `/compatibility/`, an evidence-linked
 published CLI migration guide at `/migration/` (alpha.1–alpha.5), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
-it supports live filtering and the `/` or Ctrl/⌘+K keyboard shortcut. It is a **reviewed snapshot**, not a live compiler feed.
+it supports live filtering, curated Hindi search terms for English-language website
+pages, and the `/` or Ctrl/⌘+K keyboard shortcut. It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs keep their older verified compiler baseline,
 and the same three homepage fixtures also run under the pinned alpha.5 compiler
 with byte-exact expected output. The two compiler sources and distinct CLI

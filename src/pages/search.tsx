@@ -9,11 +9,12 @@ export default function SearchPage() {
           <p className="eyebrow">Website directory</p>
           <h1>Find your way around Scarp.</h1>
           <p className="lead">Search official website pages, from the first program to development status and support. Detailed language documentation lives on <a href="https://scarp-lang.github.io/scarp-docs/">Scarp Docs ↗</a>.</p>
+          <p className="small muted">Search in English or हिंदी. For example: <code>डाउनलोड</code>, <code>मदद</code>, or <code>कृत्रिम बुद्धिमत्ता</code>. Results link to website pages; Hindi lessons are in Scarp Docs.</p>
         </div>
         <form className="site-search-form" action="/search/" method="get" role="search" data-search-form="" hidden>
           <label htmlFor="site-search-input">Search website pages</label>
           <div className="site-search-controls">
-            <input id="site-search-input" data-search-input="" name="q" type="search" maxLength={120} autoComplete="off" placeholder="Try installation, AI, or roadmap" />
+            <input id="site-search-input" data-search-input="" name="q" type="search" maxLength={120} autoComplete="off" placeholder="Try install, इंस्टॉल, or रोडमैप" />
             <button className="button primary" type="submit">Search</button>
           </div>
           <p className="small muted">Tip: press / or Ctrl/⌘+K to open search from anywhere on this site.</p>

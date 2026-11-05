@@ -78,6 +78,9 @@ test('search directory lists all canonical, public pages without JavaScript', ()
   assert.match(html, /<form[^>]*data-search-form=""[^>]*hidden/);
   for (const entry of searchEntries) assert(html.includes('href="' + entry.path + '"'));
   assert(html.includes('data-search-results=""'));
+  assert(html.includes('Search in English or हिंदी'));
+  assert(html.includes('डाउनलोड'));
+  assert(html.includes('कृत्रिम बुद्धिमत्ता'));
 });
 
 
