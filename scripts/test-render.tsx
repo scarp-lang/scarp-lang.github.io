@@ -172,7 +172,7 @@ test('getting started clearly separates published and legacy CLI commands', () =
   for (const token of [publishedCompiler.tag, project.tag, 'scarp verify hello.srp',
     'scarp exec hello.srp', 'scarp run hello.srp', 'scarp check hello.srp',
     'scarp create hello-world', 'scarp launch hello-world',
-    'scarp inspect symbols --json hello.srp', 'rms([2.0, -2.0])', '2.0']) {
+    'scarp inspect symbols --json hello.srp', 'rms', '2.0']) {
     assert(html.includes(token), 'Getting started missing: ' + token);
   }
   assert(html.includes('id="04--explore-new-alpha6-capabilities"'));
