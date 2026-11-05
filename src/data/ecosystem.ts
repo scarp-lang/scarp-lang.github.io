@@ -5,7 +5,7 @@
 import { project } from "./project.ts";
 import { publishedCompiler } from "./releases.ts";
 
-export const ecosystemReviewedOn = "2026-11-04";
+export const ecosystemReviewedOn = "2026-11-05";
 
 export interface EcosystemProject {
   id: string;
@@ -28,7 +28,7 @@ export const ecosystemProjects = [
     status: "Experimental prerelease",
     version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
-    limitation: "Published alpha.5 adds explicit project module inspection and an experimental scalar C11 emitter for Rust embedding hosts. There is no native .srp compile command; syntax, manifests and APIs remain experimental.",
+    limitation: "Published v0.0.6-alpha.1 adds opt-in cross-file symbol/reference inspection and a finite vector rms builtin. The restricted C11 emitter remains a Rust API; there is no native .srp compile CLI, stable language or integrated LSP.",
     website: `${project.repo}/releases`,
     source: project.repo,
     evidence: publishedCompiler.release,
