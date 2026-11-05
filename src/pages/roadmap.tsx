@@ -18,13 +18,20 @@ export default function ArticlePage() {
         modules. This is the <a href={"/development/"}>published baseline</a>,
         with experimental syntax and APIs.
       </p>
-      <h2 id={"next-priorities--make-modules-easier-to-work-with"}>
-        Next priorities · Make modules easier to work with
-      </h2>
+      <h2 id="published-alpha6">Published alpha.6 · Source navigation foundations</h2>
       <p>
-        The compiler repository lists module tooling, additional conformance,
-        and source navigation as its next priorities. These are development
-        directions; they do not imply a completed feature or a release date.
+        <a href="/releases/">v0.0.6-alpha.1</a> adds opt-in source
+        symbol/reference inspection and a finite-vector <code>rms</code>
+        builtin. These capabilities remain experimental; there is no
+        integrated LSP, incremental editor cache, GPU backend or native
+        compilation command.
+      </p>
+      <h2 id="next-priorities">Next priorities · Reliable developer tooling</h2>
+      <p>
+        Source indexing offers a foundation for future editor integrations,
+        but an actual language server, stable cross-edit identity and rename
+        operations need separate implementation and testing. There is
+        no guaranteed timetable.
       </p>
       <h2 id={"planned--stronger-language-and-library-foundations"}>
         Planned · Stronger language and library foundations
