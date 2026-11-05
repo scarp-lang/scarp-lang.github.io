@@ -105,7 +105,10 @@ export default function DownloadsPage() {
           <code>launch</code> executes its manifest entrypoint. All project paths
           are explicit. This release also supports{" "}
           <code>inspect modules --json PROJECT_DIRECTORY</code>, which inspects
-          project modules without executing source statements.
+          project modules without execution. Alpha.6 additionally offers{" "}
+          <code>inspect symbols --json PROJECT_DIRECTORY</code> and{" "}
+          <code>inspect references --json PROJECT_DIRECTORY</code> for
+          read-only cross-file source indexing.
         </p>
         <p>
           For the exact {publishedCompiler.tag} project commands and manifest details,
@@ -140,12 +143,14 @@ export default function DownloadsPage() {
           compiled from a <code>.srp</code> program.
         </p>
         <p>
-          Alpha.5 includes an <strong>experimental scalar C11 emitter</strong> in
-          the Rust embedding API only. It does not offer a{" "}
-          <code>scarp compile</code> command or manage a C compiler. General native
-          Scarp executable generation, one-click installers and package registry
-          installation are not available.
-          See <a href="/news/alpha5-project-inspection/">the release overview</a>.
+          Alpha.6 adds symbol/reference navigation and a finite-vector{" "}
+          <code>rms</code> builtin; see the{" "}
+          <a href="/news/alpha6-symbol-navigation/">release overview</a>.
+          The restricted C11 emitter introduced in alpha.5 remains an
+          <strong> experimental Rust embedding API only</strong>. There is no{" "}
+          <code>scarp compile</code> command, general native executable
+          generation, one-click installer or package registry.
+          Read the <a href="/learn/">version-specific quickstart</a>.
         </p>
       </section>
       <section className="wrap prose">
