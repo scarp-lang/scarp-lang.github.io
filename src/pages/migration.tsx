@@ -139,7 +139,7 @@ export default function MigrationPage() {
         command executes ordinary runtime statements. JSON schema-v1
         snapshots are compilation-local, not durable editor databases.
       </p>
-      <CodeBlock filename="Terminal · alpha.6" code={"scarp inspect symbols --json hello-world\\nscarp inspect references --json hello-world"} />
+      <CodeBlock filename="Terminal · alpha.6" code={"scarp inspect symbols --json hello-world\nscarp inspect references --json hello-world"} />
       <p>
         These commands are absent from alpha.5 binaries. Check{" "}
         <a href={migrationEvidence.publishedSource}>the release-pinned CLI reference</a>{" "}
