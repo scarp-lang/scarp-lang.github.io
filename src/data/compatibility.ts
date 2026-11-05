@@ -7,8 +7,9 @@ import { publishedCompiler } from "./releases.ts";
  * The matching source commits are checked out and executed in ci.yml/pages.yml.
  */
 export const exampleCompatibility = {
-  reviewed: "2026-11-04",
+  reviewed: "2026-11-05",
   fixtureNames: ["functions.srp", "hello.srp", "numerics.srp"],
+  publishedOnlyFixtureNames: ["rms.srp"],
   versions: [
     {
       tag: project.tag,
@@ -33,3 +34,7 @@ export const exampleCompatibility = {
 
 export const fixtureUrl = (name: string) =>
   "https://github.com/scarp-lang/scarp-lang.github.io/blob/main/src/examples/" + name;
+
+/** Additional source checks that run only under the current published compiler. */
+export const publishedFixtureUrl = (name: string) =>
+  "https://github.com/scarp-lang/scarp-lang.github.io/blob/main/src/examples/published/" + name;

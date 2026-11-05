@@ -1,5 +1,5 @@
 import Article from "../layouts/Article.tsx";
-import { exampleCompatibility, fixtureUrl } from "../data/compatibility.ts";
+import { exampleCompatibility, fixtureUrl, publishedFixtureUrl } from "../data/compatibility.ts";
 import { project } from "../data/project.ts";
 import { publishedCompiler } from "../data/releases.ts";
 
@@ -71,6 +71,24 @@ export default function CompatibilityPage() {
         syntax, old CLI commands, libraries or other projects are compatible.
       </p>
 
+      <h2 id="published-only">Published alpha.6-only coverage</h2>
+      <p>
+        An additional RMS example is run only with{" "}
+        <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>,
+        not with the older baseline. Its exact stdout is checked,
+        and the new <code>inspect symbols</code> and{" "}
+        <code>inspect references</code> JSON outputs are parsed and checked
+        for schema version 1 and their declared kinds. This does not certify
+        the whole symbol-index API or the numerical library.
+      </p>
+      <ul>
+        {exampleCompatibility.publishedOnlyFixtureNames.map(name => (
+          <li key={name}>
+            <a href={publishedFixtureUrl(name)}>{name}</a> ·{" "}
+            <a href={publishedFixtureUrl(name.replace(".srp", ".stdout"))}>expected stdout</a>
+          </li>
+        ))}
+      </ul>
       <h2 id="reproducibility">Evidence and reproducibility</h2>
       <p>
         The two exact compiler source revisions, checked on an Ubuntu GitHub

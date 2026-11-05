@@ -4,7 +4,7 @@ import { searchEntries, searchEntriesFor } from "../src/data/search.ts";
 import { hindiSearchAliases } from "../src/data/search-hi.ts";
 
 test("site search data contains distinct, canonical page paths", () => {
-  assert.equal(searchEntries.length, 20);
+  assert.equal(searchEntries.length, 21);
   assert.equal(new Set(searchEntries.map(entry => entry.path)).size, searchEntries.length);
   for (const entry of searchEntries) {
     assert(entry.path.startsWith("/"));
@@ -25,6 +25,8 @@ test("keywords, casing, prefixes, and multiple terms find relevant pages", () =>
   assert.equal(searchEntriesFor("migrate cli")[0]?.path, "/migration/");
   assert.equal(searchEntriesFor("offline project")[0]?.path, "/news/offline-projects/");
   assert.equal(searchEntriesFor("C11 embedding")[0]?.path, "/news/alpha5-project-inspection/");
+  assert.equal(searchEntriesFor("root mean square")[0]?.path, "/news/alpha6-symbol-navigation/");
+  assert.equal(searchEntriesFor("अल्फा छह")[0]?.path, "/news/alpha6-symbol-navigation/");
   assert.equal(searchEntriesFor("roadmap")[0]?.path, "/roadmap/");
   assert.equal(searchEntriesFor("module import")[0]?.path, "/news/source-modules/");
   assert.equal(searchEntriesFor("bug report")[0]?.path, "/support/");

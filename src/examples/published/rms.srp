@@ -1,0 +1,2 @@
+// Alpha.6-only example: RMS of a finite nonempty vector.
+print(rms([2.0, -2.0]));
