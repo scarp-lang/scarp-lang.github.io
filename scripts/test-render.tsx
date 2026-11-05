@@ -31,9 +31,9 @@ test('mobile navigation has disclosure semantics and works as static links witho
     const page = findPage(route);
     assert(page);
     const html = renderPage(page, developmentAssets);
-    const nav = html.match(/<nav id="main-nav"[\\s\\S]*?<\\/nav>/)?.[0];
+    const nav = html.match(/<nav id="main-nav"[\s\S]*?<\/nav>/)?.[0];
     assert(nav, 'Main navigation missing from ' + route);
-    assert(!/\\shidden(?:=|\\s|>)/.test(nav), 'Static navigation must not be hidden');
+    assert(!/\shidden(?:=|\s|>)/.test(nav), 'Static navigation must not be hidden');
     assert(html.includes('aria-controls="main-nav"'));
     assert(html.includes('aria-expanded="false"'));
     assert(html.includes('aria-label="Open navigation menu"'));
