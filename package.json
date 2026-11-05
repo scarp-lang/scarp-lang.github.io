@@ -10,7 +10,7 @@
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.tools.json",
     "check:site": "node --experimental-strip-types scripts/check-site.ts",
-    "check": "npm run test:support && npm run test:render && npm run test:search && npm run test:ecosystem && npm run test:releases && npm run test:download-guide && npm run test:release-audit && npm run test:compatibility && npm run test:migration && npm run test:compiler-pins && npm run check:compiler-pins && npm run typecheck && npm run build && npm run check:site",
+    "test:nav": "node --import tsx --test scripts/test-mobile-navigation.tsx",\n    "check": "npm run test:support && npm run test:render && npm run test:nav && npm run test:search && npm run test:ecosystem && npm run test:releases && npm run test:download-guide && npm run test:release-audit && npm run test:compatibility && npm run test:migration && npm run test:compiler-pins && npm run check:compiler-pins && npm run typecheck && npm run build && npm run check:site",
     "test:render": "node --import tsx --test scripts/test-render.tsx",
     "test:support": "node --experimental-strip-types --test scripts/test-support-report.ts",
     "test:examples": "node --experimental-strip-types scripts/test-examples.ts",
