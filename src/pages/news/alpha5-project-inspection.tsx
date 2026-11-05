@@ -1,7 +1,11 @@
 import Article from "../../layouts/Article.tsx";
 import CodeBlock from "../../components/CodeBlock.tsx";
 import { project } from "../../data/project.ts";
-import { publishedCompiler } from "../../data/releases.ts";
+const historicalAlpha5 = {
+  tag: "v0.0.5-alpha.5",
+  sourceCommit: "2eeed0aa52ccb59523307841ad8ffbd83f8911a8",
+  release: "https://github.com/scarp-lang/scarp/releases/tag/v0.0.5-alpha.5",
+} as const;
 
 export default function Alpha5ProjectInspectionPage() {
   return (
@@ -12,7 +16,7 @@ export default function Alpha5ProjectInspectionPage() {
       date="2026-11-04"
     >
       <p>
-        Scarp <strong>{publishedCompiler.tag}</strong> was published on
+        Scarp <strong>{historicalAlpha5.tag}</strong> was published on
         4 November 2026. It builds on alpha.4's offline project workflow:
         developers can inspect a project's module metadata from the CLI
         without executing the program. A separate experimental Rust library
@@ -58,7 +62,7 @@ export default function Alpha5ProjectInspectionPage() {
       <h2 id="get-release">Get the verified prerelease</h2>
       <p>
         Download the <a href="/downloads/">Windows, Linux or macOS archives and
-        SHA-256 checksums</a> for {publishedCompiler.tag}, see the{" "}
+        SHA-256 checksums</a> for {historicalAlpha5.tag}, see the{" "}
         <a href="/migration/">version-by-version migration guide</a>, or
         inspect the <a href="/compatibility/">website's limited CI fixture coverage</a>.
         This is an experimental alpha, not a stable ABI, general native compiler
@@ -66,11 +70,11 @@ export default function Alpha5ProjectInspectionPage() {
       </p>
       <p>
         For reproducible evidence, consult{" "}
-        <a href={publishedCompiler.release}>the published release record</a>,{" "}
-        <a href={project.repo + "/commit/" + publishedCompiler.sourceCommit}>
+        <a href={historicalAlpha5.release}>the published release record</a>,{" "}
+        <a href={project.repo + "/commit/" + historicalAlpha5.sourceCommit}>
           the exact annotated-tag source commit
         </a>, and{" "}
-        <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/proposals/0035-native-scalar-c11.md"}>
+        <a href={project.repo + "/blob/" + historicalAlpha5.sourceCommit + "/docs/proposals/0035-native-scalar-c11.md"}>
           the pinned backend proposal
         </a>.
       </p>
