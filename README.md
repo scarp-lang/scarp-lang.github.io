@@ -54,7 +54,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:support`: repository routing, Unicode, code fences, and long drafts.
 - `npm run test:render`: static documents, route aliases, escaping, no-JavaScript
   content, data routes, the searchable page directory, and the not-found response.
-- `npm run test:search`: search ranking, multi-term matching, and empty queries.
+- `npm run test:search`: search ranking, multi-term matching, and empty queries.\n- `npm run test:nav`: mobile disclosure state, Escape behavior, outside interaction,\n  focus restoration, and responsive breakpoint transitions.
 - `npm run test:ecosystem`: audited ecosystem links, versions, and release-stage labels.
 - `npm run test:releases`: pinned example baseline versus published compiler release, exact archive hashes, and download URLs.
 - `npm run test:download-guide`: ensure OS-specific checksum commands, archive names, and the release-pinned project guide render correctly.
