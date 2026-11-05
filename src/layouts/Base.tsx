@@ -79,6 +79,7 @@ export default function Base({
               type="button"
               aria-expanded="false"
               aria-controls="main-nav"
+              aria-label="Open navigation menu"
               hidden
               data-menu
             >
