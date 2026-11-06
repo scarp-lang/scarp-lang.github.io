@@ -1,42 +1,69 @@
 import assert from "node:assert/strict";
-import { spawn, type ChildProcess } from "node:child_process";
-import { mkdir } from "node:fs/promises";
-import { resolve } from "node:path";
+import { createServer, type Server } from "node:http";
+import { mkdir, readFile, stat } from "node:fs/promises";
+import { extname, join, resolve, sep } from "node:path";
 import { before, after, test } from "node:test";
 import { chromium, type Browser, type BrowserContextOptions, type Page } from "playwright-core";
 
-const origin = "http://127.0.0.1:4173";
-let server: ChildProcess | undefined;
+let origin: string;
+let server: Server;
 let browser: Browser;
+const distRoot = resolve("dist");
+const mimeTypes: Record<string, string> = {
+  ".html": "text/html; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".webp": "image/webp",
+  ".png": "image/png",
+  ".ico": "image/x-icon",
+  ".json": "application/json",
+  ".xml": "application/xml",
+};
 
-async function startPreview(): Promise<void> {
-  server = spawn(process.execPath, [
-    resolve("node_modules/vite/bin/vite.js"),
-    "preview", "--host", "127.0.0.1", "--port", "4173", "--strictPort",
-  ], { stdio: ["ignore", "pipe", "pipe"] });
-  let output = "";
-  server.stdout?.on("data", chunk => { output += String(chunk); });
-  server.stderr?.on("data", chunk => { output += String(chunk); });
-
-  for (let attempt = 0; attempt < 80; attempt++) {
-    if (server.exitCode !== null) throw new Error("Preview exited: " + output);
+async function startStaticServer(): Promise<void> {
+  // Serve the exact production dist/ output, without a development-server fallback.
+  server = createServer(async (request, response) => {
     try {
-      const response = await fetch(origin + "/", { signal: AbortSignal.timeout(1000) });
-      if (response.ok && (await response.text()).includes("Scarp")) return;
-    } catch { /* The server may still be starting. */ }
-    await new Promise(resolve => setTimeout(resolve, 250));
-  }
-  throw new Error("Preview did not start: " + output);
+      const pathname = new URL(request.url ?? "/", "http://localhost").pathname;
+      const relative = decodeURIComponent(pathname).replace(/^\/+/, "");
+      const requested = resolve(distRoot, relative || "index.html");
+      if (!requested.startsWith(distRoot + sep)) {
+        response.writeHead(403).end();
+        return;
+      }
+      const info = await stat(requested);
+      const filePath = info.isDirectory() ? join(requested, "index.html") : requested;
+      const content = await readFile(filePath);
+      response.writeHead(200, {
+        "Content-Type": mimeTypes[extname(filePath)] ?? "application/octet-stream",
+        "Cache-Control": "no-store",
+      }).end(content);
+    } catch {
+      response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("Not found");
+    }
+  });
+  await new Promise<void>((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", () => {
+      server.off("error", reject);
+      resolve();
+    });
+  });
+  const address = server.address();
+  if (!address || typeof address === "string") throw new Error("Missing HTTP test port");
+  origin = "http://127.0.0.1:" + address.port;
 }
 
 before(async () => {
-  await startPreview();
+  await startStaticServer();
   browser = await chromium.launch({ channel: "chrome", headless: true, args: ["--no-sandbox"] });
 }, { timeout: 45_000 });
 
 after(async () => {
   if (browser) await browser.close();
-  server?.kill("SIGTERM");
+  if (server?.listening) await new Promise<void>((resolve, reject) => {
+    server.close(error => error ? reject(error) : resolve());
+  });
 });
 
 async function inPage(
