@@ -79,6 +79,35 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `SCARP_BIN=/path/to/scarp npm run test:examples`: exact-output checks against
   the published interpreter used by the website baseline.
 
+## Real-browser mobile and accessibility QA
+
+In addition to static accessibility contracts, `.github/workflows/browser-audit.yml`
+runs the **production-built HTML/CSS/TypeScript** in headless Google Chrome
+on pull requests and supported branch pushes. Its checks cover:
+
+- Mobile menu disclosure, Escape handling and keyboard focus restoration.
+- Horizontal overflow at 320, 390, 768 and 1280px on four critical routes.
+- Global search shortcut, Hindi search results and clear-state announcements.
+- Keyboard-controlled example tabs, skip-to-content, and optimized image loading.
+- Accessible no-JavaScript fallback for examples, navigation and the site directory.
+
+The test-only runner installs pinned `playwright-core@1.64.1` against Chrome
+provided on GitHub's `ubuntu-24.04` runner, without rewriting
+`package-lock.json` or including Playwright in production bundles.
+TypeScript browser tests are type-checked by `tsconfig.browser.json`.
+
+For local Chrome testing after `npm ci`:
+
+```sh
+npm install --no-save --package-lock=false playwright-core@1.64.1
+npx tsc -p tsconfig.browser.json
+npm run build
+npm run test:browser
+```
+
+The test runner starts and stops a local Vite preview. The workflow uploads
+failure screenshots. This is browser smoke testing, not a full WCAG audit
+or a measured field Core Web Vitals score.
 ## Content and publication
 
 The hub includes features, development status, roadmap, releases/downloads,
