@@ -204,6 +204,10 @@
   .download-card .inline-link { display: flex; margin-top: 20px; }
   .download-card details { border-top: 1px solid var(--line); margin-top: 26px; padding-top: 18px; font-size: .7rem; color: var(--muted); }
   .checksum { display: block; overflow-wrap: anywhere; margin-top: 15px; line-height: 1.7; }
+  .checksum-copy { margin-top: 12px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: var(--surface); font-size: .7rem; cursor: pointer; }
+  .checksum-copy:hover { background: var(--blue-soft); }
+  .copy-button:focus-visible, .checksum-copy:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  .copy-button:disabled, .checksum-copy:disabled { opacity: .65; cursor: wait; }
   .download-verify-panels { display: grid; gap: 14px; margin: 24px 0 32px; }
   .download-verify-panels details { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 18px 22px; min-width: 0; }
   .download-verify-panels summary { font-weight: 650; color: var(--ink); }

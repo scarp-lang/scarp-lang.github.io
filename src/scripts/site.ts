@@ -1,6 +1,7 @@
 import { enhanceSiteSearch } from "./site-search.ts";
 import { enhanceMobileNavigation } from "./mobile-navigation.ts";
 import { enhanceCodeExplorer } from "./code-explorer.ts";
+import { enhanceCopyButtons } from "./code-copy.ts";
 
 const announcement = document.querySelector<HTMLElement>('[data-announcement]');
 const announce = (text: string) => { if (announcement) announcement.textContent = text; };
@@ -32,15 +33,6 @@ enhanceMobileNavigation({
 
 document.querySelectorAll<HTMLElement>('[data-code-explorer]').forEach(enhanceCodeExplorer);
 
-if (navigator.clipboard?.writeText) document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach(button => {
-  button.hidden = false;
-  button.addEventListener('click', async () => {
-    const text = button.closest('.code-block')?.querySelector('code')?.textContent;
-    if (!text) return;
-    try { await navigator.clipboard.writeText(text); button.textContent = 'Copied!'; announce('Code copied to clipboard.'); setTimeout(() => { button.textContent = 'Copy'; }, 1800); }
-    catch { announce('Could not copy. Select the code and copy it manually.'); }
-  });
-});
-
+enhanceCopyButtons(document, navigator.clipboard, announce);
 
 enhanceSiteSearch(document, window);

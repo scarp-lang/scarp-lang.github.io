@@ -43,6 +43,16 @@ export default function DownloadsPage() {
             <details>
               <summary>Archive checksum</summary>
               <code className="checksum">{item.hash}</code>
+              <button
+                type="button"
+                className="checksum-copy"
+                data-copy
+                data-copy-text={item.hash}
+                aria-label={`Copy ${item.name} SHA-256 checksum`}
+                hidden
+              >
+                Copy checksum
+              </button>
             </details>
           </article>
         ))}

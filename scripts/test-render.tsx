@@ -355,3 +355,16 @@ test('historical alpha.4 article retains original release date and source eviden
   assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/offline-projects/</link>'));
   assert(feed?.body.includes('<pubDate>' + new Date(historical.date + 'T00:00:00Z').toUTCString() + '</pubDate>'));
 });
+
+
+test("download checksum copy controls are exact, accessible, and hidden without JavaScript", () => {
+  const page = findPage("/downloads/");
+  assert(page);
+  const html = renderPage(page, developmentAssets);
+  for (const download of publishedDownloads) {
+    assert(html.includes(`data-copy-text="${download.hash}"`));
+    assert(html.includes(`aria-label="Copy ${download.name} SHA-256 checksum"`));
+  }
+  assert.equal((html.match(/class="checksum-copy"/g) ?? []).length, publishedDownloads.length);
+  assert.equal((html.match(/data-copy-text="[^"]+" aria-label="[^"]+" hidden/g) ?? []).length, publishedDownloads.length);
+});
