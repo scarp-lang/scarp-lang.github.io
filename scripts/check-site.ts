@@ -136,9 +136,14 @@ for (const token of ['v0.0.5-alpha.5', '2eeed0aa52ccb59523307841ad8ffbd83f8911a8
   assert(alpha5News.includes(token), 'Historical alpha.5 release article missing ' + token);
 }
 const alpha6News = await readFile(join(root, 'news/alpha6-symbol-navigation/index.html'), 'utf8');
-for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, '5 November 2026', 'rms', 'inspect symbols', 'inspect references']) {
-  assert(alpha6News.includes(token), 'Latest alpha.6 release article missing ' + token);
+for (const token of ['v0.0.6-alpha.1', 'aa329a22cf2bf92d2c9814a26ff9c8b67a72e6e8', '5 November 2026', 'rms', 'inspect symbols', 'inspect references']) {
+  assert(alpha6News.includes(token), 'Historical alpha.6.1 article missing ' + token);
 }
+const latestNews = await readFile(join(root, 'news/alpha6-cache-apis/index.html'), 'utf8');
+for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, '6 November 2026', 'syntax', 'semantic', 'invalidation', 'eviction']) {
+  assert(latestNews.includes(token), 'Current release article missing ' + token);
+}
+assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-cache-apis/</link>'), 'RSS missing latest alpha.6.2 release');
 const alpha4News = await readFile(join(root, 'news/offline-projects/index.html'), 'utf8');
 assert(alpha4News.includes('v0.0.5-alpha.4'), 'Alpha.4 news page missing');
 assert(alpha4News.includes('3 November 2026'), 'Article publication date missing');
@@ -148,10 +153,12 @@ for (const newsView of ['index.html', 'news/index.html']) {
   assert(newsHtml.includes('3 November 2026'), 'Historical news date changed in ' + newsView);
   assert(newsHtml.includes('href="/news/alpha5-project-inspection/"'), 'Historical alpha.5 release absent from ' + newsView);
   assert(newsHtml.includes('4 November 2026'), 'Alpha.5 historical date is missing in ' + newsView);
-  assert(newsHtml.includes('href="/news/alpha6-symbol-navigation/"'), 'Latest release absent from ' + newsView);
-  assert(newsHtml.includes('5 November 2026'), 'Latest news date is missing in ' + newsView);
+  assert(newsHtml.includes('href="/news/alpha6-symbol-navigation/"'), 'Historical alpha.6.1 release absent from ' + newsView);
+  assert(newsHtml.includes('5 November 2026'), 'Alpha.6.1 historical date is missing in ' + newsView);
+  assert(newsHtml.includes('href="/news/alpha6-cache-apis/"'), 'Newest alpha.6.2 release absent from ' + newsView);
+  assert(newsHtml.includes('6 November 2026'), 'Current release date missing in ' + newsView);
 }
-assert(pages.length >= 23, 'Missing alpha.6 release article or an existing website section');
+assert(pages.length >= 24, 'Missing alpha.6.2 release article or an existing website section');
 const searchHtml = await readFile(join(root, 'search/index.html'), 'utf8');
 assert.match(searchHtml, /data-search-results/);
 assert.match(searchHtml, /data-search-input/);
@@ -160,7 +167,7 @@ const ecosystemHtml = await readFile(join(root, 'ecosystem/index.html'), 'utf8')
 for (const name of ['Scarp compiler', 'Scarp Docs', 'Scarp Playground', 'Scarp by Example', 'Scarp for VS Code']) {
   assert(ecosystemHtml.includes(name), 'Missing ecosystem project: ' + name);
 }
-assert(ecosystemHtml.includes('2026-11-05'), 'Ecosystem snapshot date is missing');
+assert(ecosystemHtml.includes(publishedCompiler.reviewed), 'Ecosystem snapshot date is missing');
 assert(ecosystemHtml.includes(publishedCompiler.release), 'Missing latest published compiler release evidence');
 const compatibilityHtml = await readFile(join(root, 'compatibility/index.html'), 'utf8');
 for (const token of ['functions.srp', 'hello.srp', 'numerics.srp', project.tag,
@@ -180,7 +187,7 @@ for (const command of ['scarp check hello.srp', 'scarp verify hello.srp',
   assert(migrationHtml.includes(command), 'Migration guide missing command: ' + command);
 }
 for (const evidence of ['v0.0.5-alpha.1', 'v0.0.5-alpha.2', 'v0.0.5-alpha.3',
-  'v0.0.5-alpha.4', 'v0.0.5-alpha.5', publishedCompiler.tag, publishedCompiler.sourceCommit]) {
+  'v0.0.5-alpha.4', 'v0.0.5-alpha.5', 'v0.0.6-alpha.1', publishedCompiler.tag, publishedCompiler.sourceCommit]) {
   assert(migrationHtml.includes(evidence), 'Missing released version evidence: ' + evidence);
 }
 assert(migrationHtml.includes('Not equivalent'), 'Misleading check/verify migration guidance');

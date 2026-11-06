@@ -135,7 +135,7 @@ export default function MigrationPage() {
 
       <h2 id="alpha6-navigation">Published alpha.6 symbol navigation</h2>
       <p>
-        The latest prerelease adds opt-in static source indexing; neither
+        Alpha.6 retains opt-in static source indexing; neither
         command executes ordinary runtime statements. JSON schema-v1
         snapshots are compilation-local, not durable editor databases.
       </p>

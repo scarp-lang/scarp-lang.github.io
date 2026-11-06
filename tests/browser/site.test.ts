@@ -476,7 +476,7 @@ test("pixel comparison rejects intentionally altered screenshots and dimension d
     });
     await assert.rejects(
       () => verifyVisualBaseline(page, "home-desktop-light", modified, false),
-      /pixels .* differ from baseline|pixels .*differ from baseline/,
+      /pixels .* differ from baseline|pixels .*differ from baseline|screenshot height drifted/,
     );
   });
 });
@@ -489,8 +489,10 @@ test("capture reproducible light/dark screenshots for visual review", async () =
     { name: "support-desktop-dark", route: "/support/", theme: "dark", width: 1280, height: 800 },
   ] as const;
   await mkdir("test-results/browser/visual", { recursive: true });
+  const visualFailures: string[] = [];
   for (const view of views) {
-    await inPage("visual-" + view.name, {
+    try {
+      await inPage("visual-" + view.name, {
       viewport: { width: view.width, height: view.height },
       colorScheme: view.theme,
       reducedMotion: "reduce",
@@ -505,6 +507,12 @@ test("capture reproducible light/dark screenshots for visual review", async () =
         caret: "hide",
       });
       await verifyVisualBaseline(page, view.name, screenshot);
-    });
+      });
+    } catch (error) {
+      visualFailures.push(view.name + ": " +
+        (error instanceof Error ? error.message : String(error)));
+    }
   }
+  assert.deepEqual(visualFailures, [],
+    "Reviewed screenshot baselines differ. Inspect all four visual review artifacts before updating.");
 });

@@ -5,15 +5,15 @@
  */
 import { project } from "./project.ts";
 
-const releaseVersion = "0.0.6-alpha.1" as const;
+const releaseVersion = "0.0.6-alpha.2" as const;
 const releaseTag = `v${releaseVersion}` as const;
 
 export const publishedCompiler = {
   version: releaseVersion,
   tag: releaseTag,
-  publishedAt: "2026-11-05T11:39:49Z",
-  reviewed: "2026-11-05",
-  sourceCommit: "aa329a22cf2bf92d2c9814a26ff9c8b67a72e6e8",
+  publishedAt: "2026-11-06T11:03:46Z",
+  reviewed: "2026-11-06",
+  sourceCommit: "398b8ff705154a02423fe458ce3a427401e81e31",
   release: `${project.repo}/releases/tag/${releaseTag}`,
   status: "experimental-prerelease",
 } as const;
@@ -24,21 +24,21 @@ export const publishedDownloads = [
     platform: "windows",
     architecture: "x64 · MSVC",
     file: `scarp-${releaseVersion}-x86_64-pc-windows-msvc.zip`,
-    hash: "80242b4c1152c4a1c5f3238fb13a7ace881b826ff6faab462e25baf1b039d602",
+    hash: "4718d8fc23a4430861c79499653fd6a48d275eb4a0204168eb1eaacd71832c9b",
   },
   {
     name: "Linux",
     platform: "linux",
     architecture: "x64 · GNU",
     file: `scarp-${releaseVersion}-x86_64-unknown-linux-gnu.tar.gz`,
-    hash: "d3756492c632a97fba1e317a7523dece1566040a53b10a98c7494567e042e018",
+    hash: "1868e736ede3214f65a7962dab6d14f9b39360fcab0c9eb549797deccd7a7697",
   },
   {
     name: "macOS",
     platform: "macos",
     architecture: "ARM64 · Apple Silicon",
     file: `scarp-${releaseVersion}-aarch64-apple-darwin.tar.gz`,
-    hash: "17f447e33580e4fb618803e2cbf01d92e406beed92f5a8229e78f43a6a8933bf",
+    hash: "918527758eb2eba60cc263b0d83b75fb929ef3bd9e4ae3feff898c3f6c4bb90c",
   },
 ] as const;
 

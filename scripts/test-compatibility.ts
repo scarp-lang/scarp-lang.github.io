@@ -20,7 +20,7 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
   const publishedSource = resolve("src/examples/published/rms.srp");
   assert.match(await readFile(publishedSource, "utf8"), /rms\(/);
   assert.equal(await readFile(publishedSource.replace(/\.srp$/, ".stdout"), "utf8"), "2.0\n");
-  assert.equal(exampleCompatibility.reviewed, "2026-11-05");
+  assert.equal(exampleCompatibility.reviewed, publishedCompiler.reviewed);
   assert.match(exampleCompatibility.workflow, /github\.com\/scarp-lang\/scarp-lang\.github\.io\/actions\/workflows\/ci\.yml/);
 });
 
