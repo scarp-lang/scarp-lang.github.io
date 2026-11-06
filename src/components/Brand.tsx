@@ -7,9 +7,9 @@ export default function Brand({ large = false }: { large?: boolean }) {
     >
       <span className="brand-icon" aria-hidden="true">
         <img
-          src="/brand/scarp-logo.png"
-          width="1254"
-          height="1254"
+          src="/brand/scarp-logo.webp"
+          width="512"
+          height="512"
           alt=""
           decoding="async"
           loading={large ? "lazy" : "eager"}

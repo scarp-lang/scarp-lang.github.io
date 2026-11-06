@@ -14,6 +14,12 @@ async function walk(directory: string): Promise<string[]> {
 const files = await walk(root);
 assert(files.includes(join(root, '.nojekyll')), 'Missing GitHub Pages .nojekyll marker in the static build');
 const pages = files.filter(path => path.endsWith('.html'));
+const logoWebp = await readFile(join(root, 'brand/scarp-logo.webp'));
+assert(logoWebp.length > 1024 && logoWebp.length <= 32 * 1024,
+  `Optimized display logo must be <= 32 KiB, found ${logoWebp.length} bytes`);
+assert.equal(logoWebp.toString('ascii', 0, 4), 'RIFF', 'Logo must have RIFF signature');
+assert.equal(logoWebp.toString('ascii', 8, 12), 'WEBP', 'Logo must be genuine WebP');
+
 /* Guard generated JavaScript/CSS bundle sizes; not a Core Web Vitals claim. */
 for (const file of files.filter(path => /\/assets\/[^/]+\.(?:js|css)$/.test(path))) {
   const bytes = (await stat(file)).size;
@@ -24,6 +30,10 @@ const ids = new Map<string, Set<string>>();
 for (const page of pages) {
   const html = await readFile(page, 'utf8');
   assert.deepEqual(accessibilityProblems(html), [], `Accessibility contract failed for ${page}`);
+  assert.match(html, /src="\/brand\/scarp-logo\.webp"/, `Optimized logo missing from ${page}`);
+  assert(!/<img\\b[^>]*src="\/brand\/scarp-logo\.png"/.test(html),
+    `Unoptimized logo still displayed on ${page}`);
+
   const allIds = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => {
     assert(match[1] !== undefined);
     return match[1];

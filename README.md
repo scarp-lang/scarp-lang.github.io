@@ -157,6 +157,27 @@ catch accidental build bloat. This is a **static regression audit**, not a
 substitute for screen-reader testing, real mobile-device checks, browser
 interaction tests or field Core Web Vitals measurements.
 
+## Optimized display logo
+
+The header/footer reuse a faithful **512 × 512 WebP** version of the approved
+Scarp logo (`public/brand/scarp-logo.webp`, 13,250 bytes). The original
+1,136,676-byte `scarp-logo.png` remains intact for social previews and
+source artwork. The WebP uses about **98.8% fewer bytes** than that original
+when a browser loads the logo. The browser never needs the large PNG just
+to render the header or footer.
+
+To recreate the optimized display asset from the original using the WebP
+reference encoder:
+
+```sh
+cwebp -quiet -resize 512 512 -q 90 -m 6 -metadata none \
+  public/brand/scarp-logo.png -o public/brand/scarp-logo.webp
+```
+
+The generated-site audit requires the WebP asset to be genuine, between
+1 KiB and 32 KiB, and referenced on each page. This is an asset-size
+reduction, not a measured Core Web Vitals improvement.
+
 ## Branding and licenses
 
 `public/brand/scarp-logo.png` is the permanent blue geometric S and wordmark.
