@@ -29,8 +29,8 @@ jobs:
           from pathlib import Path
           import base64
           for prefix, path, signature in [
-              ("FAVICON_PNG", Path("/tmp/scarp-favicon.png"), b"\\x89PNG\\r\\n\\x1a\\n"),
-              ("FAVICON_ICO", Path("/tmp/favicon.ico"), b"\\x00\\x00\\x01\\x00"),
+              ("FAVICON_PNG", Path("/tmp/scarp-favicon.png"), bytes.fromhex("89504e470d0a1a0a")),
+              ("FAVICON_ICO", Path("/tmp/favicon.ico"), bytes.fromhex("00000100")),
           ]:
               data = path.read_bytes()
               if not data.startswith(signature):
