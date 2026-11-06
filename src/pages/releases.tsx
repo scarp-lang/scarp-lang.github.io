@@ -31,21 +31,21 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Navigate across source files. Measure vector RMS.</h3>
+          <h3>Optional compiler caching with conservative invalidation.</h3>
           <p>
-            Published alpha.6 adds opt-in <code>inspect symbols</code> and{" "}
-            <code>inspect references</code> commands for static source indexing
-            across files and explicit project directories. Their schema-v1
-            JSON output exposes original locations without running statements.
-            This is not a language server, rename engine or incremental index.
+            Scarp {publishedCompiler.tag} introduces opt-in Rust embedding APIs
+            for bounded lexical-token, parsed-syntax and whole-graph semantic
+            caching. Dependency-aware edit planning and source-scoped eviction
+            help editors and embedding tools discard affected cache entries.
+            These APIs require a compatible Rust source checkout; they are not
+            automatic background caching in the published command-line tool.
           </p>
           <p>
-            The new <code>rms(vector)</code> builtin computes a compensated,
-            scaled root mean square for finite nonempty vectors. Project{" "}
-            <code>create</code>, <code>verify</code>, <code>launch</code> and
-            module inspection remain available. The restricted C11 emitter
-            introduced in alpha.5 remains a Rust embedding API, not a
-            <code>scarp compile</code> CLI or native executable generator.
+            The release retains read-only <code>inspect symbols</code> and{" "}
+            <code>inspect references</code>, finite-vector <code>rms</code>,
+            offline project commands and the existing restricted scalar C11
+            embedding API. It does not add an LSP, file watcher, general native
+            executable generation or guaranteed performance improvements.
           </p>
           <p>
             Pre-built archives are published for Windows x64, Linux x64 GNU and

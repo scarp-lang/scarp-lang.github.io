@@ -1,7 +1,12 @@
 import Article from "../../layouts/Article.tsx";
 import CodeBlock from "../../components/CodeBlock.tsx";
 import { project } from "../../data/project.ts";
-import { publishedCompiler } from "../../data/releases.ts";
+const historicalRelease = {
+  tag: "v0.0.6-alpha.1",
+  reviewed: "2026-11-05",
+  sourceCommit: "aa329a22cf2bf92d2c9814a26ff9c8b67a72e6e8",
+  release: "https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.1",
+} as const;
 
 export default function Alpha6SymbolNavigationPage() {
   return (
@@ -9,10 +14,10 @@ export default function Alpha6SymbolNavigationPage() {
       title="Scarp alpha.6: navigate symbols and measure vector RMS"
       description="The published v0.0.6-alpha.1 prerelease adds opt-in static symbol/reference inspection and an RMS numerical builtin, with an experimental compiler and no LSP integration."
       eyebrow="Language prerelease · Reviewed source"
-      date={publishedCompiler.reviewed}
+      date={historicalRelease.reviewed}
     >
       <p>
-        <strong>{publishedCompiler.tag}</strong> was published on{" "}
+        <strong>{historicalRelease.tag}</strong> was published on{" "}
         <strong>5 November 2026</strong>. It extends the earlier project-aware
         Scarp CLI with read-only, cross-file source symbol and reference
         inspection, plus a finite vector <code>rms</code> builtin. The language
@@ -22,7 +27,7 @@ export default function Alpha6SymbolNavigationPage() {
 
       <h2 id="navigate-source">Inspect declarations and references</h2>
       <p>
-        Use the <a href="/downloads/">published interpreter</a> with a Scarp
+        Use an <a href={historicalRelease.release}>alpha.6.1 interpreter</a> (or a compatible newer release) with a Scarp
         source file or explicit project directory. These commands statically
         resolve the program without running ordinary statements:
       </p>
@@ -36,7 +41,7 @@ export default function Alpha6SymbolNavigationPage() {
       </p>
       <p>
         Read the{" "}
-        <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/symbol-index.md"}>
+        <a href={project.repo + "/blob/" + historicalRelease.sourceCommit + "/docs/symbol-index.md"}>
           source-pinned symbol-index contract
         </a>{" "}
         for JSON fields, failure modes, size limits and what is deliberately
@@ -56,7 +61,7 @@ export default function Alpha6SymbolNavigationPage() {
       <CodeBlock filename="Expected stdout" code="2.0" />
       <p>
         See the{" "}
-        <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/root-mean-square.md"}>
+        <a href={project.repo + "/blob/" + historicalRelease.sourceCommit + "/docs/root-mean-square.md"}>
           pinned RMS reference
         </a>{" "}
         and <a href="/compatibility/#published-only">verified example scope</a>.
@@ -73,8 +78,8 @@ export default function Alpha6SymbolNavigationPage() {
         executable generator or package registry is included.
       </p>
       <p>
-        The <a href={publishedCompiler.release}>GitHub release record</a> and{" "}
-        <a href={project.repo + "/commit/" + publishedCompiler.sourceCommit}>
+        The <a href={historicalRelease.release}>GitHub release record</a> and{" "}
+        <a href={project.repo + "/commit/" + historicalRelease.sourceCommit}>
           annotated-tag source commit
         </a>{" "}
         establish publication and source identity. The compiler's

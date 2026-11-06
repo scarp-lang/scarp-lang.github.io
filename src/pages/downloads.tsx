@@ -153,9 +153,13 @@ export default function DownloadsPage() {
           compiled from a <code>.srp</code> program.
         </p>
         <p>
-          Alpha.6 adds symbol/reference navigation and a finite-vector{" "}
-          <code>rms</code> builtin; see the{" "}
-          <a href="/news/alpha6-symbol-navigation/">release overview</a>.
+          This release also adds <strong>optional Rust embedding caches</strong>,
+          dependency-aware edit planning and source-scoped eviction. These are
+          developer APIs available from a matching Cargo source checkout,
+          not new <code>scarp</code> CLI flags or bundled binary libraries.
+          See the <a href="/news/alpha6-cache-apis/">cache feature overview</a>.
+          Alpha.6 still supports symbol/reference navigation and vector{" "}
+          <code>rms</code>; see the <a href="/news/alpha6-symbol-navigation/">earlier alpha.6 announcement</a>.
           The restricted C11 emitter introduced in alpha.5 remains an
           <strong> experimental Rust embedding API only</strong>. There is no{" "}
           <code>scarp compile</code> command, general native executable

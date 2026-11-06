@@ -3,7 +3,8 @@ import test from "node:test";
 import { parseDeploymentMarker, probeDeployment, waitForDeployment, repositoryName } from "./deployment-smoke-lib.ts";
 
 const sha = "a".repeat(40);
-const tag = "v0.0.6-alpha.1";
+import { publishedCompiler } from "../src/data/releases.ts";
+const tag = publishedCompiler.tag;
 const htmlType = { "content-type": "text/html; charset=utf-8" };
 const jsonType = { "content-type": "application/json; charset=utf-8" };
 function validRoutes(commit: string | null = sha): Record<string, Response> {
