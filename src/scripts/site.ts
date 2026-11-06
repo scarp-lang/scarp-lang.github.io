@@ -1,5 +1,6 @@
 import { searchEntriesFor } from "../data/search.ts";
 import { enhanceMobileNavigation } from "./mobile-navigation.ts";
+import { enhanceCodeExplorer } from "./code-explorer.ts";
 
 const announcement = document.querySelector<HTMLElement>('[data-announcement]');
 const announce = (text: string) => { if (announcement) announcement.textContent = text; };
