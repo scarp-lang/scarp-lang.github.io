@@ -1,0 +1,40 @@
+name: Temporary visual baseline import
+on:
+  push:
+    branches:
+      - feat/visual-diff-baselines-20261106
+    paths:
+      - .github/workflows/visual-baselines-temp.yml
+permissions:
+  contents: read
+  actions: read
+jobs:
+  export-reviewed-screenshots:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: browser-visual-review
+          run-id: 42160811505
+          repository: scarp-lang/scarp-lang.github.io
+          github-token: ${{ github.token }}
+          path: screenshots
+      - name: Encode main-branch production screenshots
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          allowed = {"home-desktop-light", "home-mobile-dark", "search-mobile-light", "support-desktop-dark"}
+          images = list(Path("screenshots").rglob("*.png"))
+          assert {image.stem for image in images} == allowed, images
+          for image in sorted(images):
+              data = image.read_bytes()
+              assert data.startswith(bytes.fromhex("89504e470d0a1a0a")), image
+              assert 1000 < len(data) < 2500000, (image, len(data))
+              print(f"BASELINE_NAME={image.stem}")
+              print(f"BASELINE_BYTES={len(data)}")
+              encoded = base64.b64encode(data).decode("ascii")
+              for position in range(0, len(encoded), 900):
+                  print("BASELINE_PART=" + encoded[position:position+900])
+              print(f"BASELINE_END={image.stem}")
+          PY
