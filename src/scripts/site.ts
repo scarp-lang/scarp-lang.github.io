@@ -33,6 +33,6 @@ enhanceMobileNavigation({
 
 document.querySelectorAll<HTMLElement>('[data-code-explorer]').forEach(enhanceCodeExplorer);
 
-enhanceCopyButtons(document, navigator.clipboard, announce);
+enhanceCopyButtons(document.querySelectorAll<HTMLButtonElement>("[data-copy]"), navigator.clipboard, announce);
 
 enhanceSiteSearch(document, window);
