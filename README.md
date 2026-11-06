@@ -29,7 +29,7 @@ CSS, and JavaScript that browsers consume.
 
 ## Local development
 
-Use Node.js **22.12+** and npm.
+Use Node.js **26 LTS** and npm.
 
 ```sh
 npm ci
