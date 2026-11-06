@@ -52,6 +52,9 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 
 - `npm run typecheck`: application/render/build types and strict Node tooling.
 - `npm run test:support`: repository routing, Unicode, code fences, and long drafts.
+- `npm run test:a11y`: check labelled landmarks, ARIA references, images,
+  controls, and invalid static HTML fixtures; generated-site validation checks
+  every output page using the same contracts.
 - `npm run test:render`: static documents, route aliases, escaping, no-JavaScript
   content, data routes, the searchable page directory, and the not-found response.
 - `npm run test:search`: search ranking, multi-term matching, and empty queries.
@@ -139,6 +142,20 @@ publication succeeds but these public endpoints remain stale or broken.
 `npm run test:deploy-smoke` tests the probe offline, including a stale CDN,
 missing routes, invalid marker, and release drift. `npm run check` includes
 these tests; it does **not** make network requests.
+
+## Accessibility and frontend size safeguards
+
+Generated HTML is checked for a single H1, a keyboard-focusable skip-to-content
+destination, labelled navigation, resolved ARIA references, labelled form
+controls, explicit button types, and image descriptions/dimensions. The
+offscreen footer logo loads lazily with async decoding, while the header logo
+remains eager. Header search, theme and mobile-menu controls use minimum
+44-pixel tap targets.
+
+Generated JavaScript and CSS assets also have a per-file 128 KiB limit to
+catch accidental build bloat. This is a **static regression audit**, not a
+substitute for screen-reader testing, real mobile-device checks, browser
+interaction tests or field Core Web Vitals measurements.
 
 ## Branding and licenses
 
