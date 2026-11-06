@@ -42,6 +42,21 @@ test('mobile navigation has disclosure semantics and works as static links witho
   }
 });
 
+test('code examples are labelled, visible and navigable without JavaScript', () => {
+  const page = findPage('/');
+  assert(page);
+  const html = renderPage(page, developmentAssets);
+  assert.match(html, /class="example-tabs"[^>]*hidden/);
+  for (const id of ['hello', 'functions', 'numerics']) {
+    assert(html.includes(`id="heading-${id}"`));
+    assert(html.includes(`aria-labelledby="heading-${id}"`));
+    assert(html.includes(`id="tab-${id}"`));
+    assert(html.includes(`aria-controls="example-${id}"`));
+    assert(html.includes(`id="example-${id}"`));
+  }
+  assert.equal((html.match(/class="example-panel-title"/g) ?? []).length, 3);
+});
+
 test('directory and index-file aliases resolve to the canonical page', () => {
   for (const path of ['/', '/index.html', '/?source=test']) assert.equal(findPage(path)?.path, '/');
   for (const path of ['/support', '/support/', '/support/index.html', '/support/?source=test']) assert.equal(findPage(path)?.path, '/support/');

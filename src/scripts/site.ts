@@ -29,31 +29,7 @@ enhanceMobileNavigation({
   viewport: matchMedia("(max-width: 950px)"),
 });
 
-document.querySelectorAll<HTMLElement>('[data-code-explorer]').forEach(explorer => {
-  const tabs = [...explorer.querySelectorAll<HTMLButtonElement>('[data-tab]')];
-  const panels = [...explorer.querySelectorAll<HTMLElement>('[data-panel]')];
-  const tablist = explorer.querySelector<HTMLElement>('[data-tabs]');
-  if (!tablist) return;
-  tablist.hidden = false;
-  tablist.setAttribute('role', 'tablist');
-  const select = (index: number, focus = false) => {
-    tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === index)); tab.tabIndex = i === index ? 0 : -1; });
-    panels.forEach((panel, i) => { panel.hidden = i !== index; });
-    if (focus) tabs[index]?.focus();
-  };
-  tabs.forEach((tab, index) => {
-    tab.setAttribute('role', 'tab');
-    tab.addEventListener('click', () => select(index));
-    tab.addEventListener('keydown', event => {
-      const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
-      if (!keys.includes(event.key)) return;
-      event.preventDefault();
-      select(event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length, true);
-    });
-  });
-  panels.forEach(panel => { panel.setAttribute('role', 'tabpanel'); panel.tabIndex = 0; });
-  select(0);
-});
+document.querySelectorAll<HTMLElement>('[data-code-explorer]').forEach(enhanceCodeExplorer);
 
 if (navigator.clipboard?.writeText) document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach(button => {
   button.hidden = false;

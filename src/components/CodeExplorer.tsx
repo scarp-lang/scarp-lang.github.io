@@ -28,9 +28,10 @@ export default function CodeExplorer() {
           key={example.id}
           className="example-panel"
           id={`example-${example.id}`}
-          aria-labelledby={`tab-${example.id}`}
+          aria-labelledby={`heading-${example.id}`}
           data-panel={example.id}
         >
+          <h3 className="example-panel-title" id={`heading-${example.id}`}>{example.label} example</h3>
           <CodeBlock code={example.code} filename={example.filename} />
           <div className="code-output">
             <span className="output-label">Expected output</span>

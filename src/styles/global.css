@@ -73,8 +73,11 @@
   .section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 50px; margin-bottom: 46px; }
   .section-heading > p { font-size: .88rem; color: var(--muted); padding-bottom: 4px; }
   .code-explorer { border-radius: var(--radius); overflow: hidden; background: var(--code); box-shadow: 0 25px 60px #09274f12; color: var(--code-ink); border: 1px solid #2f425d; }
-  .example-tabs { display: flex; gap: 20px; padding-inline: 22px; border-bottom: 1px solid #2e3c51; background: #14243b; }
-  .example-tabs button { background: transparent; color: #a6b6cd; border: 0; padding: 15px 0; font-size: .7rem; border-bottom: 2px solid transparent; }
+  .example-tabs { display: flex; gap: 20px; padding-inline: 22px; border-bottom: 1px solid #2e3c51; background: #14243b; overflow-x: auto; overscroll-behavior-x: contain; }
+  .example-tabs button { background: transparent; color: #a6b6cd; border: 0; padding: 13px 0; min-height: 44px; flex: 0 0 auto; font-size: .7rem; border-bottom: 2px solid transparent; }
+  .example-tabs button:focus-visible { outline: 3px solid #a4ceff; outline-offset: -3px; }
+  .example-panel-title { font-size: 1rem; letter-spacing: 0; padding: 16px 22px 4px; color: var(--code-ink); }
+  .code-explorer.is-enhanced .example-panel-title { display: none; }
   .example-tabs button[aria-selected='true'] { color: #eaf3ff; border-bottom-color: #64acff; }
   .code-block { background: var(--code); color: var(--code-ink); border: 1px solid #2a3a52; border-radius: 8px; overflow: hidden; }
   .code-explorer .code-block { border: 0; border-radius: 0; }

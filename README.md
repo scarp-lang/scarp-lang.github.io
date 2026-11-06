@@ -57,6 +57,8 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:search`: search ranking, multi-term matching, and empty queries.
 - `npm run test:nav`: mobile disclosure state, Escape behavior, outside interaction,
   focus restoration, and responsive breakpoint transitions.
+- `npm run test:tabs`: accessible example tab selection, arrow/Home/End keyboard
+  navigation, focus behavior, and safe fallback when markup is incomplete.
 - `npm run test:ecosystem`: audited ecosystem links, versions, and release-stage labels.
 - `npm run test:releases`: pinned example baseline versus published compiler release, exact archive hashes, and download URLs.
 - `npm run test:download-guide`: ensure OS-specific checksum commands, archive names, and the release-pinned project guide render correctly.
