@@ -368,3 +368,19 @@ test("download checksum copy controls are exact, accessible, and hidden without 
   assert.equal((html.match(/class="checksum-copy"/g) ?? []).length, publishedDownloads.length);
   assert.equal((html.match(/data-copy-text="[^"]+" aria-label="[^"]+" hidden/g) ?? []).length, publishedDownloads.length);
 });
+
+test("native quick search is discoverable on every page with static fallback and reviewed result links", () => {
+  for (const page of pages) {
+    const html = renderPage(page, developmentAssets);
+    assert(html.includes('href="/search/" data-quick-trigger=""'));
+    assert(html.includes('id="quick-search" data-quick-search=""'));
+    assert(html.includes('aria-labelledby="quick-search-title"'));
+    assert(html.includes('role="search"'));
+    assert(html.includes('id="quick-search-input"'));
+    assert(html.includes('data-quick-results=""'));
+    assert.equal((html.match(/data-quick-item=""/g) ?? []).length, searchEntries.length);
+    for (const entry of searchEntries) {
+      assert(html.includes('data-quick-path="' + entry.path + '"'));
+    }
+  }
+});

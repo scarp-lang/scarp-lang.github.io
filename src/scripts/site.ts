@@ -1,4 +1,5 @@
 import { enhanceSiteSearch } from "./site-search.ts";
+import { enhanceQuickSearch } from "./quick-search.ts";
 import { enhanceMobileNavigation } from "./mobile-navigation.ts";
 import { enhanceCodeExplorer } from "./code-explorer.ts";
 import { enhanceCopyButtons } from "./code-copy.ts";
@@ -36,3 +37,4 @@ document.querySelectorAll<HTMLElement>('[data-code-explorer]').forEach(enhanceCo
 enhanceCopyButtons(document.querySelectorAll<HTMLButtonElement>("[data-copy]"), navigator.clipboard, announce);
 
 enhanceSiteSearch(document, window);
+enhanceQuickSearch(document, window);

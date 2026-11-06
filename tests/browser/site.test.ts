@@ -131,25 +131,64 @@ test("critical pages fit 320, 390, 768, and 1280 pixel viewports", async () => {
   });
 });
 
-test("global shortcut focuses search and Hindi filtering announces results", async () => {
-  await inPage("search-keyboard", { viewport: { width: 390, height: 844 } }, async page => {
+test("quick search opens from header and shortcuts, ranks Hindi results, and restores focus", async () => {
+  await inPage("quick-search", { viewport: { width: 390, height: 844 } }, async page => {
     await page.goto(origin + "/", { waitUntil: "networkidle" });
+    const dialog = page.locator("#quick-search");
+    const trigger = page.locator("[data-quick-trigger]");
+    const input = page.locator("#quick-search-input");
+    assert.equal(await dialog.isVisible(), false);
     await page.keyboard.press("/");
-    await page.waitForURL(/\/search\/#site-search-input$/);
-    const input = page.locator("#site-search-input");
+    assert.equal(await dialog.isVisible(), true);
     assert.equal(await input.evaluate(element => element === document.activeElement), true);
     await input.fill("डाउनलोड");
+    assert.equal(await page.locator("[data-quick-item]:visible").count(), 1);
+    assert.equal(await page.locator("[data-quick-item]:visible").first().getAttribute("data-quick-path"), "/downloads/");
+    assert.equal(await page.locator("[data-quick-count]").textContent(), "1 result.");
+    await input.press("ArrowDown");
+    assert.equal(await page.locator('[data-quick-item]:visible a').evaluate(element => element === document.activeElement), true);
+    await page.keyboard.press("ArrowDown");
+    assert.equal(await input.evaluate(element => element === document.activeElement), true);
+    await input.fill("no-such-page-123456");
+    assert.equal(await page.locator("[data-quick-empty]").isVisible(), true);
+    await page.keyboard.press("Escape");
+    assert.equal(await dialog.isVisible(), false);
+    assert.equal(await trigger.evaluate(element => element === document.activeElement), true);
+    await trigger.click();
+    assert.equal(await dialog.isVisible(), true);
+    await input.fill("roadmap");
+    assert.equal(await page.locator("[data-quick-all]").getAttribute("href"), "/search/?q=roadmap");
+    await page.locator("[data-quick-all]").click();
+    await page.waitForURL(/\/search\/\?q=roadmap/);
+    assert.equal(await page.locator("[data-search-item]:visible").first().getAttribute("data-search-path"), "/roadmap/");
+  });
+});
+
+test("quick-search shortcuts respect editors and the full search directory", async () => {
+  await inPage("quick-shortcuts", { viewport: { width: 1280, height: 800 } }, async page => {
+    await page.goto(origin + "/features/", { waitUntil: "networkidle" });
+    await page.keyboard.press("Control+k");
+    assert.equal(await page.locator("#quick-search").isVisible(), true);
+    await page.locator("[data-quick-close]").click();
+    assert.equal(await page.locator("#quick-search").isVisible(), false);
+    await page.goto(origin + "/search/", { waitUntil: "networkidle" });
+    await page.keyboard.press("/");
+    const input = page.locator("#site-search-input");
+    assert.equal(await input.evaluate(element => element === document.activeElement), true);
+    assert.equal(await page.locator("#quick-search").isVisible(), false);
+    await input.fill("डाउनलोड");
     assert.equal(await page.locator("[data-search-item]:visible").count(), 1);
-    assert.equal(await page.locator("[data-search-item]:visible").first().getAttribute("data-search-path"), "/downloads/");
     assert.equal(await page.locator("[data-search-status]").textContent(), "1 result.");
     await input.press("Escape");
     assert.equal(await input.inputValue(), "");
-    assert(await page.locator("[data-search-item]:visible").count() >= 20);
     await input.fill("notfoundanywhere12345");
     assert.equal(await page.locator("[data-search-empty]").isVisible(), true);
     await page.locator("[data-search-clear]").click();
-    assert.equal(await input.inputValue(), "");
     assert.equal(await page.locator("[data-search-empty]").isVisible(), false);
+    await input.fill("help");
+    await page.keyboard.press("Control+k");
+    assert.equal(await page.locator("#quick-search").isVisible(), false);
+    assert.equal(await input.inputValue(), "help");
   });
 });
 

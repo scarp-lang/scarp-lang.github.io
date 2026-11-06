@@ -81,23 +81,4 @@ export function enhanceSiteSearch(doc: Document, win: Window): void {
       if (win.location.hash === "#site-search-input") input.focus();
     }
   }
-
-  // Do not steal shortcuts from any editor, including contenteditable controls.
-  doc.addEventListener("keydown", event => {
-    if (event.defaultPrevented || event.isComposing || event.altKey || event.shiftKey) return;
-    const target = event.target as Element | null;
-    const editing = Boolean(target?.closest?.("input, textarea, select, [contenteditable], [role='textbox']"));
-    if (editing) return;
-    const modK = (event.ctrlKey || event.metaKey) &&
-      event.key.toLowerCase() === "k";
-    const slash = !event.ctrlKey && !event.metaKey && event.key === "/";
-    if (!modK && !slash) return;
-    event.preventDefault();
-    if (input && !input.closest("form")?.hidden) {
-      input.focus();
-      input.select();
-    } else {
-      win.location.assign("/search/#site-search-input");
-    }
-  });
 }
