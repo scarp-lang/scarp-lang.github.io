@@ -6,17 +6,30 @@ export interface ClipboardWriter {
   writeText(text: string): Promise<void>;
 }
 
+/** Structural DOM subset: also typechecks in Node's DOM-free test environment. */
+export interface CopyControl {
+  hidden: boolean;
+  disabled: boolean;
+  textContent: string | null;
+  dataset: { copyText?: string };
+  closest(selector: string): { querySelector(selector: string): { textContent: string | null } | null } | null;
+  getAttribute(name: string): string | null;
+  setAttribute(name: string, value: string): void;
+  removeAttribute(name: string): void;
+  addEventListener(type: "click", handler: () => void): void;
+}
+
 type Scheduler = (callback: () => void, delayMs: number) => void;
 
 export function enhanceCopyButtons(
-  doc: Document,
+  buttons: Iterable<CopyControl>,
   clipboard: ClipboardWriter | undefined,
   announce: (message: string) => void,
   schedule: Scheduler = (callback, delayMs) => { setTimeout(callback, delayMs); },
 ): void {
   if (typeof clipboard?.writeText !== "function") return;
 
-  for (const button of doc.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
+  for (const button of buttons) {
     const explicitText = button.dataset.copyText;
     const text = explicitText ??
       button.closest(".code-block")?.querySelector("code")?.textContent ?? "";
