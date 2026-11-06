@@ -8,15 +8,17 @@ class FakeButton {
   textContent: string;
   dataset: Record<string, string> = {};
   private label: string | null;
+  readonly code: string | null;
   private handlers: Array<() => void | Promise<void>> = [];
   constructor(
     text: string,
-    readonly code: string | null = null,
+    code: string | null = null,
     explicitText?: string,
     label: string | null = null,
   ) {
     this.textContent = text;
     this.label = label;
+    this.code = code;
     if (explicitText !== undefined) this.dataset.copyText = explicitText;
   }
   getAttribute(name: string) { return name === "aria-label" ? this.label : null; }
@@ -36,13 +38,6 @@ class FakeButton {
   }
   async click() { await Promise.all(this.handlers.map(handler => handler())); }
 }
-class FakeDocument {
-  constructor(readonly buttons: FakeButton[]) {}
-  querySelectorAll<T>(selector: string): T[] {
-    assert.equal(selector, "[data-copy]");
-    return this.buttons as unknown as T[];
-  }
-}
 function enhance(
   buttons: FakeButton[],
   clipboard: ClipboardWriter | undefined,
@@ -50,7 +45,7 @@ function enhance(
   schedule?: (callback: () => void, delayMs: number) => void,
 ) {
   enhanceCopyButtons(
-    new FakeDocument(buttons) as unknown as Document,
+    buttons,
     clipboard,
     announce,
     schedule,
