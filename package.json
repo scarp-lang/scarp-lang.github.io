@@ -27,7 +27,7 @@
     "test:compiler-pins": "node --experimental-strip-types --test scripts/test-compiler-pins.ts",
     "test:migration": "node --experimental-strip-types --test scripts/test-migration.ts",
     "test:deploy-smoke": "node --experimental-strip-types --test scripts/test-deployment-smoke.ts",
-    "test:tabs": "node --import tsx --test scripts/test-code-explorer.ts"
+    "test:tabs": "node --import tsx --test scripts/test-code-explorer.tsx"
   },
   "dependencies": {
     "react": "19.3.1",
