@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 23);
+  assert.equal(pages.length, 24);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -282,38 +282,52 @@ test('migration route displays source-backed version guidance with no JavaScript
   assert(renderPage(findPage('/faq/')!, developmentAssets).includes('href="/migration/"'));
 });
 
-test('current alpha.6 announcement is dated, source-backed and included in RSS', async () => {
+test('alpha.6.2 cache announcement is dated, source-backed and included in RSS', async () => {
   const announcement = news[0];
   assert(announcement);
-  assert.equal(announcement.href, '/news/alpha6-symbol-navigation/');
+  assert.equal(announcement.href, '/news/alpha6-cache-apis/');
   assert.equal(announcement.date, publishedCompiler.reviewed);
-  assert.equal(formatNewsDate('2026-11-05'), '5 November 2026');
+  assert.equal(formatNewsDate('2026-11-06'), '6 November 2026');
   assert.throws(() => formatNewsDate('not-a-date'), RangeError);
 
   for (const route of ['/', '/news/']) {
     const page = findPage(route);
     assert(page);
     const html = renderPage(page, developmentAssets);
-    assert(html.includes('href="' + announcement.href + '"'), 'Alpha.6 announcement absent from ' + route);
-    assert(html.includes('>5 November 2026</time>'), 'Latest announcement date absent from ' + route);
+    assert(html.includes('href="' + announcement.href + '"'), 'Latest announcement absent from ' + route);
+    assert(html.includes('>6 November 2026</time>'), 'Latest announcement date absent from ' + route);
   }
-
   const article = findPage(announcement.href);
-  assert(article, 'Alpha.6 article not registered');
+  assert(article, 'Cache article not registered');
   const html = renderPage(article, developmentAssets);
-  for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, 'rms',
-    'inspect symbols', 'inspect references', '/compatibility/', '/migration/']) {
-    assert(html.includes(token), 'Alpha.6 article missing source-backed detail: ' + token);
+  for (const token of ['v0.0.6-alpha.2', publishedCompiler.sourceCommit, 'token',
+    'semantic', 'invalidation', 'eviction', '/downloads/', '/compatibility/']) {
+    assert(html.includes(token), 'Alpha.6.2 article missing evidence: ' + token);
   }
-  assert(searchEntries.some(entry => entry.path === announcement.href), 'Alpha.6 news absent from search');
-
+  assert(searchEntries.some(entry => entry.path === announcement.href));
   const feed = await renderRequest('/feed.xml', developmentAssets);
-  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-symbol-navigation/</link>'));
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-cache-apis/</link>'));
   assert(feed?.body.includes('<pubDate>' + new Date(announcement.date + 'T00:00:00Z').toUTCString() + '</pubDate>'));
 });
 
+test('historical alpha.6.1 article stays pinned after release updates', async () => {
+  const previous = news[1];
+  assert(previous);
+  assert.equal(previous.href, '/news/alpha6-symbol-navigation/');
+  assert.equal(previous.date, '2026-11-05');
+  const article = findPage(previous.href);
+  assert(article);
+  const html = renderPage(article, developmentAssets);
+  for (const token of ['v0.0.6-alpha.1', 'aa329a22cf2bf92d2c9814a26ff9c8b67a72e6e8', 'rms',
+    'inspect symbols', 'inspect references', '/compatibility/', '/migration/']) {
+    assert(html.includes(token), 'Historical alpha.6.1 article changed: ' + token);
+  }
+  assert(!html.includes(publishedCompiler.sourceCommit));
+  assert(searchEntries.some(entry => entry.path === previous.href));
+});
+
 test('historical alpha.5 article keeps its original release and source references', async () => {
-  const historical = news[1];
+  const historical = news[2];
   assert(historical);
   assert.equal(historical.href, '/news/alpha5-project-inspection/');
   assert.equal(historical.date, '2026-11-04');
@@ -329,7 +343,7 @@ test('historical alpha.5 article keeps its original release and source reference
 });
 
 test('historical alpha.4 article retains original release date and source evidence', async () => {
-  const historical = news[2];
+  const historical = news[3];
   assert(historical);
   assert.equal(historical.href, '/news/offline-projects/');
   assert.equal(historical.date, '2026-11-03');
