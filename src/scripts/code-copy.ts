@@ -8,7 +8,7 @@ export interface ClipboardWriter {
 
 /** Structural DOM subset: also typechecks in Node's DOM-free test environment. */
 export interface CopyControl {
-  hidden: boolean;
+  hidden: boolean | string;
   disabled: boolean;
   textContent: string | null;
   dataset: { copyText?: string };
