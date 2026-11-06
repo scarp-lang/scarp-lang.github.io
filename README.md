@@ -118,6 +118,22 @@ checks and the pinned Scarp example tests pass. No custom domain is configured.
 The main site uses `/`; the independent documentation site uses `/scarp-docs/`.
 See [CONTRIBUTING.md](CONTRIBUTING.md) for source and evidence conventions.
 
+## Live deployment verification
+
+The build emits a small `/deployment.json` containing the Git commit SHA
+(when built in GitHub Actions) and the reviewed Scarp compiler tag. This is
+public build provenance, not a live release feed; local builds use a null commit.
+
+After `deploy-pages` completes, the deployment job uses Node.js 26 to
+re-check the **live** root, downloads, support, `project.json`, and
+`deployment.json`. It verifies the exact deployed commit and release tag,
+retrying briefly for GitHub Pages CDN propagation. The workflow fails if
+publication succeeds but these public endpoints remain stale or broken.
+
+`npm run test:deploy-smoke` tests the probe offline, including a stale CDN,
+missing routes, invalid marker, and release drift. `npm run check` includes
+these tests; it does **not** make network requests.
+
 ## Branding and licenses
 
 `public/brand/scarp-logo.png` is the permanent blue geometric S and wordmark.

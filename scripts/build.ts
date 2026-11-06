@@ -6,6 +6,7 @@ import { build, type Manifest } from "vite";
 import { pages, outputPath } from "../src/site/pages.ts";
 import { dataRoutes, renderPage } from "../src/site/render.tsx";
 import type { SiteAssets } from "../src/site/context.ts";
+import { publishedCompiler } from "../src/data/releases.ts";
 
 await build({
   configFile: false,
@@ -57,6 +58,15 @@ for (const route of dataRoutes) {
     await route.create().text(),
   );
 }
+const commit = process.env.GITHUB_SHA ?? null;
+assert(commit === null || /^[0-9a-f]{40}$/.test(commit), "GITHUB_SHA must be a 40-character commit");
+await writeFile("dist/deployment.json", JSON.stringify({
+  schemaVersion: 1,
+  repository: "scarp-lang/scarp-lang.github.io",
+  commit,
+  compilerTag: publishedCompiler.tag,
+}, null, 2) + "\n");
+
 console.log(
   `Rendered ${pages.length} static pages from TypeScript/TSX and ${dataRoutes.length} data endpoints.`,
 );
