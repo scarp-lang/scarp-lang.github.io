@@ -30,11 +30,12 @@ test('brand images retain intrinsic size and defer offscreen decoding', () => {
   const home = findPage('/');
   assert(home);
   const html = renderPage(home, developmentAssets);
-  assert.equal((html.match(/src="\/brand\/scarp-logo.png"/g) ?? []).length, 2);
+  assert.equal((html.match(/src="\/brand\/scarp-logo.webp"/g) ?? []).length, 2);
   assert.equal((html.match(/decoding="async"/g) ?? []).length, 2);
   assert(html.includes('loading="lazy"'));
   assert(html.includes('loading="eager"'));
-  assert.equal((html.match(/width="1254" height="1254"/g) ?? []).length, 2);
+  assert(html.includes('content="https://scarp-lang.github.io/brand/scarp-logo.png"'));
+  assert.equal((html.match(/width="512" height="512"/g) ?? []).length, 2);
 });
 
 test('mobile navigation has disclosure semantics and works as static links without JavaScript', () => {
