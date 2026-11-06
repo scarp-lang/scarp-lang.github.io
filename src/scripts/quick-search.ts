@@ -74,6 +74,13 @@ export function enhanceQuickSearch(doc: Document, win: Window): void {
 
       // Keep the ordinary tab order; arrow keys are an optional fast path.
       dialog.addEventListener("keydown", event => {
+        // Chrome may consume Escape in a nonempty search input to clear it.
+        // Closing explicitly gives the dialog predictable keyboard behavior.
+        if (event.key === "Escape" && !event.isComposing) {
+          event.preventDefault();
+          dialog.close();
+          return;
+        }
         if (event.defaultPrevented || event.isComposing || event.altKey ||
             event.ctrlKey || event.metaKey || event.shiftKey) return;
         if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
