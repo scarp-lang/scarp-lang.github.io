@@ -26,6 +26,14 @@ test('every registered page renders a complete, distinct static document', () =>
   }
 });
 
+test('all public pages use a small favicon and preserve the original OG artwork', () => {
+  for (const page of pages) {
+    const html = renderPage(page, developmentAssets);
+    assert(html.includes('rel="icon" type="image/png" sizes="64x64" href="/brand/scarp-favicon.png"'));
+    assert(html.includes('content="https://scarp-lang.github.io/brand/scarp-logo.png"'));
+  }
+});
+
 test('brand images retain intrinsic size and defer offscreen decoding', () => {
   const home = findPage('/');
   assert(home);

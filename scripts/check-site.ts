@@ -19,6 +19,17 @@ assert(logoWebp.length > 1024 && logoWebp.length <= 32 * 1024,
   `Optimized display logo must be <= 32 KiB, found ${logoWebp.length} bytes`);
 assert.equal(logoWebp.toString('ascii', 0, 4), 'RIFF', 'Logo must have RIFF signature');
 assert.equal(logoWebp.toString('ascii', 8, 12), 'WEBP', 'Logo must be genuine WebP');
+const favicon = await readFile(join(root, 'brand/scarp-favicon.png'));
+assert(favicon.length > 200 && favicon.length <= 16 * 1024,
+  `PNG favicon exceeds budget: ${favicon.length} bytes`);
+assert.equal(favicon.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+assert.equal(favicon.readUInt32BE(16), 64, 'PNG favicon width must be 64 pixels');
+assert.equal(favicon.readUInt32BE(20), 64, 'PNG favicon height must be 64 pixels');
+const faviconIco = await readFile(join(root, 'favicon.ico'));
+assert(faviconIco.length > 200 && faviconIco.length <= 24 * 1024,
+  `ICO favicon exceeds budget: ${faviconIco.length} bytes`);
+assert.equal(faviconIco.subarray(0, 4).toString('hex'), '00000100', 'Invalid ICO signature');
+
 
 /* Guard generated JavaScript/CSS bundle sizes; not a Core Web Vitals claim. */
 for (const file of files.filter(path => /\/assets\/[^/]+\.(?:js|css)$/.test(path))) {
@@ -31,6 +42,9 @@ for (const page of pages) {
   const html = await readFile(page, 'utf8');
   assert.deepEqual(accessibilityProblems(html), [], `Accessibility contract failed for ${page}`);
   assert.match(html, /src="\/brand\/scarp-logo\.webp"/, `Optimized logo missing from ${page}`);
+  assert.match(html, /rel="icon" type="image\/png" sizes="64x64" href="\/brand\/scarp-favicon\.png"/,
+    `Compact favicon missing from ${page}`);
+
   assert(!/<img\\b[^>]*src="\/brand\/scarp-logo\.png"/.test(html),
     `Unoptimized logo still displayed on ${page}`);
 

@@ -178,6 +178,17 @@ The generated-site audit requires the WebP asset to be genuine, between
 1 KiB and 32 KiB, and referenced on each page. This is an asset-size
 reduction, not a measured Core Web Vitals improvement.
 
+## Compact favicons
+
+The site uses a **5,046-byte** 64 × 64 PNG favicon and supplies a
+**15,086-byte** root `favicon.ico` for browsers and clients that request
+it directly. Both are derived from the original Scarp S mark using the same
+crop displayed in the header, without redrawing the logo.
+
+These replace the previous 1,136,676-byte source PNG as the browser-tab
+icon. Generated-site validation checks signatures, dimensions and file
+budgets. The original PNG remains unchanged for social metadata.
+
 ## Branding and licenses
 
 `public/brand/scarp-logo.png` is the permanent blue geometric S and wordmark.
