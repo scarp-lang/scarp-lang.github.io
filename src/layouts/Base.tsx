@@ -34,7 +34,7 @@ export default function Base({
         <meta name="description" content={description} />
         {noindex && <meta name="robots" content="noindex" />}
         <link rel="canonical" href={canonical} />
-        <link rel="icon" type="image/png" href="/brand/scarp-logo.png" />
+        <link rel="icon" type="image/png" sizes="64x64" href="/brand/scarp-favicon.png" />
         <meta name="theme-color" content="#f7f9fc" />
         <meta property="og:type" content="website" />
         <meta
