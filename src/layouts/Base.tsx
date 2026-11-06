@@ -101,7 +101,7 @@ export default function Base({
                 </a>
               ))}
             </nav>
-            <a href="/search/" data-quick-trigger className="site-search-link" aria-label="Search website" aria-current={path === "/search/" ? "page" : undefined}>
+            <a href="/search/" data-quick-trigger="" className="site-search-link" aria-label="Search website" aria-current={path === "/search/" ? "page" : undefined}>
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                 <circle cx="10.5" cy="10.5" r="6.5" />
                 <path d="m16 16 5 5" />
