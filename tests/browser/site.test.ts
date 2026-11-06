@@ -311,6 +311,137 @@ test("theme preference survives navigation and reload, and has an accessible tog
   });
 });
 
+
+/**
+ * Decode both checked-in baseline and current Chromium PNGs in the browser's
+ * own canvas, then count materially different pixels. This intentionally
+ * requires baseline files to exist; no CI mode can auto-approve screenshots.
+ */
+async function verifyVisualBaseline(page: Page, name: string, screenshot: Buffer, saveDiff = true): Promise<void> {
+  const file = resolve("tests/browser/baselines", name + ".png");
+  const expected = await readFile(file);
+  const result = await page.evaluate(async ({ golden, current }) => {
+    async function decode(base64: string) {
+      const bytes = Uint8Array.from(atob(base64), character => character.charCodeAt(0));
+      const bitmap = await createImageBitmap(new Blob([bytes], { type: "image/png" }));
+      const canvas = document.createElement("canvas");
+      canvas.width = bitmap.width;
+      canvas.height = bitmap.height;
+      const context = canvas.getContext("2d", { willReadFrequently: true });
+      if (!context) throw new Error("Canvas 2D unavailable");
+      context.drawImage(bitmap, 0, 0);
+      const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+      bitmap.close();
+      return { pixels: pixels.data, width: canvas.width, height: canvas.height };
+    }
+    const baseline = await decode(golden);
+    const actual = await decode(current);
+    if (baseline.width !== actual.width || baseline.height !== actual.height) {
+      return {
+        width: actual.width,
+        height: actual.height,
+        baselineWidth: baseline.width,
+        baselineHeight: baseline.height,
+        changed: -1,
+        total: baseline.width * baseline.height,
+        diffPng: null as string | null,
+      };
+    }
+    const changedMap = new Uint8ClampedArray(actual.pixels.length);
+    let changed = 0;
+    const CHANNEL_THRESHOLD = 40;
+    for (let index = 0; index < actual.pixels.length; index += 4) {
+      const delta = Math.max(
+        Math.abs(actual.pixels[index]! - baseline.pixels[index]!),
+        Math.abs(actual.pixels[index + 1]! - baseline.pixels[index + 1]!),
+        Math.abs(actual.pixels[index + 2]! - baseline.pixels[index + 2]!),
+        Math.abs(actual.pixels[index + 3]! - baseline.pixels[index + 3]!),
+      );
+      const isDifferent = delta > CHANNEL_THRESHOLD;
+      if (isDifferent) changed++;
+      // Gray unchanged pixels, bright magenta for real differences.
+      const gray = Math.round((
+        actual.pixels[index]! + actual.pixels[index + 1]! + actual.pixels[index + 2]!
+      ) / 3);
+      changedMap[index] = isDifferent ? 255 : gray;
+      changedMap[index + 1] = isDifferent ? 0 : gray;
+      changedMap[index + 2] = isDifferent ? 180 : gray;
+      changedMap[index + 3] = 255;
+    }
+    const total = actual.width * actual.height;
+    let diffPng: string | null = null;
+    if (changed / total > 0.0035) {
+      const canvas = document.createElement("canvas");
+      canvas.width = actual.width;
+      canvas.height = actual.height;
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("Canvas 2D unavailable");
+      context.putImageData(new ImageData(changedMap, actual.width, actual.height), 0, 0);
+      diffPng = canvas.toDataURL("image/png").split(",")[1] ?? null;
+    }
+    return {
+      width: actual.width,
+      height: actual.height,
+      baselineWidth: baseline.width,
+      baselineHeight: baseline.height,
+      changed,
+      total,
+      diffPng,
+    };
+  }, {
+    golden: expected.toString("base64"),
+    current: screenshot.toString("base64"),
+  });
+
+  assert.equal(result.width, result.baselineWidth,
+    name + ": screenshot width drifted from the production-verified baseline");
+  assert.equal(result.height, result.baselineHeight,
+    name + ": screenshot height drifted from the reviewed production baseline");
+  if (saveDiff && result.diffPng) {
+    await mkdir("test-results/browser/diffs", { recursive: true });
+    await import("node:fs/promises").then(({ writeFile }) =>
+      writeFile("test-results/browser/diffs/" + name + "-diff.png",
+        Buffer.from(result.diffPng!, "base64")));
+  }
+  const fraction = result.changed / result.total;
+  assert(fraction <= 0.0035,
+    name + ": " + result.changed + " / " + result.total + " pixels (" +
+    (fraction * 100).toFixed(3) + "%) differ from baseline; threshold is 0.35%. " +
+    "Review test-results/browser/diffs and update approved reference images only after visual review.");
+}
+
+test("pixel comparison rejects intentionally altered screenshots and dimension drift", async () => {
+  await inPage("visual-diff-sensitivity", {
+    viewport: { width: 1280, height: 800 },
+    colorScheme: "light",
+    reducedMotion: "reduce",
+  }, async page => {
+    await page.goto(origin + "/", { waitUntil: "networkidle" });
+    await page.evaluate(() => document.fonts.ready);
+
+    // An incorrectly cropped capture cannot be mistaken for a valid baseline.
+    const cropped = await page.screenshot({
+      fullPage: false, animations: "disabled", caret: "hide",
+    });
+    await assert.rejects(
+      () => verifyVisualBaseline(page, "home-desktop-light", cropped, false),
+      /screenshot height drifted/,
+    );
+
+    // Deliberate whole-page visual change must trigger a real pixel mismatch.
+    await page.evaluate(() => {
+      document.documentElement.style.filter = "invert(1)";
+    });
+    const modified = await page.screenshot({
+      fullPage: true, animations: "disabled", caret: "hide",
+    });
+    await assert.rejects(
+      () => verifyVisualBaseline(page, "home-desktop-light", modified, false),
+      /pixels .* differ from baseline|pixels .*differ from baseline/,
+    );
+  });
+});
+
 test("capture reproducible light/dark screenshots for visual review", async () => {
   const views = [
     { name: "home-desktop-light", route: "/", theme: "light", width: 1280, height: 800 },
@@ -328,12 +459,13 @@ test("capture reproducible light/dark screenshots for visual review", async () =
       await page.goto(origin + view.route, { waitUntil: "networkidle" });
       await page.evaluate(() => document.fonts.ready);
       assert.equal(await page.locator("html").getAttribute("data-theme"), view.theme);
-      await page.screenshot({
+      const screenshot = await page.screenshot({
         path: "test-results/browser/visual/" + view.name + ".png",
         fullPage: true,
         animations: "disabled",
         caret: "hide",
       });
+      await verifyVisualBaseline(page, view.name, screenshot);
     });
   }
 });

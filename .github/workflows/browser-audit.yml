@@ -28,7 +28,7 @@ jobs:
         run: npm run build
       - name: Test mobile and accessibility behavior in Chrome
         run: npm run test:browser
-      - name: Upload failure screenshots
+      - name: Upload visual comparison diffs and failure screenshots
         if: failure()
         uses: actions/upload-artifact@v4
         with:

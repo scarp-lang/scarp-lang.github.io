@@ -110,10 +110,24 @@ npm run test:browser
 ```
 
 The test runner serves the exact built `dist/` files using a temporary local HTTP server. The workflow uploads
-failure screenshots. These screenshots are **review artifacts**, not pixel-diff regression gates.
+failure screenshots and visual-difference images. Four **checked-in production reference
+screenshots** are compared against each browser run pixel by pixel, allowing
+no more than **0.35% of pixels** to differ materially (over 40 intensity
+levels in any RGBA channel). Width/height differences always fail.
+Mismatches produce magenta-highlighted diff PNGs under
+`test-results/browser/diffs/` alongside the current screenshot.
+
+Reference screenshots in `tests/browser/baselines/` were imported from the
+successful GitHub Actions Chrome run [42160811505](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/42160811505),
+for the verified live production commit `5289b957`. **Reference files are
+never regenerated or accepted in CI**. When a design update is intentional,
+review its screenshots before explicitly updating and committing reference
+images. Hosted Chrome/font updates can introduce genuine differences and should
+also be reviewed, not silently approved.
+
 The contrast samples check solid, directly defined foreground/background pairs;
 they do not automatically audit every text pixel, overlay, or gradient.
-This is browser smoke testing, not a full WCAG audit
+This remains browser regression testing, not a full WCAG audit
 or a measured field Core Web Vitals score.
 ## Content and publication
 
