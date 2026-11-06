@@ -29,7 +29,8 @@
     "test:deploy-smoke": "node --experimental-strip-types --test scripts/test-deployment-smoke.ts",
     "test:tabs": "node --import tsx --test scripts/test-code-explorer.tsx",
     "test:search-ui": "node --import tsx --test scripts/test-site-search.tsx",
-    "test:a11y": "node --experimental-strip-types --test scripts/test-accessibility-contracts.ts"
+    "test:a11y": "node --experimental-strip-types --test scripts/test-accessibility-contracts.ts",
+    "test:browser": "node --experimental-strip-types --test tests/browser/site.test.ts"
   },
   "dependencies": {
     "react": "19.3.1",
