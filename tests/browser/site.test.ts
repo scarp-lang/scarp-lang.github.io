@@ -317,7 +317,7 @@ test("theme preference survives navigation and reload, and has an accessible tog
  * own canvas, then count materially different pixels. This intentionally
  * requires baseline files to exist; no CI mode can auto-approve screenshots.
  */
-async function verifyVisualBaseline(page: Page, name: string, screenshot: Buffer): Promise<void> {
+async function verifyVisualBaseline(page: Page, name: string, screenshot: Buffer, saveDiff = true): Promise<void> {
   const file = resolve("tests/browser/baselines", name + ".png");
   const expected = await readFile(file);
   const result = await page.evaluate(async ({ golden, current }) => {
@@ -394,10 +394,10 @@ async function verifyVisualBaseline(page: Page, name: string, screenshot: Buffer
   });
 
   assert.equal(result.width, result.baselineWidth,
-    name + ": screenshot width drifted from the reviewed production baseline");
+    name + ": screenshot width drifted from the production-verified baseline");
   assert.equal(result.height, result.baselineHeight,
     name + ": screenshot height drifted from the reviewed production baseline");
-  if (result.diffPng) {
+  if (saveDiff && result.diffPng) {
     await mkdir("test-results/browser/diffs", { recursive: true });
     await import("node:fs/promises").then(({ writeFile }) =>
       writeFile("test-results/browser/diffs/" + name + "-diff.png",
@@ -409,6 +409,38 @@ async function verifyVisualBaseline(page: Page, name: string, screenshot: Buffer
     (fraction * 100).toFixed(3) + "%) differ from baseline; threshold is 0.35%. " +
     "Review test-results/browser/diffs and update approved reference images only after visual review.");
 }
+
+test("pixel comparison rejects intentionally altered screenshots and dimension drift", async () => {
+  await inPage("visual-diff-sensitivity", {
+    viewport: { width: 1280, height: 800 },
+    colorScheme: "light",
+    reducedMotion: "reduce",
+  }, async page => {
+    await page.goto(origin + "/", { waitUntil: "networkidle" });
+    await page.evaluate(() => document.fonts.ready);
+
+    // An incorrectly cropped capture cannot be mistaken for a valid baseline.
+    const cropped = await page.screenshot({
+      fullPage: false, animations: "disabled", caret: "hide",
+    });
+    await assert.rejects(
+      () => verifyVisualBaseline(page, "home-desktop-light", cropped, false),
+      /screenshot height drifted/,
+    );
+
+    // Deliberate whole-page visual change must trigger a real pixel mismatch.
+    await page.evaluate(() => {
+      document.documentElement.style.filter = "invert(1)";
+    });
+    const modified = await page.screenshot({
+      fullPage: true, animations: "disabled", caret: "hide",
+    });
+    await assert.rejects(
+      () => verifyVisualBaseline(page, "home-desktop-light", modified, false),
+      /pixels .* differ from baseline|pixels .*differ from baseline/,
+    );
+  });
+});
 
 test("capture reproducible light/dark screenshots for visual review", async () => {
   const views = [
