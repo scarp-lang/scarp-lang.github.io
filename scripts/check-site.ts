@@ -46,6 +46,12 @@ for (const page of pages) {
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
+const deployment: unknown = JSON.parse(await readFile(join(root, 'deployment.json'), 'utf8'));
+assert(isRecord(deployment), 'Missing machine-readable deployment marker');
+assert.equal(deployment.schemaVersion, 1);
+assert.equal(deployment.repository, 'scarp-lang/scarp-lang.github.io');
+assert.equal(deployment.commit, process.env.GITHUB_SHA ?? null);
+assert.equal(deployment.compilerTag, publishedCompiler.tag);
 const snapshot: unknown = JSON.parse(await readFile(join(root, 'project.json'), 'utf8'));
 assert(isRecord(snapshot), 'Project snapshot must be an object');
 const baseline = snapshot.baseline;

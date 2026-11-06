@@ -63,3 +63,13 @@ jobs:
           enablement: true
       - uses: actions/deploy-pages@v4
         id: deployment
+      - name: Check out website smoke-test source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js for smoke testing
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - name: Verify deployed commit and public pages
+        run: node --experimental-strip-types scripts/verify-deployment.ts
