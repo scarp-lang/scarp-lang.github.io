@@ -201,3 +201,139 @@ test("skip link reaches main and header loads WebP rather than the original PNG"
     assert.equal(await page.locator('link[rel="icon"]').getAttribute("href"), "/brand/scarp-favicon.png");
   });
 });
+
+
+type ColorSample = { foreground: string; background: string; label: string; minimum?: number };
+
+/** Sample actual computed browser colors rather than assuming CSS variables. */
+async function requireContrast(page: Page, route: string, samples: ColorSample[]): Promise<void> {
+  const results = await page.evaluate((cases) => {
+    function channels(css: string): [number, number, number] {
+      const match = css.match(/^rgba?\((.+)\)$/);
+      if (!match) throw new Error("Unsupported computed color: " + css);
+      const components = match[1]!.split(/[\s,/]+/).filter(Boolean).map(Number);
+      if (components.length < 3 || components.slice(0, 3).some(v => !Number.isFinite(v)))
+        throw new Error("Unparseable computed color: " + css);
+      return [components[0]!, components[1]!, components[2]!];
+    }
+    function luminance(rgb: [number, number, number]): number {
+      const [red, green, blue] = rgb.map(value => {
+        const linear = value / 255;
+        return linear <= 0.04045 ? linear / 12.92 : ((linear + 0.055) / 1.055) ** 2.4;
+      });
+      return red! * 0.2126 + green! * 0.7152 + blue! * 0.0722;
+    }
+    return cases.map(sample => {
+      const fg = document.querySelector(sample.foreground);
+      const bg = document.querySelector(sample.background);
+      if (!fg || !bg) return { label: sample.label, error: "Missing foreground/background element" };
+      const color = getComputedStyle(fg).color;
+      const background = getComputedStyle(bg).backgroundColor;
+      const foregroundLuminance = luminance(channels(color));
+      const backgroundLuminance = luminance(channels(background));
+      const ratio = (Math.max(foregroundLuminance, backgroundLuminance) + 0.05) /
+        (Math.min(foregroundLuminance, backgroundLuminance) + 0.05);
+      return { label: sample.label, ratio, color, background };
+    });
+  }, samples);
+  for (let i = 0; i < results.length; i++) {
+    const sample = samples[i]!;
+    const result = results[i]!;
+    if ("error" in result) assert.fail(route + " " + sample.label + ": " + result.error);
+    assert(result.ratio! >= (sample.minimum ?? 4.5),
+      route + " " + sample.label + ": ratio " + result.ratio!.toFixed(2) +
+      " is below " + (sample.minimum ?? 4.5) + " (" + result.color +
+      " on " + result.background + ")");
+  }
+}
+
+test("light and dark themes maintain AA text contrast across critical pages", async () => {
+  const sampleCases: Array<{ route: string; samples: ColorSample[] }> = [
+    { route: "/", samples: [
+      { label: "hero heading", foreground: ".hero h1", background: "body" },
+      { label: "hero supporting text", foreground: ".hero-detail", background: "body" },
+      { label: "primary CTA", foreground: ".hero .primary", background: ".hero .primary" },
+      { label: "secondary CTA", foreground: ".hero .secondary", background: ".hero .secondary" },
+      { label: "feature description", foreground: ".feature p", background: ".feature" },
+      { label: "code panel", foreground: ".code-block", background: ".code-block" },
+    ] },
+    { route: "/search/", samples: [
+      { label: "search input", foreground: ".site-search-controls input", background: ".site-search-controls input" },
+      { label: "result card", foreground: ".site-search-results a", background: ".site-search-results a" },
+      { label: "result detail", foreground: ".site-search-results p", background: ".site-search-results a" },
+    ] },
+    { route: "/downloads/", samples: [
+      { label: "intro", foreground: ".page-heading .lead", background: "body" },
+      { label: "download card", foreground: ".download-card", background: ".download-card" },
+      { label: "download details", foreground: ".download-card details", background: ".download-card" },
+    ] },
+    { route: "/support/", samples: [
+      { label: "support intro", foreground: ".page-heading .lead", background: "body" },
+      { label: "support topic", foreground: ".support-topic", background: ".support-topic" },
+      { label: "support description", foreground: ".support-topic p", background: ".support-topic" },
+      { label: "support form input", foreground: ".support-builder input", background: ".support-builder input" },
+    ] },
+  ];
+
+  for (const theme of ["light", "dark"] as const) {
+    await inPage("contrast-" + theme, {
+      viewport: { width: 390, height: 844 },
+      colorScheme: theme,
+      reducedMotion: "reduce",
+    }, async page => {
+      for (const { route, samples } of sampleCases) {
+        await page.goto(origin + route, { waitUntil: "networkidle" });
+        assert.equal(await page.locator("html").getAttribute("data-theme"), theme);
+        await requireContrast(page, theme + " " + route, samples);
+      }
+    });
+  }
+});
+
+test("theme preference survives navigation and reload, and has an accessible toggle label", async () => {
+  await inPage("theme-persistence", {
+    viewport: { width: 390, height: 844 },
+    colorScheme: "light",
+  }, async page => {
+    await page.goto(origin + "/", { waitUntil: "networkidle" });
+    const button = page.locator("[data-theme-toggle]");
+    assert.equal(await button.getAttribute("aria-label"), "Switch to dark theme");
+    await button.click();
+    assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
+    assert.equal(await button.getAttribute("aria-label"), "Switch to light theme");
+    assert.equal(await page.evaluate(() => localStorage.getItem("scarp-theme")), "dark");
+    await page.goto(origin + "/downloads/", { waitUntil: "networkidle" });
+    assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
+    await page.reload({ waitUntil: "networkidle" });
+    assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
+    await page.locator("[data-theme-toggle]").click();
+    assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
+  });
+});
+
+test("capture reproducible light/dark screenshots for visual review", async () => {
+  const views = [
+    { name: "home-desktop-light", route: "/", theme: "light", width: 1280, height: 800 },
+    { name: "home-mobile-dark", route: "/", theme: "dark", width: 390, height: 844 },
+    { name: "search-mobile-light", route: "/search/", theme: "light", width: 390, height: 844 },
+    { name: "support-desktop-dark", route: "/support/", theme: "dark", width: 1280, height: 800 },
+  ] as const;
+  await mkdir("test-results/browser/visual", { recursive: true });
+  for (const view of views) {
+    await inPage("visual-" + view.name, {
+      viewport: { width: view.width, height: view.height },
+      colorScheme: view.theme,
+      reducedMotion: "reduce",
+    }, async page => {
+      await page.goto(origin + view.route, { waitUntil: "networkidle" });
+      await page.evaluate(() => document.fonts.ready);
+      assert.equal(await page.locator("html").getAttribute("data-theme"), view.theme);
+      await page.screenshot({
+        path: "test-results/browser/visual/" + view.name + ".png",
+        fullPage: true,
+        animations: "disabled",
+        caret: "hide",
+      });
+    });
+  }
+});
