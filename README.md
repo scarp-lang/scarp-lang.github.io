@@ -55,6 +55,8 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:render`: static documents, route aliases, escaping, no-JavaScript
   content, data routes, the searchable page directory, and the not-found response.
 - `npm run test:search`: search ranking, multi-term matching, and empty queries.
+- `npm run test:search-ui`: accessible result announcements, clear/Escape, browser
+  navigation, global keyboard shortcuts, and no-JS fallback.
 - `npm run test:nav`: mobile disclosure state, Escape behavior, outside interaction,
   focus restoration, and responsive breakpoint transitions.
 - `npm run test:tabs`: accessible example tab selection, arrow/Home/End keyboard
@@ -84,7 +86,9 @@ published CLI migration guide at `/migration/` (alpha.1–alpha.5), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering, curated Hindi search terms for English-language website
-pages, and the `/` or Ctrl/⌘+K keyboard shortcut. It is a **reviewed snapshot**, not a live compiler feed.
+pages, clear and Escape interactions, concise screen-reader result announcements,
+URL restoration during browser navigation, and the `/` or Ctrl/⌘+K shortcut
+(outside editable controls). It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs keep their older verified compiler baseline,
 and the same three homepage fixtures also run under the pinned alpha.6 compiler
 with byte-exact expected output. An additional alpha.6-only RMS program and the

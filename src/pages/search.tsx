@@ -14,17 +14,19 @@ export default function SearchPage() {
         <form className="site-search-form" action="/search/" method="get" role="search" data-search-form="" hidden>
           <label htmlFor="site-search-input">Search website pages</label>
           <div className="site-search-controls">
-            <input id="site-search-input" data-search-input="" name="q" type="search" maxLength={120} autoComplete="off" placeholder="Try install, इंस्टॉल, or रोडमैप" />
+            <input id="site-search-input" data-search-input="" name="q" type="search" maxLength={120} autoComplete="off" aria-controls="site-search-results" aria-describedby="site-search-help" placeholder="Try install, इंस्टॉल, or रोडमैप" />
             <button className="button primary" type="submit">Search</button>
+            <button className="search-clear" type="button" data-search-clear="" hidden>Clear search</button>
           </div>
-          <p className="small muted">Tip: press / or Ctrl/⌘+K to open search from anywhere on this site.</p>
+          <p className="small muted" id="site-search-help">Tip: press / or Ctrl/⌘+K to open search from anywhere on this site. Press Escape to clear the query.</p>
         </form>
         <div className="search-results-heading">
           <h2>Explore the website</h2>
-          <p data-search-count="" aria-live="polite">Browse all {searchEntries.length} pages</p>
+          <p data-search-count="">Browse all {searchEntries.length} pages</p>
+          <p className="sr-only" data-search-status="" role="status" aria-live="polite" aria-atomic="true"></p>
         </div>
         <p className="search-empty" data-search-empty="" hidden>No matching pages. Try another term or browse the <a href="/faq/">FAQ</a>.</p>
-        <ul className="site-search-results" data-search-results="">
+        <ul id="site-search-results" className="site-search-results" data-search-results="">
           {searchEntries.map(entry => (
             <li key={entry.path} data-search-item="" data-search-path={entry.path}>
               <a href={entry.path}>
