@@ -1,0 +1,41 @@
+name: Temporary logo asset optimization
+on:
+  push:
+    branches:
+      - feat/logo-webp-optimization-20261106
+    paths:
+      - .github/workflows/logo-encode-temp.yml
+permissions:
+  contents: read
+jobs:
+  encode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install WebP encoder
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends webp
+      - name: Encode resized logo preserving the original artwork
+        shell: bash
+        run: |
+          set -euo pipefail
+          cwebp -quiet -resize 512 512 -q 90 -m 6 -metadata none public/brand/scarp-logo.png -o /tmp/scarp-logo.webp
+          file /tmp/scarp-logo.webp
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          data = Path("/tmp/scarp-logo.webp").read_bytes()
+          if not data.startswith(b"RIFF") or data[8:12] != b"WEBP":
+              raise SystemExit("Invalid WebP signature")
+          if not 1000 <= len(data) <= 200_000:
+              raise SystemExit(f"Unexpected optimized logo size: {len(data)}")
+          print(f"OPTIMIZED_LOGO_SIZE={len(data)}")
+          print("OPTIMIZED_LOGO_START")
+          encoded = base64.b64encode(data).decode("ascii")
+          for i in range(0, len(encoded), 900):
+              print("OPTIMIZED_LOGO_PART=" + encoded[i:i+900])
+          print("OPTIMIZED_LOGO_END")
+          PY
