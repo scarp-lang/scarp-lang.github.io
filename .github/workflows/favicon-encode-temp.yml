@@ -1,0 +1,46 @@
+name: Temporary favicon asset optimization
+on:
+  push:
+    branches:
+      - feat/compact-favicons-20261106
+    paths:
+      - .github/workflows/favicon-encode-temp.yml
+permissions:
+  contents: read
+jobs:
+  encode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install ImageMagick
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends imagemagick
+      - name: Derive compact PNG/ICO favicons from original Scarp logo
+        shell: bash
+        run: |
+          set -euo pipefail
+          convert public/brand/scarp-logo.png -crop 646x703+304+133 +repage -resize 64x64 -gravity center -background white -extent 64x64 -strip -define png:compression-level=9 /tmp/scarp-favicon.png
+          convert /tmp/scarp-favicon.png -define icon:auto-resize=48,32,16 /tmp/favicon.ico
+          file /tmp/scarp-favicon.png /tmp/favicon.ico
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64
+          for prefix, path, signature in [
+              ("FAVICON_PNG", Path("/tmp/scarp-favicon.png"), b"\\x89PNG\\r\\n\\x1a\\n"),
+              ("FAVICON_ICO", Path("/tmp/favicon.ico"), b"\\x00\\x00\\x01\\x00"),
+          ]:
+              data = path.read_bytes()
+              if not data.startswith(signature):
+                  raise SystemExit(f"{prefix} has an invalid signature")
+              if not 200 <= len(data) <= 30_000:
+                  raise SystemExit(f"Unexpected size for {prefix}: {len(data)}")
+              print(f"{prefix}_SIZE={len(data)}")
+              print(f"{prefix}_START")
+              encoded = base64.b64encode(data).decode("ascii")
+              for offset in range(0, len(encoded), 900):
+                  print(prefix + "_PART=" + encoded[offset:offset + 900])
+              print(f"{prefix}_END")
+          PY
