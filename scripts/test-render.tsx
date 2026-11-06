@@ -21,9 +21,20 @@ test('every registered page renders a complete, distinct static document', () =>
     const html = renderPage(page, developmentAssets);
     assert(html.startsWith('<!doctype html>'));
     assert.match(html, /<html lang="en"/);
-    assert.match(html, /<main id="main">/);
+    assert.match(html, /<main id="main" tabindex="-1">/);
     assert(html.includes(`href="https://scarp-lang.github.io${page.path}"`));
   }
+});
+
+test('brand images retain intrinsic size and defer offscreen decoding', () => {
+  const home = findPage('/');
+  assert(home);
+  const html = renderPage(home, developmentAssets);
+  assert.equal((html.match(/src="\/brand\/scarp-logo.png"/g) ?? []).length, 2);
+  assert.equal((html.match(/decoding="async"/g) ?? []).length, 2);
+  assert(html.includes('loading="lazy"'));
+  assert(html.includes('loading="eager"'));
+  assert.equal((html.match(/width="1254" height="1254"/g) ?? []).length, 2);
 });
 
 test('mobile navigation has disclosure semantics and works as static links without JavaScript', () => {

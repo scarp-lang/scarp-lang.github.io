@@ -4,6 +4,7 @@ import { join, resolve } from 'node:path';
 import { runInNewContext } from 'node:vm';
 import { project } from '../src/data/project.ts';
 import { publishedCompiler } from '../src/data/releases.ts';
+import { accessibilityProblems } from './accessibility-contracts.ts';
 
 const root = resolve('dist');
 async function walk(directory: string): Promise<string[]> {
@@ -13,9 +14,16 @@ async function walk(directory: string): Promise<string[]> {
 const files = await walk(root);
 assert(files.includes(join(root, '.nojekyll')), 'Missing GitHub Pages .nojekyll marker in the static build');
 const pages = files.filter(path => path.endsWith('.html'));
+/* Guard generated JavaScript/CSS bundle sizes; not a Core Web Vitals claim. */
+for (const file of files.filter(path => /\/assets\/[^/]+\.(?:js|css)$/.test(path))) {
+  const bytes = (await stat(file)).size;
+  assert(bytes <= 128 * 1024, `Oversized frontend asset (${bytes} bytes): ${file}`);
+}
+
 const ids = new Map<string, Set<string>>();
 for (const page of pages) {
   const html = await readFile(page, 'utf8');
+  assert.deepEqual(accessibilityProblems(html), [], `Accessibility contract failed for ${page}`);
   const allIds = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => {
     assert(match[1] !== undefined);
     return match[1];
