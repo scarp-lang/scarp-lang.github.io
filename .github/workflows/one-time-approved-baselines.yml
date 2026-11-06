@@ -1,0 +1,60 @@
+name: One-time approved Scarp visual baseline commit
+# Temporary branch-only workflow; remove immediately after the reviewed PNGs are committed.
+on:
+  push:
+    branches:
+      - feat/alpha6-2-release-evidence-20261106
+
+permissions:
+  contents: write
+
+jobs:
+  commit-reviewed-images:
+    if: github.repository == 'scarp-lang/scarp-lang.github.io' && github.ref == 'refs/heads/feat/alpha6-2-release-evidence-20261106'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - name: Install dependencies and test-only browser runner
+        run: |
+          npm ci
+          npm install --no-save --package-lock=false playwright-core@1.64.1
+      - name: Build unchanged static website
+        run: npm run build
+      - name: Capture the four screenshots without bypassing normal browser tests
+        shell: bash
+        run: |
+          set +e
+          npm run test:browser > /tmp/scarp-browser-review.log 2>&1
+          status=$?
+          set -e
+          cat /tmp/scarp-browser-review.log
+          test "$status" -eq 1
+          grep -q 'capture reproducible light/dark screenshots for visual review' /tmp/scarp-browser-review.log
+          grep -Eq 'fail 1' /tmp/scarp-browser-review.log
+      - name: Require exactly the four previously visually reviewed image digests
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/approved-screenshots.sha256 <<'EOF'
+          cecf1b3828746d460c54d5c3f19a8c9a363675e36b449e6ae2624c4a0677d2c3  test-results/browser/visual/home-desktop-light.png
+          9e83c765a8ba581170a9bbff4df6d2ad93d36275bf1ed57f563466fce3f898ec  test-results/browser/visual/home-mobile-dark.png
+          827059743db09d66061498e338e323af55fe9d2aadc476b2a3193e01b652cd55  test-results/browser/visual/search-mobile-light.png
+          aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0  test-results/browser/visual/support-desktop-dark.png
+          EOF
+          sha256sum --check --strict /tmp/approved-screenshots.sha256
+      - name: Explicitly commit the approved PNG blobs on this feature branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp test-results/browser/visual/*.png tests/browser/baselines/
+          git config user.name "Scarp Website Maintainer"
+          git config user.email "sanskarin@outlook.in"
+          git add tests/browser/baselines/*.png
+          git diff --cached --quiet && { echo "No reviewed baselines to commit"; exit 1; }
+          git commit -m "test(browser): commit reviewed alpha.6.2 visual baselines"
+          git push origin "HEAD:refs/heads/feat/alpha6-2-release-evidence-20261106"
