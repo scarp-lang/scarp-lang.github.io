@@ -90,6 +90,10 @@ on pull requests and supported branch pushes. Its checks cover:
 - Global search shortcut, Hindi search results and clear-state announcements.
 - Keyboard-controlled example tabs, skip-to-content, and optimized image loading.
 - Accessible no-JavaScript fallback for examples, navigation and the site directory.
+- Browser-computed foreground/background contrast checks in **light and dark** modes
+  across home, search, downloads and support (minimum 4.5:1 for representative normal text).
+- Explicit theme-toggle label and persistent theme choice across navigation/reload.
+- Four full-page Chrome screenshots, uploaded as review artifacts for 14 days.
 
 The test-only runner installs pinned `playwright-core@1.64.1` against Chrome
 provided on GitHub's `ubuntu-24.04` runner, without rewriting
@@ -106,7 +110,10 @@ npm run test:browser
 ```
 
 The test runner serves the exact built `dist/` files using a temporary local HTTP server. The workflow uploads
-failure screenshots. This is browser smoke testing, not a full WCAG audit
+failure screenshots. These screenshots are **review artifacts**, not pixel-diff regression gates.
+The contrast samples check solid, directly defined foreground/background pairs;
+they do not automatically audit every text pixel, overlay, or gradient.
+This is browser smoke testing, not a full WCAG audit
 or a measured field Core Web Vitals score.
 ## Content and publication
 
