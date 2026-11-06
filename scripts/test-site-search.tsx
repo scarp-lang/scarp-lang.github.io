@@ -175,41 +175,11 @@ test("back/forward navigation restores the query and result visibility", () => {
   assert.equal(s.list.items.find(x => !x.hidden)?.dataset.searchPath, "/roadmap/");
   assert.equal(s.win.replaces.length, replacements);
 });
-test("global search shortcuts focus the search input or navigate from other pages", () => {
+test("deep-link hash focuses the full directory search", () => {
   const s = setup("https://scarp-lang.github.io/search/#site-search-input");
   s.enhance();
   assert.equal(s.input.focusCount, 1);
-  const outside = new FakeElement();
-  assert.equal(s.doc.emit("keydown", { key: "/", defaultPrevented: false }, outside), true);
-  assert.equal(s.input.focusCount, 2);
-  assert.equal(s.input.selectCount, 1);
-  assert.equal(s.doc.emit("keydown", { key: "K", ctrlKey: true }, outside), true);
-  assert.equal(s.doc.emit("keydown", { key: "k", metaKey: true }, outside), true);
-  const other = setup();
-  other.doc.elements.clear();
-  other.enhance();
-  assert.equal(other.doc.emit("keydown", { key: "/" }, outside), true);
-  assert.equal(other.win.navigated, "/search/#site-search-input");
-});
-test("editing, modifier keys, IME and previously-handled keys remain untouched", () => {
-  const s = setup();
-  s.enhance();
-  const editor = new FakeElement();
-  editor.editor = true;
-  const outside = new FakeElement();
-  for (const opts of [
-    { key: "/", ctrlKey: false },
-    { key: "k", ctrlKey: true },
-    { key: "k", metaKey: true },
-  ]) assert.equal(s.doc.emit("keydown", opts, editor), false);
-  for (const opts of [
-    { key: "/", shiftKey: true },
-    { key: "k", ctrlKey: true, altKey: true },
-    { key: "k", ctrlKey: true, defaultPrevented: true },
-    { key: "/", isComposing: true },
-    { key: "c", ctrlKey: true },
-  ]) assert.equal(s.doc.emit("keydown", opts, outside), Boolean(opts.defaultPrevented));
-  assert.equal(s.input.focusCount, 0);
+  assert.equal(s.form.hidden, false);
 });
 test("incomplete directory keeps static results and form hidden", () => {
   const s = setup();

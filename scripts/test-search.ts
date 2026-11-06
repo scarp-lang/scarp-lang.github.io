@@ -68,3 +68,17 @@ test("search does not mutate the website directory", () => {
   searchEntriesFor("ai");
   assert.deepEqual(searchEntries.map(entry => entry.path), original);
 });
+
+test("quick search uses existing ranking and encodes only local directory links", async () => {
+  const { quickSearchLimit, previewSearch, searchDirectoryHref } =
+    await import("../src/data/quick-search.ts");
+  assert.equal(quickSearchLimit, 6);
+  assert.deepEqual(previewSearch(""), searchEntries.slice(0, quickSearchLimit));
+  assert.equal(previewSearch("डाउनलोड")[0]?.path, "/downloads/");
+  assert.equal(previewSearch("root mean square")[0]?.path, "/news/alpha6-symbol-navigation/");
+  assert.deepEqual(previewSearch("unlikely-no-results-987"), []);
+  assert.equal(searchDirectoryHref(""), "/search/");
+  assert.equal(searchDirectoryHref("  roadmap  "), "/search/?q=roadmap");
+  assert.equal(searchDirectoryHref("मदद"), "/search/?q=%E0%A4%AE%E0%A4%A6%E0%A4%A6");
+  assert.equal(searchDirectoryHref("a&redirect=https://example.com"), "/search/?q=a%26redirect%3Dhttps%3A%2F%2Fexample.com");
+});

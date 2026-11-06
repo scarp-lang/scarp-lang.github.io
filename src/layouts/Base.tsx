@@ -1,5 +1,6 @@
 import { useContext, type ReactNode } from "react";
 import Brand from "../components/Brand.tsx";
+import QuickSearch from "../components/QuickSearch.tsx";
 import { navigation, project } from "../data/project.ts";
 import { initializeTheme } from "../scripts/theme-init.ts";
 import { SiteContext } from "../site/context.ts";
@@ -100,7 +101,7 @@ export default function Base({
                 </a>
               ))}
             </nav>
-            <a href="/search/" className="site-search-link" aria-label="Search website" aria-current={path === "/search/" ? "page" : undefined}>
+            <a href="/search/" data-quick-trigger="" className="site-search-link" aria-label="Search website" aria-current={path === "/search/" ? "page" : undefined}>
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                 <circle cx="10.5" cy="10.5" r="6.5" />
                 <path d="m16 16 5 5" />
@@ -128,6 +129,7 @@ export default function Base({
             </button>
           </div>
         </header>
+        <QuickSearch />
         <main id="main" tabIndex={-1}>{children}</main>
         <footer className="site-footer">
           <div className="footer-top">
