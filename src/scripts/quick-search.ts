@@ -65,11 +65,20 @@ export function enhanceQuickSearch(doc: Document, win: Window): void {
       trigger?.setAttribute("aria-haspopup", "dialog");
       trigger?.setAttribute("aria-controls", dialog.id);
       input.addEventListener("input", () => update(input.value));
-      closeButton.addEventListener("click", () => dialog.close());
-      dialog.addEventListener("close", () => {
+      const restoreFocus = () => {
         if (returnFocus?.isConnected && returnFocus !== doc.body) returnFocus.focus();
         else trigger?.focus();
         returnFocus = null;
+      };
+      const closeDialog = () => {
+        dialog.close();
+        // "close" events are queued: restore focus synchronously for keyboard users.
+        restoreFocus();
+      };
+      closeButton.addEventListener("click", closeDialog);
+      // Also covers native dismissals not handled by our own controls.
+      dialog.addEventListener("close", () => {
+        if (returnFocus) restoreFocus();
       });
 
       // Keep the ordinary tab order; arrow keys are an optional fast path.
@@ -78,7 +87,7 @@ export function enhanceQuickSearch(doc: Document, win: Window): void {
         // Closing explicitly gives the dialog predictable keyboard behavior.
         if (event.key === "Escape" && !event.isComposing) {
           event.preventDefault();
-          dialog.close();
+          closeDialog();
           return;
         }
         if (event.defaultPrevented || event.isComposing || event.altKey ||
