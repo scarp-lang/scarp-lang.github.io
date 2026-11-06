@@ -18,7 +18,7 @@ Approved screenshot SHA-256 values:
 cecf1b3828746d460c54d5c3f19a8c9a363675e36b449e6ae2624c4a0677d2c3  home-desktop-light.png
 9e83c765a8ba581170a9bbff4df6d2ad93d36275bf1ed57f563466fce3f898ec  home-mobile-dark.png
 827059743db09d66061498e338e323af55fe9d2aadc476b2a3193e01b652cd55  search-mobile-light.png
-aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0  support-desktop-dark.png
+aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a  support-desktop-dark.png
 ```
 
 Screenshots are full-page captures (height can exceed the viewport). The
