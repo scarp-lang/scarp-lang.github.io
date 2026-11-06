@@ -105,7 +105,7 @@ npm run build
 npm run test:browser
 ```
 
-The test runner starts and stops a local Vite preview. The workflow uploads
+The test runner serves the exact built `dist/` files using a temporary local HTTP server. The workflow uploads
 failure screenshots. This is browser smoke testing, not a full WCAG audit
 or a measured field Core Web Vitals score.
 ## Content and publication
