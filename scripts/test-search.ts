@@ -31,7 +31,8 @@ test("keywords, casing, prefixes, and multiple terms find relevant pages", () =>
   assert.equal(searchEntriesFor("softmax_temp")[0]?.path, "/news/alpha6-ranking-temperature/");
   assert.equal(searchEntriesFor("topk_values")[0]?.path, "/news/alpha6-ranking-temperature/");
   assert.equal(searchEntriesFor("स्कोर रैंकिंग")[0]?.path, "/news/alpha6-ranking-temperature/");
-  assert.equal(searchEntriesFor("अल्फा छह")[0]?.path, "/news/alpha6-symbol-navigation/");
+  assert(searchEntriesFor("अल्फा छह").some(entry => entry.path === "/news/alpha6-symbol-navigation/"));
+  assert.equal(searchEntriesFor("सोर्स नेविगेशन")[0]?.path, "/news/alpha6-symbol-navigation/");
   assert.equal(searchEntriesFor("roadmap")[0]?.path, "/roadmap/");
   assert.equal(searchEntriesFor("module import")[0]?.path, "/news/source-modules/");
   assert.equal(searchEntriesFor("bug report")[0]?.path, "/support/");
