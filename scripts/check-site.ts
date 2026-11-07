@@ -139,11 +139,16 @@ const alpha6News = await readFile(join(root, 'news/alpha6-symbol-navigation/inde
 for (const token of ['v0.0.6-alpha.1', 'aa329a22cf2bf92d2c9814a26ff9c8b67a72e6e8', '5 November 2026', 'rms', 'inspect symbols', 'inspect references']) {
   assert(alpha6News.includes(token), 'Historical alpha.6.1 article missing ' + token);
 }
-const latestNews = await readFile(join(root, 'news/alpha6-cache-apis/index.html'), 'utf8');
-for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, '6 November 2026', 'syntax', 'semantic', 'invalidation', 'eviction']) {
-  assert(latestNews.includes(token), 'Current release article missing ' + token);
+const priorCacheNews = await readFile(join(root, 'news/alpha6-cache-apis/index.html'), 'utf8');
+for (const token of ['v0.0.6-alpha.2', '398b8ff705154a02423fe458ce3a427401e81e31', '6 November 2026', 'syntax', 'semantic', 'invalidation', 'eviction']) {
+  assert(priorCacheNews.includes(token), 'Historical alpha.6.2 article missing ' + token);
 }
-assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-cache-apis/</link>'), 'RSS missing latest alpha.6.2 release');
+assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-cache-apis/</link>'), 'RSS missing historical alpha.6.2 release');
+const latestNews = await readFile(join(root, 'news/alpha6-ranking-temperature/index.html'), 'utf8');
+for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, '7 November 2026', 'topk_values', 'softmax_temp', 'logsoftmax_temp', 'scalar']) {
+  assert(latestNews.includes(token), 'Current alpha.6.3 article missing ' + token);
+}
+assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-ranking-temperature/</link>'), 'RSS missing latest alpha.6.3 release');
 const alpha4News = await readFile(join(root, 'news/offline-projects/index.html'), 'utf8');
 assert(alpha4News.includes('v0.0.5-alpha.4'), 'Alpha.4 news page missing');
 assert(alpha4News.includes('3 November 2026'), 'Article publication date missing');
@@ -155,10 +160,12 @@ for (const newsView of ['index.html', 'news/index.html']) {
   assert(newsHtml.includes('4 November 2026'), 'Alpha.5 historical date is missing in ' + newsView);
   assert(newsHtml.includes('href="/news/alpha6-symbol-navigation/"'), 'Historical alpha.6.1 release absent from ' + newsView);
   assert(newsHtml.includes('5 November 2026'), 'Alpha.6.1 historical date is missing in ' + newsView);
-  assert(newsHtml.includes('href="/news/alpha6-cache-apis/"'), 'Newest alpha.6.2 release absent from ' + newsView);
-  assert(newsHtml.includes('6 November 2026'), 'Current release date missing in ' + newsView);
+  assert(newsHtml.includes('href="/news/alpha6-cache-apis/"'), 'Historical alpha.6.2 release absent from ' + newsView);
+  assert(newsHtml.includes('6 November 2026'), 'Historical alpha.6.2 date missing in ' + newsView);
+  assert(newsHtml.includes('href="/news/alpha6-ranking-temperature/"'), 'Latest alpha.6.3 release absent from ' + newsView);
+  assert(newsHtml.includes('7 November 2026'), 'Latest release date missing in ' + newsView);
 }
-assert(pages.length >= 24, 'Missing alpha.6.2 release article or an existing website section');
+assert(pages.length >= 25, 'Missing alpha.6.3 or historical release articles and website pages');
 const searchHtml = await readFile(join(root, 'search/index.html'), 'utf8');
 assert.match(searchHtml, /data-search-results/);
 assert.match(searchHtml, /data-search-input/);
