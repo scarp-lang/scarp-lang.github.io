@@ -105,6 +105,24 @@ export default function LearnPage() {
         </a>. Do not run alpha.6-only examples with the older alpha.1 interpreter.
       </p>
 
+      <h2 id="05--rank-with-alpha63">05 · Rank scores in alpha.6.3</h2>
+      <p>
+        The published {publishedCompiler.tag} interpreter also supports pure{" "}
+        <code>topk</code>, <code>topk_values</code>,{" "}
+        <code>softmax_temp</code> and <code>logsoftmax_temp</code> numerical
+        built-ins. Tie scores keep earlier input indices first; temperature
+        must be a positive finite float. No random sampling or GPU runtime
+        is included.
+      </p>
+      <CodeBlock filename="topk.srp · published alpha.6.3"
+        code={"bind scores = [1.0, 5.0, 5.0, -2.0, 3.0];\nprint(topk(scores, 3));\nprint(topk_values(scores, 3));"} />
+      <CodeBlock filename="Expected stdout" code={"[integer: 1, 2, 4]\n[5.0, 5.0, 3.0]"} />
+      <p>
+        This follows the exact <a href="/news/alpha6-ranking-temperature/">alpha.6.3 release examples</a>.
+        Read the <a href="/compatibility/#published-only">published-only fixture evidence</a>{" "}
+        before assuming code works on an older compiler.
+      </p>
+
       <h2 id="older-example-baseline">Using the older website example baseline?</h2>
       <p>
         The featured homepage examples are pinned to{" "}
