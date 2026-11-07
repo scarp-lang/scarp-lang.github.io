@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 24);
+  assert.equal(pages.length, 25);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -296,36 +296,59 @@ test('migration route displays source-backed version guidance with no JavaScript
   assert(renderPage(findPage('/faq/')!, developmentAssets).includes('href="/migration/"'));
 });
 
-test('alpha.6.2 cache announcement is dated, source-backed and included in RSS', async () => {
+test('latest alpha.6.3 announcement has pinned source, examples, search and RSS', async () => {
   const announcement = news[0];
   assert(announcement);
-  assert.equal(announcement.href, '/news/alpha6-cache-apis/');
+  assert.equal(announcement.href, '/news/alpha6-ranking-temperature/');
   assert.equal(announcement.date, publishedCompiler.reviewed);
-  assert.equal(formatNewsDate('2026-11-06'), '6 November 2026');
+  assert.equal(formatNewsDate('2026-11-07'), '7 November 2026');
   assert.throws(() => formatNewsDate('not-a-date'), RangeError);
-
   for (const route of ['/', '/news/']) {
     const page = findPage(route);
     assert(page);
     const html = renderPage(page, developmentAssets);
-    assert(html.includes('href="' + announcement.href + '"'), 'Latest announcement absent from ' + route);
-    assert(html.includes('>6 November 2026</time>'), 'Latest announcement date absent from ' + route);
+    assert(html.includes('href="' + announcement.href + '"'), 'Latest release absent from ' + route);
+    assert(html.includes('>7 November 2026</time>'), 'Latest date absent from ' + route);
   }
   const article = findPage(announcement.href);
-  assert(article, 'Cache article not registered');
+  assert(article, 'Alpha.6.3 article not registered');
   const html = renderPage(article, developmentAssets);
-  for (const token of ['v0.0.6-alpha.2', publishedCompiler.sourceCommit, 'token',
-    'semantic', 'invalidation', 'eviction', '/downloads/', '/compatibility/']) {
-    assert(html.includes(token), 'Alpha.6.2 article missing evidence: ' + token);
+  for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, 'topk_values',
+    'softmax_temp', 'logsoftmax_temp', 'scalar', '/downloads/', '/compatibility/']) {
+    assert(html.includes(token), 'Alpha.6.3 article missing evidence: ' + token);
   }
   assert(searchEntries.some(entry => entry.path === announcement.href));
   const feed = await renderRequest('/feed.xml', developmentAssets);
-  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-cache-apis/</link>'));
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-ranking-temperature/</link>'));
   assert(feed?.body.includes('<pubDate>' + new Date(announcement.date + 'T00:00:00Z').toUTCString() + '</pubDate>'));
 });
 
+test('historical alpha.6.2 cache announcement stays immutable after alpha.6.3', async () => {
+  const announcement = news[1];
+  assert(announcement);
+  assert.equal(announcement.href, '/news/alpha6-cache-apis/');
+  assert.equal(announcement.date, '2026-11-06');
+  for (const route of ['/', '/news/']) {
+    const page = findPage(route);
+    assert(page);
+    const html = renderPage(page, developmentAssets);
+    assert(html.includes('href="' + announcement.href + '"'), 'Historical cache update absent from ' + route);
+    assert(html.includes('>6 November 2026</time>'), 'Historical date absent from ' + route);
+  }
+  const article = findPage(announcement.href);
+  assert(article);
+  const html = renderPage(article, developmentAssets);
+  for (const token of ['v0.0.6-alpha.2', '398b8ff705154a02423fe458ce3a427401e81e31',
+    'token', 'semantic', 'invalidation', 'eviction', '/downloads/', '/compatibility/']) {
+    assert(html.includes(token), 'Historical alpha.6.2 article missing ' + token);
+  }
+  assert(!html.includes(publishedCompiler.sourceCommit));
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-cache-apis/</link>'));
+});
+
 test('historical alpha.6.1 article stays pinned after release updates', async () => {
-  const previous = news[1];
+  const previous = news[2];
   assert(previous);
   assert.equal(previous.href, '/news/alpha6-symbol-navigation/');
   assert.equal(previous.date, '2026-11-05');
@@ -341,7 +364,7 @@ test('historical alpha.6.1 article stays pinned after release updates', async ()
 });
 
 test('historical alpha.5 article keeps its original release and source references', async () => {
-  const historical = news[2];
+  const historical = news[3];
   assert(historical);
   assert.equal(historical.href, '/news/alpha5-project-inspection/');
   assert.equal(historical.date, '2026-11-04');
@@ -357,7 +380,7 @@ test('historical alpha.5 article keeps its original release and source reference
 });
 
 test('historical alpha.4 article retains original release date and source evidence', async () => {
-  const historical = news[3];
+  const historical = news[4];
   assert(historical);
   assert.equal(historical.href, '/news/offline-projects/');
   assert.equal(historical.date, '2026-11-03');
