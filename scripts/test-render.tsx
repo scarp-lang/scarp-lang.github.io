@@ -26,6 +26,20 @@ test('every registered page renders a complete, distinct static document', () =>
   }
 });
 
+test('static pages emit exactly one parseable canonical JSON-LD graph, except noindex pages', () => {
+  for (const page of pages) {
+    const html = renderPage(page, developmentAssets);
+    const blocks = [...html.matchAll(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/g)];
+    assert.equal(blocks.length, page.noindex ? 0 : 1, 'Schema count differs for ' + page.path);
+    if (page.noindex) continue;
+    const schema = JSON.parse(blocks[0]?.[1] ?? '');
+    assert.equal(schema['@context'], 'https://schema.org');
+    assert.deepEqual(schema['@graph'].map((item: { '@type': string }) => item['@type']), ['WebSite', 'WebPage']);
+    assert.equal(schema['@graph'][1].url, 'https://scarp-lang.github.io' + page.path);
+    assert.equal(schema['@graph'][1].isPartOf['@id'], schema['@graph'][0]['@id']);
+  }
+});
+
 test('all public pages use a small favicon and preserve the original OG artwork', () => {
   for (const page of pages) {
     const html = renderPage(page, developmentAssets);
