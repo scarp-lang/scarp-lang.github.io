@@ -229,10 +229,12 @@ test('getting started clearly separates published and legacy CLI commands', () =
   for (const token of [publishedCompiler.tag, project.tag, 'scarp verify hello.srp',
     'scarp exec hello.srp', 'scarp run hello.srp', 'scarp check hello.srp',
     'scarp create hello-world', 'scarp launch hello-world',
-    'scarp inspect symbols --json hello.srp', 'rms', '2.0']) {
+    'scarp inspect symbols --json hello.srp', 'rms', '2.0',
+    'topk_values', 'softmax_temp']) {
     assert(html.includes(token), 'Getting started missing: ' + token);
   }
   assert(html.includes('id="04--explore-new-alpha6-capabilities"'));
+  assert(html.includes('id="05--rank-with-alpha63"'));
   assert(html.includes('href="/migration/"'));
   assert(html.includes('href="/downloads/"'));
 });
@@ -256,6 +258,10 @@ test('compiler compatibility guide exposes only CI-backed fixture coverage', asy
   for (const fixture of exampleCompatibility.fixtureNames) {
     assert(html.includes('/src/examples/' + fixture));
     assert(html.includes('/src/examples/' + fixture.replace('.srp', '.stdout')));
+  }
+  for (const fixture of exampleCompatibility.publishedOnlyFixtureNames) {
+    assert(html.includes('/src/examples/published/' + fixture));
+    assert(html.includes('/src/examples/published/' + fixture.replace('.srp', '.stdout')));
   }
   const response = await renderRequest('/project.json', developmentAssets);
   assert(response);
