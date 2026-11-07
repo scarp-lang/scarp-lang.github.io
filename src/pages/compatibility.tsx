@@ -71,15 +71,16 @@ export default function CompatibilityPage() {
         syntax, old CLI commands, libraries or other projects are compatible.
       </p>
 
-      <h2 id="published-only">Published alpha.6-only coverage</h2>
+      <h2 id="published-only">Published alpha.6-only numerical coverage</h2>
       <p>
-        An additional RMS example is run only with{" "}
+        Additional examples for vector <code>rms</code>, deterministic{" "}
+        <code>topk</code> ranking, and temperature-aware{" "}
+        <code>softmax_temp</code>/<code>logsoftmax_temp</code> run only with{" "}
         <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>,
-        not with the older baseline. Its exact stdout is checked,
-        and the new <code>inspect symbols</code> and{" "}
-        <code>inspect references</code> JSON outputs are parsed and checked
-        for schema version 1 and their declared kinds. This does not certify
-        the whole symbol-index API or the numerical library.
+        not with the older baseline. Their exact stdout is checked,
+        and <code>inspect symbols</code> and <code>inspect references</code>{" "}
+        JSON outputs are checked for schema version 1 and declared kinds.
+        These tests do not certify the whole symbol-index API or numerical library.
       </p>
       <ul>
         {exampleCompatibility.publishedOnlyFixtureNames.map(name => (
