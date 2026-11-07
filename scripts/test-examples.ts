@@ -9,7 +9,7 @@ import { exampleCompatibility } from "../src/data/compatibility.ts";
 /**
  * Compile the official interpreter outside this script. Every website .srp fixture
  * must produce byte-identical stdout under its selected, exact source revision.
- * Historical alpha.1 uses run/check; alpha.4 uses exec/static-only verify.
+ * Historical alpha.1 uses run/check; published alpha.6 uses exec/static-only verify.
  */
 const target = process.env.SCARP_EXAMPLE_TARGET ?? "baseline";
 assert(["baseline", "published"].includes(target), "SCARP_EXAMPLE_TARGET must be baseline or published");
@@ -50,14 +50,14 @@ for (const file of sources) {
 if (target === "published") {
   const alpha6Directory = resolve("src/examples/published");
   const alpha6Sources = (await readdir(alpha6Directory)).filter(name => name.endsWith(".srp")).sort();
-  assert.deepEqual(alpha6Sources, ["rms.srp"], "Review new published-only fixtures before adding them");
+  assert.deepEqual(alpha6Sources, [...exampleCompatibility.publishedOnlyFixtureNames].sort(), "Review new published-only fixtures before adding them");
   for (const file of alpha6Sources) {
     const source = join(alpha6Directory, file);
     const expected = await readFile(source.replace(/\.srp$/, ".stdout"), "utf8");
     const executed = run(["exec", source]);
     assert.equal(executed.error, undefined, String(executed.error));
     assert.equal(executed.status, 0, `${file}: ${executed.stderr}`);
-    assert.equal(executed.stdout, expected, `${file}: unexpected RMS output`);
+    assert.equal(executed.stdout, expected, `${file}: unexpected published output`);
     assert.equal(executed.stderr, "", `${file}: unexpected runtime stderr`);
     const verified = run(["verify", source]);
     assert.equal(verified.status, 0, `${file}: static verification failed: ${verified.stderr}`);
