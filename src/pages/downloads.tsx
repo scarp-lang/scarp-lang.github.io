@@ -153,10 +153,16 @@ export default function DownloadsPage() {
           compiled from a <code>.srp</code> program.
         </p>
         <p>
-          This release also adds <strong>optional Rust embedding caches</strong>,
-          dependency-aware edit planning and source-scoped eviction. These are
-          developer APIs available from a matching Cargo source checkout,
-          not new <code>scarp</code> CLI flags or bundled binary libraries.
+          The current release adds <strong>deterministic Top-K ranking</strong>
+          using <code>topk</code> and <code>topk_values</code>, and
+          temperature-aware numerical functions <code>softmax_temp</code> and
+          <code>logsoftmax_temp</code>. These are interpreter built-ins,
+          not new CLI commands or a full model-training framework.
+          See the <a href="/news/alpha6-ranking-temperature/">alpha.6.3 numerical overview</a>.
+          Earlier <strong>optional Rust embedding caches</strong>,
+          dependency-aware edit planning and source-scoped eviction remain
+          available from a matching Cargo source checkout,
+          not as CLI flags or bundled binary libraries.
           See the <a href="/news/alpha6-cache-apis/">cache feature overview</a>.
           Alpha.6 still supports symbol/reference navigation and vector{" "}
           <code>rms</code>; see the <a href="/news/alpha6-symbol-navigation/">earlier alpha.6 announcement</a>.
