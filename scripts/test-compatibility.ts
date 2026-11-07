@@ -16,10 +16,18 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
     assert(program.length > 0, name + " is blank");
     assert(expectedOutput.length > 0, name + " has no expected output");
   }
-  assert.deepEqual(exampleCompatibility.publishedOnlyFixtureNames, ["rms.srp"]);
-  const publishedSource = resolve("src/examples/published/rms.srp");
-  assert.match(await readFile(publishedSource, "utf8"), /rms\(/);
-  assert.equal(await readFile(publishedSource.replace(/\.srp$/, ".stdout"), "utf8"), "2.0\n");
+  assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["rms.srp", "temperature_softmax.srp", "topk_scores.srp"]);
+  const publishedRoot = resolve("src/examples/published");
+  assert.deepEqual((await readdir(publishedRoot)).filter(name => name.endsWith(".srp")).sort(),
+    [...exampleCompatibility.publishedOnlyFixtureNames].sort());
+  for (const name of exampleCompatibility.publishedOnlyFixtureNames) {
+    assert((await readFile(join(publishedRoot, name), "utf8")).trim().length > 0, name);
+    assert((await readFile(join(publishedRoot, name.replace(".srp", ".stdout")), "utf8")).length > 0, name);
+  }
+  assert.match(await readFile(join(publishedRoot, "rms.srp"), "utf8"), /rms\(/);
+  assert.match(await readFile(join(publishedRoot, "topk_scores.srp"), "utf8"), /topk\(/);
+  assert.match(await readFile(join(publishedRoot, "temperature_softmax.srp"), "utf8"), /logsoftmax_temp\(/);
+  assert.equal(await readFile(join(publishedRoot, "rms.stdout"), "utf8"), "2.0\n");
   assert.equal(exampleCompatibility.reviewed, publishedCompiler.reviewed);
   assert.match(exampleCompatibility.workflow, /github\.com\/scarp-lang\/scarp-lang\.github\.io\/actions\/workflows\/ci\.yml/);
 });

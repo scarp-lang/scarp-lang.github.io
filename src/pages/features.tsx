@@ -77,6 +77,17 @@ export default function FeaturesPage() {
             commands, plus explicit Rust embedding APIs.
           </li>
         </ul>
+        <h2>New in the separately published alpha.6.3</h2>
+        <p>
+          The latest experimental prerelease adds deterministic numerical
+          ranking with <code>topk</code> and <code>topk_values</code>,
+          temperature-controlled <code>softmax_temp</code> and{" "}
+          <code>logsoftmax_temp</code>, and test-backed internal scalar
+          compiler verification. The featured examples above still use the
+          older pinned website baseline; newer features are documented with
+          their <a href="/news/alpha6-ranking-temperature/">version-specific examples</a>.
+          They do not add a native compilation CLI or a training framework.
+        </p>
         <h2>Know the boundaries</h2>
         <p>
           Scarp currently interprets programs. Native code generation, a package

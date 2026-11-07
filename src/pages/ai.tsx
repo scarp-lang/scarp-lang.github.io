@@ -39,6 +39,19 @@ export default function ArticlePage() {
         </a>
         .
       </p>
+      <h2 id="alpha6-ranking">Newer published alpha.6.3 primitives</h2>
+      <p>
+        The separately published experimental{" "}
+        <a href="https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.3">
+          v0.0.6-alpha.3
+        </a>{" "}
+        interpreter adds deterministic <code>topk</code> candidate ranking,
+        <code>topk_values</code>, <code>softmax_temp</code> and
+        <code>logsoftmax_temp</code> for finite vectors. These can support
+        small score-selection experiments, but are neither a neural-network
+        inference runtime nor random sampling. Read the{" "}
+        <a href="/news/alpha6-ranking-temperature/">tested numerical examples</a>.
+      </p>
       <h2 id={"what-that-enables"}>What that enables</h2>
       <p>
         You can explore small numerical programs, combine operations inside

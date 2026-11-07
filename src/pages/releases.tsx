@@ -31,21 +31,29 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Optional compiler caching with conservative invalidation.</h3>
+          <h3>Deterministic Top-K and temperature-controlled probabilities.</h3>
           <p>
-            Scarp {publishedCompiler.tag} introduces opt-in Rust embedding APIs
-            for bounded lexical-token, parsed-syntax and whole-graph semantic
-            caching. Dependency-aware edit planning and source-scoped eviction
-            help editors and embedding tools discard affected cache entries.
-            These APIs require a compatible Rust source checkout; they are not
-            automatic background caching in the published command-line tool.
+            Scarp {publishedCompiler.tag} adds pure <code>topk</code> and{" "}
+            <code>topk_values</code> built-ins for stable candidate ranking,
+            plus <code>softmax_temp</code> and <code>logsoftmax_temp</code>
+            for finite vector probabilities at a positive temperature.
+            Equal scores retain original-index tie ordering. Numerical
+            work and allocation bounds still apply.
           </p>
           <p>
-            The release retains read-only <code>inspect symbols</code> and{" "}
-            <code>inspect references</code>, finite-vector <code>rms</code>,
-            offline project commands and the existing restricted scalar C11
-            embedding API. It does not add an LSP, file watcher, general native
-            executable generation or guaranteed performance improvements.
+            Internal compiler-owned scalar IR, branch/slot validation and
+            test-only interpreter differential checks improve experimental
+            C11 subset correctness; they do <strong>not</strong> add general
+            native compilation. Earlier optional Rust compiler caches,
+            read-only symbol navigation, offline projects and vector{" "}
+            <code>rms</code> are retained. There is no integrated LSP,
+            GPU backend, tensor framework, random sampling, or native
+            <code>scarp compile</code> CLI.
+          </p>
+          <p>
+            Read the <a href="/news/alpha6-ranking-temperature/">alpha.6.3 feature overview</a>
+            {" "}and its pinned example outputs, or the{" "}
+            <a href="/news/alpha6-cache-apis/">previous cache feature note</a>.
           </p>
           <p>
             Pre-built archives are published for Windows x64, Linux x64 GNU and

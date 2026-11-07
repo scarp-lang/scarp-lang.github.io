@@ -49,6 +49,7 @@ export const socials = [
 ] as const;
 
 export const news = [
+  { date: '2026-11-07', category: 'Language release', title: 'Scarp alpha.6.3: deterministic Top-K and temperature softmax', description: 'The published prerelease adds typed Top-K score ranking and stable temperature-aware probabilities, plus internal scalar IR verification.', href: '/news/alpha6-ranking-temperature/' },
   { date: '2026-11-06', category: 'Language release', title: 'Scarp alpha.6.2: optional compiler caches and invalidation', description: 'The new experimental prerelease adds opt-in Rust token, syntax and semantic caches with conservative dependency planning and source-scoped eviction.', href: '/news/alpha6-cache-apis/' },
   { date: '2026-11-05', category: 'Language release', title: 'Scarp alpha.6: symbol navigation and vector RMS', description: 'The published alpha.6 adds static, cross-file symbol/reference inspection and a finite-vector rms builtin, with explicit prerelease limits.', href: '/news/alpha6-symbol-navigation/' },
   { date: '2026-11-04', category: 'Language release', title: 'Scarp alpha.5: project inspection and experimental C11 emitter', description: 'Inspect explicit Scarp projects from the CLI and explore restricted scalar C11 code generation through a Rust embedding API.', href: '/news/alpha5-project-inspection/' },
