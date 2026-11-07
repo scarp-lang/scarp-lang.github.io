@@ -146,13 +146,14 @@ URL restoration during browser navigation, and the `/` or Ctrl/⌘+K shortcut
 (outside editable controls). It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs keep their older verified compiler baseline,
 and the same three homepage fixtures also run under the pinned alpha.6 compiler
-with byte-exact expected output. An additional alpha.6-only RMS program and the
-schema-v1 symbol/reference inspection outputs are checked only against the
-latest published compiler. The two compiler sources and distinct CLI
+with byte-exact expected output. Published-only RMS, Top-K and
+temperature-softmax fixtures, plus schema-v1 symbol/reference inspection
+outputs, are checked only against the latest published compiler. The two compiler sources and distinct CLI
 commands are tested in both CI and the Pages workflow. The compatibility page
 does **not** promise that all user programs work across versions. The Downloads and Releases pages show the reviewed published
-**v0.0.6-alpha.1** prerelease, released on 5 November 2026, with exact
-GitHub archive digests. The ecosystem page independently records project
+**v0.0.6-alpha.3** prerelease, released on 7 November 2026, with exact
+GitHub archive digests. The earlier alpha.6.2 announcement remains an
+independently pinned historical article. The ecosystem page independently records project
 versions; these are reviewed snapshots, not a live GitHub feed.
 Baseline: **v0.0.5-alpha.1**, source
 `afe8b5380c9d6c4774162e51c6c9bc8b90901671`, reviewed 1 November 2026.
