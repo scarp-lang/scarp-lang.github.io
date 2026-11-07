@@ -6,6 +6,7 @@ on:
       - feat/release-alpha6-3-20261107
 permissions:
   contents: write
+  actions: read
 jobs:
   commit-reviewed-screenshots:
     if: github.repository == 'scarp-lang/scarp-lang.github.io' && github.ref == 'refs/heads/feat/release-alpha6-3-20261107'
@@ -13,28 +14,14 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Fetch previously reviewed visual screenshots from exact GitHub Actions run
+        uses: actions/download-artifact@v4
         with:
-          node-version: 26
-          cache: npm
-      - name: Install production and pinned test-only browser dependencies
-        run: |
-          npm ci
-          npm install --no-save --package-lock=false playwright-core@1.64.1
-      - name: Build site without changing source content
-        run: npm run build
-      - name: Require only the expected existing visual-baseline test failure
-        shell: bash
-        run: |
-          set +e
-          npm run test:browser > /tmp/scarp-reviewed-browser.log 2>&1
-          status=$?
-          set -e
-          cat /tmp/scarp-reviewed-browser.log
-          test "$status" -eq 1
-          grep -q 'capture reproducible light/dark screenshots for visual review' /tmp/scarp-reviewed-browser.log
-          grep -q 'Reviewed screenshot baselines differ' /tmp/scarp-reviewed-browser.log
-          grep -Eq 'fail 1' /tmp/scarp-reviewed-browser.log
+          name: browser-visual-review
+          path: test-results/browser/visual
+          repository: scarp-lang/scarp-lang.github.io
+          run-id: 42385531877
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Require all four exact independently reviewed screenshot SHA-256 digests
         shell: bash
         run: |
