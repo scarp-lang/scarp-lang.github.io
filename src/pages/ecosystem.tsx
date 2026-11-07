@@ -17,7 +17,7 @@ export default function EcosystemPage() {
           or work in your editor. Each tool is developing at its own pace.
         </p>
         <p className="small muted ecosystem-reviewed">
-          Reviewed <time dateTime={ecosystemReviewedOn}>3 November 2026</time>. This is a documented snapshot, not a live availability monitor.
+          Reviewed <time dateTime={ecosystemReviewedOn}>7 November 2026</time>. This is a documented snapshot, not a live availability monitor.
         </p>
       </section>
 
