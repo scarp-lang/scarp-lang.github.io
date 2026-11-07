@@ -26,6 +26,16 @@ export default function ArticlePage() {
         integrated LSP, incremental editor cache, GPU backend or native
         compilation command.
       </p>
+      <h2 id="published-alpha63">Published alpha.6.3 · Deterministic numerical primitives</h2>
+      <p>
+        The <a href="/news/alpha6-ranking-temperature/">published alpha.6.3 update</a>
+        {" "}adds <code>topk</code>, <code>topk_values</code>,
+        <code>softmax_temp</code> and <code>logsoftmax_temp</code> to the
+        experimental interpreter. The previous alpha.6.2 release added
+        optional Rust embedding caches, but not an automatic incremental CLI.
+        Internal scalar IR validation does not mean that a general native
+        compiler has shipped.
+      </p>
       <h2 id="next-priorities">Next priorities · Reliable developer tooling</h2>
       <p>
         Source indexing offers a foundation for future editor integrations,
