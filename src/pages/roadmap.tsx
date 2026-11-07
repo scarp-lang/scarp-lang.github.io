@@ -55,6 +55,30 @@ export default function ArticlePage() {
         for the upstream ordering. Priorities may change as implementation
         reveals new requirements.
       </p>
+      <h2 id="planned-scientific-computing">
+        Planned · Scientific computing and numerical AI
+      </h2>
+      <p>
+        Scientific programming is a long-term direction, grounded in Scarp’s
+        existing finite vectors, matrix kernels and numerical validation.
+        Sampling-based integration and interval derivatives are being reviewed
+        in{" "}
+        <a href="https://github.com/scarp-lang/scarp/pull/153">
+          compiler PR #153
+        </a>
+        . These proposed functions are <strong>not in the published
+        v0.0.6-alpha.3 compiler</strong>. General tensors, ODE solvers,
+        automatic differentiation, GPU execution and stable <code>scarp.*</code>
+        scientific namespaces are not implemented.
+      </p>
+      <p>
+        Read the{" "}
+        <a href="https://scarp-lang.github.io/scarp-docs/project/scientific-computing">
+          scientific computing proposal
+        </a>{" "}
+        for the release gates, architecture and feature dependencies. Proposed
+        library names are not available imports.
+      </p>
       <h2 id={"future-vision--ai-development-with-less-friction"}>
         Future vision · AI development with less friction
       </h2>
