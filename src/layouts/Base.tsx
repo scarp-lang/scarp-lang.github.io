@@ -2,6 +2,7 @@ import { useContext, type ReactNode } from "react";
 import Brand from "../components/Brand.tsx";
 import QuickSearch from "../components/QuickSearch.tsx";
 import { navigation, project } from "../data/project.ts";
+import { websiteStructuredData } from "../lib/structured-data.ts";
 import { initializeTheme } from "../scripts/theme-init.ts";
 import { SiteContext } from "../site/context.ts";
 
@@ -20,6 +21,9 @@ export default function Base({
 }: BaseProps) {
   const { path, assets } = useContext(SiteContext);
   const canonical = new URL(path, project.origin).href;
+  const pageTitle = title === "Home"
+    ? "Scarp — Build Beyond Boundaries"
+    : `${title} · Scarp Programming Language`;
   const themeBootstrap = `(${initializeTheme.toString()})();`;
   return (
     <html lang="en">
@@ -27,12 +31,12 @@ export default function Base({
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content="Scarp TypeScript static renderer" />
-        <title>
-          {title === "Home"
-            ? "Scarp — Build Beyond Boundaries"
-            : `${title} · Scarp Programming Language`}
-        </title>
+        <title>{pageTitle}</title>
         <meta name="description" content={description} />
+        {!noindex && (
+          <script type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: websiteStructuredData(pageTitle, description, canonical) }} />
+        )}
         {noindex && <meta name="robots" content="noindex" />}
         <link rel="canonical" href={canonical} />
         <link rel="icon" type="image/png" sizes="64x64" href="/brand/scarp-favicon.png" />

@@ -23,6 +23,7 @@ CSS, and JavaScript that browsers consume.
 | Route registry and static renderer | `src/site/pages.ts`, `src/site/render.tsx` |
 | Browser interactions and early theme initialization | `src/scripts/*.ts` |
 | Project data and shared logic | `src/data/*.ts`, `src/lib/*.ts` |
+| Search metadata | Safe, static `WebSite` / `WebPage` JSON-LD from `src/lib/structured-data.ts` |
 | RSS, sitemap, and project snapshot | `src/pages/*.ts` |
 | Build and development configuration | `scripts/build.ts`, `vite.config.ts` |
 | Styles and static assets | `src/styles/*.css`, `public/` |
@@ -58,6 +59,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:render`: static documents, route aliases, escaping, no-JavaScript
   content, data routes, the searchable page directory, and the not-found response.
 - `npm run test:search`: search ranking, multi-term matching, and empty queries.
+- `npm run test:structured-data`: canonical URLs, project identity, and script-safe JSON-LD; deliberately avoids unsupported stable-software claims.
 - `npm run test:search-ui`: accessible result announcements, clear/Escape, browser
   navigation, global keyboard shortcuts, and no-JS fallback.
 - `npm run test:nav`: mobile disclosure state, Escape behavior, outside interaction,
