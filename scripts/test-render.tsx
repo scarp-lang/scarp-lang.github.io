@@ -319,7 +319,7 @@ test('historical alpha.6.3 announcement keeps pinned source, examples, search an
   const article = findPage(announcement.href);
   assert(article, 'Alpha.6.3 article not registered');
   const html = renderPage(article, developmentAssets);
-  for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, 'topk_values',
+  for (const token of ['v0.0.6-alpha.3', 'ceff07d9014f466974e0c9e02fc5d23573f55777', 'topk_values',
     'softmax_temp', 'logsoftmax_temp', 'scalar', '/downloads/', '/compatibility/']) {
     assert(html.includes(token), 'Alpha.6.3 article missing evidence: ' + token);
   }
