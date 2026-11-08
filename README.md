@@ -151,7 +151,7 @@ temperature-softmax fixtures, plus schema-v1 symbol/reference inspection
 outputs, are checked only against the latest published compiler. The two compiler sources and distinct CLI
 commands are tested in both CI and the Pages workflow. The compatibility page
 does **not** promise that all user programs work across versions. The Downloads and Releases pages show the reviewed published
-**v0.0.6-alpha.3** prerelease, released on 7 November 2026, with exact
+**v0.0.6-alpha.4** prerelease, released on 8 November 2026, with exact
 GitHub archive digests. The earlier alpha.6.2 announcement remains an
 independently pinned historical article. The ecosystem page independently records project
 versions; these are reviewed snapshots, not a live GitHub feed.

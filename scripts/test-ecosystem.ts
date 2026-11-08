@@ -4,7 +4,7 @@ import { ecosystemProjects, ecosystemReviewedOn } from "../src/data/ecosystem.ts
 import { publishedCompiler } from "../src/data/releases.ts";
 
 test("official ecosystem snapshot is complete and stable to audit", () => {
-  assert.equal(ecosystemReviewedOn, "2026-11-07");
+  assert.equal(ecosystemReviewedOn, "2026-11-08");
   assert.equal(ecosystemProjects.length, 5);
   assert.deepEqual(ecosystemProjects.map(project => project.id), [
     "compiler", "docs", "playground", "examples", "vscode",
@@ -27,9 +27,9 @@ test("published versions are recorded only where source evidence supports them",
   const versions = new Map(ecosystemProjects.map(project => [project.id, project.version]));
   assert.equal(versions.get("compiler"), publishedCompiler.tag);
   assert.equal(versions.get("docs"), null);
-  assert.equal(versions.get("playground"), "v0.0.1");
-  assert.equal(versions.get("examples"), "v0.1.0-alpha.1");
-  assert.equal(versions.get("vscode"), "v0.1.2");
+  assert.equal(versions.get("playground"), "v0.0.2");
+  assert.equal(versions.get("examples"), "v0.1.0-alpha.5");
+  assert.equal(versions.get("vscode"), "v0.1.4");
   for (const project of ecosystemProjects) {
     if (project.version) assert(project.evidence.endsWith("/" + project.version));
   }

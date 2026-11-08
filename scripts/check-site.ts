@@ -145,10 +145,10 @@ for (const token of ['v0.0.6-alpha.2', '398b8ff705154a02423fe458ce3a427401e81e31
 }
 assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-cache-apis/</link>'), 'RSS missing historical alpha.6.2 release');
 const latestNews = await readFile(join(root, 'news/alpha6-ranking-temperature/index.html'), 'utf8');
-for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, '7 November 2026', 'topk_values', 'softmax_temp', 'logsoftmax_temp', 'scalar']) {
-  assert(latestNews.includes(token), 'Current alpha.6.3 article missing ' + token);
+for (const token of ['v0.0.6-alpha.3', 'ceff07d9014f466974e0c9e02fc5d23573f55777', '7 November 2026', 'topk_values', 'softmax_temp', 'logsoftmax_temp', 'scalar']) {
+  assert(latestNews.includes(token), 'Historical alpha.6.3 article missing ' + token);
 }
-assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-ranking-temperature/</link>'), 'RSS missing latest alpha.6.3 release');
+assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-ranking-temperature/</link>'), 'RSS missing historical alpha.6.3 release');
 const alpha4News = await readFile(join(root, 'news/offline-projects/index.html'), 'utf8');
 assert(alpha4News.includes('v0.0.5-alpha.4'), 'Alpha.4 news page missing');
 assert(alpha4News.includes('3 November 2026'), 'Article publication date missing');

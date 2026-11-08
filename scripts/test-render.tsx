@@ -302,11 +302,11 @@ test('migration route displays source-backed version guidance with no JavaScript
   assert(renderPage(findPage('/faq/')!, developmentAssets).includes('href="/migration/"'));
 });
 
-test('latest alpha.6.3 announcement has pinned source, examples, search and RSS', async () => {
+test('historical alpha.6.3 announcement keeps pinned source, examples, search and RSS', async () => {
   const announcement = news[0];
   assert(announcement);
   assert.equal(announcement.href, '/news/alpha6-ranking-temperature/');
-  assert.equal(announcement.date, publishedCompiler.reviewed);
+  assert.equal(announcement.date, '2026-11-07', 'Historical alpha.3 announcement date must remain immutable');
   assert.equal(formatNewsDate('2026-11-07'), '7 November 2026');
   assert.throws(() => formatNewsDate('not-a-date'), RangeError);
   for (const route of ['/', '/news/']) {
@@ -319,7 +319,7 @@ test('latest alpha.6.3 announcement has pinned source, examples, search and RSS'
   const article = findPage(announcement.href);
   assert(article, 'Alpha.6.3 article not registered');
   const html = renderPage(article, developmentAssets);
-  for (const token of [publishedCompiler.tag, publishedCompiler.sourceCommit, 'topk_values',
+  for (const token of ['v0.0.6-alpha.3', 'ceff07d9014f466974e0c9e02fc5d23573f55777', 'topk_values',
     'softmax_temp', 'logsoftmax_temp', 'scalar', '/downloads/', '/compatibility/']) {
     assert(html.includes(token), 'Alpha.6.3 article missing evidence: ' + token);
   }

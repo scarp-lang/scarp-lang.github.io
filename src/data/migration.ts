@@ -83,11 +83,11 @@ export const cliMilestones = [
   {
     tag: publishedCompiler.tag,
     sourceCommit: publishedCompiler.sourceCommit,
-    title: "Deterministic top-k ranking and temperature-controlled softmax",
+    title: "Sampled calculus, cosine similarity and restricted ELF64 integer objects",
     execution: "scarp exec hello.srp",
     validation: "scarp verify hello.srp",
     inspection: "scarp inspect symbols --json PROJECT_DIRECTORY",
-    additional: "Adds topk(vector,integer), topk_values, softmax_temp and logsoftmax_temp; retains rms(vector), read-only symbol inspection and opt-in Rust caches (no LSP or native compile CLI)",
+    additional: "Adds sample_area, sample_cumulative_area, sample_slopes and cosine_similarity; restricted ELF64 object emission is Rust API-only. Retains topk, topk_values, softmax_temp, logsoftmax_temp and rms(vector), static symbols and opt-in caches (no LSP or general native compiler CLI)",
     evidence: publishedCompiler.release,
     fixtureTested: true,
   },
