@@ -87,7 +87,7 @@ export const cliMilestones = [
     execution: "scarp exec hello.srp",
     validation: "scarp verify hello.srp",
     inspection: "scarp inspect symbols --json PROJECT_DIRECTORY",
-    additional: "Adds sample_area, sample_cumulative_area, sample_slopes and cosine_similarity; restricted ELF64 object emission is Rust API-only. Retains Top-K and temperature softmax, static symbols and opt-in caches (no general native compiler CLI)",
+    additional: "Adds sample_area, sample_cumulative_area, sample_slopes and cosine_similarity; restricted ELF64 object emission is Rust API-only. Retains Top-K and temperature softmax, rms(vector), static symbols and opt-in caches (no general native compiler CLI)",
     evidence: publishedCompiler.release,
     fixtureTested: true,
   },
