@@ -302,8 +302,26 @@ test('migration route displays source-backed version guidance with no JavaScript
   assert(renderPage(findPage('/faq/')!, developmentAssets).includes('href="/migration/"'));
 });
 
+test('published alpha.6.5 announcement has immutable source evidence and RSS', async () => {
+  const announcement = news.find(item => item.href === '/news/alpha6-nucleus-correlation/');
+  assert(announcement);
+  assert.equal(announcement.date, '2026-11-09');
+  assert.equal(formatNewsDate(announcement.date), '9 November 2026');
+  const article = findPage(announcement.href);
+  assert(article, 'Latest alpha.6.5 article not registered');
+  const html = renderPage(article, developmentAssets);
+  for (const token of ['v0.0.6-alpha.5', '205e92f166f186c3905e5880d41c31717b697b8e',
+    'top_p_values', 'pearson_correlation', 'ELF64', '/downloads/', '/compatibility/']) {
+    assert(html.includes(token), 'Alpha.6.5 article missing evidence: ' + token);
+  }
+  assert(searchEntries.some(entry => entry.path === announcement.href));
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-nucleus-correlation/</link>'));
+  assert(feed?.body.includes('<pubDate>' + new Date(announcement.date + 'T00:00:00Z').toUTCString() + '</pubDate>'));
+});
+
 test('historical alpha.6.3 announcement keeps pinned source, examples, search and RSS', async () => {
-  const announcement = news[0];
+  const announcement = news.find(item => item.href === '/news/alpha6-ranking-temperature/');
   assert(announcement);
   assert.equal(announcement.href, '/news/alpha6-ranking-temperature/');
   assert.equal(announcement.date, '2026-11-07', 'Historical alpha.3 announcement date must remain immutable');
@@ -330,7 +348,7 @@ test('historical alpha.6.3 announcement keeps pinned source, examples, search an
 });
 
 test('historical alpha.6.2 cache announcement stays immutable after alpha.6.3', async () => {
-  const announcement = news[1];
+  const announcement = news.find(item => item.href === '/news/alpha6-cache-apis/');
   assert(announcement);
   assert.equal(announcement.href, '/news/alpha6-cache-apis/');
   assert.equal(announcement.date, '2026-11-06');
@@ -354,7 +372,7 @@ test('historical alpha.6.2 cache announcement stays immutable after alpha.6.3', 
 });
 
 test('historical alpha.6.1 article stays pinned after release updates', async () => {
-  const previous = news[2];
+  const previous = news.find(item => item.href === '/news/alpha6-symbol-navigation/');
   assert(previous);
   assert.equal(previous.href, '/news/alpha6-symbol-navigation/');
   assert.equal(previous.date, '2026-11-05');
@@ -370,7 +388,7 @@ test('historical alpha.6.1 article stays pinned after release updates', async ()
 });
 
 test('historical alpha.5 article keeps its original release and source references', async () => {
-  const historical = news[3];
+  const historical = news.find(item => item.href === '/news/alpha5-project-inspection/');
   assert(historical);
   assert.equal(historical.href, '/news/alpha5-project-inspection/');
   assert.equal(historical.date, '2026-11-04');
@@ -386,7 +404,7 @@ test('historical alpha.5 article keeps its original release and source reference
 });
 
 test('historical alpha.4 article retains original release date and source evidence', async () => {
-  const historical = news[4];
+  const historical = news.find(item => item.href === '/news/offline-projects/');
   assert(historical);
   assert.equal(historical.href, '/news/offline-projects/');
   assert.equal(historical.date, '2026-11-03');
