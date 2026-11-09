@@ -16,6 +16,7 @@ import OfflineProjects from "../pages/news/offline-projects.tsx";
 import Alpha6SymbolNavigation from "../pages/news/alpha6-symbol-navigation.tsx";
 import Alpha6CacheApis from "../pages/news/alpha6-cache-apis.tsx";
 import Alpha6RankingTemperature from "../pages/news/alpha6-ranking-temperature.tsx";
+import Alpha6NucleusCorrelation from "../pages/news/alpha6-nucleus-correlation.tsx";
 import Alpha5ProjectInspection from "../pages/news/alpha5-project-inspection.tsx";
 import SourceModules from "../pages/news/source-modules.tsx";
 import OfficialWebsite from "../pages/news/official-website.tsx";
@@ -50,6 +51,7 @@ export const pages: readonly SitePage[] = [
   { path: "/support/", Component: Support },
   { path: "/search/", Component: Search },
   { path: "/news/", Component: News },
+  { path: "/news/alpha6-nucleus-correlation/", Component: Alpha6NucleusCorrelation },
   { path: "/news/alpha6-ranking-temperature/", Component: Alpha6RankingTemperature },
   { path: "/news/alpha6-cache-apis/", Component: Alpha6CacheApis },
   { path: "/news/alpha6-symbol-navigation/", Component: Alpha6SymbolNavigation },
