@@ -71,11 +71,13 @@ export default function CompatibilityPage() {
         syntax, old CLI commands, libraries or other projects are compatible.
       </p>
 
-      <h2 id="published-only">Published alpha.6-only numerical coverage</h2>
+      <h2 id="published-only">Published alpha.6 numerical coverage</h2>
       <p>
         Additional examples for vector <code>rms</code>, deterministic{" "}
-        <code>topk</code> ranking, and temperature-aware{" "}
-        <code>softmax_temp</code>/<code>logsoftmax_temp</code> run only with{" "}
+        <code>topk</code> ranking, temperature-aware{" "}
+        <code>softmax_temp</code>/<code>logsoftmax_temp</code>,{" "}
+        <code>top_p</code> nucleus selection and centered{" "}
+        <code>pearson_correlation</code> run only with{" "}
         <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>,
         not with the older baseline. Their exact stdout is checked,
         and <code>inspect symbols</code> and <code>inspect references</code>{" "}

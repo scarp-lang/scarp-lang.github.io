@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: scarp-lang/scarp
-          ref: f04be0758cbce405ddcdb229699b0ff83c09d207
+          ref: 205e92f166f186c3905e5880d41c31717b697b8e
           path: .compiler-published
           persist-credentials: false
       - name: Build the published interpreter

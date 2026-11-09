@@ -19,7 +19,7 @@ export default function DevelopmentPage() {
           An experimental language, developed in public. This page documents
           the website's verified examples as of 1 November 2026;{" "}
           <a href={publishedCompiler.release}>{publishedCompiler.tag}</a> is the
-          newer published prerelease reviewed 7 November 2026.
+          newer published prerelease reviewed 9 November 2026.
         </p>
       </section>
       <section className="wrap status-summary">
@@ -41,11 +41,12 @@ export default function DevelopmentPage() {
         <h2>What you can use</h2>
         <p>
           The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>{" "}
-          release adds <code>topk</code>, <code>topk_values</code>,
-          <code>softmax_temp</code> and <code>logsoftmax_temp</code> for
-          deterministic numerical ranking and probabilities. It retains
-          earlier read-only symbol/reference inspection and finite-vector
-          <code>rms</code>. Earlier offline project commands{" "}
+          release adds <code>top_p</code> and <code>top_p_values</code> for
+          deterministic nucleus selection plus <code>pearson_correlation</code>
+          for centered vector statistics. Earlier <code>topk</code>,
+          <code>topk_values</code>, <code>softmax_temp</code>,
+          <code>logsoftmax_temp</code>, read-only symbol inspection and
+          finite-vector <code>rms</code> remain. Earlier offline project commands{" "}
           <code>create</code>, directory <code>verify</code> and{" "}
           <code>launch</code> remain available. See{" "}
           <a href="/releases/">release notes</a> and{" "}

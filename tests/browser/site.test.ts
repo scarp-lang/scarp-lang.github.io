@@ -506,7 +506,14 @@ test("capture reproducible light/dark screenshots for visual review", async () =
         animations: "disabled",
         caret: "hide",
       });
-      await verifyVisualBaseline(page, view.name, screenshot);
+      // Explicit local/maintainer-only baseline refresh: ordinary CI never sets this.
+      // All four captures are still produced and must be visually reviewed.
+      if (process.env.SCARP_UPDATE_VISUAL_BASELINES === "1") {
+        const { writeFile } = await import("node:fs/promises");
+        await writeFile(resolve("tests/browser/baselines", view.name + ".png"), screenshot);
+      } else {
+        await verifyVisualBaseline(page, view.name, screenshot);
+      }
       });
     } catch (error) {
       visualFailures.push(view.name + ": " +

@@ -132,6 +132,18 @@ export default function DownloadsPage() {
           has separate instructions pinned to {project.tag}; do not use its old
           CLI commands with the new package.
         </p>
+        <h2>New in {publishedCompiler.tag}</h2>
+        <p>
+          This release adds deterministic <code>top_p</code> and{" "}
+          <code>top_p_values</code> for selecting the smallest probability
+          prefix reaching a requested mass, plus centered{" "}
+          <code>pearson_correlation</code> for paired numerical vectors.
+          These built-ins do not perform random sampling or run AI models.
+          The restricted native object emitter is available only as an
+          experimental Rust API and produces relocatable Linux x86-64 ELF64
+          objects, not executables. See the{" "}
+          <a href="/news/alpha6-nucleus-correlation/">release overview</a>.
+        </p>
         <h2>Using examples from this website?</h2>
         <p>
           The homepage and verified examples still target the older{" "}
@@ -153,7 +165,7 @@ export default function DownloadsPage() {
           compiled from a <code>.srp</code> program.
         </p>
         <p>
-          The current release adds <strong>deterministic Top-K ranking</strong>
+          The earlier alpha.6.3 release introduced <strong>deterministic Top-K ranking</strong>
           using <code>topk</code> and <code>topk_values</code>, and
           temperature-aware numerical functions <code>softmax_temp</code> and
           <code>logsoftmax_temp</code>. These are interpreter built-ins,
