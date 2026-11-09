@@ -5,9 +5,9 @@ import { project } from "../src/data/project.ts";
 import { publishedCompiler } from "../src/data/releases.ts";
 import { exampleCompatibility } from "../src/data/compatibility.ts";
 
-test("CLI migration milestones are pinned to eight published prereleases", () => {
+test("CLI migration milestones are pinned to nine published prereleases", () => {
   assert.deepEqual(cliMilestones.map(item => item.tag), [
-    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", publishedCompiler.tag,
+    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", publishedCompiler.tag,
   ]);
   assert.equal(new Set(cliMilestones.map(item => item.tag)).size, cliMilestones.length);
   for (const item of cliMilestones) {
@@ -17,7 +17,8 @@ test("CLI migration milestones are pinned to eight published prereleases", () =>
   }
   assert.equal(cliMilestones[0]?.sourceCommit, project.source);
   assert.equal(cliMilestones[3]?.sourceCommit, "79141329176f5dce51457e90a6652902f6432135");
-  assert.equal(cliMilestones[7]?.sourceCommit, publishedCompiler.sourceCommit);
+  assert.equal(cliMilestones[7]?.sourceCommit, "f04be0758cbce405ddcdb229699b0ff83c09d207");
+  assert.equal(cliMilestones[8]?.sourceCommit, publishedCompiler.sourceCommit);
   assert.equal(migrationEvidence.publishedRelease, publishedCompiler.release);
   assert(migrationEvidence.projectWorkflow.includes(publishedCompiler.sourceCommit));
 });
@@ -40,13 +41,15 @@ test("migration guidance preserves the runtime/static distinction", () => {
   assert(cliMilestones[3]?.additional.includes("launch DIRECTORY"));
   assert(cliMilestones[4]?.additional.includes("project") || cliMilestones[4]?.additional.includes("Project"));
   assert(cliMilestones[4]?.inspection.includes("PROJECT_DIRECTORY"));
-  assert(cliMilestones[7]?.inspection.includes("PROJECT_DIRECTORY"));
-  assert(cliMilestones[7]?.inspection.includes("symbols"));
+  assert(cliMilestones[8]?.inspection.includes("PROJECT_DIRECTORY"));
+  assert(cliMilestones[8]?.inspection.includes("symbols"));
   assert(cliMilestones[4]?.additional.includes("no compile CLI"));
-  assert(cliMilestones[7]?.additional.includes("rms(vector)"));
-  assert(cliMilestones[7]?.additional.includes("no LSP"));
-  assert(cliMilestones[7]?.additional.includes("topk"));
-  assert(cliMilestones[7]?.additional.includes("softmax_temp"));
+  assert(cliMilestones[8]?.additional.includes("rms(vector)"));
+  assert(cliMilestones[8]?.additional.includes("no LSP"));
+  assert(cliMilestones[8]?.additional.includes("topk"));
+  assert(cliMilestones[8]?.additional.includes("softmax_temp"));
+  assert(cliMilestones[8]?.additional.includes("pearson_correlation"));
+  assert(cliMilestones[8]?.additional.includes("top_p"));
   assert.equal(cliMilestones[6]?.tag, "v0.0.6-alpha.2");
   assert.equal(new Set(cliMigrations.map(item => item.id)).size, cliMigrations.length);
   const validation = cliMigrations.find(item => item.id === "validate");
