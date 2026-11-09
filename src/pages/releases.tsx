@@ -31,29 +31,27 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Deterministic Top-K and temperature-controlled probabilities.</h3>
+          <h3>Deterministic Top-P selection and centered Pearson correlation.</h3>
           <p>
-            Scarp {publishedCompiler.tag} adds pure <code>topk</code> and{" "}
-            <code>topk_values</code> built-ins for stable candidate ranking,
-            plus <code>softmax_temp</code> and <code>logsoftmax_temp</code>
-            for finite vector probabilities at a positive temperature.
-            Equal scores retain original-index tie ordering. Numerical
-            work and allocation bounds still apply.
+            Scarp {publishedCompiler.tag} adds <code>top_p</code> and{" "}
+            <code>top_p_values</code> for deterministic probability-ranked
+            nucleus selection and <code>pearson_correlation</code> for
+            centered finite-vector statistics. These operations are bounded
+            and validated; Top-P selection is not random sampling.
           </p>
           <p>
-            Internal compiler-owned scalar IR, branch/slot validation and
-            test-only interpreter differential checks improve experimental
-            C11 subset correctness; they do <strong>not</strong> add general
-            native compilation. Earlier optional Rust compiler caches,
-            read-only symbol navigation, offline projects and vector{" "}
-            <code>rms</code> are retained. There is no integrated LSP,
-            GPU backend, tensor framework, random sampling, or native
-            <code>scarp compile</code> CLI.
+            The experimental Rust-only ELF64 x86-64 object emitter now
+            supports bounded sequences of integer bindings referencing earlier
+            bindings; it generates relocatable objects, not executables.
+            Earlier sampled calculus, cosine similarity, Top-K, temperature
+            softmax, source navigation, caches and offline projects remain.
+            There is no integrated LSP, GPU backend, generalized tensor
+            framework, stochastic sampling or <code>scarp compile</code> CLI.
           </p>
           <p>
-            Read the <a href="/news/alpha6-ranking-temperature/">alpha.6.3 feature overview</a>
-            {" "}and its pinned example outputs, or the{" "}
-            <a href="/news/alpha6-cache-apis/">previous cache feature note</a>.
+            Read the <a href="/news/alpha6-nucleus-correlation/">alpha.6.5 overview</a>
+            {" "}and its pinned numerical examples, or the{" "}
+            <a href="/news/alpha6-ranking-temperature/">earlier Top-K feature overview</a>.
           </p>
           <p>
             Pre-built archives are published for Windows x64, Linux x64 GNU and
