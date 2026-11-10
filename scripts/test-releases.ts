@@ -21,9 +21,9 @@ test("latest public prerelease is separate from the verified website baseline", 
 
 test("all three public archive SHA-256 digests and links match the release", () => {
   const expected = new Map([
-    ["scarp-0.0.6-alpha.5-x86_64-pc-windows-msvc.zip", "152b7bad159ae0e3c3a4d84d63af0a3deda712cec674ab5a25a124ce0626fba1"],
-    ["scarp-0.0.6-alpha.5-x86_64-unknown-linux-gnu.tar.gz", "4f7af0fc4e2b018040ee987b5647eb227f874dd21adfbb1892a65c9dc764b678"],
-    ["scarp-0.0.6-alpha.5-aarch64-apple-darwin.tar.gz", "7227144923e599cd03d288a6d5517676daff21e66bed37749f83d91b8565c5e8"],
+    ["scarp-0.0.6-alpha.6-x86_64-pc-windows-msvc.zip", "152b7bad159ae0e3c3a4d84d63af0a3deda712cec674ab5a25a124ce0626fba1"],
+    ["scarp-0.0.6-alpha.6-x86_64-unknown-linux-gnu.tar.gz", "4f7af0fc4e2b018040ee987b5647eb227f874dd21adfbb1892a65c9dc764b678"],
+    ["scarp-0.0.6-alpha.6-aarch64-apple-darwin.tar.gz", "7227144923e599cd03d288a6d5517676daff21e66bed37749f83d91b8565c5e8"],
   ]);
   assert.equal(publishedDownloads.length, 3);
   assert.equal(new Set(publishedDownloads.map(item => item.file)).size, 3);
