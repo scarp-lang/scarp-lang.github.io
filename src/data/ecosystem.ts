@@ -5,7 +5,7 @@
 import { project } from "./project.ts";
 import { publishedCompiler } from "./releases.ts";
 
-export const ecosystemReviewedOn = "2026-11-09";
+export const ecosystemReviewedOn = "2026-11-10";
 
 export interface EcosystemProject {
   id: string;
@@ -28,7 +28,7 @@ export const ecosystemProjects = [
     status: "Experimental prerelease",
     version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
-    limitation: "Published v0.0.6-alpha.5 adds deterministic Top-P nucleus selection, centered Pearson correlation, and an expanded Rust-only x86-64 ELF64 integer-object emitter. Earlier sampled calculus, cosine similarity, Top-K and temperature softmax remain. No stochastic sampling, general native .srp compiler, stable language, GPU backend or integrated LSP.",
+    limitation: "Published v0.0.6-alpha.6 adds bounded redirected UTF-8 read_line input, explicit Unicode text utilities, and immutable typed tuples with arity 1–32. Earlier numerical tools, static source inspection and restricted Rust-only native object APIs remain. Input is not an interactive prompt API; native backends reject tuples and input. No general compiled executable CLI, GPU runtime, stable ABI or integrated LSP.",
     website: `${project.repo}/releases`,
     source: project.repo,
     evidence: publishedCompiler.release,

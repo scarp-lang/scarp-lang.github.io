@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 26);
+  assert.equal(pages.length, 27);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -458,4 +458,28 @@ test("native quick search is discoverable on every page with static fallback and
       assert(html.includes('data-quick-path="' + entry.path + '"'));
     }
   }
+});
+
+test('published alpha.6.6 input and tuple announcement has immutable source evidence and RSS', async () => {
+  const announcement = news.find(item => item.href === '/news/alpha6-input-tuples/');
+  assert(announcement);
+  assert.equal(announcement.date, '2026-11-10');
+  assert.equal(formatNewsDate(announcement.date), '10 November 2026');
+  const article = findPage(announcement.href);
+  assert(article, 'Alpha.6.6 article not registered');
+  const html = renderPage(article, developmentAssets);
+  for (const token of ['v0.0.6-alpha.6', 'cdf6a3924ec2a36c7beca5a9aec4f01a0bce515e',
+    'read_line', 'text_to_integer', 'tuple', 'core_input_tuple.srp', 'redirected',
+    '/downloads/', '/compatibility/']) {
+    assert(html.includes(token), 'Alpha.6.6 release article missing ' + token);
+  }
+  assert(searchEntries.some(entry => entry.path === announcement.href));
+  for (const route of ['/', '/news/']) {
+    const page = findPage(route);
+    assert(page);
+    assert(renderPage(page, developmentAssets).includes('href="' + announcement.href + '"'));
+  }
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-input-tuples/</link>'));
+  assert(feed?.body.includes('<pubDate>' + new Date(announcement.date + 'T00:00:00Z').toUTCString() + '</pubDate>'));
 });

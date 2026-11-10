@@ -86,13 +86,13 @@ export default function LearnPage() {
 
       <h2 id="04--explore-new-alpha6-capabilities">04 · Explore alpha.6-only tools</h2>
       <p>
-        {publishedCompiler.tag} adds opt-in, read-only symbol and reference
+        {publishedCompiler.tag} retains opt-in, read-only symbol and reference
         indexes. These commands type-check source without executing ordinary
         statements; they are not an integrated language server:
       </p>
       <CodeBlock filename="Terminal · alpha.6" code={"scarp inspect symbols --json hello.srp\nscarp inspect references --json hello.srp"} />
       <p>
-        The same release adds <code>rms(vector)</code> for finite, nonempty
+        The alpha.6 series includes <code>rms(vector)</code> for finite, nonempty
         numerical vectors. This example is separately tested in website CI
         against the published alpha.6 interpreter:
       </p>
@@ -121,6 +121,25 @@ export default function LearnPage() {
         This follows the exact <a href="/news/alpha6-ranking-temperature/">alpha.6.3 release examples</a>.
         Read the <a href="/compatibility/#published-only">published-only fixture evidence</a>{" "}
         before assuming code works on an older compiler.
+      </p>
+
+      <h2 id="06--input-and-tuples-alpha66">06 · Try input and tuples in alpha.6.6</h2>
+      <p>
+        In <a href="/news/alpha6-input-tuples/">{publishedCompiler.tag}</a>,
+        immutable tuples can hold values of different types. A tuple
+        annotation names each element's type, and a literal index accesses
+        an element:
+      </p>
+      <CodeBlock filename="pair.srp · alpha.6.6" code={'bind pair: tuple<integer, string> = (42, "नमस्ते");\nprint(pair[0]);'} />
+      <p>
+        This snippet illustrates the new syntax; it is not part of the
+        website's three cross-version CI fixtures. For tested input behavior
+        and exact expected output, see the compiler's
+        <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/examples/core_input_tuple.srp"}>
+          tagged input-and-tuple example
+        </a>. <code>read_line()</code> requires a supplied reader; the
+        packaged CLI supports redirected stdin but not interactive prompting.
+        Rust embedding clients must review the new structural type contracts.
       </p>
 
       <h2 id="older-example-baseline">Using the older website example baseline?</h2>
