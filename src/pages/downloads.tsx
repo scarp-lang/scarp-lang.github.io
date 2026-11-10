@@ -134,15 +134,24 @@ export default function DownloadsPage() {
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
         <p>
-          This release adds deterministic <code>top_p</code> and{" "}
-          <code>top_p_values</code> for selecting the smallest probability
-          prefix reaching a requested mass, plus centered{" "}
-          <code>pearson_correlation</code> for paired numerical vectors.
-          These built-ins do not perform random sampling or run AI models.
-          The restricted native object emitter is available only as an
-          experimental Rust API and produces relocatable Linux x86-64 ELF64
-          objects, not executables. See the{" "}
-          <a href="/news/alpha6-nucleus-correlation/">release overview</a>.
+          <code>read_line()</code> adds bounded UTF-8 input from redirected
+          standard input when a program executes. Checked explicit
+          conversions (<code>text_to_integer</code>,
+          <code>text_to_float</code>, <code>integer_to_text</code>,
+          <code>float_to_text</code>), Unicode text operations
+          (<code>text_trim</code>, <code>text_replace</code>) and immutable
+          heterogeneous <code>tuple&lt;integer, string&gt;</code> values are
+          also available. There is no interactive prompt API.
+        </p>
+        <p>
+          Input defaults: 65,536 raw bytes per line, 1,048,576 total bytes
+          and 4,096 reads, adjustable via the three
+          <code>--max-input-*</code> options. Tuple arity is 1–32,
+          nesting at most 32 and the default cumulative tuple payload
+          limit is 8 MiB. Native backends reject input and tuple
+          operations. Read the{" "}
+          <a href="/news/alpha6-input-tuples/">alpha.6.6 overview</a>{" "}
+          and <a href={publishedCompiler.release}>official compatibility notes</a>.
         </p>
         <h2>Using examples from this website?</h2>
         <p>
