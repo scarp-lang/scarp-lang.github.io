@@ -1,0 +1,42 @@
+name: One-time reviewed alpha.6.6 visual baseline refresh
+on:
+  push:
+    branches: [feat/alpha6-input-tuples-site-20261110]
+    paths:
+      - .github/workflows/alpha66-visual-refresh.yml
+permissions:
+  contents: write
+jobs:
+  refresh:
+    if: github.ref == 'refs/heads/feat/alpha6-input-tuples-site-20261110'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false playwright-core@1.64.1
+      - run: npx tsc -p tsconfig.browser.json
+      - run: npm run build
+      - name: Capture the reviewed alpha.6.6 baseline screenshots
+        run: npm run test:browser
+        env:
+          SCARP_UPDATE_VISUAL_BASELINES: '1'
+      - name: Commit reviewed reference images to the feature branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add tests/browser/baselines/*.png
+          if git diff --cached --quiet; then
+            echo 'No screenshot updates were produced'
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'test(browser): refresh reviewed alpha.6.6 visual baselines'
+          git push origin HEAD:feat/alpha6-input-tuples-site-20261110
