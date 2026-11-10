@@ -36,6 +36,14 @@ export default function ArticlePage() {
         Internal scalar IR validation does not mean that a general native
         compiler has shipped.
       </p>
+      <h2 id="published-alpha66">Published alpha.6.6 · Core input and typed tuples</h2>
+      <p>
+        The <a href="/news/alpha6-input-tuples/">alpha.6.6 prerelease</a>
+        {" "}adds bounded redirected UTF-8 input, explicit text conversion
+        and immutable heterogeneous tuples to the interpreter. It does not
+        provide interactive prompts, general maps and arrays, BigInt or
+        native execution of input/tuple operations.
+      </p>
       <h2 id="next-priorities">Next priorities · Reliable developer tooling</h2>
       <p>
         Source indexing offers a foundation for future editor integrations,
@@ -71,13 +79,14 @@ export default function ArticlePage() {
       <p>
         Scientific programming is a long-term direction, grounded in Scarp’s
         existing finite vectors, matrix kernels and numerical validation.
-        Sampling-based integration and interval derivatives are being reviewed
-        in{" "}
-        <a href="https://github.com/scarp-lang/scarp/pull/153">
-          compiler PR #153
-        </a>
-        . These proposed functions are <strong>not in the published
-        v0.0.6-alpha.3 compiler</strong>. General tensors, ODE solvers,
+        The sampled <code>sample_area</code> and
+        <code>sample_slopes</code> functions shipped in
+        <a href="https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.4">
+          alpha.6.4
+        </a>, following the merged work in{" "}
+        <a href="https://github.com/scarp-lang/scarp/pull/153">compiler PR #153</a>.
+        These are bounded numerical primitives, not a complete scientific
+        stack. General tensors, ODE solvers,
         automatic differentiation, GPU execution and stable <code>scarp.*</code>
         scientific namespaces are not implemented.
       </p>
