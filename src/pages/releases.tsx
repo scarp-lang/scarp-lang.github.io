@@ -31,27 +31,35 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Deterministic Top-P selection and centered Pearson correlation.</h3>
+          <h3>Bounded program input, explicit text conversion and typed tuples.</h3>
           <p>
-            Scarp {publishedCompiler.tag} adds <code>top_p</code> and{" "}
-            <code>top_p_values</code> for deterministic probability-ranked
-            nucleus selection and <code>pearson_correlation</code> for
-            centered finite-vector statistics. These operations are bounded
-            and validated; Top-P selection is not random sampling.
+            Scarp {publishedCompiler.tag} adds <code>read_line()</code> for
+            bounded UTF-8 line input from an explicitly supplied reader.
+            Packaged <code>exec</code>, <code>run</code> and <code>launch</code>
+            accept redirected standard input. This is <strong>not</strong>
+            an interactive terminal prompt API.
           </p>
           <p>
-            The experimental Rust-only ELF64 x86-64 object emitter now
-            supports bounded sequences of integer bindings referencing earlier
-            bindings; it generates relocatable objects, not executables.
-            Earlier sampled calculus, cosine similarity, Top-K, temperature
-            softmax, source navigation, caches and offline projects remain.
-            There is no integrated LSP, GPU backend, generalized tensor
-            framework, stochastic sampling or <code>scarp compile</code> CLI.
+            Checked number/text conversions include <code>text_to_integer</code>,
+            <code>text_to_float</code>, <code>integer_to_text</code> and
+            <code>float_to_text</code>, alongside Unicode-aware
+            <code>text_trim</code> and <code>text_replace</code>. Immutable
+            heterogeneous <code>tuple&lt;integer, string&gt;</code> values
+            support typed functions, imports, structural equality and
+            literal-index projection. Tuple arity is 1–32.
           </p>
           <p>
-            Read the <a href="/news/alpha6-nucleus-correlation/">alpha.6.5 overview</a>
-            {" "}and its pinned numerical examples, or the{" "}
-            <a href="/news/alpha6-ranking-temperature/">earlier Top-K feature overview</a>.
+            Earlier Top-P, Pearson correlation, Top-K, sampled calculus,
+            static source inspection and restricted Rust-only object
+            emitters remain. This prerelease still does not include
+            general native executable compilation, a stable ABI, LSP
+            or GPU backend. Rust embedding clients must review the
+            structural type migration.
+          </p>
+          <p>
+            Read the <a href="/news/alpha6-input-tuples/">alpha.6.6 feature overview</a>,
+            {" "}the <a href="/news/alpha6-nucleus-correlation/">earlier alpha.6.5 numerical update</a>,
+            or the <a href={publishedCompiler.release}>official release notes</a>.
           </p>
           <p>
             Pre-built archives are published for Windows x64, Linux x64 GNU and
