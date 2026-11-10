@@ -98,7 +98,7 @@ export const cliMilestones = [
     execution: "scarp exec hello.srp",
     validation: "scarp verify hello.srp",
     inspection: "scarp inspect symbols --json PROJECT_DIRECTORY",
-    additional: "Adds read_line with redirected stdin, checked text conversion and immutable structural tuples. Retains top_p, top_p_values, pearson_correlation, sampled calculus, topk, softmax_temp, rms(vector), static symbols and opt-in Rust caches. Tuple module signatures use inventory schema 2. No LSP, interactive prompt, general native compiler CLI or stable Rust embedding ABI.",
+    additional: "Adds read_line with redirected stdin, checked text conversion and immutable structural tuples. Retains top_p, top_p_values, pearson_correlation, sampled calculus, topk, softmax_temp, rms(vector), static symbols and opt-in Rust caches. Tuple module signatures use inventory schema 2; no LSP, interactive prompt, general native compiler CLI or stable Rust embedding ABI.",
     evidence: publishedCompiler.release,
     fixtureTested: true,
   },
