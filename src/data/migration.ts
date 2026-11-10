@@ -94,11 +94,11 @@ export const cliMilestones = [
   {
     tag: publishedCompiler.tag,
     sourceCommit: publishedCompiler.sourceCommit,
-    title: "Nucleus selection, Pearson correlation and expanded ELF64 integer objects",
+    title: "Bounded input, text conversions and typed tuples",
     execution: "scarp exec hello.srp",
     validation: "scarp verify hello.srp",
     inspection: "scarp inspect symbols --json PROJECT_DIRECTORY",
-    additional: "Adds top_p, top_p_values and pearson_correlation; expanded bounded ELF64 integer-object emission remains Rust API-only. Retains sampled calculus, cosine_similarity, topk, softmax_temp and rms(vector), static symbols and opt-in caches (no LSP, stochastic sampling or general native compiler CLI)",
+    additional: "Adds read_line with redirected stdin, checked text conversion and immutable structural tuples. Retains top_p, top_p_values, pearson_correlation, sampled calculus, topk, softmax_temp, rms(vector), static symbols and opt-in Rust caches. Tuple module signatures use inventory schema 2. No LSP, interactive prompt, general native compiler CLI or stable Rust embedding ABI.",
     evidence: publishedCompiler.release,
     fixtureTested: true,
   },
