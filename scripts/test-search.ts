@@ -4,7 +4,7 @@ import { searchEntries, searchEntriesFor } from "../src/data/search.ts";
 import { hindiSearchAliases } from "../src/data/search-hi.ts";
 
 test("site search data contains distinct, canonical page paths", () => {
-  assert.equal(searchEntries.length, 24);
+  assert.equal(searchEntries.length, 25);
   assert.equal(new Set(searchEntries.map(entry => entry.path)).size, searchEntries.length);
   for (const entry of searchEntries) {
     assert(entry.path.startsWith("/"));
@@ -30,6 +30,8 @@ test("keywords, casing, prefixes, and multiple terms find relevant pages", () =>
   assert.equal(searchEntriesFor("syntax cache")[0]?.path, "/news/alpha6-cache-apis/");
   assert.equal(searchEntriesFor("softmax_temp")[0]?.path, "/news/alpha6-ranking-temperature/");
   assert.equal(searchEntriesFor("topk_values")[0]?.path, "/news/alpha6-ranking-temperature/");
+  assert.equal(searchEntriesFor("read_line")[0]?.path, "/news/alpha6-input-tuples/");
+  assert.equal(searchEntriesFor("टपल")[0]?.path, "/news/alpha6-input-tuples/");
   assert.equal(searchEntriesFor("pearson_correlation")[0]?.path, "/news/alpha6-nucleus-correlation/");
   assert.equal(searchEntriesFor("न्यूक्लियस चयन")[0]?.path, "/news/alpha6-nucleus-correlation/");
   assert.equal(searchEntriesFor("स्कोर रैंकिंग")[0]?.path, "/news/alpha6-ranking-temperature/");
