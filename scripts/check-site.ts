@@ -149,11 +149,17 @@ for (const token of ['v0.0.6-alpha.3', 'ceff07d9014f466974e0c9e02fc5d23573f55777
   assert(latestNews.includes(token), 'Historical alpha.6.3 article missing ' + token);
 }
 assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-ranking-temperature/</link>'), 'RSS missing historical alpha.6.3 release');
+const alpha66News = await readFile(join(root, 'news/alpha6-input-tuples/index.html'), 'utf8');
+for (const token of ['v0.0.6-alpha.6', 'cdf6a3924ec2a36c7beca5a9aec4f01a0bce515e',
+  '10 November 2026', 'read_line', 'text_to_integer', 'tuple']) {
+  assert(alpha66News.includes(token), 'Alpha.6.6 release article missing ' + token);
+}
 const alpha65News = await readFile(join(root, 'news/alpha6-nucleus-correlation/index.html'), 'utf8');
 for (const token of ['v0.0.6-alpha.5', '205e92f166f186c3905e5880d41c31717b697b8e', '9 November 2026', 'top_p_values', 'pearson_correlation', 'ELF64']) {
   assert(alpha65News.includes(token), 'Alpha.6.5 article missing ' + token);
 }
 assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-nucleus-correlation/</link>'), 'RSS missing alpha.6.5 release');
+assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-input-tuples/</link>'), 'RSS missing alpha.6.6 release');
 const alpha4News = await readFile(join(root, 'news/offline-projects/index.html'), 'utf8');
 assert(alpha4News.includes('v0.0.5-alpha.4'), 'Alpha.4 news page missing');
 assert(alpha4News.includes('3 November 2026'), 'Article publication date missing');
