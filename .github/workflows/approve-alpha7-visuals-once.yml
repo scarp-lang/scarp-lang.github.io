@@ -1,0 +1,58 @@
+# TEMPORARY: remove this workflow immediately after its hash-gated baseline commit.
+# Scoped to the reviewed feature branch and to the commit adding this workflow.
+name: One-time reviewed alpha.7 visual baseline refresh
+
+on:
+  push:
+    branches:
+      - feat/website-scarp-alpha7-20261111
+    paths:
+      - .github/workflows/approve-alpha7-visuals-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  review-approved-captures:
+    if: github.repository == 'scarp-lang/scarp-lang.github.io' && github.ref == 'refs/heads/feat/website-scarp-alpha7-20261111'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false playwright-core@1.64.1
+      - run: npx tsc -p tsconfig.browser.json
+      - run: npm run build
+      - name: Capture and self-check reviewed browser views
+        env:
+          SCARP_UPDATE_VISUAL_BASELINES: '1'
+        run: npm run test:browser
+      - name: Verify three independently reviewed screenshot digests and commit only them
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd tests/browser/baselines
+          printf '%s\n' \
+            'd60c847707ba9cc6da98ac63204ce10fb3aa6401b14361ed3eb6cfe02ec72a6e  home-desktop-light.png' \
+            '24a88727d7a3fe71e52014530bc4f0d8cc41a9fa90b57d50621c13909ddb3c53  home-mobile-dark.png' \
+            'c45c2949d3e92e6a709645804d2ecae1c40356910d68322253a6390b4c25a9ce  search-mobile-light.png' | sha256sum --check --strict
+          cd ../../..
+          git restore -- tests/browser/baselines/support-desktop-dark.png
+          git add -- tests/browser/baselines/home-desktop-light.png tests/browser/baselines/home-mobile-dark.png tests/browser/baselines/search-mobile-light.png
+          expected="$(printf '%s\n' 'tests/browser/baselines/home-desktop-light.png' 'tests/browser/baselines/home-mobile-dark.png' 'tests/browser/baselines/search-mobile-light.png')"
+          actual="$(git diff --cached --name-only)"
+          if [[ "$actual" != "$expected" ]]; then
+            echo "Unexpected staged paths; refusing screenshot approval"
+            exit 1
+          fi
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'test(visual): commit manually reviewed alpha.7 reference screenshots'
+          git push origin HEAD:refs/heads/feat/website-scarp-alpha7-20261111
