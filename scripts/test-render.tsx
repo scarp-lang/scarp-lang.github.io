@@ -483,3 +483,31 @@ test('published alpha.6.6 input and tuple announcement has immutable source evid
   assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-input-tuples/</link>'));
   assert(feed?.body.includes('<pubDate>' + new Date(announcement.date + 'T00:00:00Z').toUTCString() + '</pubDate>'));
 });
+
+test('alpha.6.7 article, release pages and RSS retain verified source evidence', async () => {
+  const announcement = news.find(item => item.href === '/news/alpha6-conditional-unicode/');
+  assert(announcement);
+  assert.equal(announcement.date, '2026-11-11');
+  const article = findPage(announcement.href);
+  assert(article, 'Alpha.6.7 article route not registered');
+  const html = renderPage(article, developmentAssets);
+  for (const token of ['v0.0.6-alpha.7', 'b1c1fd232b418267d95520c69ee563ac99ecae30',
+    'elif', 'Unicode', 'conditional_unicode.srp', 'नमस्ते', '/downloads/', '/compatibility/']) {
+    assert(html.includes(token), 'Alpha.6.7 article missing: ' + token);
+  }
+  for (const route of ['/', '/news/']) {
+    const page = findPage(route);
+    assert(page);
+    assert(renderPage(page, developmentAssets).includes('href="' + announcement.href + '"'));
+  }
+  for (const route of ['/downloads/', '/releases/']) {
+    const page = findPage(route);
+    assert(page);
+    const rendered = renderPage(page, developmentAssets);
+    assert(rendered.includes('href="/news/alpha6-conditional-unicode/"'));
+    assert(rendered.includes(publishedCompiler.tag));
+  }
+  assert(searchEntries.some(entry => entry.path === announcement.href));
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-conditional-unicode/</link>'));
+});
