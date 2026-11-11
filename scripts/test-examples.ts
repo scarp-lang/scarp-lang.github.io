@@ -9,7 +9,7 @@ import { exampleCompatibility } from "../src/data/compatibility.ts";
 /**
  * Compile the official interpreter outside this script. Every website .srp fixture
  * must produce byte-identical stdout under its selected, exact source revision.
- * Historical alpha.1 uses run/check; published alpha.6 uses exec/static-only verify.
+ * Historical alpha.1 uses run/check; published alpha.6+ uses exec/static-only verify.
  */
 const target = process.env.SCARP_EXAMPLE_TARGET ?? "baseline";
 assert(["baseline", "published"].includes(target), "SCARP_EXAMPLE_TARGET must be baseline or published");
