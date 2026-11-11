@@ -149,6 +149,13 @@ for (const token of ['v0.0.6-alpha.3', 'ceff07d9014f466974e0c9e02fc5d23573f55777
   assert(latestNews.includes(token), 'Historical alpha.6.3 article missing ' + token);
 }
 assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-ranking-temperature/</link>'), 'RSS missing historical alpha.6.3 release');
+const alpha67News = await readFile(join(root, 'news/alpha6-conditional-unicode/index.html'), 'utf8');
+for (const token of ['v0.0.6-alpha.7', 'b1c1fd232b418267d95520c69ee563ac99ecae30',
+  'conditional_unicode.srp', 'elif', 'Unicode']) {
+  assert(alpha67News.includes(token), 'Alpha.6.7 release article missing ' + token);
+}
+assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-conditional-unicode/</link>'),
+  'RSS missing alpha.6.7 announcement');
 const alpha66News = await readFile(join(root, 'news/alpha6-input-tuples/index.html'), 'utf8');
 for (const token of ['v0.0.6-alpha.6', 'cdf6a3924ec2a36c7beca5a9aec4f01a0bce515e',
   '10 November 2026', 'read_line', 'text_to_integer', 'tuple']) {
