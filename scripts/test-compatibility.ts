@@ -24,7 +24,8 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
     assert((await readFile(join(publishedRoot, name), "utf8")).trim().length > 0, name);
     assert((await readFile(join(publishedRoot, name.replace(".srp", ".stdout")), "utf8")).length > 0, name);
   }
-  assert.match(await readFile(join(publishedRoot, "rms.srp"), "utf8"), /rms\(/);\n  assert.match(await readFile(join(publishedRoot, "conditional_unicode.srp"), "utf8"), /elif score >= 60/);
+  assert.match(await readFile(join(publishedRoot, "rms.srp"), "utf8"), /rms\(/);
+  assert.match(await readFile(join(publishedRoot, "conditional_unicode.srp"), "utf8"), /elif score >= 60/);
   assert.match(await readFile(join(publishedRoot, "nucleus_selection.srp"), "utf8"), /top_p\(/);
   assert.match(await readFile(join(publishedRoot, "pearson_correlation.srp"), "utf8"), /pearson_correlation\(/);
   assert.match(await readFile(join(publishedRoot, "topk_scores.srp"), "utf8"), /topk\(/);
