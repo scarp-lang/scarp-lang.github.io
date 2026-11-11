@@ -1,43 +1,48 @@
 # Scarp website visual regression references
 
-The `v0.0.6-alpha.3` website screenshots were reviewed after release
-content and the search directory gained their new pages. Visual artifacts from
-[run 42385476100](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/42385476100)
-and [run 42385531877](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/42385531877)
-were compared byte-for-byte and produced **identical SHA-256 values** for all
-four screenshots. The homepage and search page grew in height from the added
-release announcement; the support screenshot is pixel-identical to the
-previously approved reference. Review used the complete new rendered
-screenshots rather than disabling image comparison.
+## Reviewed alpha.6.7 release snapshots — 11 November 2026
 
-- `home-desktop-light.png`: 1280 × 800 viewport, light theme, homepage.
-- `home-mobile-dark.png`: 390 × 844 viewport, dark theme, homepage.
-- `search-mobile-light.png`: 390 × 844 viewport, light theme, search page.
-- `support-desktop-dark.png`: 1280 × 800 viewport, dark theme, support page.
+The published Scarp `v0.0.6-alpha.7` announcement adds one homepage news
+card, one full-page article, and one item to the searchable directory. The
+additional content increases the homepage and search result page heights.
+The support page is unchanged and retains its previous approved reference.
 
-Approved alpha.6.3 screenshot SHA-256 values:
+All four full-page captures were inspected before approving these changes.
+The **three changed captures** from two independent CI runs at the same source
+commit were compared byte-for-byte and had identical SHA-256 digests:
 
-```text
-a6193a8dae9b8e58b36f089a1ae6288508d7e09866e5c37b1e810301adb19257  home-desktop-light.png
-282ab9a5900fb4ad3c5616c166b1ebeac1a64c2ff8edcbab03d563c1be8e85bf  home-mobile-dark.png
-d1b256720892af02396c7a29cc5b1627fcc29459a67569a31c3a528469529ebc  search-mobile-light.png
-aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a  support-desktop-dark.png
-```
+- [PR browser run 43026866779](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/43026866779)
+- [Push browser run 43026854671](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/43026854671)
 
-The previous alpha.6.2 review is retained in
-[commit 51dcc4740f96efde176a100223eb1f11c196f98f](https://github.com/scarp-lang/scarp-lang.github.io/tree/51dcc4740f96efde176a100223eb1f11c196f98f/tests/browser/baselines).
+The updated reference images were committed only after the temporary,
+branch-specific baseline refresh job verified the exact reviewed SHA-256 hashes.
+That temporary workflow must be removed from the branch before merging.
 
-Screenshots are full-page captures (height can exceed the viewport). The
-browser tests compare actual RGBA pixels after PNG decoding. Any dimension
-drift fails; more than 0.35% materially changed pixels fails. Diff images
-are attached to failing GitHub Actions jobs for manual review.
+| Reference PNG | Viewport | Captured page | Approved SHA-256 |
+| --- | --- | --- | --- |
+| `home-desktop-light.png` | 1280 × 800, light | Homepage | `d60c847707ba9cc6da98ac63204ce10fb3aa6401b14361ed3eb6cfe02ec72a6e` |
+| `home-mobile-dark.png` | 390 × 844, dark | Homepage | `24a88727d7a3fe71e52014530bc4f0d8cc41a9fa90b57d50621c13909ddb3c53` |
+| `search-mobile-light.png` | 390 × 844, light | Search directory | `c45c2949d3e92e6a709645804d2ecae1c40356910d68322253a6390b4c25a9ce` |
+| `support-desktop-dark.png` | 1280 × 800, dark | Support hub (unchanged reference) | `aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a` |
 
-Baseline PNGs must never be silently approved by recurring CI. For the reviewed
-release, the four images were manually reviewed, checked for exact
-repeatability, and explicitly committed through a **temporary,
-hash-gated, branch-specific** GitHub Actions job. That one-time workflow is
-removed before merging the website update. Future changes require another
-manual review and explicit committed references.
+## Review process and historical references
 
-These are reference images of the production website, not guarantees of
-exact rendering in every browser or platform.
+The preceding alpha.6.3 visual references were reviewed in
+[runs 42385476100](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/42385476100)
+and [42385531877](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/42385531877).
+Their review and full set of hashes remain in
+[commit a8fb15be](https://github.com/scarp-lang/scarp-lang.github.io/tree/a8fb15bec692297ae5020d2b0633d6993edbf547/tests/browser/baselines).
+
+Screenshots are full-page captures (height can exceed the viewport).
+The browser suite compares RGBA pixels after PNG decoding: any dimension drift
+fails, and more than 0.35% materially changed pixels fails. Failing GitHub
+Actions runs attach diff images and new screenshots for manual inspection.
+
+**Recurring CI must never silently approve screenshots.** Each new change
+requires visual inspection, repeatability evidence, a temporary hash-gated
+branch-specific refresh job, and explicit committed reference PNGs. Remove
+that one-time workflow before merging so future changes continue to fail
+until reviewed.
+
+These are production website visual regression references, not guarantees of
+identical rendering across every browser and operating system.
