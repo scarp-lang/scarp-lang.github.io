@@ -31,34 +31,29 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Bounded program input, explicit text conversion and typed tuples.</h3>
+          <h3>Interpreter conditional expressions and Unicode scalar escapes.</h3>
           <p>
-            Scarp {publishedCompiler.tag} adds <code>read_line()</code> for
-            bounded UTF-8 line input from an explicitly supplied reader.
-            Packaged <code>exec</code>, <code>run</code> and <code>launch</code>
-            accept redirected standard input. This is <strong>not</strong>
-            an interactive terminal prompt API.
+            Scarp {publishedCompiler.tag} introduces value-returning
+            <code>if</code>/<code>elif</code>/<code>else</code> expressions.
+            Every condition must be boolean, branches must produce the same
+            exact type, and a final <code>else</code> is required.
+            Only the selected result is evaluated.
           </p>
           <p>
-            Checked number/text conversions include <code>text_to_integer</code>,
-            <code>text_to_float</code>, <code>integer_to_text</code> and
-            <code>float_to_text</code>, alongside Unicode-aware
-            <code>text_trim</code> and <code>text_replace</code>. Immutable
-            heterogeneous <code>tuple&lt;integer, string&gt;</code> values
-            support typed functions, imports, structural equality and
-            literal-index projection. Tuple arity is 1–32.
+            String literals now support checked Unicode scalar escapes of the form
+            <code>{"\\u{HEX}"}</code> using one to six ASCII hexadecimal digits.
+            Malformed escapes, surrogate values and scalars above U+10FFFF are rejected.
           </p>
           <p>
-            Earlier Top-P, Pearson correlation, Top-K, sampled calculus,
-            static source inspection and restricted Rust-only object
-            emitters remain. This prerelease still does not include
-            general native executable compilation, a stable ABI, LSP
-            or GPU backend. Rust embedding clients must review the
-            structural type migration.
+            These conditional expressions are interpreter-only: module constants
+            and the experimental C11 and ELF64 backends reject them.
+            The older alpha.6.6 redirected-input, text conversion and typed-tuple
+            features remain experimental. There is still no general native
+            executable compilation, stable ABI, integrated LSP or GPU runtime.
           </p>
           <p>
-            Read the <a href="/news/alpha6-input-tuples/">alpha.6.6 feature overview</a>,
-            {" "}the <a href="/news/alpha6-nucleus-correlation/">earlier alpha.6.5 numerical update</a>,
+            Read the <a href="/news/alpha6-conditional-unicode/">alpha.6.7 feature overview</a>,
+            {" "}<a href="/news/alpha6-input-tuples/">previous alpha.6.6 input and tuples overview</a>,
             or the <a href={publishedCompiler.release}>official release notes</a>.
           </p>
           <p>
