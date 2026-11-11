@@ -134,6 +134,21 @@ export default function DownloadsPage() {
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
         <p>
+          Use <code>if</code>/<code>elif</code>/<code>else</code> as
+          a value-returning expression with boolean conditions, exactly
+          matching branch types and a required final <code>else</code>.
+          Only the selected branch executes.
+          String literals also support checked Unicode scalar
+          <code>{"\\u{HEX}"}</code> escapes with one to six ASCII hex digits.
+        </p>
+        <p>
+          Conditional expressions work in the interpreter, not module constants
+          or the experimental C11/ELF64 backends. See the
+          {" "}<a href="/news/alpha6-conditional-unicode/">alpha.6.7 release details</a>
+          and <a href={publishedCompiler.release}>upstream compatibility notes</a>.
+        </p>
+        <h2>Introduced in the preceding alpha.6.6</h2>
+        <p>
           <code>read_line()</code> adds bounded UTF-8 input from redirected
           standard input when a program executes. Checked explicit
           conversions (<code>text_to_integer</code>,
