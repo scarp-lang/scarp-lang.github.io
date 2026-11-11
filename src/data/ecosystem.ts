@@ -5,7 +5,7 @@
 import { project } from "./project.ts";
 import { publishedCompiler } from "./releases.ts";
 
-export const ecosystemReviewedOn = "2026-11-10";
+export const ecosystemReviewedOn = "2026-11-11";
 
 export interface EcosystemProject {
   id: string;
@@ -28,7 +28,7 @@ export const ecosystemProjects = [
     status: "Experimental prerelease",
     version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
-    limitation: "Published v0.0.6-alpha.6 adds bounded redirected UTF-8 read_line input, explicit Unicode text utilities, and immutable typed tuples with arity 1–32. Earlier numerical tools, static source inspection and restricted Rust-only native object APIs remain. Input is not an interactive prompt API; native backends reject tuples and input. No general compiled executable CLI, GPU runtime, stable ABI or integrated LSP.",
+    limitation: "Published v0.0.6-alpha.7 adds interpreter-only value-returning if/elif/else expressions and checked Unicode scalar string escapes. Alpha.6.6 added bounded redirected UTF-8 input, explicit text utilities and immutable typed tuples. Native backends reject conditional expressions, tuple operations and input. No general compiled executable CLI, GPU runtime, stable ABI or integrated LSP.",
     website: `${project.repo}/releases`,
     source: project.repo,
     evidence: publishedCompiler.release,

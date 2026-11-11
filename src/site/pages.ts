@@ -12,6 +12,7 @@ import Contribute from "../pages/contribute.tsx";
 import Faq from "../pages/faq.tsx";
 import Support from "../pages/support.tsx";
 import News from "../pages/news/index.tsx";
+import Alpha6ConditionalUnicode from "../pages/news/alpha6-conditional-unicode.tsx";
 import OfflineProjects from "../pages/news/offline-projects.tsx";
 import Alpha6SymbolNavigation from "../pages/news/alpha6-symbol-navigation.tsx";
 import Alpha6CacheApis from "../pages/news/alpha6-cache-apis.tsx";
@@ -52,6 +53,7 @@ export const pages: readonly SitePage[] = [
   { path: "/support/", Component: Support },
   { path: "/search/", Component: Search },
   { path: "/news/", Component: News },
+  { path: "/news/alpha6-conditional-unicode/", Component: Alpha6ConditionalUnicode },
   { path: "/news/alpha6-input-tuples/", Component: Alpha6InputTuples },
   { path: "/news/alpha6-nucleus-correlation/", Component: Alpha6NucleusCorrelation },
   { path: "/news/alpha6-ranking-temperature/", Component: Alpha6RankingTemperature },

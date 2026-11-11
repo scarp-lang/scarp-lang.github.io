@@ -7,9 +7,9 @@ import { publishedCompiler } from "./releases.ts";
  * The matching source commits are checked out and executed in ci.yml/pages.yml.
  */
 export const exampleCompatibility = {
-  reviewed: "2026-11-10",
+  reviewed: "2026-11-11",
   fixtureNames: ["functions.srp", "hello.srp", "numerics.srp"],
-  publishedOnlyFixtureNames: ["rms.srp", "topk_scores.srp", "temperature_softmax.srp", "nucleus_selection.srp", "pearson_correlation.srp"],
+  publishedOnlyFixtureNames: ["rms.srp", "topk_scores.srp", "temperature_softmax.srp", "nucleus_selection.srp", "pearson_correlation.srp", "conditional_unicode.srp"],
   versions: [
     {
       tag: project.tag,
