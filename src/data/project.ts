@@ -49,6 +49,7 @@ export const socials = [
 ] as const;
 
 export const news = [
+  { date: '2026-11-11', category: 'Language release', title: 'Scarp alpha.6.7: conditional values and Unicode escapes', description: 'The published prerelease adds interpreter-only if/elif/else expressions with lazy branches and checked Unicode scalar escapes in strings.', href: '/news/alpha6-conditional-unicode/' },
   { date: '2026-11-10', category: 'Language release', title: 'Scarp alpha.6.6: program input, text and typed tuples', description: 'The published prerelease adds bounded UTF-8 line input, explicit text conversions and immutable heterogeneous tuples, with clear runtime and native-backend limits.', href: '/news/alpha6-input-tuples/' },
   { date: "2026-11-09", category: "Language release", title: "Scarp alpha.6.5: nucleus selection and Pearson correlation", description: "The published prerelease brings deterministic Top-P probability ranking, centered Pearson statistics and a narrow Rust-only ELF64 object emitter improvement.", href: "/news/alpha6-nucleus-correlation/" },
   { date: '2026-11-07', category: 'Language release', title: 'Scarp alpha.6.3: deterministic Top-K and temperature softmax', description: 'The published prerelease adds typed Top-K score ranking and stable temperature-aware probabilities, plus internal scalar IR verification.', href: '/news/alpha6-ranking-temperature/' },
