@@ -43,6 +43,10 @@ jobs:
         env:
           SCARP_BIN: .compiler-published/target/debug/scarp
           SCARP_EXAMPLE_TARGET: published
+      - name: Verify published Scarp project and test workflow
+        run: npm run test:project-workflow
+        env:
+          SCARP_BIN: .compiler-published/target/debug/scarp
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist

@@ -16,6 +16,7 @@
     "test:render": "node --import tsx --test scripts/test-render.tsx",
     "test:support": "node --experimental-strip-types --test scripts/test-support-report.ts",
     "test:examples": "node --experimental-strip-types scripts/test-examples.ts",
+    "test:project-workflow": "node --experimental-strip-types scripts/test-project-workflow.ts",
     "test:search": "node --experimental-strip-types --test scripts/test-search.ts",
     "test:structured-data": "node --experimental-strip-types --test scripts/test-structured-data.ts",
     "test:ecosystem": "node --experimental-strip-types --test scripts/test-ecosystem.ts",
