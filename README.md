@@ -71,7 +71,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run test:download-guide`: ensure OS-specific checksum commands, archive names, and the release-pinned project guide render correctly.
 - `npm run test:release-audit`: isolated tests for upstream publication drift, annotated tags, sidecar and archive tampering.
 - `npm run audit:release`: optional **online, read-only** release audit against GitHub (requires network); verifies current public release tag, commit, three binary hashes, sidecars, and combined checksums.
-- `SCARP_BIN=.compiler-published/target/debug/scarp npm run test:project-workflow`: build the pinned published interpreter first, then validate real alpha.8 project init/verify/run/info, test discovery and JSON output, per-test input, filtering and assertions in a temporary directory. This is exercised in CI and Pages; it intentionally does not run under the older baseline.
+- `SCARP_BIN=.compiler-published/target/debug/scarp npm run test:project-workflow`: build the pinned published interpreter first, then execute the copy-ready alpha.8 project manifest and imported source module, verify exact app stdout, and validate init/verify/run/info, test discovery and JSON output, per-test input, filtering and assertions in a temporary directory. This is exercised in CI and Pages; it intentionally does not run under the older baseline.
 - `npm run test:compatibility`: fixture coverage and expected commands for both verified compiler source pins.
 - `npm run test:migration`: release-tag evidence, CLI migration semantics and source-backed fixture labels.
 - `npm run test:compiler-pins`: check that the pin synchronizer rejects accidental or ambiguous workflow changes.

@@ -39,6 +39,16 @@ export default function Alpha8ProjectsAndTests() {
         <code>create</code> and <code>launch</code> remain supported.
       </p>
 
+      <p>
+        For a complete starter project, use the
+        <a href="/learn/#03--try-an-offline-project"> beginner guide</a>,
+        including the following CI-tested files. The application uses a
+        public, pure <code>add</code> function imported by its entrypoint
+        and its tests:
+      </p>
+      <CodeBlock filename="src/math.srp · alpha.8" code={alpha8ProjectWorkflow.moduleSource} />
+      <CodeBlock filename="src/main.srp · alpha.8" code={alpha8ProjectWorkflow.mainSource} />
+      <CodeBlock filename="Expected application stdout" code={alpha8ProjectWorkflow.expectedMainStdout} />
       <h2 id="tests">Run ordinary .srp programs as tests</h2>
       <p>
         Create standalone source files directly inside <code>tests/</code>.
@@ -87,7 +97,10 @@ export default function Alpha8ProjectsAndTests() {
         tests cover selected examples rather than all compiler behavior.
       </p>
       <p>
-        Review the <a href={project.repo + "/releases/tag/" + release.tag}>official release notes</a>,
+        The source-pinned compiler docs may retain their earlier
+        development-branch status banners; use the published
+        <a href={project.repo + "/releases/tag/" + release.tag}> official release notes</a>
+        as the release-status authority. Also see the
         {" "}<a href={sourceFile("docs/project-v2.md")}>declarative manifest reference</a>,
         {" "}<a href={sourceFile("docs/project-testing.md")}>test runner guide</a>,
         {" "}<a href={sourceFile("docs/assertions.md")}>assertion reference</a>,

@@ -65,8 +65,17 @@ try {
   const manifest = await readFile(join(projectDirectory, "scarp.project"), "utf8");
   assert(manifest.includes('project "calculator"'), "Expected declarative project manifest");
   assert(manifest.includes('entry: "src/main.srp"'), "Missing manifest entrypoint");
+  // The site publishes a complete copy-ready project. Check that the documented
+  // declarative manifest and module files work with this exact release, not a
+  // mocked parser or a later unreleased compiler branch.
+  await writeFile(join(projectDirectory, "scarp.project"), alpha8ProjectWorkflow.manifestSource, "utf8");
+  await writeFile(join(projectDirectory, "src", "math.srp"), alpha8ProjectWorkflow.moduleSource, "utf8");
+  await writeFile(join(projectDirectory, "src", "main.srp"), alpha8ProjectWorkflow.mainSource, "utf8");
   expectExit(["verify", projectDirectory], 0);
-  expectExit(["run", projectDirectory], 0);
+  const executedApp = expectExit(["run", projectDirectory], 0);
+  assert.equal(executedApp.stdout, alpha8ProjectWorkflow.expectedMainStdout,
+    "Documented module import and executable project output diverged");
+  assert.equal(executedApp.stderr, "", "Unexpected application stderr");
 
   const metadata = expectExit(["project", "info", "--json", projectDirectory], 0);
   const info = JSON.parse(metadata.stdout) as {
@@ -122,7 +131,8 @@ try {
   // Static verification checks types; the false assertion fails only at runtime.
   expectExit(["verify", join(testsDir, "failure.srp")], 0);
   console.log("Verified Scarp " + publishedCompiler.tag +
-    ": declarative init/verify/run/info; empty-suite guard; isolated UTF-8 input;" +
+    ": copy-ready manifest, source-module import and exact application stdout;" +
+    " init/verify/run/info; empty-suite guard; isolated UTF-8 input;" +
     " JSON listing, filtering, passing and failing assertions.");
 } finally {
   await rm(workspace, { recursive: true, force: true });

@@ -69,49 +69,81 @@ export default function LearnPage() {
         static check does not guarantee that runtime operations will succeed.
       </p>
 
-      <h2 id="03--try-an-offline-project">03 · Create an offline project</h2>
+      <h2 id="03--try-an-offline-project">03 · Build an offline project (alpha.8)</h2>
       <p>
-        Starting with alpha.4, Scarp can create a small project with an
-        explicit <code>Scarp.project</code> manifest. Choose a destination
-        that does not already exist:
+        With <strong>{publishedCompiler.tag}</strong>, create a new project
+        directory from a terminal in its parent folder. <code>init</code>
+        refuses to overwrite an existing directory:
       </p>
-      <CodeBlock filename="Terminal · published alpha.6" code={"scarp create hello-world\nscarp verify hello-world\nscarp launch hello-world"} />
+      <CodeBlock filename="Terminal · Scarp alpha.8" code="scarp init calculator" />
       <p>
-        Project verification is static; <code>launch</code> executes the
-        declared entrypoint. No package registry, dependency resolution,
-        installer, or native executable is produced. See the{" "}
-        <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-workflow.md"}>
-          release-pinned project workflow
-        </a>.
+        The new project contains a declarative <code>scarp.project</code>
+        manifest, <code>src/main.srp</code>, and folders for tests and
+        examples. Add the files below to make a reusable calculator:
+      </p>
+      <CodeBlock filename="Project layout · after creating files" code={"calculator/\n  scarp.project\n  src/\n    main.srp\n    math.srp\n  tests/\n    addition.srp\n    greeting.srp\n    greeting.stdin"} />
+      <p>
+        The manifest is not TOML or executable Scarp. <code>init</code>
+        generates it; this is the copyable declarative content for the
+        project named <code>calculator</code>:
+      </p>
+      <CodeBlock filename="calculator/scarp.project" code={alpha8ProjectWorkflow.manifestSource} />
+      <p>
+        Create <code>src/math.srp</code> with a public, pure typed
+        function. Then replace the generated <code>src/main.srp</code>
+        with the following entrypoint:
+      </p>
+      <CodeBlock filename="calculator/src/math.srp" code={alpha8ProjectWorkflow.moduleSource} />
+      <CodeBlock filename="calculator/src/main.srp" code={alpha8ProjectWorkflow.mainSource} />
+      <p>
+        From the parent of <code>calculator/</code>, verify the project
+        without running the program, then run it and inspect the
+        validated manifest:
+      </p>
+      <CodeBlock filename="Terminal · alpha.8" code={"scarp verify calculator\nscarp run calculator\nscarp project info --json calculator"} />
+      <CodeBlock filename="Expected stdout from scarp run calculator" code={alpha8ProjectWorkflow.expectedMainStdout} />
+      <p>
+        The commands work on the project directory, not directly on the
+        <code> scarp.project</code> file. <code>run</code> executes the
+        declared entrypoint; <code>project info</code> only reads and validates
+        metadata, without running application code.
       </p>
 
-      <h2 id="alpha8-projects">New alpha.8 project workflow</h2>
+      <h3 id="alpha8-projects">Add real Scarp tests</h3>
       <p>
-        The current <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
-        creates a declarative <code>scarp.project</code> manifest with
-        <code>init</code>, supports <code>run</code> and
-        <code>project info</code>, and executes isolated <code>tests/*.srp</code>
-        programs with <code>test</code>. Earlier <code>create</code> and
-        <code>launch</code> remain supported for legacy projects.
-      </p>
-      <CodeBlock filename="Terminal · alpha.8" code={"scarp init calculator\nscarp verify calculator\nscarp run calculator\nscarp test --list calculator"} />
-      <p>
-        Save the following standalone program as <code>calculator/tests/addition.srp</code>
-        before running the test suite:
+        Scarp discovers ordinary <code>.srp</code> test programs immediately
+        inside <code>tests/</code>. Save this file to test the imported
+        <code> math.add</code> function:
       </p>
       <CodeBlock filename="calculator/tests/addition.srp" code={alpha8ProjectWorkflow.additionSource} />
-      <CodeBlock filename="Terminal · test your project" code={"scarp test --require-tests calculator\nscarp test --json calculator"} />
       <p>
-        The website runs this test with the real published compiler in CI.
-        Its <code>print</code> output is captured, rather than mixed into JSON.
-        See <a href="/compatibility/#project-workflow">the exact verification scope</a>.
+        To test user input without an interactive terminal, add a second
+        test and a matching UTF-8 input fixture. The
+        <code> greeting.stdin</code> file contains <code>नमस्ते</code>
+        followed by a newline:
+      </p>
+      <CodeBlock filename="calculator/tests/greeting.srp" code={alpha8ProjectWorkflow.greetingSource} />
+      <CodeBlock filename="calculator/tests/greeting.stdin · UTF-8" code={alpha8ProjectWorkflow.greetingInput} />
+      <CodeBlock filename="Terminal · alpha.8" code={"scarp test --list calculator\nscarp test --require-tests calculator\nscarp test --json calculator\nscarp test --filter greeting --require-tests calculator"} />
+      <p>
+        <code>--list</code> does not run tests;
+        <code>--require-tests</code> makes an empty suite fail; and
+        <code>--filter</code> uses a case-sensitive filename substring.
+        The JSON report captures test output rather than mixing application
+        text into the report. The compiler's <code>assert</code> statement
+        reports error E0065 if its boolean condition is false.
       </p>
       <p>
-        Use <code>scarp test --require-tests calculator</code> to make an empty
-        suite fail in CI. See the
-        {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>project test specification</a>
-        for <code>--json</code>, <code>--filter</code>, assertions and stdin fixtures.
+        These are the exact manifest and Scarp source files run in
+        <a href={project.websiteRepo + "/blob/main/scripts/test-project-workflow.ts"}> website CI</a>
+        against the pinned published compiler, with verified app output
+        <code> 42</code>. See the <a href="/compatibility/#project-workflow">verification scope</a>,
+        <a href="/news/alpha8-project-tests/"> alpha.8 release guide</a> and
+        <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/examples/projects/calculator/README.md"}> release-pinned example</a>.
+        This workflow has no dependency installer, package registry or
+        native executable build.
       </p>
+
       <h2 id="04--explore-new-alpha6-capabilities">04 · Explore alpha.6-only tools</h2>
       <p>
         {publishedCompiler.tag} retains opt-in, read-only symbol and reference
@@ -171,6 +203,13 @@ export default function LearnPage() {
       </p>
 
       <h2 id="older-example-baseline">Using the older website example baseline?</h2>
+      <p>
+        The separate alpha.4+ legacy project workflow uses
+        <code> Scarp.project</code>, <code>create</code>, and
+        <code>launch</code>. These older commands remain accepted by
+        alpha.8, but they do not generate the new declarative format:
+      </p>
+      <CodeBlock filename="Terminal · legacy project workflow" code={"scarp create hello-world\nscarp verify hello-world\nscarp launch hello-world"} />
       <p>
         The featured homepage examples are pinned to{" "}
         <a href={project.release}>{project.tag}</a>. Under that older
