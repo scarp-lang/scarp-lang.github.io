@@ -56,7 +56,11 @@ test("versions and CLI semantics are sourced from exact release pins", () => {
 test("published project workflow CI smoke checks use the exact alpha.8 source", async () => {
   const { alpha8ProjectWorkflow } = await import("../src/data/project-workflow.ts");
   assert.equal(alpha8ProjectWorkflow.releaseTag, publishedCompiler.tag);
-  assert.match(alpha8ProjectWorkflow.additionSource, /assert\(2 \+ 3 == 5/);
+  assert.match(alpha8ProjectWorkflow.manifestSource, /project "calculator"/);
+  assert.match(alpha8ProjectWorkflow.moduleSource, /pub pure funcra add/);
+  assert.match(alpha8ProjectWorkflow.mainSource, /import "math.srp" as math/);
+  assert.equal(alpha8ProjectWorkflow.expectedMainStdout, "42\n");
+  assert.match(alpha8ProjectWorkflow.additionSource, /assert\(math\.add\(2, 3\) == 5/);
   assert.match(alpha8ProjectWorkflow.greetingSource, /read_line\(\)/);
   assert.equal(alpha8ProjectWorkflow.greetingInput, "नमस्ते\n");
   assert.match(alpha8ProjectWorkflow.failureSource, /assert\(false/);
