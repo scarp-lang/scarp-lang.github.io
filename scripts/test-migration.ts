@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFile } from "node:fs/promises";
 import { cliMilestones, cliMigrations, migrationEvidence } from "../src/data/migration.ts";
 import { project } from "../src/data/project.ts";
 import { publishedCompiler } from "../src/data/releases.ts";
@@ -58,4 +59,31 @@ test("migration guidance preserves the runtime/static distinction", () => {
   assert.match(validation.meaning, /runtime paths/);
   assert.match(validation.meaning, /statically/);
   assert(cliMigrations.find(item => item.id === "modules")?.meaning.includes("alpha.2"));
+});
+
+
+test("alpha.8 project migrations distinguish legacy and declarative formats", async () => {
+  const init = cliMigrations.find(item => item.id === "project-init");
+  const execute = cliMigrations.find(item => item.id === "project-execution");
+  const metadata = cliMigrations.find(item => item.id === "project-metadata");
+  assert(init && execute && metadata);
+  assert.equal(init.current, "scarp init hello-world");
+  assert.equal(init.equivalent, false);
+  assert.match(init.meaning, /Scarp.project/);
+  assert.match(init.meaning, /scarp.project/);
+  assert.equal(execute.current, "scarp run hello-world");
+  assert.equal(execute.equivalent, false);
+  assert.equal(metadata.equivalent, false);
+  assert.match(metadata.meaning, /without executing code/);
+  for (const href of [migrationEvidence.declarativeProjects, migrationEvidence.projectTesting]) {
+    assert(href.includes(publishedCompiler.sourceCommit));
+  }
+  assert.match(migrationEvidence.projectWorkflowCI, /test-project-workflow.ts$/);
+  const guide = await readFile("src/pages/migration.tsx", "utf8");
+  assert(guide.includes('id="alpha8-projects"'));
+  assert(guide.includes('id="alpha8-tests"'));
+  assert(guide.includes("scarp init calculator"));
+  assert(guide.includes("scarp test --require-tests calculator"));
+  assert(guide.includes("renaming the old"));
+  assert(guide.includes("migrationEvidence.projectWorkflowCI"));
 });

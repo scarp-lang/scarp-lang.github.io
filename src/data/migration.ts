@@ -133,11 +133,35 @@ export const cliMigrations = [
     meaning: "Inspect checked module metadata. The older standalone modules command began in alpha.2, not alpha.1.",
     equivalent: true,
   },
+  {
+    id: "project-init",
+    previous: "scarp create hello-world",
+    current: "scarp init hello-world",
+    meaning: "Not equivalent: create generates a legacy Scarp.project manifest; init creates the declarative scarp.project format and refuses existing directories.",
+    equivalent: false,
+  },
+  {
+    id: "project-execution",
+    previous: "scarp launch hello-world",
+    current: "scarp run hello-world",
+    meaning: "Both execute a declared project entrypoint, but changing the command does not convert an existing legacy manifest into the new format.",
+    equivalent: false,
+  },
+  {
+    id: "project-metadata",
+    previous: "scarp inspect modules --json hello-world",
+    current: "scarp project info --json hello-world",
+    meaning: "Not equivalent: inspect modules reports checked source-module details; project info reads validated manifest metadata without executing code or inspecting the source module graph.",
+    equivalent: false,
+  },
 ] as const;
 
 export const migrationEvidence = {
   publishedSource: project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/reference/cli.md",
   projectWorkflow: project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-workflow.md",
+  declarativeProjects: project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-v2.md",
+  projectTesting: project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md",
+  projectWorkflowCI: project.websiteRepo + "/blob/main/scripts/test-project-workflow.ts",
   publishedRelease: publishedCompiler.release,
   baselineRelease: project.release,
 } as const;

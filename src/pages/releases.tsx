@@ -113,7 +113,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version command differences through alpha.6,
+          version-by-version command differences through alpha.8,
           including project workflows and the new read-only symbol index.
         </p>
         <p>

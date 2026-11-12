@@ -130,6 +130,29 @@ try {
 
   // Static verification checks types; the false assertion fails only at runtime.
   expectExit(["verify", join(testsDir, "failure.srp")], 0);
+
+  // Real legacy regression: new alpha.8 packages must still create, verify,
+  // execute and inspect the old Scarp.project format without converting it.
+  const legacyDirectory = join(workspace, "legacy-calculator");
+  expectExit(["create", legacyDirectory], 0);
+  const legacyManifest = await readFile(join(legacyDirectory, "Scarp.project"), "utf8");
+  assert(legacyManifest.includes("scarp-project: 1"), "Expected legacy v1 manifest");
+  expectExit(["verify", legacyDirectory], 0);
+  expectExit(["launch", legacyDirectory], 0);
+  const legacyMetadata = JSON.parse(
+    expectExit(["project", "info", "--json", legacyDirectory], 0).stdout,
+  ) as { schema_version: number; name: string; manifest: string; format: string };
+  assert.deepEqual(
+    [legacyMetadata.schema_version, legacyMetadata.name,
+      legacyMetadata.manifest, legacyMetadata.format],
+    [1, "legacy-calculator", "Scarp.project", "legacy-v1"],
+  );
+  // A modern initializer must refuse an existing legacy OR modern project.
+  expectExit(["init", legacyDirectory], 1);
+  expectExit(["init", projectDirectory], 1);
+  assert.equal(await readFile(join(legacyDirectory, "Scarp.project"), "utf8"),
+    legacyManifest, "Failed init must leave legacy manifest unchanged");
+  console.log("Verified legacy project create/verify/launch/info and no-overwrite init.");
   console.log("Verified Scarp " + publishedCompiler.tag +
     ": copy-ready manifest, source-module import and exact application stdout;" +
     " init/verify/run/info; empty-suite guard; isolated UTF-8 input;" +

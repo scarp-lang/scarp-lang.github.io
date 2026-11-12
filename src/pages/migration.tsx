@@ -63,7 +63,10 @@ export default function MigrationPage() {
         Alpha.2 through alpha.5 entries are based on their published source
         and release history, <strong>not</strong> this website's current
         executable fixture tests. The alpha.4 fixtures passed in an earlier
-        website CI run; the current suite tests the baseline and alpha.6.
+        website CI run; the current suite tests the baseline and alpha.8.
+        The distinct <a href="/compatibility/#project-workflow">alpha.8 project
+        and test-runner integration check</a> covers a fresh project and
+        separate legacy-CLI compatibility beyond the three homepage files.
       </p>
 
       <h2 id="commands">Translate old commands carefully</h2>
@@ -90,7 +93,7 @@ export default function MigrationPage() {
         successful static verification guarantees successful runtime execution.
       </p>
 
-      <h2 id="workflow">A safe file-to-project upgrade</h2>
+      <h2 id="workflow">Historical alpha.4 offline project workflow</h2>
       <ol>
         <li>
           Run <code>scarp --version</code> on the executable you intend to use.
@@ -133,6 +136,85 @@ export default function MigrationPage() {
         and <a href={migrationEvidence.publishedSource}>CLI reference source</a>.
       </p>
 
+      <h2 id="alpha8-projects">Upgrade to declarative projects in alpha.8</h2>
+      <p>
+        Starting with <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>,
+        <code> scarp init</code> creates a fresh declarative
+        <code> scarp.project</code> manifest. Earlier projects with
+        <code> Scarp.project</code> and the
+        <code> create</code>/<code>launch</code> commands are still supported.
+        Do not attempt a conversion by merely renaming the old
+        <code> Scarp.project</code> file: the new format has different syntax
+        and stricter validation.
+      </p>
+      <ol>
+        <li>
+          Save a backup of your existing project; check
+          <code> scarp --version</code> before changing commands.
+        </li>
+        <li>
+          Use <code>scarp init NEW_DIRECTORY</code> to start a fresh
+          declarative project. The destination must not already exist,
+          even if it is an empty directory.
+        </li>
+        <li>
+          Copy or adapt your trusted <code>.srp</code> source files, review
+          the new manifest's entrypoint and relative imports, then
+          statically verify the new project before executing it.
+        </li>
+        <li>
+          Add ordinary <code>tests/*.srp</code> files, execute them, and
+          compare output with the original project. Do not require a nonempty
+          test suite until you have added tests.
+        </li>
+      </ol>
+      <CodeBlock
+        filename="Terminal · alpha.8"
+        code={"scarp init calculator\nscarp verify calculator\nscarp run calculator\nscarp project info --json calculator"}
+      />
+      <p>
+        A declarative <code>scarp.project</code> has a quoted project name,
+        <code> version</code>, <code>entry</code>, and
+        <code> type: "application"</code> declarations.
+        The optional <code>dependencies {}</code> section is reserved;
+        alpha.8 does not fetch or install dependencies. The
+        <a href="/learn/#03--try-an-offline-project"> complete calculator starter</a>
+        provides a copy-ready manifest, typed module, and working entrypoint
+        verified against the published compiler.
+      </p>
+
+      <h3 id="alpha8-tests">Replace ad-hoc checks with Scarp tests</h3>
+      <p>
+        The alpha.8 test runner executes ordinary standalone Scarp programs
+        directly in <code>tests/</code>, without recursive discovery.
+        <code> assert</code> requires a boolean predicate; false assertions
+        fail at runtime with E0065. Static verification checks an assertion's
+        types but does not execute the predicate.
+      </p>
+      <CodeBlock
+        filename="Terminal · alpha.8, after adding tests"
+        code={"scarp test --list calculator\nscarp test --require-tests calculator\nscarp test --json calculator\nscarp test --filter addition calculator"}
+      />
+      <p>
+        <code>--list</code> discovers tests without executing them.
+        <code>--json</code> returns a schema-v1 suite report.
+        <code>--filter</code> selects a case-sensitive filename substring.
+        Optional sibling <code>.stdin</code> fixtures supply isolated
+        bounded UTF-8 input. <code>--require-tests</code> makes an empty
+        selected suite fail in CI. Tests execute real source code, so run
+        only files you trust.
+      </p>
+      <p>
+        Review the <a href={migrationEvidence.declarativeProjects}>release-pinned
+        declarative project format</a>,
+        {" "}<a href={migrationEvidence.projectTesting}>alpha.8 test runner</a>,
+        and <a href={migrationEvidence.projectWorkflowCI}>compiler-backed
+        project integration tests</a>. These checks cover the new manifest,
+        source imports and legacy CLI behavior, but do not guarantee every
+        program or platform works unchanged. There is no package registry,
+        general native-code compiler CLI, or stable ABI in alpha.8.
+      </p>
+
       <h2 id="alpha6-navigation">Published alpha.6 symbol navigation</h2>
       <p>
         Alpha.6 retains opt-in static source indexing; neither
@@ -152,6 +234,8 @@ export default function MigrationPage() {
         <li>Imports and filesystem paths, particularly inside a new project.</li>
         <li>Editor/CLI integrations that invoke the older command vocabulary.</li>
         <li>Syntax, manifest and embedding APIs: none have a stable v1 guarantee.</li>
+        <li>Legacy versus declarative manifest format, relative entrypoints, and project names.</li>
+        <li>Test discovery, per-test input fixtures, assertion behavior, and empty-suite CI guards.</li>
       </ul>
       <p>
         The <a href="/compatibility/">compatibility evidence</a> names the
