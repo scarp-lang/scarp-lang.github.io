@@ -61,17 +61,20 @@ export default function DownloadsPage() {
       <section className="wrap section prose" id="verify-download">
         <h2>Verify your download before extracting</h2>
         <p>
-          Save the archive and its matching <code>.sha256</code> file into the
-          same folder. Open a terminal in that folder, then use the command for
-          your operating system. Do not extract or run an archive if verification fails.
+          Save the archive in a folder you control, then open a terminal there.
+          The command for your operating system checks it against the
+          <strong> SHA-256 digest pinned on this page</strong>.
+          The separately downloadable <code>.sha256</code> sidecar is optional
+          for this verification. Do not extract or run an archive if verification fails.
         </p>
         <div className="download-verify-panels">
           {publishedDownloads.map((item) => (
             <details key={item.file} id={`verify-${item.platform}`}>
               <summary>{item.name}: verify {item.file.endsWith(".zip") ? "ZIP" : ".tar.gz"}</summary>
               <p>
-                File: <code>{item.file}</code>. Use the download links above
-                for this exact {publishedCompiler.tag} archive and checksum file.
+                File: <code>{item.file}</code>. Use the archive link above
+                for this exact {publishedCompiler.tag} prerelease. The command
+                verifies its bytes against the reviewed digest shown here.
               </p>
               <CodeBlock
                 filename={item.platform === "windows" ? "PowerShell" : "Terminal"}
@@ -86,15 +89,16 @@ export default function DownloadsPage() {
           ))}
         </div>
         <p className="small muted">
-          The checks use the published SHA-256 values reviewed for {publishedCompiler.tag}.
-          On Windows, the command compares the archive directly against the pinned hash
-          displayed above. Linux and macOS validate against the release sidecar;
-          confirm that it agrees with the hash displayed on this page.
+          All three commands use the pinned SHA-256 digests reviewed for
+          {publishedCompiler.tag}. If you also download the official
+          <code> .sha256</code> sidecar, confirm that its digest agrees with
+          this page. A sidecar matching a modified archive is not sufficient
+          evidence that it matches the independently reviewed value.
           SHA-256 verifies file integrity, not whether the prerelease is production-ready.
         </p>
         <h2>Extract and run the verified interpreter</h2>
         <ol>
-          <li>Download the archive and its matching <code>.sha256</code> file. Compare the archive digest against the published checksum before extraction.</li>
+          <li>Download the archive and optionally its <code>.sha256</code> sidecar. Verify the archive against the pinned digest using the appropriate command above before extraction.</li>
           <li>Extract the archive into a directory you control, including any bundled example files.</li>
           <li>Run the extracted interpreter's <code>version</code> command to confirm the release before creating a project.</li>
         </ol>

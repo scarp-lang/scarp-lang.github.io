@@ -1,7 +1,19 @@
 import type { PublishedDownload } from "./releases.ts";
 
-/** Commands are derived from the reviewed artifact metadata, never hand-copied. */
-export function checksumCommand(item: PublishedDownload): string {
+/**
+ * All platforms verify downloads against the exact reviewed digest in
+ * releases.ts. Matching a separately downloaded sidecar alone does not prove
+ * the archive matches the checksum pinned by this website.
+ */
+export function checksumCommand(
+  item: Pick<PublishedDownload, "platform" | "file" | "hash">,
+): string {
+  // These values enter shell snippets. Reject metacharacters, traversal,
+  // interpolation, and invalid digest metadata even if data provenance changes.
+  if (!/^[a-f0-9]{64}$/.test(item.hash) ||
+      !/^[A-Za-z0-9][A-Za-z0-9._-]*\.(?:zip|tar\.gz)$/.test(item.file)) {
+    throw new Error("Unsafe or malformed published archive metadata");
+  }
   switch (item.platform) {
     case "windows":
       return [
@@ -9,8 +21,8 @@ export function checksumCommand(item: PublishedDownload): string {
         "if ($hash -eq '" + item.hash + "') { 'Checksum OK' } else { throw 'Checksum mismatch: do not run this archive' }",
       ].join("\n");
     case "linux":
-      return "sha256sum --check '" + item.file + ".sha256'";
+      return "printf '%s\\n' '" + item.hash + "  " + item.file + "' | sha256sum --check -";
     case "macos":
-      return "shasum -a 256 --check '" + item.file + ".sha256'";
+      return "printf '%s\\n' '" + item.hash + "  " + item.file + "' | shasum -a 256 --check -";
   }
 }
