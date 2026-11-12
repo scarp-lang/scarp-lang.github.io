@@ -31,35 +31,34 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Interpreter conditional expressions and Unicode scalar escapes.</h3>
+          <h3>Declarative projects and executable Scarp tests.</h3>
           <p>
-            Scarp {publishedCompiler.tag} introduces value-returning
-            <code>if</code>/<code>elif</code>/<code>else</code> expressions.
-            Every condition must be boolean, branches must produce the same
-            exact type, and a final <code>else</code> is required.
-            Only the selected result is evaluated.
+            Scarp {publishedCompiler.tag} adds the <code>scarp.project</code> manifest
+            and the <code>init</code>, <code>run</code>, <code>project info</code>
+            and <code>test</code> commands for offline project workflows.
           </p>
           <p>
-            String literals now support checked Unicode scalar escapes of the form
-            <code>{"\\u{HEX}"}</code> using one to six ASCII hexadecimal digits.
-            Malformed escapes, surrogate values and scalars above U+10FFFF are rejected.
+            Direct <code>tests/*.srp</code> files execute as ordinary Scarp
+            programs. The runner supports read-only <code>--list</code>, JSON
+            reports, literal filename filters, per-test <code>.stdin</code>
+            fixtures and <code>--require-tests</code> to reject empty CI suites.
+            Interpreter assertions return source-located E0065 diagnostics.
           </p>
           <p>
-            These conditional expressions are interpreter-only: module constants
-            and the experimental C11 and ELF64 backends reject them.
-            The older alpha.6.6 redirected-input, text conversion and typed-tuple
-            features remain experimental. There is still no general native
-            executable compilation, stable ABI, integrated LSP or GPU runtime.
+            Legacy <code>Scarp.project</code>, <code>create</code> and
+            <code>launch</code> remain supported. No dependency installation,
+            native compile CLI, integrated LSP or GPU runtime has been added.
+            The release remains experimental.
           </p>
           <p>
-            Read the <a href="/news/alpha6-conditional-unicode/">alpha.6.7 feature overview</a>,
-            {" "}<a href="/news/alpha6-input-tuples/">previous alpha.6.6 input and tuples overview</a>,
+            Read the <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>release-pinned test specification</a>,
+            {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-v2.md"}>declarative project guide</a>,
+            {" "}<a href="/news/alpha6-conditional-unicode/">historical alpha.6.7 feature overview</a>,
             or the <a href={publishedCompiler.release}>official release notes</a>.
           </p>
           <p>
-            Pre-built archives are published for Windows x64, Linux x64 GNU and
-            macOS Apple Silicon. This is still an alpha—not a stable compiler,
-            native executable generator, package registry or GPU backend.
+            Pre-built archives are available for Windows x64, Linux x64 GNU
+            and macOS Apple Silicon. This is an alpha—not a stable compiler.
           </p>
           <div className="actions">
             <a className="button primary" href="/downloads/">Download {publishedCompiler.tag} →</a>

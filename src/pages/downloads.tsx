@@ -98,7 +98,22 @@ export default function DownloadsPage() {
           <li>Extract the archive into a directory you control, including any bundled example files.</li>
           <li>Run the extracted interpreter's <code>version</code> command to confirm the release before creating a project.</li>
         </ol>
-        <h3>Linux / macOS</h3>
+        <h2>New alpha.8 declarative project workflow</h2>
+        <p>
+          These commands create a new offline project with a
+          <code>scarp.project</code> manifest, verify it statically and run it.
+          The list command discovers tests without execution; a newly initialized
+          project may legitimately have zero tests.
+        </p>
+        <CodeBlock filename="Terminal · alpha.8" code={"scarp init calculator\nscarp verify calculator\nscarp run calculator\nscarp project info calculator\nscarp test --list calculator"} />
+        <p>
+          Add standalone <code>tests/*.srp</code> files, then use
+          <code>scarp test --require-tests calculator</code> in CI.
+          Optional <code>.stdin</code> fixtures supply bounded per-test input.
+          Read the <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>release-pinned test runner documentation</a>.
+        </p>
+        <h3>Legacy project commands (still supported)</h3>
+                <h3>Linux / macOS</h3>
         <CodeBlock
           filename="terminal"
           code={"./scarp version\n./scarp create hello-world\n./scarp verify hello-world\n./scarp launch hello-world"}
@@ -133,6 +148,16 @@ export default function DownloadsPage() {
           CLI commands with the new package.
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
+        <p>
+          Alpha.8 adds declarative <code>scarp.project</code> projects,
+          <code>scarp init</code> and <code>scarp run</code>, read-only
+          <code>scarp project info</code>, and executable <code>scarp test</code>
+          suites with JSON, filters, per-test input and assertions.
+          False assertions report source-located E0065 diagnostics;
+          assertions remain interpreter-only. See the
+          {" "}<a href={publishedCompiler.release}>alpha.8 release details</a>.
+        </p>
+        <h2>Introduced in preceding alpha.6.7</h2>
         <p>
           Use <code>if</code>/<code>elif</code>/<code>else</code> as
           a value-returning expression with boolean conditions, exactly

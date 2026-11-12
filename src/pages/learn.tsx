@@ -84,6 +84,22 @@ export default function LearnPage() {
         </a>.
       </p>
 
+      <h2 id="alpha8-projects">New alpha.8 project workflow</h2>
+      <p>
+        The current <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
+        creates a declarative <code>scarp.project</code> manifest with
+        <code>init</code>, supports <code>run</code> and
+        <code>project info</code>, and executes isolated <code>tests/*.srp</code>
+        programs with <code>test</code>. Earlier <code>create</code> and
+        <code>launch</code> remain supported for legacy projects.
+      </p>
+      <CodeBlock filename="Terminal · alpha.8" code={"scarp init calculator\nscarp verify calculator\nscarp run calculator\nscarp test --list calculator"} />
+      <p>
+        Use <code>scarp test --require-tests calculator</code> to make an empty
+        suite fail in CI. See the
+        {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>project test specification</a>
+        for <code>--json</code>, <code>--filter</code>, assertions and stdin fixtures.
+      </p>
       <h2 id="04--explore-new-alpha6-capabilities">04 · Explore alpha.6-only tools</h2>
       <p>
         {publishedCompiler.tag} retains opt-in, read-only symbol and reference
