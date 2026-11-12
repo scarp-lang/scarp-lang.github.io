@@ -242,6 +242,10 @@ These replace the previous 1,136,676-byte source PNG as the browser-tab
 icon. Generated-site validation checks signatures, dimensions and file
 budgets. The original PNG remains unchanged for social metadata.
 
+## Support Scarp development
+
+Scarp and its developer resources remain open source. [GitHub Sponsors](https://github.com/sponsors/sanskarIN) offers optional monthly or one-time support for compiler development, documentation, testing, and tools; sponsorship does not unlock features.
+
 ## Branding and licenses
 
 `public/brand/scarp-logo.png` is the permanent blue geometric S and wordmark.
