@@ -51,7 +51,8 @@ export default function ReleasesPage() {
             The release remains experimental.
           </p>
           <p>
-            Read the <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>release-pinned test specification</a>,
+            Read the <a href="/news/alpha8-project-tests/">alpha.8 project testing overview</a>,
+            {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>release-pinned test specification</a>,
             {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-v2.md"}>declarative project guide</a>,
             {" "}<a href="/news/alpha6-conditional-unicode/">historical alpha.6.7 feature overview</a>,
             or the <a href={publishedCompiler.release}>official release notes</a>.

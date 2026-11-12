@@ -110,7 +110,8 @@ export default function DownloadsPage() {
           Add standalone <code>tests/*.srp</code> files, then use
           <code>scarp test --require-tests calculator</code> in CI.
           Optional <code>.stdin</code> fixtures supply bounded per-test input.
-          Read the <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>release-pinned test runner documentation</a>.
+          Read the <a href="/news/alpha8-project-tests/">alpha.8 project guide</a>
+          and the <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>release-pinned test runner documentation</a>.
         </p>
         <h3>Legacy project commands (still supported)</h3>
                 <h3>Linux / macOS</h3>

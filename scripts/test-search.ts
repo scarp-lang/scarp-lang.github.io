@@ -4,7 +4,7 @@ import { searchEntries, searchEntriesFor } from "../src/data/search.ts";
 import { hindiSearchAliases } from "../src/data/search-hi.ts";
 
 test("site search data contains distinct, canonical page paths", () => {
-  assert.equal(searchEntries.length, 26);
+  assert.equal(searchEntries.length, 27);
   assert.equal(new Set(searchEntries.map(entry => entry.path)).size, searchEntries.length);
   for (const entry of searchEntries) {
     assert(entry.path.startsWith("/"));

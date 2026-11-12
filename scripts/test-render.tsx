@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 28);
+  assert.equal(pages.length, 29);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -510,4 +510,20 @@ test('alpha.6.7 article, release pages and RSS retain verified source evidence',
   assert(searchEntries.some(entry => entry.path === announcement.href));
   const feed = await renderRequest('/feed.xml', developmentAssets);
   assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha6-conditional-unicode/</link>'));
+});
+
+test('alpha.8 project testing release article has immutable evidence, search and RSS', async () => {
+  const path = '/news/alpha8-project-tests/';
+  const item = news.find(entry => entry.href === path);
+  assert(item && item.date === '2026-11-12');
+  const page = findPage(path);
+  assert(page);
+  const html = renderPage(page, developmentAssets);
+  for (const token of ['v0.0.6-alpha.8', '37253e7805c0ca594560700dd1deb3928458e60d', 'scarp.project',
+    'assert', '--require-tests', 'stdin', '/downloads/', '/compatibility/']) {
+    assert(html.includes(token), 'Alpha.8 article missing ' + token);
+  }
+  assert(searchEntries.some(entry => entry.path === path));
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha8-project-tests/</link>'));
 });
