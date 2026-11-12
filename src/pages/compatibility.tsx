@@ -117,6 +117,25 @@ export default function CompatibilityPage() {
         Future changes to examples or compiler versions must pass these
         checks before deployment.
       </p>
+      <h2 id="project-workflow">Alpha.8 project and test workflow checks</h2>
+      <p>
+        The separate <a href={project.websiteRepo + "/blob/main/scripts/test-project-workflow.ts"}>compiler-backed integration test</a>
+        executes <code>init</code>, <code>verify</code>, <code>run</code>
+        and <code>project info --json</code> on a disposable
+        <code>scarp.project</code> application. It checks that an empty
+        suite fails with <code>--require-tests</code>, that
+        <code>--list</code> discovers tests without running them, and that
+        <code>--json</code> produces the documented report structure.
+      </p>
+      <p>
+        The same smoke test executes
+        <a href="/news/alpha8-project-tests/#tests"> example assertions</a>,
+        a per-test UTF-8 <code>.stdin</code> fixture, a filtered run,
+        and a deliberately failing assertion with E0065 diagnostics.
+        It runs only with the pinned <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
+        source in Linux CI. This does not certify all project CLI combinations,
+        platforms or third-party code.
+      </p>
       <h2 id="limits">What these results do not prove</h2>
       <ul>
         <li>They do not exercise every language feature or source module.</li>

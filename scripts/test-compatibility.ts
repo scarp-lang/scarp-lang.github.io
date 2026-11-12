@@ -52,3 +52,22 @@ test("versions and CLI semantics are sourced from exact release pins", () => {
     assert.equal(version.status, "Verified fixtures");
   }
 });
+
+test("published project workflow CI smoke checks use the exact alpha.8 source", async () => {
+  const { alpha8ProjectWorkflow } = await import("../src/data/project-workflow.ts");
+  assert.equal(alpha8ProjectWorkflow.releaseTag, publishedCompiler.tag);
+  assert.match(alpha8ProjectWorkflow.additionSource, /assert\(2 \+ 3 == 5/);
+  assert.match(alpha8ProjectWorkflow.greetingSource, /read_line\(\)/);
+  assert.equal(alpha8ProjectWorkflow.greetingInput, "नमस्ते\n");
+  assert.match(alpha8ProjectWorkflow.failureSource, /assert\(false/);
+  const runner = await readFile("scripts/test-project-workflow.ts", "utf8");
+  for (const token of ["--require-tests", "--filter", "--list", "--json", "E0065", "scarp.project"]) {
+    assert(runner.includes(token), "Missing CLI smoke coverage: " + token);
+  }
+  for (const file of [".github/workflows/ci.yml", ".github/workflows/pages.yml"]) {
+    const yaml = await readFile(file, "utf8");
+    assert(yaml.includes("npm run test:project-workflow"), file + " must run the project smoke check");
+    assert(yaml.includes("SCARP_BIN: .compiler-published/target/debug/scarp"),
+      file + " must use the separately pinned published binary");
+  }
+});

@@ -1,6 +1,7 @@
 import Article from "../../layouts/Article.tsx";
 import CodeBlock from "../../components/CodeBlock.tsx";
 import { project } from "../../data/project.ts";
+import { alpha8ProjectWorkflow } from "../../data/project-workflow.ts";
 
 /** Immutable alpha.8 release evidence, separate from the website example baseline. */
 const release = {
@@ -45,7 +46,7 @@ export default function Alpha8ProjectsAndTests() {
         64 immediate <code>.srp</code> files. A missing or empty suite
         succeeds unless you specify <code>--require-tests</code>.
       </p>
-      <CodeBlock filename="tests/addition.srp · alpha.8" code={'assert(2 + 3 == 5, "addition should produce five");'} />
+      <CodeBlock filename="tests/addition.srp · alpha.8" code={alpha8ProjectWorkflow.additionSource} />
       <CodeBlock filename="Terminal · alpha.8" code={"scarp test calculator\nscarp test --list calculator\nscarp test --json calculator\nscarp test --require-tests --filter addition calculator"} />
       <p>
         <code>assert(condition, "message")</code> requires a boolean and
@@ -63,12 +64,17 @@ export default function Alpha8ProjectsAndTests() {
       </p>
 
       <h2 id="stdin">Per-test input without shared shell stdin</h2>
+      <CodeBlock filename="tests/greeting.srp · alpha.8" code={alpha8ProjectWorkflow.greetingSource} />
+      <CodeBlock filename="tests/greeting.stdin · UTF-8" code={alpha8ProjectWorkflow.greetingInput} />
       <p>
         A sibling file such as <code>tests/greeting.stdin</code> supplies
         UTF-8 input exclusively to <code>tests/greeting.srp</code> when it
         calls <code>read_line()</code>. Fixtures are limited to 1 MiB each
         and the interpreter's ordinary per-line and total-input limits
         still apply. Test listing does not read these fixtures.
+        The test files shown above are executed against the exact alpha.8
+        compiler source by <a href={project.websiteRepo + "/blob/main/scripts/test-project-workflow.ts"}>website CI</a>,
+        including empty-suite, structured-report and assertion-failure cases.
       </p>
 
       <h2 id="limits">Compatibility and limits</h2>

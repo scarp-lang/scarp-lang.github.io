@@ -2,6 +2,7 @@ import Article from "../layouts/Article.tsx";
 import CodeBlock from "../components/CodeBlock.tsx";
 import { project } from "../data/project.ts";
 import { publishedCompiler } from "../data/releases.ts";
+import { alpha8ProjectWorkflow } from "../data/project-workflow.ts";
 
 export default function LearnPage() {
   return (
@@ -94,6 +95,17 @@ export default function LearnPage() {
         <code>launch</code> remain supported for legacy projects.
       </p>
       <CodeBlock filename="Terminal · alpha.8" code={"scarp init calculator\nscarp verify calculator\nscarp run calculator\nscarp test --list calculator"} />
+      <p>
+        Save the following standalone program as <code>calculator/tests/addition.srp</code>
+        before running the test suite:
+      </p>
+      <CodeBlock filename="calculator/tests/addition.srp" code={alpha8ProjectWorkflow.additionSource} />
+      <CodeBlock filename="Terminal · test your project" code={"scarp test --require-tests calculator\nscarp test --json calculator"} />
+      <p>
+        The website runs this test with the real published compiler in CI.
+        Its <code>print</code> output is captured, rather than mixed into JSON.
+        See <a href="/compatibility/#project-workflow">the exact verification scope</a>.
+      </p>
       <p>
         Use <code>scarp test --require-tests calculator</code> to make an empty
         suite fail in CI. See the

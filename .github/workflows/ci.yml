@@ -43,3 +43,7 @@ jobs:
         env:
           SCARP_BIN: .compiler-published/target/debug/scarp
           SCARP_EXAMPLE_TARGET: published
+      - name: Exercise declarative projects and test runner with published compiler
+        run: npm run test:project-workflow
+        env:
+          SCARP_BIN: .compiler-published/target/debug/scarp
