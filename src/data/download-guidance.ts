@@ -6,7 +6,7 @@ import type { PublishedDownload } from "./releases.ts";
  * the archive matches the checksum pinned by this website.
  */
 export function checksumCommand(
-  item: Pick<PublishedDownload, "platform" | "file" | "hash">,
+  item: { platform: PublishedDownload["platform"]; file: string; hash: string },
 ): string {
   // These values enter shell snippets. Reject metacharacters, traversal,
   // interpolation, and invalid digest metadata even if data provenance changes.
