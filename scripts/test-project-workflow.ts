@@ -128,10 +128,26 @@ try {
   assert.equal(failed.tests[0]?.status, "failed");
   assert.match(failed.tests[0]?.error ?? "", /E0065|assertion/i);
 
+  // Alpha.9 adds source-oriented structured diagnostics without changing v1 reports.
+  const detailed = expectExit(["test", "--json=v2", "--filter", "failure", projectDirectory], 1);
+  const structured = JSON.parse(detailed.stdout) as {
+    schema_version: number; mode: string; discovered: number; failed: number;
+    tests: Array<{ path: string; status: string; phase?: string; diagnostic?: { code?: string | null } }>;
+  };
+  assert.equal(structured.schema_version, 2);
+  assert.equal(structured.mode, "run");
+  assert.deepEqual([structured.discovered, structured.failed], [1, 1]);
+  assert.equal(structured.tests[0]?.path, "tests/failure.srp");
+  assert.equal(structured.tests[0]?.status, "failed");
+  assert.equal(structured.tests[0]?.phase, "runtime");
+  assert.equal(structured.tests[0]?.diagnostic?.code, "E0065");
+  assert(!detailed.stdout.includes("captured test output"),
+    "V2 structured diagnostics must not include other program output");
+
   // Static verification checks types; the false assertion fails only at runtime.
   expectExit(["verify", join(testsDir, "failure.srp")], 0);
 
-  // Real legacy regression: new alpha.8 packages must still create, verify,
+  // Real legacy regression: new alpha.8+ packages must still create, verify,
   // execute and inspect the old Scarp.project format without converting it.
   const legacyDirectory = join(workspace, "legacy-calculator");
   expectExit(["create", legacyDirectory], 0);
@@ -156,7 +172,7 @@ try {
   console.log("Verified Scarp " + publishedCompiler.tag +
     ": copy-ready manifest, source-module import and exact application stdout;" +
     " init/verify/run/info; empty-suite guard; isolated UTF-8 input;" +
-    " JSON listing, filtering, passing and failing assertions.");
+    " JSON v1/v2 listing, filtering, passing and failing assertions.");
 } finally {
   await rm(workspace, { recursive: true, force: true });
 }
