@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 29);
+  assert.equal(pages.length, 30);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
