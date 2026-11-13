@@ -49,6 +49,7 @@ export const socials = [
 ] as const;
 
 export const news = [
+  { date: '2026-11-13', category: 'Language release', title: 'Scarp alpha.9: exact BigInt and structured test diagnostics', description: 'This prerelease introduces bounded signed large integers and scarp test --json=v2 diagnostic reports with source locations.', href: '/news/alpha9-bigint-reports/' },
   { date: '2026-11-12', category: 'Language release', title: 'Scarp alpha.8: declarative projects and executable tests', description: 'The published prerelease adds scarp.project manifests, an offline project test runner, interpreter assertions and per-test input fixtures.', href: '/news/alpha8-project-tests/' },
   { date: '2026-11-11', category: 'Language release', title: 'Scarp alpha.6.7: conditional values and Unicode escapes', description: 'The published prerelease adds interpreter-only if/elif/else expressions with lazy branches and checked Unicode scalar escapes in strings.', href: '/news/alpha6-conditional-unicode/' },
   { date: '2026-11-10', category: 'Language release', title: 'Scarp alpha.6.6: program input, text and typed tuples', description: 'The published prerelease adds bounded UTF-8 line input, explicit text conversions and immutable heterogeneous tuples, with clear runtime and native-backend limits.', href: '/news/alpha6-input-tuples/' },
