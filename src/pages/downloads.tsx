@@ -102,14 +102,14 @@ export default function DownloadsPage() {
           <li>Extract the archive into a directory you control, including any bundled example files.</li>
           <li>Run the extracted interpreter's <code>version</code> command to confirm the release before creating a project.</li>
         </ol>
-        <h2>New alpha.8 declarative project workflow</h2>
+        <h2>Declarative projects (introduced in alpha.8)</h2>
         <p>
           These commands create a new offline project with a
           <code>scarp.project</code> manifest, verify it statically and run it.
           The list command discovers tests without execution; a newly initialized
           project may legitimately have zero tests.
         </p>
-        <CodeBlock filename="Terminal · alpha.8" code={"scarp init calculator\nscarp verify calculator\nscarp run calculator\nscarp project info calculator\nscarp test --list calculator"} />
+        <CodeBlock filename="Terminal · alpha.8+" code={"scarp init calculator\nscarp verify calculator\nscarp run calculator\nscarp project info calculator\nscarp test --list calculator"} />
         <p>
           Add standalone <code>tests/*.srp</code> files, then use
           <code>scarp test --require-tests calculator</code> in CI.
@@ -154,13 +154,13 @@ export default function DownloadsPage() {
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
         <p>
-          Alpha.8 adds declarative <code>scarp.project</code> projects,
-          <code>scarp init</code> and <code>scarp run</code>, read-only
-          <code>scarp project info</code>, and executable <code>scarp test</code>
-          suites with JSON, filters, per-test input and assertions.
-          False assertions report source-located E0065 diagnostics;
-          assertions remain interpreter-only. See the
-          {" "}<a href={publishedCompiler.release}>alpha.8 release details</a>.
+          Alpha.9 introduces bounded exact signed <code>bigint</code> values,
+          explicit integer conversions, and <code>scarp test --json=v2</code>
+          reports with diagnostic codes, source locations and failure phases.
+          Existing <code>integer</code> values remain signed 64-bit;
+          the older <code>--json</code> report remains schema v1.
+          Read the <a href="/news/alpha9-bigint-reports/">alpha.9 feature guide</a>
+          {" "}or the <a href={publishedCompiler.release}>official release notes</a>.
         </p>
         <h2>Introduced in preceding alpha.6.7</h2>
         <p>
