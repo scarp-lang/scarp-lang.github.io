@@ -31,30 +31,30 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Declarative projects and executable Scarp tests.</h3>
+          <h3>Exact BigInt arithmetic and structured project test failures.</h3>
           <p>
-            Scarp {publishedCompiler.tag} adds the <code>scarp.project</code> manifest
-            and the <code>init</code>, <code>run</code>, <code>project info</code>
-            and <code>test</code> commands for offline project workflows.
+            Scarp {publishedCompiler.tag} adds a separate, bounded <code>bigint</code>
+            type for exact signed integers beyond the built-in signed 64-bit
+            <code> integer</code>. Explicit conversions support arithmetic,
+            comparison, functions and modules in the interpreter.
           </p>
           <p>
-            Direct <code>tests/*.srp</code> files execute as ordinary Scarp
-            programs. The runner supports read-only <code>--list</code>, JSON
-            reports, literal filename filters, per-test <code>.stdin</code>
-            fixtures and <code>--require-tests</code> to reject empty CI suites.
-            Interpreter assertions return source-located E0065 diagnostics.
+            Project tests now offer <code>scarp test --json=v2</code>, with
+            machine-readable compile, fixture and runtime failure phases,
+            diagnostic codes and source locations. The older <code>--json</code>
+            reports and alpha.8 project commands remain compatible.
           </p>
           <p>
-            Legacy <code>Scarp.project</code>, <code>create</code> and
-            <code>launch</code> remain supported. No dependency installation,
-            native compile CLI, integrated LSP or GPU runtime has been added.
-            The release remains experimental.
+            BigInt is subject to resource limits and is not supported by
+            experimental native backends. No package registry, general native
+            compile CLI, integrated LSP or GPU runtime has been added.
+            Scarp remains an experimental prerelease.
           </p>
           <p>
-            Read the <a href="/news/alpha8-project-tests/">alpha.8 project testing overview</a>,
-            {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>release-pinned test specification</a>,
-            {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-v2.md"}>declarative project guide</a>,
-            {" "}<a href="/news/alpha6-conditional-unicode/">historical alpha.6.7 feature overview</a>,
+            Read the <a href="/news/alpha9-bigint-reports/">alpha.9 release overview</a>,
+            {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/bigint.md"}>source-pinned BigInt reference</a>,
+            {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>test report reference</a>,
+            {" "}<a href="/news/alpha8-project-tests/">earlier alpha.8 project guide</a>,
             or the <a href={publishedCompiler.release}>official release notes</a>.
           </p>
           <p>
