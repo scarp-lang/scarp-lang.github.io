@@ -1,0 +1,38 @@
+name: Alpha9 reviewed visual baseline refresh (temporary)
+on:
+  push:
+    branches:
+      - feat/alpha9-release-verified-website
+    paths:
+      - .github/workflows/alpha9-visual-baseline-refresh.yml
+permissions:
+  contents: write
+jobs:
+  refresh:
+    if: github.repository == 'scarp-lang/scarp-lang.github.io'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/alpha9-release-verified-website
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false playwright-core@1.64.1
+      - run: npm run build
+      - name: Refresh four visually reviewed baselines
+        run: npm run test:browser
+        env:
+          SCARP_UPDATE_VISUAL_BASELINES: "1"
+      - name: Commit exact Chrome snapshots to feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/browser/baselines/
+          git diff --cached --quiet && { echo "No baseline changes"; exit 0; }
+          git commit -m "test(visual): refresh reviewed alpha.9 snapshot baselines"
+          git push origin HEAD:feat/alpha9-release-verified-website
