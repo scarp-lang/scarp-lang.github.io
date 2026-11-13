@@ -4,7 +4,7 @@ import { ecosystemProjects, ecosystemReviewedOn } from "../src/data/ecosystem.ts
 import { publishedCompiler } from "../src/data/releases.ts";
 
 test("official ecosystem snapshot is complete and stable to audit", () => {
-  assert.equal(ecosystemReviewedOn, "2026-11-12");
+  assert.equal(ecosystemReviewedOn, "2026-11-13");
   assert.equal(ecosystemProjects.length, 5);
   assert.deepEqual(ecosystemProjects.map(project => project.id), [
     "compiler", "docs", "playground", "examples", "vscode",
