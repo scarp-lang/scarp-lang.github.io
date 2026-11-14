@@ -94,11 +94,11 @@ export const cliMilestones = [
   {
     tag: publishedCompiler.tag,
     sourceCommit: publishedCompiler.sourceCommit,
-    title: "Declarative projects, test runner and assertions",
+    title: "Interactive programs, fixed arrays and project testing",
     execution: "scarp exec hello.srp",
     validation: "scarp verify hello.srp",
     inspection: "scarp inspect symbols --json PROJECT_DIRECTORY",
-    additional: "Adds scarp init/run/project info, declarative scarp.project, scarp test with JSON reports, filters and per-test stdin, plus assert statements. Retains read_line, typed tuples, top_p, top_p_values, pearson_correlation, topk, softmax_temp, rms(vector), static symbols and opt-in Rust caches; no LSP, general native compiler CLI or stable Rust embedding ABI.",
+    additional: "Adds scarp init/run/project info, declarative scarp.project, scarp test with JSON reports, filters and per-test stdin, plus assert statements. Alpha.10 adds --interactive, --input-file, stdout/stderr fixtures, fixed arrays and extended BigInt. Retains read_line, typed tuples, top_p, top_p_values, pearson_correlation, topk, softmax_temp, rms(vector), static symbols and opt-in Rust caches; no LSP, general native compiler CLI or stable Rust embedding ABI.",
     evidence: publishedCompiler.release,
     fixtureTested: true,
   },
