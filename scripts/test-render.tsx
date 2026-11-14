@@ -527,3 +527,21 @@ test('alpha.8 project testing release article has immutable evidence, search and
   const feed = await renderRequest('/feed.xml', developmentAssets);
   assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha8-project-tests/</link>'));
 });
+
+test('published alpha.10 release article, archive metadata and discovery are linked', async () => {
+  const path = '/news/alpha10-interactive-arrays/';
+  const page = findPage(path);
+  assert(page);
+  const html = renderPage(page, developmentAssets);
+  assert(html.includes('v0.0.6-alpha.10'));
+  assert(html.includes('44fcd0f77ccb92648cdb1fc7632495c506c87cb3'));
+  assert(html.includes('scarp exec --interactive app.srp'));
+  assert(html.includes('array'));
+  assert(searchEntries.some(item => item.path === path));
+  assert(news.some(item => item.href === path));
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io/news/alpha10-interactive-arrays/</link>'));
+  const downloads = findPage('/downloads/');
+  assert(downloads);
+  assert(renderPage(downloads, developmentAssets).includes('alpha10-interactive-arrays'));
+});

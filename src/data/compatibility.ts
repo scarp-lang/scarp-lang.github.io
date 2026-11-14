@@ -9,7 +9,7 @@ import { publishedCompiler } from "./releases.ts";
 export const exampleCompatibility = {
   reviewed: "2026-11-14",
   fixtureNames: ["functions.srp", "hello.srp", "numerics.srp"],
-  publishedOnlyFixtureNames: ["bigint_arithmetic.srp", "rms.srp", "topk_scores.srp", "temperature_softmax.srp", "nucleus_selection.srp", "pearson_correlation.srp", "conditional_unicode.srp"],
+  publishedOnlyFixtureNames: ["bigint_arithmetic.srp", "bigint_exact.srp", "fixed_arrays.srp", "rms.srp", "topk_scores.srp", "temperature_softmax.srp", "nucleus_selection.srp", "pearson_correlation.srp", "conditional_unicode.srp"],
   versions: [
     {
       tag: project.tag,
