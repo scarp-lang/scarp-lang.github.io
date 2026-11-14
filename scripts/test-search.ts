@@ -4,7 +4,7 @@ import { searchEntries, searchEntriesFor } from "../src/data/search.ts";
 import { hindiSearchAliases } from "../src/data/search-hi.ts";
 
 test("site search data contains distinct, canonical page paths", () => {
-  assert.equal(searchEntries.length, 28);
+  assert.equal(searchEntries.length, 29);
   assert.equal(new Set(searchEntries.map(entry => entry.path)).size, searchEntries.length);
   for (const entry of searchEntries) {
     assert(entry.path.startsWith("/"));
@@ -31,6 +31,9 @@ test("keywords, casing, prefixes, and multiple terms find relevant pages", () =>
   assert.equal(searchEntriesFor("softmax_temp")[0]?.path, "/news/alpha6-ranking-temperature/");
   assert.equal(searchEntriesFor("topk_values")[0]?.path, "/news/alpha6-ranking-temperature/");
   assert.equal(searchEntriesFor("read_line")[0]?.path, "/news/alpha6-input-tuples/");
+  assert.equal(searchEntriesFor("interactive input")[0]?.path, "/news/alpha10-interactive-arrays/");
+  assert.equal(searchEntriesFor("fixed array")[0]?.path, "/news/alpha10-interactive-arrays/");
+  assert.equal(searchEntriesFor("अल्फा दस")[0]?.path, "/news/alpha10-interactive-arrays/");
   assert.equal(searchEntriesFor("bigint")[0]?.path, "/news/alpha9-bigint-reports/");
   assert.equal(searchEntriesFor("json v2")[0]?.path, "/news/alpha9-bigint-reports/");
   assert.equal(searchEntriesFor("बड़े पूर्णांक")[0]?.path, "/news/alpha9-bigint-reports/");

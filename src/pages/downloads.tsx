@@ -154,13 +154,27 @@ export default function DownloadsPage() {
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
         <p>
-          Alpha.9 introduces bounded exact signed <code>bigint</code> values,
-          explicit integer conversions, and <code>scarp test --json=v2</code>
-          reports with diagnostic codes, source locations and failure phases.
-          Existing <code>integer</code> values remain signed 64-bit;
-          the older <code>--json</code> report remains schema v1.
-          Read the <a href="/news/alpha9-bigint-reports/">alpha.9 feature guide</a>
-          {" "}or the <a href={publishedCompiler.release}>official release notes</a>.
+          Alpha.10 adds opt-in interactive prompts with <code>input(prompt)</code>,
+          <code>ask(prompt)</code>, <code>ask_or(prompt, fallback)</code>, typed
+          numeric input and <code>try_read_line()</code>. Supply
+          <code> --interactive</code> for terminal prompts, or
+          <code> --input-file</code> for a reproducible UTF-8 input source.
+        </p>
+        <CodeBlock filename="Terminal · alpha.10" code={"scarp exec --interactive app.srp\nscarp exec --input-file DATA.txt app.srp"} />
+        <p>
+          Immutable <code>array&lt;T, N&gt;</code> values support checked indexing.
+          BigInt adds powers, GCD/LCM, integer square roots, radix conversion,
+          shifts and bitwise operators. Tests now support exact stdout/stderr
+          fixture comparisons. See the
+          {" "}<a href="/news/alpha10-interactive-arrays/">alpha.10 feature guide</a>
+          {" "}and the <a href={publishedCompiler.release}>official release notes</a>.
+        </p>
+        <h2>Introduced in alpha.9</h2>
+        <p>
+          Alpha.9 introduced bounded exact signed <code>bigint</code> values
+          and <code>scarp test --json=v2</code> with structured diagnostics.
+          The older <code>--json</code> remains schema v1.
+          Read the <a href="/news/alpha9-bigint-reports/">alpha.9 feature guide</a>.
         </p>
         <h2>Introduced in preceding alpha.6.7</h2>
         <p>
@@ -186,7 +200,7 @@ export default function DownloadsPage() {
           <code>float_to_text</code>), Unicode text operations
           (<code>text_trim</code>, <code>text_replace</code>) and immutable
           heterogeneous <code>tuple&lt;integer, string&gt;</code> values are
-          also available. There is no interactive prompt API.
+          also available. Interactive prompts now require alpha.10's explicit --interactive mode.
         </p>
         <p>
           Input defaults: 65,536 raw bytes per line, 1,048,576 total bytes

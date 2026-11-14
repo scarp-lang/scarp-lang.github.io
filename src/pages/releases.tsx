@@ -31,27 +31,25 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Exact BigInt arithmetic and structured project test failures.</h3>
+          <h3>Interactive input, fixed arrays and exact number theory.</h3>
           <p>
-            Scarp {publishedCompiler.tag} adds a separate, bounded <code>bigint</code>
-            type for exact signed integers beyond the built-in signed 64-bit
-            <code> integer</code>. Explicit conversions support arithmetic,
-            comparison, functions and modules in the interpreter.
+            Scarp {publishedCompiler.tag} introduces opt-in prompts with
+            <code> --interactive</code> and explicit <code>--input-file</code>
+            for reproducible UTF-8 input. Project tests can compare
+            exact stdout and stderr fixtures.
           </p>
           <p>
-            Project tests now offer <code>scarp test --json=v2</code>, with
-            machine-readable compile, fixture and runtime failure phases,
-            diagnostic codes and source locations. The older <code>--json</code>
-            reports and alpha.8 project commands remain compatible.
+            Immutable <code>array&lt;T, N&gt;</code> values provide checked indexing,
+            homogeneous element types and typed imports. Bounded BigInt gains
+            powers, GCD/LCM, integer square roots, shifts and radix conversion.
           </p>
           <p>
-            BigInt is subject to resource limits and is not supported by
-            experimental native backends. No package registry, general native
-            compile CLI, integrated LSP or GPU runtime has been added.
-            Scarp remains an experimental prerelease.
+            Array-bearing module inventories use JSON schema 3. Scarp remains
+            an experimental interpreter: there is no package registry,
+            integrated LSP, general native compile CLI or stable ABI.
           </p>
           <p>
-            Read the <a href="/news/alpha9-bigint-reports/">alpha.9 release overview</a>,
+            Read the <a href="/news/alpha10-interactive-arrays/">alpha.10 release overview</a>,
             {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/bigint.md"}>source-pinned BigInt reference</a>,
             {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>test report reference</a>,
             {" "}<a href="/news/alpha8-project-tests/">earlier alpha.8 project guide</a>,
@@ -113,7 +111,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version command differences through alpha.8,
+          version-by-version command differences through alpha.10,
           including project workflows and the new read-only symbol index.
         </p>
         <p>

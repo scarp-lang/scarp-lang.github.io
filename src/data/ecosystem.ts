@@ -5,7 +5,7 @@
 import { project } from "./project.ts";
 import { publishedCompiler } from "./releases.ts";
 
-export const ecosystemReviewedOn = "2026-11-13";
+export const ecosystemReviewedOn = "2026-11-14";
 
 export interface EcosystemProject {
   id: string;
@@ -28,7 +28,7 @@ export const ecosystemProjects = [
     status: "Experimental prerelease",
     version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
-    limitation: "Published v0.0.6-alpha.9 adds exact bounded BigInt arithmetic and scarp test --json=v2 diagnostics, retaining alpha.8 project workflows, assertions and input fixtures. Legacy commands still work. No dependency installation, general native compile CLI, integrated LSP, GPU runtime or stable ABI.",
+    limitation: "Published v0.0.6-alpha.10 adds explicit interactive prompts, UTF-8 input files, exact stream assertions, immutable fixed-size arrays, and extended bounded BigInt operations. Earlier alpha.9 structured test reports and alpha.8 projects remain. No filesystem I/O functions, general native compile CLI, integrated LSP, GPU runtime or stable ABI.",
     website: `${project.repo}/releases`,
     source: project.repo,
     evidence: publishedCompiler.release,

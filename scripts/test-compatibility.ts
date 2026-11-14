@@ -16,7 +16,7 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
     assert(program.length > 0, name + " is blank");
     assert(expectedOutput.length > 0, name + " has no expected output");
   }
-  assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["bigint_arithmetic.srp", "conditional_unicode.srp", "nucleus_selection.srp", "pearson_correlation.srp", "rms.srp", "temperature_softmax.srp", "topk_scores.srp"]);
+  assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["bigint_arithmetic.srp", "bigint_exact.srp", "conditional_unicode.srp", "fixed_arrays.srp", "nucleus_selection.srp", "pearson_correlation.srp", "rms.srp", "temperature_softmax.srp", "topk_scores.srp"]);
   const publishedRoot = resolve("src/examples/published");
   assert.deepEqual((await readdir(publishedRoot)).filter(name => name.endsWith(".srp")).sort(),
     [...exampleCompatibility.publishedOnlyFixtureNames].sort());
@@ -27,6 +27,10 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
   assert.match(await readFile(join(publishedRoot, "rms.srp"), "utf8"), /rms\(/);
   assert.match(await readFile(join(publishedRoot, "bigint_arithmetic.srp"), "utf8"), /bigint\(/);
   assert.equal((await readFile(join(publishedRoot, "bigint_arithmetic.stdout"), "utf8")).split("\n")[0], "1000000000000000000000000000000");
+  assert.match(await readFile(join(publishedRoot, "bigint_exact.srp"), "utf8"), /bigint_pow\(/);
+  assert.match(await readFile(join(publishedRoot, "fixed_arrays.srp"), "utf8"), /array<string, 2>/);
+  assert.equal(await readFile(join(publishedRoot, "bigint_exact.stdout"), "utf8"), "111111111111111111111111111111 8\n129 100000000000000000000000000000000\n18446744073709551616 6\n");
+  assert.equal(await readFile(join(publishedRoot, "fixed_arrays.stdout"), "utf8"), "Scarp 3 [array: <array<integer, 2>>]\n[array: \"नमस्ते\", \"Scarp\"] true\n");
   assert.match(await readFile(join(publishedRoot, "conditional_unicode.srp"), "utf8"), /elif score >= 60/);
   assert.match(await readFile(join(publishedRoot, "nucleus_selection.srp"), "utf8"), /top_p\(/);
   assert.match(await readFile(join(publishedRoot, "pearson_correlation.srp"), "utf8"), /pearson_correlation\(/);
