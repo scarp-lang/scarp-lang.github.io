@@ -1,0 +1,52 @@
+name: One-time reviewed alpha.10 visual baseline refresh
+on:
+  push:
+    branches: [feat/verified-alpha10-website-sync-20261114]
+permissions:
+  contents: write
+jobs:
+  refresh-reviewed-screenshots:
+    if: github.repository == 'scarp-lang/scarp-lang.github.io' && github.ref == 'refs/heads/feat/verified-alpha10-website-sync-20261114'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false playwright-core@1.64.1
+      - run: npx tsc -p tsconfig.browser.json
+      - run: npm run build
+      - name: Refresh screenshots with browser's reviewed capture mode
+        run: npm run test:browser
+        env:
+          SCARP_UPDATE_VISUAL_BASELINES: '1'
+      - name: Validate all four captured PNGs against independently reviewed hashes
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/approved-scarp-alpha10-sha256 <<'HASHES'
+          a423d1af283b65c7dac6b549764564bcc03e9cdcffc348f6ed74309719ea5fa2  tests/browser/baselines/home-desktop-light.png
+          ec20709b7dc0deb248ea7bfbe37607df6468451fbdd76854abd90acba990b7fd  tests/browser/baselines/home-mobile-dark.png
+          254371ea86fdc67d1717d0bb47fe0e9de6dee7fcccec4219658f255a67473ac6  tests/browser/baselines/search-mobile-light.png
+          aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a  tests/browser/baselines/support-desktop-dark.png
+          HASHES
+          sha256sum --check /tmp/approved-scarp-alpha10-sha256
+          git diff --exit-code -- tests/browser/baselines/support-desktop-dark.png
+      - name: Commit only reviewed changed baseline images on this one branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- tests/browser/baselines/home-desktop-light.png tests/browser/baselines/home-mobile-dark.png tests/browser/baselines/search-mobile-light.png
+          if git diff --cached --quiet; then
+            echo 'Reviewed screenshots already committed'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'test(website): refresh reviewed alpha.10 visual baselines'
+          git push origin HEAD:feat/verified-alpha10-website-sync-20261114
