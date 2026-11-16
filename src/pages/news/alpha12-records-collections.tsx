@@ -8,7 +8,7 @@ const release = {
   date: "2026-11-16",
   source: "a1f9c2fc1c6bc8f3e04878d30d658bb38fab441d",
 } as const;
-const sourcePath = (path: string) => `${project.repo}/blob/${release.source}/${path}`;
+const sourcePath = (path: string) => `${project.repo}/tree/${release.source}/${path}`;
 
 export default function Alpha12RecordsCollections() {
   return (
