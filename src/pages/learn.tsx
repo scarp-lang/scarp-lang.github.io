@@ -185,7 +185,7 @@ export default function LearnPage() {
 
       <h2 id="06--input-and-tuples-alpha66">06 · Try input and tuples in alpha.6.6</h2>
       <p>
-        In <a href="/news/alpha6-input-tuples/">{publishedCompiler.tag}</a>,
+        Since <a href="/news/alpha6-input-tuples/">alpha.6.6</a>,
         immutable tuples can hold values of different types. A tuple
         annotation names each element's type, and a literal index accesses
         an element:
@@ -198,7 +198,7 @@ export default function LearnPage() {
         <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/examples/core_input_tuple.srp"}>
           tagged input-and-tuple example
         </a>. <code>read_line()</code> requires a supplied reader; the
-        packaged CLI supports redirected stdin but not interactive prompting.
+        alpha.6.6 CLI accepted redirected stdin; interactive prompts became an explicit opt-in with alpha.10.
         Rust embedding clients must review the new structural type contracts.
       </p>
 
