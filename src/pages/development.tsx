@@ -78,8 +78,7 @@ export default function DevelopmentPage() {
             re-exports need further milestones.
           </li>
           <li>
-            General-purpose collections, user-defined types, a standard library,
-            and a package manager are not available.
+            The latest published interpreter supports bounded records, variants, lists and maps; native backend support for aggregates remains limited. User-defined generics, a broad standard library and package manager are not available.
           </li>
           <li>
             There is no general tensor engine, automatic differentiation, or GPU
@@ -98,7 +97,7 @@ export default function DevelopmentPage() {
         <p>
           Read-only symbol navigation and constant-expression work have
           progressed beyond the original alpha.1 baseline. Further editor
-          integration, language conformance and user-defined types require
+          integration, language conformance and user-defined generics require
           separate implementation and tests.{" "}
           <a href="/roadmap/">Explore the longer path toward v1.0.0</a>.
         </p>
