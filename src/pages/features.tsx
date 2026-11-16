@@ -79,7 +79,7 @@ export default function FeaturesPage() {
         </ul>
         <h2>New in the separately published alpha.6.3</h2>
         <p>
-          The latest experimental prerelease adds deterministic numerical
+          The earlier alpha.6.3 prerelease introduced deterministic numerical
           ranking with <code>topk</code> and <code>topk_values</code>,
           temperature-controlled <code>softmax_temp</code> and{" "}
           <code>logsoftmax_temp</code>, and test-backed internal scalar
@@ -90,11 +90,14 @@ export default function FeaturesPage() {
         </p>
         <h2>Know the boundaries</h2>
         <p>
-          Scarp currently interprets programs. Native code generation, a package
-          manager, general-purpose collections, user-defined types, a general
-          tensor engine, GPU execution, and automatic differentiation are future
-          milestones. Execution budgets do not measure total process memory or
-          form a security sandbox.
+          The newer <a href="/news/alpha12-records-collections/">alpha.12 release</a>
+          supports records, variants, option/result and immutable lists/maps
+          in the interpreter; <a href="/news/alpha11-exact-decimal/">alpha.11</a>
+          introduced exact decimal arithmetic. A general native compilation
+          command, package manager, user-defined generics, general tensor
+          engine, GPU execution and automatic differentiation remain outside
+          those releases. Execution budgets do not measure total process memory
+          or form a security sandbox.
         </p>
         <a className="inline-link" href="/development/">
           Read the full development status →
