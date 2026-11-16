@@ -43,3 +43,38 @@ jobs:
           path: test-results/browser/visual/
           if-no-files-found: ignore
           retention-days: 14
+
+  # One-time PR branch visual baseline update after maintainer review of all 4 captures.
+  # Never runs on default branch, external PRs, or unrelated refs.
+  baseline-refresh:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/feat/verified-alpha12-website-sync-20261116' && github.repository == 'scarp-lang/scarp-lang.github.io' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false playwright-core@1.64.1
+      - run: npm run build
+      - name: Re-render all four reviewed full-page baselines
+        env:
+          SCARP_UPDATE_VISUAL_BASELINES: "1"
+        run: npm run test:browser
+      - name: Push only reviewed screenshot baselines to this PR branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tests/browser/baselines/home-desktop-light.png tests/browser/baselines/home-mobile-dark.png tests/browser/baselines/search-mobile-light.png tests/browser/baselines/support-desktop-dark.png
+          if git diff --cached --quiet; then
+            echo "No visual baseline changes"
+            exit 0
+          fi
+          git commit -m "test(browser): update reviewed alpha.12 visual baselines"
+          git push origin HEAD:refs/heads/feat/verified-alpha12-website-sync-20261116
