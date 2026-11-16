@@ -5,7 +5,7 @@
 import { project } from "./project.ts";
 import { publishedCompiler } from "./releases.ts";
 
-export const ecosystemReviewedOn = "2026-11-14";
+export const ecosystemReviewedOn = "2026-11-16";
 
 export interface EcosystemProject {
   id: string;
@@ -28,7 +28,7 @@ export const ecosystemProjects = [
     status: "Experimental prerelease",
     version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
-    limitation: "Published v0.0.6-alpha.10 adds explicit interactive prompts, UTF-8 input files, exact stream assertions, immutable fixed-size arrays, and extended bounded BigInt operations. Earlier alpha.9 structured test reports and alpha.8 projects remain. No filesystem I/O functions, general native compile CLI, integrated LSP, GPU runtime or stable ABI.",
+    limitation: "Published v0.0.6-alpha.12 adds typed records and variants, checked matching, destructuring, option/result, and immutable lists/maps. Alpha.11 introduced exact decimal values; alpha.10 added interactive input and fixed arrays. Aggregate execution is interpreter-only; user-defined generics, host-side data engine, general native compile CLI, integrated LSP, GPU runtime, and stable ABI are not included.",
     website: `${project.repo}/releases`,
     source: project.repo,
     evidence: publishedCompiler.release,
