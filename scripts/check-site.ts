@@ -131,6 +131,19 @@ assert.match(feedXml, /<rss version="2.0">/);
 assert(feedXml.includes('<link>https://scarp-lang.github.io/news/offline-projects/</link>'), 'RSS missing historical alpha.4 announcement');
 assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha5-project-inspection/</link>'), 'RSS missing historical alpha.5 release');
 assert(feedXml.includes('<link>https://scarp-lang.github.io/news/alpha6-symbol-navigation/</link>'), 'RSS missing published alpha.6 release');
+
+for (const release of [
+  { slug: "alpha12-records-collections", version: "v0.0.6-alpha.12", source: "a1f9c2fc1c6bc8f3e04878d30d658bb38fab441d" },
+  { slug: "alpha11-exact-decimal", version: "v0.0.6-alpha.11", source: "79b57395957f47e1270ee542a856c844b82386de" },
+]) {
+  const path = "news/" + release.slug + "/index.html";
+  const article = await readFile(join(root, path), "utf8");
+  assert(article.includes(release.version), "Missing published version in " + path);
+  assert(article.includes(release.source), "Missing exact release source in " + path);
+  assert(feedXml.includes("<link>https://scarp-lang.github.io/news/" + release.slug + "/</link>"),
+    "RSS missing published " + release.version);
+}
+
 const alpha5News = await readFile(join(root, 'news/alpha5-project-inspection/index.html'), 'utf8');
 for (const token of ['v0.0.5-alpha.5', '2eeed0aa52ccb59523307841ad8ffbd83f8911a8', '4 November 2026', 'C11', 'scarp compile']) {
   assert(alpha5News.includes(token), 'Historical alpha.5 release article missing ' + token);

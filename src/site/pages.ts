@@ -16,6 +16,8 @@ import Alpha6ConditionalUnicode from "../pages/news/alpha6-conditional-unicode.t
 import Alpha8ProjectsAndTests from "../pages/news/alpha8-project-tests.tsx";
 import Alpha9BigIntReports from "../pages/news/alpha9-bigint-reports.tsx";
 import Alpha10InteractiveArrays from "../pages/news/alpha10-interactive-arrays.tsx";
+import Alpha11ExactDecimal from "../pages/news/alpha11-exact-decimal.tsx";
+import Alpha12RecordsCollections from "../pages/news/alpha12-records-collections.tsx";
 import OfflineProjects from "../pages/news/offline-projects.tsx";
 import Alpha6SymbolNavigation from "../pages/news/alpha6-symbol-navigation.tsx";
 import Alpha6CacheApis from "../pages/news/alpha6-cache-apis.tsx";
@@ -56,6 +58,8 @@ export const pages: readonly SitePage[] = [
   { path: "/support/", Component: Support },
   { path: "/search/", Component: Search },
   { path: "/news/", Component: News },
+  { path: "/news/alpha12-records-collections/", Component: Alpha12RecordsCollections },
+  { path: "/news/alpha11-exact-decimal/", Component: Alpha11ExactDecimal },
   { path: "/news/alpha10-interactive-arrays/", Component: Alpha10InteractiveArrays },
   { path: "/news/alpha9-bigint-reports/", Component: Alpha9BigIntReports },
   { path: "/news/alpha8-project-tests/", Component: Alpha8ProjectsAndTests },

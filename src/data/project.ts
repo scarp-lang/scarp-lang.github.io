@@ -49,6 +49,8 @@ export const socials = [
 ] as const;
 
 export const news = [
+  { date: '2026-11-16', category: 'Language release', title: 'Scarp alpha.12: typed records, variants and collections', description: 'Typed records and variants, exhaustive matching, option/result, immutable lists/maps and a multi-file task-board example.', href: '/news/alpha12-records-collections/' },
+  { date: '2026-11-15', category: 'Language release', title: 'Scarp alpha.11: exact decimal arithmetic', description: 'Experimental exact base-10 decimal values, controlled rounding and explicit input/conversions, with interpreter-only execution.', href: '/news/alpha11-exact-decimal/' },
   { date: '2026-11-14', category: 'Language release', title: 'Scarp alpha.10: interactive input, fixed arrays and exact BigInt tools', description: 'New opt-in terminal prompts, UTF-8 input files, stdout/stderr test fixtures, immutable arrays and bounded number-theory operations.', href: '/news/alpha10-interactive-arrays/' },
   { date: '2026-11-13', category: 'Language release', title: 'Scarp alpha.9: exact BigInt and structured test diagnostics', description: 'This prerelease introduces bounded signed large integers and scarp test --json=v2 diagnostic reports with source locations.', href: '/news/alpha9-bigint-reports/' },
   { date: '2026-11-12', category: 'Language release', title: 'Scarp alpha.8: declarative projects and executable tests', description: 'The published prerelease adds scarp.project manifests, an offline project test runner, interpreter assertions and per-test input fixtures.', href: '/news/alpha8-project-tests/' },

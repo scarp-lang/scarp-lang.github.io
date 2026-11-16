@@ -1,9 +1,11 @@
+import { publishedCompiler } from "./releases.ts";
+
 /**
  * Copy-ready Scarp alpha.8 starter project, regression-tested by the latest published compiler
  * in both website CI and GitHub Pages deployment. This is NOT alpha.1 syntax.
  */
 export const alpha8ProjectWorkflow = {
-  releaseTag: "v0.0.6-alpha.10",
+  releaseTag: publishedCompiler.tag,
   manifestSource: 'project "calculator" {\n    version: "0.1.0"\n    entry: "src/main.srp"\n    type: "application"\n    dependencies {}\n}\n',
   moduleSource: 'pub pure funcra add(left: integer, right: integer) -> integer {\n    return left + right;\n}\n',
   mainSource: 'import "math.srp" as math;\nprint(math.add(20, 22));\n',

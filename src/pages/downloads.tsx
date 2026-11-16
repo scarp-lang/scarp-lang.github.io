@@ -154,20 +154,45 @@ export default function DownloadsPage() {
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
         <p>
-          Alpha.10 adds opt-in interactive prompts with <code>input(prompt)</code>,
+          Alpha.12 adds typed records, tagged variants, nested destructuring,
+          exhaustively checked matches, concrete <code>option&lt;T&gt;</code>
+          and <code>result&lt;T, E&gt;</code> values, plus immutable
+          lists and deterministic maps. A multi-file task-board example ships
+          with the tagged compiler source. These aggregate operations are
+          interpreter features; unsupported native programs are rejected.
+        </p>
+        <CodeBlock
+          filename="Terminal · alpha.12 task-board (from the tagged source tree)"
+          code={"scarp verify examples/projects/task-board\nscarp launch examples/projects/task-board\nscarp test examples/projects/task-board"}
+        />
+        <p>
+          Read the <a href="/news/alpha12-records-collections/">alpha.12 feature overview</a>,
+          {" "}the <a href={publishedCompiler.release}>official release notes</a>
+          {" "}and the <a href={project.repo + "/tree/" + publishedCompiler.sourceCommit + "/examples/projects/task-board"}>tagged task-board source</a>.
+        </p>
+        <h2>Introduced in alpha.11</h2>
+        <p>
+          Alpha.11 introduced interpreter-only exact base-10
+          <code> decimal</code> values, explicit decimal/integer conversions,
+          controlled rounding and <code>input_decimal(prompt)</code> with
+          opt-in interactive mode. Inexact division requires explicit rounding.
+          See the <a href="/news/alpha11-exact-decimal/">alpha.11 decimal guide</a>.
+        </p>
+        <h2>Introduced in alpha.10</h2>
+        <p>
+          Alpha.10 added opt-in interactive prompts with <code>input(prompt)</code>,
           <code>ask(prompt)</code>, <code>ask_or(prompt, fallback)</code>, typed
           numeric input and <code>try_read_line()</code>. Supply
           <code> --interactive</code> for terminal prompts, or
-          <code> --input-file</code> for a reproducible UTF-8 input source.
+          <code> --input-file</code> for reproducible UTF-8 input.
         </p>
-        <CodeBlock filename="Terminal · alpha.10" code={"scarp exec --interactive app.srp\nscarp exec --input-file DATA.txt app.srp"} />
+        <CodeBlock filename="Terminal · alpha.10+" code={"scarp exec --interactive app.srp\nscarp exec --input-file DATA.txt app.srp"} />
         <p>
           Immutable <code>array&lt;T, N&gt;</code> values support checked indexing.
-          BigInt adds powers, GCD/LCM, integer square roots, radix conversion,
-          shifts and bitwise operators. Tests now support exact stdout/stderr
+          BigInt added powers, GCD/LCM, integer square roots, radix conversion,
+          shifts and bitwise operators. Tests also gained exact stdout/stderr
           fixture comparisons. See the
-          {" "}<a href="/news/alpha10-interactive-arrays/">alpha.10 feature guide</a>
-          {" "}and the <a href={publishedCompiler.release}>official release notes</a>.
+          {" "}<a href="/news/alpha10-interactive-arrays/">alpha.10 feature guide</a>.
         </p>
         <h2>Introduced in alpha.9</h2>
         <p>

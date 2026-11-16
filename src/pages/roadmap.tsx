@@ -57,7 +57,7 @@ export default function ArticlePage() {
       <p>The source roadmap then calls for:</p>
       <ol>
         <li>Explicit constant-expression and library organization design.</li>
-        <li>User-defined types and callable values.</li>
+        <li>Expand released record/variant capabilities, user-defined generics and callable values.</li>
         <li>A compiler backend and developer tooling.</li>
         <li>Domain-specific libraries.</li>
       </ol>
