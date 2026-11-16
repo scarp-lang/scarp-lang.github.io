@@ -168,7 +168,7 @@ export default function DownloadsPage() {
         <p>
           Read the <a href="/news/alpha12-records-collections/">alpha.12 feature overview</a>,
           {" "}the <a href={publishedCompiler.release}>official release notes</a>
-          {" "}and the <a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/examples/projects/task-board"}>tagged task-board source</a>.
+          {" "}and the <a href={project.repo + "/tree/" + publishedCompiler.sourceCommit + "/examples/projects/task-board"}>tagged task-board source</a>.
         </p>
         <h2>Introduced in alpha.11</h2>
         <p>
