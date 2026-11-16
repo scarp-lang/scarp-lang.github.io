@@ -31,29 +31,32 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Interactive input, fixed arrays and exact number theory.</h3>
+          <h3>Typed records, variants and immutable collections.</h3>
           <p>
-            Scarp {publishedCompiler.tag} introduces opt-in prompts with
-            <code> --interactive</code> and explicit <code>--input-file</code>
-            for reproducible UTF-8 input. Project tests can compare
-            exact stdout and stderr fixtures.
+            Scarp {publishedCompiler.tag} introduces checked source records,
+            tagged variants, nested destructuring, and exhaustive matching.
+            Concrete <code>option&lt;T&gt;</code> and
+            <code>result&lt;T, E&gt;</code> types support error propagation
+            via <code>bind value = expression?;</code>.
           </p>
           <p>
-            Immutable <code>array&lt;T, N&gt;</code> values provide checked indexing,
-            homogeneous element types and typed imports. Bounded BigInt gains
-            powers, GCD/LCM, integer square roots, shifts and radix conversion.
+            Immutable typed lists and deterministic maps provide ordered
+            key/value projections with bounded allocation and work budgets.
+            A multi-file task-board project demonstrates tested transitions,
+            typed actions and deterministic interpreter output.
           </p>
           <p>
-            Array-bearing module inventories use JSON schema 3. Scarp remains
-            an experimental interpreter: there is no package registry,
-            integrated LSP, general native compile CLI or stable ABI.
+            Alpha.11 introduced exact <code>decimal</code> arithmetic;
+            alpha.10 introduced opt-in interactive input, stream assertions
+            and fixed-size arrays. Aggregate execution remains interpreter-only.
+            No general native compile CLI, user-defined generics, host-side
+            data engine, integrated LSP or stable ABI are included.
           </p>
           <p>
-            Read the <a href="/news/alpha10-interactive-arrays/">alpha.10 release overview</a>,
-            {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/bigint.md"}>source-pinned BigInt reference</a>,
-            {" "}<a href={project.repo + "/blob/" + publishedCompiler.sourceCommit + "/docs/project-testing.md"}>test report reference</a>,
-            {" "}<a href="/news/alpha8-project-tests/">earlier alpha.8 project guide</a>,
-            or the <a href={publishedCompiler.release}>official release notes</a>.
+            Read the <a href="/news/alpha12-records-collections/">alpha.12 release overview</a>,
+            {" "}<a href="/news/alpha11-exact-decimal/">alpha.11 decimal overview</a>,
+            {" "}<a href="/news/alpha10-interactive-arrays/">alpha.10 input and arrays</a>,
+            or the <a href={publishedCompiler.release}>authoritative release notes</a>.
           </p>
           <p>
             Pre-built archives are available for Windows x64, Linux x64 GNU
