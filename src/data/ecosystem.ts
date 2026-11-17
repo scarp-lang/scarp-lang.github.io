@@ -28,7 +28,7 @@ export const ecosystemProjects = [
     status: "Experimental prerelease",
     version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
-    limitation: "Published v0.0.6-alpha.12 adds typed records and variants, checked matching, destructuring, option/result, and immutable lists/maps. Alpha.11 introduced exact decimal values; alpha.10 added interactive input and fixed arrays. Aggregate execution is interpreter-only; user-defined generics, host-side data engine, general native compile CLI, integrated LSP, GPU runtime, and stable ABI are not included.",
+    limitation: "Published v0.0.6-alpha.13 improves Option/Result propagation, opt-in Rust cache retention and revision eviction, and workspace-safe editor snapshots without changing the Scarp CLI. Alpha.12 added typed records, variants and immutable lists/maps; alpha.11 added exact decimals; alpha.10 added interactive input and fixed arrays. Aggregate execution is interpreter-only; user-defined generics, host-side data engine, general native compile CLI, integrated LSP, GPU runtime, and stable ABI are not included.",
     website: `${project.repo}/releases`,
     source: project.repo,
     evidence: publishedCompiler.release,
