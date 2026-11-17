@@ -4,6 +4,7 @@ import { join, resolve } from 'node:path';
 import { runInNewContext } from 'node:vm';
 import { project } from '../src/data/project.ts';
 import { publishedCompiler } from '../src/data/releases.ts';
+import { ecosystemReviewedOn } from '../src/data/ecosystem.ts';
 import { accessibilityProblems } from './accessibility-contracts.ts';
 
 const root = resolve('dist');
@@ -205,7 +206,7 @@ const ecosystemHtml = await readFile(join(root, 'ecosystem/index.html'), 'utf8')
 for (const name of ['Scarp compiler', 'Scarp Docs', 'Scarp Playground', 'Scarp by Example', 'Scarp for VS Code']) {
   assert(ecosystemHtml.includes(name), 'Missing ecosystem project: ' + name);
 }
-assert(ecosystemHtml.includes(publishedCompiler.reviewed), 'Ecosystem snapshot date is missing');
+assert(ecosystemHtml.includes(ecosystemReviewedOn), 'Ecosystem snapshot date is missing');
 assert(ecosystemHtml.includes(publishedCompiler.release), 'Missing latest published compiler release evidence');
 const compatibilityHtml = await readFile(join(root, 'compatibility/index.html'), 'utf8');
 for (const token of ['functions.srp', 'hello.srp', 'numerics.srp', project.tag,

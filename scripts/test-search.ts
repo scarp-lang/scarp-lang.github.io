@@ -4,7 +4,7 @@ import { searchEntries, searchEntriesFor } from "../src/data/search.ts";
 import { hindiSearchAliases } from "../src/data/search-hi.ts";
 
 test("site search data contains distinct, canonical page paths", () => {
-  assert.equal(searchEntries.length, 31);
+  assert.equal(searchEntries.length, 32);
   assert.equal(new Set(searchEntries.map(entry => entry.path)).size, searchEntries.length);
   for (const entry of searchEntries) {
     assert(entry.path.startsWith("/"));
@@ -31,6 +31,8 @@ test("keywords, casing, prefixes, and multiple terms find relevant pages", () =>
   assert.equal(searchEntriesFor("softmax_temp")[0]?.path, "/news/alpha6-ranking-temperature/");
   assert.equal(searchEntriesFor("topk_values")[0]?.path, "/news/alpha6-ranking-temperature/");
   assert.equal(searchEntriesFor("read_line")[0]?.path, "/news/alpha6-input-tuples/");
+  assert.equal(searchEntriesFor("workspace generation")[0]?.path, "/news/alpha13-editor-caches/");
+  assert.equal(searchEntriesFor("अल्फा तेरह")[0]?.path, "/news/alpha13-editor-caches/");
   assert.equal(searchEntriesFor("typed records")[0]?.path, "/news/alpha12-records-collections/");
   assert.equal(searchEntriesFor("अल्फा बारह")[0]?.path, "/news/alpha12-records-collections/");
   assert.equal(searchEntriesFor("exact decimal")[0]?.path, "/news/alpha11-exact-decimal/");

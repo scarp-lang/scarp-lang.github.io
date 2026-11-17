@@ -71,7 +71,7 @@ export default function CompatibilityPage() {
         syntax, old CLI commands, libraries or other projects are compatible.
       </p>
 
-      <h2 id="published-only">Published alpha.6 numerical and language coverage</h2>
+      <h2 id="published-only">Published compiler numerical and language coverage</h2>
       <p>
         Additional examples for vector <code>rms</code>, deterministic{" "}
         <code>topk</code> ranking, temperature-aware{" "}
@@ -85,6 +85,14 @@ export default function CompatibilityPage() {
         and <code>inspect symbols</code> and <code>inspect references</code>{" "}
         JSON outputs are checked for schema version 1 and declared kinds.
         These tests do not certify the whole symbol-index API or numerical library.
+      </p>
+      <p>
+        Alpha.13 expands this interpreter coverage with two
+        <a href={publishedCompiler.release}> release-tagged examples</a>:
+        <code> typed_propagation.srp</code> checks concrete Option/Result
+        propagation and <code>map_projection_snapshots.srp</code> checks ordered
+        map keys/values and retained immutable snapshots. Their stdout is
+        byte-for-byte checked. This does not test Rust cache eviction APIs.
       </p>
       <ul>
         {exampleCompatibility.publishedOnlyFixtureNames.map(name => (
@@ -135,6 +143,17 @@ export default function CompatibilityPage() {
         It runs only with the pinned <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
         source in Linux CI. This does not certify all project CLI combinations,
         platforms or third-party code.
+      </p>
+      <h2 id="alpha13-rust-apis">Alpha.13 Rust embedding API boundaries</h2>
+      <p>
+        In <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>,
+        syntax and semantic cache retention controls, revision eviction and
+        workspace-generation-aware static analysis are opt-in Rust features.
+        Existing CLI commands and project manifests retain their behavior.
+        The website tests shown above run representative source programs and
+        project commands. They do <strong>not</strong> certify those Rust
+        embedding APIs, asynchronous host integration or all cache budgets.
+        See the <a href="/news/alpha13-editor-caches/">alpha.13 overview</a>.
       </p>
       <h2 id="limits">What these results do not prove</h2>
       <ul>

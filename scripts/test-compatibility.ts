@@ -16,7 +16,7 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
     assert(program.length > 0, name + " is blank");
     assert(expectedOutput.length > 0, name + " has no expected output");
   }
-  assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["bigint_arithmetic.srp", "bigint_exact.srp", "conditional_unicode.srp", "fixed_arrays.srp", "nucleus_selection.srp", "pearson_correlation.srp", "rms.srp", "temperature_softmax.srp", "topk_scores.srp"]);
+  assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["bigint_arithmetic.srp", "bigint_exact.srp", "conditional_unicode.srp", "fixed_arrays.srp", "map_projection_snapshots.srp", "nucleus_selection.srp", "pearson_correlation.srp", "rms.srp", "temperature_softmax.srp", "topk_scores.srp", "typed_propagation.srp"]);
   const publishedRoot = resolve("src/examples/published");
   assert.deepEqual((await readdir(publishedRoot)).filter(name => name.endsWith(".srp")).sort(),
     [...exampleCompatibility.publishedOnlyFixtureNames].sort());
@@ -24,6 +24,12 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
     assert((await readFile(join(publishedRoot, name), "utf8")).trim().length > 0, name);
     assert((await readFile(join(publishedRoot, name.replace(".srp", ".stdout")), "utf8")).length > 0, name);
   }
+  assert.match(await readFile(join(publishedRoot, "typed_propagation.srp"), "utf8"), /validate_title\(value\)\?/);
+  assert.match(await readFile(join(publishedRoot, "map_projection_snapshots.srp"), "utf8"), /map_keys\(reduced\)/);
+  assert.equal(await readFile(join(publishedRoot, "typed_propagation.stdout"), "utf8"),
+    "Saved Review PR\nRejected title empty\nRejected title missing\nNo title\ntrue\n");
+  assert.equal(await readFile(join(publishedRoot, "map_projection_snapshots.stdout"), "utf8"),
+    '[list: 1, 2, 3]\n[list: "one", "two", "three"]\n[list: 2, 3]\n[list: "TWO", "three"]\n3 2\n');
   assert.match(await readFile(join(publishedRoot, "rms.srp"), "utf8"), /rms\(/);
   assert.match(await readFile(join(publishedRoot, "bigint_arithmetic.srp"), "utf8"), /bigint\(/);
   assert.equal((await readFile(join(publishedRoot, "bigint_arithmetic.stdout"), "utf8")).split("\n")[0], "1000000000000000000000000000000");

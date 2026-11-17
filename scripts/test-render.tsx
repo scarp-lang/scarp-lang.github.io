@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 33);
+  assert.equal(pages.length, 34);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -544,4 +544,28 @@ test('published alpha.10 release article, archive metadata and discovery are lin
   const downloads = findPage('/downloads/');
   assert(downloads);
   assert(renderPage(downloads, developmentAssets).includes('alpha10-interactive-arrays'));
+});
+
+
+test('alpha.13 announcement, release evidence, compiler limits and discoverability', async () => {
+  const path = '/news/alpha13-editor-caches/';
+  const announcement = news.find(item => item.href === path);
+  assert(announcement);
+  assert.equal(announcement.date, '2026-11-17');
+  assert.equal(news[0]?.href, path);
+  const page = findPage(path);
+  assert(page);
+  const html = renderPage(page, developmentAssets);
+  for (const token of [
+    'v0.0.6-alpha.13', 'e755fda37cdaeed29434e848cb5dd41f2f2e7eb2',
+    'workspace generation', 'semantic caches', 'Option', 'Result',
+    'interpreter', 'scarp verify examples/projects/task-board',
+    'scarp launch examples/projects/task-board', 'scarp test examples/projects/task-board',
+    '/downloads/', '/compatibility/',
+  ]) assert(html.includes(token), 'alpha.13 article missing ' + token);
+  assert(searchEntries.some(entry => entry.path === path));
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io' + path + '</link>'));
+  const sitemap = await renderRequest('/sitemap.xml', developmentAssets);
+  assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + path + '</loc>'));
 });
