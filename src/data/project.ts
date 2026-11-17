@@ -49,6 +49,7 @@ export const socials = [
 ] as const;
 
 export const news = [
+  { date: '2026-11-17', category: 'Language release', title: 'Scarp alpha.13: cache control and editor snapshot safety', description: 'Option/Result propagation reuse, adjustable Rust compiler caches, revision eviction and workspace-aware static analysis.', href: '/news/alpha13-editor-caches/' },
   { date: '2026-11-16', category: 'Language release', title: 'Scarp alpha.12: typed records, variants and collections', description: 'Typed records and variants, exhaustive matching, option/result, immutable lists/maps and a multi-file task-board example.', href: '/news/alpha12-records-collections/' },
   { date: '2026-11-15', category: 'Language release', title: 'Scarp alpha.11: exact decimal arithmetic', description: 'Experimental exact base-10 decimal values, controlled rounding and explicit input/conversions, with interpreter-only execution.', href: '/news/alpha11-exact-decimal/' },
   { date: '2026-11-14', category: 'Language release', title: 'Scarp alpha.10: interactive input, fixed arrays and exact BigInt tools', description: 'New opt-in terminal prompts, UTF-8 input files, stdout/stderr test fixtures, immutable arrays and bounded number-theory operations.', href: '/news/alpha10-interactive-arrays/' },
