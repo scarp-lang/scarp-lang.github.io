@@ -162,7 +162,7 @@ Downloads and Releases use the manually reviewed
 published 17 November 2026 from exact compiler source
 `e755fda37cdaeed29434e848cb5dd41f2f2e7eb2`, with pinned Windows x64,
 Linux x64 GNU and Apple Silicon macOS SHA-256 archive digests.
-[Release coverage](/news/alpha13-editor-caches/) describes optimized
+[Release coverage](https://scarp-lang.github.io/news/alpha13-editor-caches/) describes optimized
 Option/Result forwarding, Rust compiler cache retention and workspace-aware
 editor snapshots; these are **not** an integrated LSP, new Scarp source syntax
 or a native executable compiler CLI. Earlier articles remain independent,
