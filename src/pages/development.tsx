@@ -1,6 +1,7 @@
 import Base from "../layouts/Base.tsx";
 import { project, sourceUrl, verification } from "../data/project";
 import { publishedCompiler } from "../data/releases.ts";
+import { formatNewsDate } from "../lib/date.ts";
 
 export default function DevelopmentPage() {
   return (
@@ -17,9 +18,11 @@ export default function DevelopmentPage() {
         </h1>
         <p className="lead">
           An experimental language, developed in public. This page documents
-          the website's verified examples as of 1 November 2026;{" "}
+          the website's historical example baseline as of{" "}
+          <time dateTime={project.reviewed}>{formatNewsDate(project.reviewed)}</time>;{" "}
           <a href={publishedCompiler.release}>{publishedCompiler.tag}</a> is the
-          newer published prerelease reviewed 9 November 2026.
+          newest reviewed public prerelease as of{" "}
+          <time dateTime={publishedCompiler.reviewed}>{formatNewsDate(publishedCompiler.reviewed)}</time>.
         </p>
       </section>
       <section className="wrap status-summary">
@@ -41,24 +44,26 @@ export default function DevelopmentPage() {
         <h2>What you can use</h2>
         <p>
           The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>{" "}
-          release adds <code>top_p</code> and <code>top_p_values</code> for
-          deterministic nucleus selection plus <code>pearson_correlation</code>
-          for centered vector statistics. Earlier <code>topk</code>,
-          <code>topk_values</code>, <code>softmax_temp</code>,
-          <code>logsoftmax_temp</code>, read-only symbol inspection and
-          finite-vector <code>rms</code> remain. Earlier offline project commands{" "}
-          <code>create</code>, directory <code>verify</code> and{" "}
-          <code>launch</code> remain available. See{" "}
-          <a href="/releases/">release notes</a> and{" "}
-          <a href="/downloads/">current packages</a>. The information below
-          describes the separately tested older example baseline.
+          refines typed Option/Result propagation and adds opt-in Rust cache
+          retention, selective revision eviction and workspace-generation-aware
+          static analysis snapshots for editor hosts. The previous alpha.12
+          brought records, tagged variants, nested patterns, immutable lists
+          and ordered maps; alpha.11 brought exact decimals and alpha.10
+          interactive input and fixed arrays. Earlier numerical ranking,
+          read-only symbol inspection, declarative projects and test runner
+          features remain. See <a href="/news/alpha13-editor-caches/">the alpha.13 overview</a>,
+          {" "}<a href="/releases/">release comparison</a> and
+          {" "}<a href="/downloads/">current packages</a>.
+          Language execution is still interpreter-backed, and the Rust
+          integration APIs are not a bundled LSP or new CLI flags.
         </p>
         <p>
           The published interpreter includes scalar values, typed functions and
           contracts, control flow, numerical vectors and tiles, relative source
           modules, explicit output streams, and execution budgets. Windows x64,
-          Linux x64 GNU, and macOS ARM64 packages are published for this
-          baseline.
+          Linux x64 GNU, and macOS ARM64 packages are published for the
+          current prerelease. Homepage examples separately retain their
+          historical verified baseline.
         </p>
         <h2>What “alpha” means</h2>
         <p>
@@ -97,8 +102,10 @@ export default function DevelopmentPage() {
         <p>
           Read-only symbol navigation and constant-expression work have
           progressed beyond the original alpha.1 baseline. Further editor
-          integration, language conformance and user-defined generics require
-          separate implementation and tests.{" "}
+          integration, an integrated language server, language conformance
+          and user-defined generics require separate implementation and tests.
+          Alpha.13 provides workspace-aware editor snapshot primitives, not an
+          end-to-end editor server.{" "}
           <a href="/roadmap/">Explore the longer path toward v1.0.0</a>.
         </p>
         <h2 id="evidence">Evidence and freshness</h2>
