@@ -63,7 +63,8 @@ export default function MigrationPage() {
         Alpha.2 through alpha.5 entries are based on their published source
         and release history, <strong>not</strong> this website's current
         executable fixture tests. The alpha.4 fixtures passed in an earlier
-        website CI run; the current suite tests the baseline and alpha.8.
+        website CI run; the current suite tests the baseline and the
+        separately pinned published alpha.13 compiler.
         The distinct <a href="/compatibility/#project-workflow">alpha.8 project
         and test-runner integration check</a> covers a fresh project and
         separate legacy-CLI compatibility beyond the three homepage files.
@@ -215,6 +216,17 @@ export default function MigrationPage() {
         general native-code compiler CLI, or stable ABI in alpha.8.
       </p>
 
+      <h2 id="alpha13-embedding">Alpha.13 embedding compatibility</h2>
+      <p>
+        <a href="/news/alpha13-editor-caches/">Alpha.13</a> keeps existing
+        CLI command spellings and Scarp project manifests. It adds opt-in
+        Rust compiler cache retention and revision eviction plus
+        workspace-generation-aware static analysis snapshots. Rust editor
+        hosts must track both document revisions and workspace generations
+        to avoid publishing stale navigation or diagnostics after edits.
+        There are no new Scarp cache CLI flags, bundled LSP or stable
+        embedding ABI. Re-test any Rust host integration separately.
+      </p>
       <h2 id="alpha6-navigation">Published alpha.6 symbol navigation</h2>
       <p>
         Alpha.6 retains opt-in static source indexing; neither
