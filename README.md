@@ -79,8 +79,10 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
 - `npm run sync:compiler-pins`: update only the two Scarp checkout SHAs in both workflows after a manually reviewed release change.
 - `npm run check:site`: generated links, fragments, assets, metadata, sitemap,
   RSS, release snapshot, and six early-theme scenarios.
-- `SCARP_BIN=/path/to/scarp npm run test:examples`: exact-output checks against
-  the published interpreter used by the website baseline.
+- `SCARP_BIN=/path/to/baseline/scarp npm run test:examples`: exact-output checks
+  for the historical baseline. For the current published prerelease, run
+  `SCARP_BIN=/path/to/alpha13/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
+  after building the separately pinned published source.
 
 ## Real-browser mobile and accessibility QA
 
@@ -138,24 +140,35 @@ The hub includes features, development status, roadmap, releases/downloads,
 learning paths, AI direction, community, support, contribution guidance, FAQ,
 project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
 a source-verified compatibility guide at `/compatibility/`, an evidence-linked
-published CLI migration guide at `/migration/` (alpha.1–alpha.5), and a local,
+published CLI migration guide at `/migration/` (covering legacy commands through the
+reviewed alpha.13 release), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering, curated Hindi search terms for English-language website
 pages, clear and Escape interactions, concise screen-reader result announcements,
 URL restoration during browser navigation, and the `/` or Ctrl/⌘+K shortcut
 (outside editable controls). It is a **reviewed snapshot**, not a live compiler feed.
-The featured website programs keep their older verified compiler baseline,
-and the same three homepage fixtures also run under the pinned alpha.6 compiler
-with byte-exact expected output. Published-only RMS, Top-K and
-temperature-softmax fixtures, plus schema-v1 symbol/reference inspection
-outputs, are checked only against the latest published compiler. The two compiler sources and distinct CLI
-commands are tested in both CI and the Pages workflow. The compatibility page
-does **not** promise that all user programs work across versions. The Downloads and Releases pages show the reviewed published
-**v0.0.6-alpha.4** prerelease, released on 8 November 2026, with exact
-GitHub archive digests. The earlier alpha.6.2 announcement remains an
-independently pinned historical article. The ecosystem page independently records project
-versions; these are reviewed snapshots, not a live GitHub feed.
+The featured website programs retain their historical verified compiler baseline.
+The three homepage fixtures also run with the exact pinned published
+**v0.0.6-alpha.13** compiler, with byte-identical stdout. Additional
+published-only fixtures exercise numerical kernels, typed propagation,
+ordered map projections and schema-v1 symbol/reference inspection. The
+two compiler revisions and version-specific CLI commands are checked in
+both CI and the GitHub Pages workflow. These tests do not claim universal
+language or platform compatibility.
+
+Downloads and Releases use the manually reviewed
+[Scarp v0.0.6-alpha.13 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.13),
+published 17 November 2026 from exact compiler source
+`e755fda37cdaeed29434e848cb5dd41f2f2e7eb2`, with pinned Windows x64,
+Linux x64 GNU and Apple Silicon macOS SHA-256 archive digests.
+[Release coverage](/news/alpha13-editor-caches/) describes optimized
+Option/Result forwarding, Rust compiler cache retention and workspace-aware
+editor snapshots; these are **not** an integrated LSP, new Scarp source syntax
+or a native executable compiler CLI. Earlier articles remain independent,
+immutable historical records, while the ecosystem directory has its own
+review date. This is a reviewed snapshot, not a live GitHub release feed.
+
 Baseline: **v0.0.5-alpha.1**, source
 `afe8b5380c9d6c4774162e51c6c9bc8b90901671`, reviewed 1 November 2026.
 
