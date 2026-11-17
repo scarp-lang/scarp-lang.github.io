@@ -1,6 +1,6 @@
 # Contributing
 
-Use Node.js 22.12+ and npm. Run `npm ci`, develop with `npm run dev`, and validate
+Use Node.js 26 or newer and npm. Run `npm ci`, develop with `npm run dev`, and validate
 with `npm run check`. `npm run preview` serves the production build.
 
 ## TypeScript source
