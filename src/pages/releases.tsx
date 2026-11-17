@@ -31,31 +31,37 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Typed records, variants and immutable collections.</h3>
+          <h3>Compiler cache controls and safer editor snapshots.</h3>
           <p>
-            Scarp {publishedCompiler.tag} introduces checked source records,
-            tagged variants, nested destructuring, and exhaustive matching.
-            Concrete <code>option&lt;T&gt;</code> and
-            <code>result&lt;T, E&gt;</code> types support error propagation
-            via <code>bind value = expression?;</code>.
+            Scarp {publishedCompiler.tag} refines typed Option/Result propagation:
+            an existing immutable error payload can be reused, and forwarding
+            an empty option needs no payload allocation.
           </p>
           <p>
-            Immutable typed lists and deterministic maps provide ordered
-            key/value projections with bounded allocation and work budgets.
-            A multi-file task-board project demonstrates tested transitions,
-            typed actions and deterministic interpreter output.
+            Opt-in Rust embedding APIs now support changing syntax and semantic
+            cache retention limits, plus source-revision eviction across a
+            range or threshold. Rust editor hosts can tie static analysis to
+            a workspace generation to reject stale navigation and diagnostics
+            after an edit or import rebinding.
           </p>
           <p>
-            Alpha.11 introduced exact <code>decimal</code> arithmetic;
-            alpha.10 introduced opt-in interactive input, stream assertions
-            and fixed-size arrays. Aggregate execution remains interpreter-only.
-            No general native compile CLI, user-defined generics, host-side
-            data engine, integrated LSP or stable ABI are included.
+            Alpha.12 introduced interpreter-backed records, variants,
+            exhaustive matching, immutable lists/maps and a multi-file
+            task-board demonstration. Alpha.11 added exact decimals, while
+            alpha.10 added interactive input, test output fixtures and fixed
+            arrays. Existing CLI commands and project manifests remain
+            compatible in alpha.13.
           </p>
           <p>
-            Read the <a href="/news/alpha12-records-collections/">alpha.12 release overview</a>,
+            The new cache and editor facilities are opt-in Rust APIs:
+            no bundled LSP, general native <code>scarp compile</code>
+            command, stable Rust ABI or general-purpose user generics are
+            promised. Source programs continue to run in the interpreter.
+          </p>
+          <p>
+            Read the <a href="/news/alpha13-editor-caches/">alpha.13 release overview</a>,
+            {" "}<a href="/news/alpha12-records-collections/">alpha.12 aggregate overview</a>,
             {" "}<a href="/news/alpha11-exact-decimal/">alpha.11 decimal overview</a>,
-            {" "}<a href="/news/alpha10-interactive-arrays/">alpha.10 input and arrays</a>,
             or the <a href={publishedCompiler.release}>authoritative release notes</a>.
           </p>
           <p>
@@ -114,7 +120,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version command differences through alpha.10,
+          version-by-version CLI changes and alpha.13 embedding compatibility,
           including project workflows and the new read-only symbol index.
         </p>
         <p>
