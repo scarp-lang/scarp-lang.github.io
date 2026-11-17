@@ -23,8 +23,9 @@ export default function ArticlePage() {
         <a href="/releases/">v0.0.6-alpha.1</a> adds opt-in source
         symbol/reference inspection and a finite-vector <code>rms</code>
         builtin. These capabilities remain experimental; there is no
-        integrated LSP, incremental editor cache, GPU backend or native
-        compilation command.
+        integrated LSP, GPU backend or native compilation command in that
+        prerelease. Later alpha.13 adds opt-in cache and workspace-snapshot
+        primitives for Rust editor hosts, not an integrated language server.
       </p>
       <h2 id="published-alpha63">Published alpha.6.3 · Deterministic numerical primitives</h2>
       <p>
@@ -44,11 +45,23 @@ export default function ArticlePage() {
         provide interactive prompts, general maps and arrays, BigInt or
         native execution of input/tuple operations.
       </p>
+      <h2 id="published-alpha13">Published alpha.13 · Compiler and editor infrastructure</h2>
+      <p>
+        <a href="/news/alpha12-records-collections/">Alpha.12</a> added
+        interpreter-backed records, variants, exhaustive matching, typed
+        Option/Result and immutable list/map operations. The current
+        <a href="/news/alpha13-editor-caches/"> alpha.13</a> refines
+        propagation and expands opt-in Rust cache retention, revision
+        eviction and workspace-generation-aware analysis snapshots.
+        These are implementation building blocks, not a stable ABI, bundled
+        LSP or a general native executable compiler.
+      </p>
       <h2 id="next-priorities">Next priorities · Reliable developer tooling</h2>
       <p>
         Source indexing offers a foundation for future editor integrations,
-        but an actual language server, stable cross-edit identity and rename
-        operations need separate implementation and testing. There is
+        and alpha.13 adds generation-aware snapshots to reject stale host
+        results, but an actual language server, comprehensive editor behavior
+        and rename operations need separate implementation and testing. There is
         no guaranteed timetable.
       </p>
       <h2 id={"planned--stronger-language-and-library-foundations"}>
