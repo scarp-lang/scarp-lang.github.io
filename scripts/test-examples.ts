@@ -9,7 +9,7 @@ import { exampleCompatibility } from "../src/data/compatibility.ts";
 /**
  * Compile the official interpreter outside this script. Every website .srp fixture
  * must produce byte-identical stdout under its selected, exact source revision.
- * Historical alpha.1 uses run/check; published alpha.6+ uses exec/static-only verify.
+ * Historical alpha.1 uses run/check; reviewed published versions use exec/static-only verify.
  */
 const target = process.env.SCARP_EXAMPLE_TARGET ?? "baseline";
 assert(["baseline", "published"].includes(target), "SCARP_EXAMPLE_TARGET must be baseline or published");
@@ -48,11 +48,11 @@ for (const file of sources) {
   console.log(`PASS ${file}: ${executeCommand} stdout + ${validateCommand} under ${expectedVersion}`);
 }
 if (target === "published") {
-  const alpha6Directory = resolve("src/examples/published");
-  const alpha6Sources = (await readdir(alpha6Directory)).filter(name => name.endsWith(".srp")).sort();
-  assert.deepEqual(alpha6Sources, [...exampleCompatibility.publishedOnlyFixtureNames].sort(), "Review new published-only fixtures before adding them");
-  for (const file of alpha6Sources) {
-    const source = join(alpha6Directory, file);
+  const publishedDirectory = resolve("src/examples/published");
+  const publishedSources = (await readdir(publishedDirectory)).filter(name => name.endsWith(".srp")).sort();
+  assert.deepEqual(publishedSources, [...exampleCompatibility.publishedOnlyFixtureNames].sort(), "Review new published-only fixtures before adding them");
+  for (const file of publishedSources) {
+    const source = join(publishedDirectory, file);
     const expected = await readFile(source.replace(/\.srp$/, ".stdout"), "utf8");
     const executed = run(["exec", source]);
     assert.equal(executed.error, undefined, String(executed.error));
@@ -70,7 +70,7 @@ if (target === "published") {
       assert.equal(result.schema_version, 1, `${file}: unsupported inspection schema`);
       assert.equal(result.kind, "scarp." + kind, `${file}: inspection kind mismatch`);
     }
-    console.log(`PASS ${file}: alpha.6 exec, static verify and schema-v1 symbol navigation`);
+    console.log(`PASS ${file}: published exec, static verify and schema-v1 symbol navigation`);
   }
 }
 console.log(`Verified ${sources.length} real website examples using Scarp ${expectedVersion} (${target}).`);
