@@ -154,21 +154,34 @@ export default function DownloadsPage() {
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
         <p>
-          Alpha.12 adds typed records, tagged variants, nested destructuring,
+          Alpha.13 refines typed Option/Result error propagation without
+          changing the source spelling. Opt-in Rust embedding APIs now allow
+          adjustable syntax and semantic cache retention, revision/range
+          eviction and workspace-generation-aware static analysis. These
+          are not Scarp CLI cache flags or an integrated language server.
+        </p>
+        <p>
+          Scarp programs continue to run through the interpreter. Source
+          builds support Rust 1.74 or newer; native release packages target
+          Windows x64, Linux x64 GNU and Apple Silicon macOS.
+          Read the <a href="/news/alpha13-editor-caches/">alpha.13 feature overview</a>
+          {" "}and the <a href={publishedCompiler.release}>official release notes</a>.
+        </p>
+        <h2>Introduced in alpha.12</h2>
+        <p>
+          Alpha.12 added typed records, tagged variants, nested destructuring,
           exhaustively checked matches, concrete <code>option&lt;T&gt;</code>
           and <code>result&lt;T, E&gt;</code> values, plus immutable
-          lists and deterministic maps. A multi-file task-board example ships
-          with the tagged compiler source. These aggregate operations are
-          interpreter features; unsupported native programs are rejected.
+          lists and deterministic maps. These aggregate operations remain
+          interpreter-backed.
         </p>
         <CodeBlock
-          filename="Terminal · alpha.12 task-board (from the tagged source tree)"
+          filename="Terminal · alpha.12+ task-board (from the tagged source tree)"
           code={"scarp verify examples/projects/task-board\nscarp launch examples/projects/task-board\nscarp test examples/projects/task-board"}
         />
         <p>
-          Read the <a href="/news/alpha12-records-collections/">alpha.12 feature overview</a>,
-          {" "}the <a href={publishedCompiler.release}>official release notes</a>
-          {" "}and the <a href={project.repo + "/tree/" + publishedCompiler.sourceCommit + "/examples/projects/task-board"}>tagged task-board source</a>.
+          Read the <a href="/news/alpha12-records-collections/">alpha.12 feature overview</a>
+          {" "}and the <a href={project.repo + "/tree/" + publishedCompiler.sourceCommit + "/examples/projects/task-board"}>alpha.13-tagged task-board source</a>.
         </p>
         <h2>Introduced in alpha.11</h2>
         <p>
