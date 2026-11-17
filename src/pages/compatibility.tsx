@@ -86,6 +86,14 @@ export default function CompatibilityPage() {
         JSON outputs are checked for schema version 1 and declared kinds.
         These tests do not certify the whole symbol-index API or numerical library.
       </p>
+      <p>
+        Alpha.13 expands this interpreter coverage with two
+        <a href={publishedCompiler.release}> release-tagged examples</a>:
+        <code> typed_propagation.srp</code> checks concrete Option/Result
+        propagation and <code>map_projection_snapshots.srp</code> checks ordered
+        map keys/values and retained immutable snapshots. Their stdout is
+        byte-for-byte checked. This does not test Rust cache eviction APIs.
+      </p>
       <ul>
         {exampleCompatibility.publishedOnlyFixtureNames.map(name => (
           <li key={name}>
