@@ -90,9 +90,12 @@ export default function FeaturesPage() {
         </p>
         <h2>Know the boundaries</h2>
         <p>
-          The current <a href="/news/alpha13-editor-caches/">alpha.13 release</a>
-          improves typed Option/Result propagation and opt-in Rust cache and
-          editor snapshot APIs. <a href="/news/alpha12-records-collections/">Alpha.12</a>
+          The current <a href="/news/alpha14-patterns-native/">alpha.14 release</a>
+          refines nested pattern diagnostics, live Rust editor cache limits and
+          a restricted checked integer ELF64 object API. Earlier
+          <a href="/news/alpha13-editor-caches/"> alpha.13</a> improved typed
+          Option/Result propagation and editor snapshot safety.
+          <a href="/news/alpha12-records-collections/"> Alpha.12</a>
           added records, variants, option/result and immutable lists/maps
           in the interpreter; <a href="/news/alpha11-exact-decimal/">alpha.11</a>
           introduced exact decimal arithmetic. A general native compilation
@@ -100,7 +103,7 @@ export default function FeaturesPage() {
           engine, GPU execution and automatic differentiation remain outside
           those releases. Execution budgets do not measure total process memory
           or form a security sandbox. The source snippets above use
-          the pinned older example baseline; for alpha.13 use the
+          the pinned older example baseline; for alpha.14 use the
           <a href="/compatibility/">compiler-backed compatibility coverage</a>.
           The Rust cache APIs are not a new Scarp source syntax or CLI.
         </p>

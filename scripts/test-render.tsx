@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 34);
+  assert.equal(pages.length, 35);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -552,7 +552,7 @@ test('alpha.13 announcement, release evidence, compiler limits and discoverabili
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-17');
-  assert.equal(news[0]?.href, path);
+  assert(news.some(item => item.href === path));
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);
@@ -563,6 +563,28 @@ test('alpha.13 announcement, release evidence, compiler limits and discoverabili
     'scarp launch examples/projects/task-board', 'scarp test examples/projects/task-board',
     '/downloads/', '/compatibility/',
   ]) assert(html.includes(token), 'alpha.13 article missing ' + token);
+  assert(searchEntries.some(entry => entry.path === path));
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io' + path + '</link>'));
+  const sitemap = await renderRequest('/sitemap.xml', developmentAssets);
+  assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + path + '</loc>'));
+});
+
+test('alpha.14 announcement, tagged source and search/feed discovery', async () => {
+  const path = '/news/alpha14-patterns-native/';
+  const announcement = news.find(item => item.href === path);
+  assert(announcement);
+  assert.equal(announcement.date, '2026-11-18');
+  assert.equal(news[0]?.href, path);
+  const page = findPage(path);
+  assert(page);
+  const html = renderPage(page, developmentAssets);
+  for (const token of [
+    'v0.0.6-alpha.14', '43627b74af5fccccc5e233e98207413983ebafc1',
+    'EditorCompilationCache::set_limits', 'emit_elf64_checked_integer_kernel',
+    'nested tuple', 'expected closing delimiter', 'docs/native-elf64.md',
+    'interpreter', '/compatibility/', '/downloads/',
+  ]) assert(html.includes(token), 'alpha.14 article missing ' + token);
   assert(searchEntries.some(entry => entry.path === path));
   const feed = await renderRequest('/feed.xml', developmentAssets);
   assert(feed?.body.includes('<link>https://scarp-lang.github.io' + path + '</link>'));

@@ -144,9 +144,20 @@ export default function CompatibilityPage() {
         source in Linux CI. This does not certify all project CLI combinations,
         platforms or third-party code.
       </p>
+      <h2 id="alpha14-rust-apis">Alpha.14 Rust embedding API boundaries</h2>
+      <p>
+        The pinned <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
+        preserves existing CLI behavior and adds nested destructuring diagnostic
+        improvements, live editor cache quota updates and a restricted checked
+        integer ELF64 object emitter for Rust hosts. The fixture suite on this
+        page tests Scarp source execution and static verification in Linux CI,
+        <strong> not</strong> the Rust embedding emitter, cache eviction,
+        parser error span contracts or Windows/macOS release binaries.
+        Review <a href="/news/alpha14-patterns-native/">the alpha.14 limits</a>.
+      </p>
       <h2 id="alpha13-rust-apis">Alpha.13 Rust embedding API boundaries</h2>
       <p>
-        In <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>,
+        In <a href="/news/alpha13-editor-caches/">alpha.13</a>,
         syntax and semantic cache retention controls, revision eviction and
         workspace-generation-aware static analysis are opt-in Rust features.
         Existing CLI commands and project manifests retain their behavior.

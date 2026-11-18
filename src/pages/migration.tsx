@@ -64,7 +64,7 @@ export default function MigrationPage() {
         and release history, <strong>not</strong> this website's current
         executable fixture tests. The alpha.4 fixtures passed in an earlier
         website CI run; the current suite tests the baseline and the
-        separately pinned published alpha.13 compiler.
+        separately pinned published alpha.14 compiler.
         The distinct <a href="/compatibility/#project-workflow">alpha.8 project
         and test-runner integration check</a> covers a fresh project and
         separate legacy-CLI compatibility beyond the three homepage files.
@@ -216,6 +216,18 @@ export default function MigrationPage() {
         general native-code compiler CLI, or stable ABI in alpha.8.
       </p>
 
+      <h2 id="alpha14-embedding">Alpha.14 embedding compatibility</h2>
+      <p>
+        <a href="/news/alpha14-patterns-native/">Alpha.14</a> preserves the
+        existing Scarp source syntax, CLI command spelling and JSON schemas,
+        while improving diagnostics for nested destructuring patterns.
+        Rust hosts can change five live editor cache quotas with
+        <code> EditorCompilationCache::set_limits</code>; previous snapshots
+        retain their data. The restricted checked-integer Linux x86-64 ELF64
+        object emitter is a Rust embedding API, not a new
+        <code> scarp compile</code> command. Re-test host integrations for
+        cache eviction, diagnostics, status and source span contracts.
+      </p>
       <h2 id="alpha13-embedding">Alpha.13 embedding compatibility</h2>
       <p>
         <a href="/news/alpha13-editor-caches/">Alpha.13</a> keeps existing
