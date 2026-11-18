@@ -45,21 +45,23 @@ export default function ArticlePage() {
         provide interactive prompts, general maps and arrays, BigInt or
         native execution of input/tuple operations.
       </p>
-      <h2 id="published-alpha13">Published alpha.13 · Compiler and editor infrastructure</h2>
+      <h2 id="published-alpha14">Published alpha.14 · Pattern diagnostics and Rust embedding</h2>
       <p>
         <a href="/news/alpha12-records-collections/">Alpha.12</a> added
         interpreter-backed records, variants, exhaustive matching, typed
-        Option/Result and immutable list/map operations. The current
-        <a href="/news/alpha13-editor-caches/"> alpha.13</a> refines
-        propagation and expands opt-in Rust cache retention, revision
-        eviction and workspace-generation-aware analysis snapshots.
-        These are implementation building blocks, not a stable ABI, bundled
-        LSP or a general native executable compiler.
+        Option/Result and immutable list/map operations.
+        <a href="/news/alpha13-editor-caches/"> Alpha.13</a> refined
+        propagation and added cache eviction and workspace-safe snapshots.
+        The current <a href="/news/alpha14-patterns-native/">alpha.14 release</a>
+        improves nested destructuring diagnostics, live editor cache resizing
+        and a restricted checked-integer ELF64 emitter for Rust hosts.
+        These remain implementation building blocks, not a stable ABI, bundled
+        LSP or a general native compilation command.
       </p>
       <h2 id="next-priorities">Next priorities · Reliable developer tooling</h2>
       <p>
         Source indexing offers a foundation for future editor integrations,
-        and alpha.13 adds generation-aware snapshots to reject stale host
+        and alpha.13 introduced generation-aware snapshots to reject stale host
         results, but an actual language server, comprehensive editor behavior
         and rename operations need separate implementation and testing. There is
         no guaranteed timetable.

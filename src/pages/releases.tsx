@@ -31,37 +31,38 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Compiler cache controls and safer editor snapshots.</h3>
+          <h3>More precise patterns and checked native integer kernels.</h3>
           <p>
-            Scarp {publishedCompiler.tag} refines typed Option/Result propagation:
-            an existing immutable error payload can be reused, and forwarding
-            an empty option needs no payload allocation.
+            Scarp {publishedCompiler.tag} improves error locations for nested
+            tuple, fixed-array and record destructuring patterns, including
+            missing or duplicated commas and closing delimiters. Additional
+            source-level regression tests cover immutable pattern bindings,
+            nominal payloads and deterministic map projections.
           </p>
           <p>
-            Opt-in Rust embedding APIs now support changing syntax and semantic
-            cache retention limits, plus source-revision eviction across a
-            range or threshold. Rust editor hosts can tie static analysis to
-            a workspace generation to reject stale navigation and diagnostics
-            after an edit or import rebinding.
+            For Rust embedding hosts, <code>EditorCompilationCache::set_limits</code>
+            updates five live retention quotas. Previously issued editor
+            snapshots and compiled programs retain their original data and
+            revisions even when the underlying cache evicts entries.
           </p>
           <p>
-            Alpha.12 introduced interpreter-backed records, variants,
-            exhaustive matching, immutable lists/maps and a multi-file
-            task-board demonstration. Alpha.11 added exact decimals, while
-            alpha.10 added interactive input, test output fixtures and fixed
-            arrays. Existing CLI commands and project manifests remain
-            compatible in alpha.13.
+            The new experimental <code>emit_elf64_checked_integer_kernel</code>
+            Rust API supports checked integer arithmetic in a restricted
+            linear-binding subset for Linux x86-64 ELF64 objects, including
+            status and source-operator span reporting on failure. It is not a
+            general native compilation CLI, and packaged programs still run
+            through the interpreter.
           </p>
           <p>
-            The new cache and editor facilities are opt-in Rust APIs:
-            no bundled LSP, general native <code>scarp compile</code>
-            command, stable Rust ABI or general-purpose user generics are
-            promised. Source programs continue to run in the interpreter.
+            Alpha.13 previously improved Option/Result propagation and editor
+            snapshot safety; alpha.12 added typed aggregates and matching.
+            Existing Scarp source syntax, CLI commands and JSON schemas
+            remain compatible in alpha.14, but prerelease APIs are not stable.
           </p>
           <p>
-            Read the <a href="/news/alpha13-editor-caches/">alpha.13 release overview</a>,
-            {" "}<a href="/news/alpha12-records-collections/">alpha.12 aggregate overview</a>,
-            {" "}<a href="/news/alpha11-exact-decimal/">alpha.11 decimal overview</a>,
+            Read the <a href="/news/alpha14-patterns-native/">alpha.14 release overview</a>,
+            {" "}<a href="/news/alpha13-editor-caches/">alpha.13 editor overview</a>,
+            {" "}<a href="/news/alpha12-records-collections/">alpha.12 aggregates</a>,
             or the <a href={publishedCompiler.release}>authoritative release notes</a>.
           </p>
           <p>
@@ -120,7 +121,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version CLI changes and alpha.13 embedding compatibility,
+          version-by-version CLI changes and alpha.14 embedding compatibility,
           including project workflows and the new read-only symbol index.
         </p>
         <p>

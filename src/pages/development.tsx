@@ -44,14 +44,14 @@ export default function DevelopmentPage() {
         <h2>What you can use</h2>
         <p>
           The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>{" "}
-          refines typed Option/Result propagation and adds opt-in Rust cache
-          retention, selective revision eviction and workspace-generation-aware
-          static analysis snapshots for editor hosts. The previous alpha.12
-          brought records, tagged variants, nested patterns, immutable lists
-          and ordered maps; alpha.11 brought exact decimals and alpha.10
-          interactive input and fixed arrays. Earlier numerical ranking,
-          read-only symbol inspection, declarative projects and test runner
-          features remain. See <a href="/news/alpha13-editor-caches/">the alpha.13 overview</a>,
+          improves nested tuple, array and record pattern diagnostics, allows
+          Rust editor hosts to resize cache quotas, and adds a restricted checked
+          integer ELF64 object emitter. Alpha.13 previously improved typed
+          Option/Result propagation and workspace-safe snapshots; alpha.12
+          introduced records, variants, immutable lists/maps and matching;
+          alpha.11 exact decimals and alpha.10 interactive input. Numerical
+          ranking, symbol inspection and project tests remain.
+          See <a href="/news/alpha14-patterns-native/">the alpha.14 overview</a>,
           {" "}<a href="/releases/">release comparison</a> and
           {" "}<a href="/downloads/">current packages</a>.
           Language execution is still interpreter-backed, and the Rust
