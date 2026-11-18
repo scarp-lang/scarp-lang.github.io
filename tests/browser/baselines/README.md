@@ -1,41 +1,44 @@
 # Scarp website visual regression references
 
-## Reviewed alpha.10 release snapshots — 14 November 2026
+## Reviewed alpha.14 release snapshots — 18 November 2026
 
-The verified `v0.0.6-alpha.10` compiler release adds a homepage news card,
-a full release article, and a searchable directory entry. These changes
-increase homepage and search-directory full-page capture heights; the support
-page is unchanged.
+The source-verified `v0.0.6-alpha.14` compiler release adds a homepage news
+card, an independently routed release article, and a searchable directory entry.
+The homepage and search-directory full-page captures are therefore taller than
+the previous alpha.13 baselines; the support page's image remains unchanged.
 
-All four full-page light/dark captures were inspected for visible content,
-layout, and mobile overflow. Two independent Chrome CI captures for the same
-source commit produced **byte-identical PNG files**, with SHA-256 verification
-performed before this change:
+All four full-page light/dark screenshots were visually inspected for readable
+content, intact layout and mobile overflow. Two independent Chrome CI captures
+for the **same source commit** `a4c29b1354420e854b5883ea62653caa21e83c37`
+produced **byte-identical PNG files**, confirmed by SHA-256 comparison:
 
-- [Feature branch browser run 43583117005](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/43583117005)
-- [PR browser run 43583175020](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/43583175020)
+- [Feature branch browser capture 44324024956](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/44324024956)
+- [Pull request browser capture 44324037820](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/44324037820)
 
 | Reference PNG | Viewport | Captured page | Reviewed SHA-256 |
 | --- | --- | --- | --- |
-| `home-desktop-light.png` | 1280 × 800, light | Homepage | `a423d1af283b65c7dac6b549764564bcc03e9cdcffc348f6ed74309719ea5fa2` |
-| `home-mobile-dark.png` | 390 × 844, dark | Homepage | `ec20709b7dc0deb248ea7bfbe37607df6468451fbdd76854abd90acba990b7fd` |
-| `search-mobile-light.png` | 390 × 844, light | Search directory | `254371ea86fdc67d1717d0bb47fe0e9de6dee7fcccec4219658f255a67473ac6` |
+| `home-desktop-light.png` | 1280 × 800, light | Homepage | `18b8ef8aec5cd24ba443ec50663940f8eeffc470e34a80f2cd58e2c3e3383601` |
+| `home-mobile-dark.png` | 390 × 844, dark | Homepage | `54eb8e0b1e574d1f8ff9a6b574983daa3a9aa131864cda7bc10b5c4142b69cf6` |
+| `search-mobile-light.png` | 390 × 844, light | Search directory | `0a7576bbdae6f01ee788a6dda3dac566ca8167bc8b7a0329fa75b0433167eb5e` |
 | `support-desktop-dark.png` | 1280 × 800, dark | Support hub (unchanged) | `aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a` |
 
-After reviewing the screenshots, a **temporary branch-specific hash-gated workflow**
-refreshes only the three changed references. Remove that workflow before merging.
-Ordinary CI never sets `SCARP_UPDATE_VISUAL_BASELINES` and continues to reject
-unexpected screenshot changes.
+A temporary, branch-scoped workflow imported the PNGs from the identified PR
+artifact after verifying its exact source SHA and expected artifact name.
+It removed itself in the same snapshot-refresh commit
+[`8cd9dc2`](https://github.com/scarp-lang/scarp-lang.github.io/commit/8cd9dc2523628ccb171dd6f538df8fed2637fd60).
+The production repository does **not** retain this workflow. Normal browser CI
+still rejects visual drift; it never silently regenerates approved baselines.
 
 ## Review process and historical references
 
-The preceding alpha.6.7 review and hash references remain available in
-[the previous snapshot README](https://github.com/scarp-lang/scarp-lang.github.io/blob/154b9c7372ac0d77b3b962c07473e73f1abb84db/tests/browser/baselines/README.md).
-Screenshots cover the entire page, so their heights can exceed the viewport.
-The browser suite compares decoded RGBA pixels: dimension drift always fails;
-more than 0.35% materially changed pixels fails. CI uploads visual diffs and
-fresh screenshots for review.
+The preceding alpha.10 screenshot review and its original hash references
+remain available in the
+[previous baseline README](https://github.com/scarp-lang/scarp-lang.github.io/blob/576f5ff9bcd72091db3d59d825d7e43c306aa7b4/tests/browser/baselines/README.md).
+Screenshots cover the entire page, so full-image heights can exceed the viewport.
+The browser suite compares decoded RGBA pixels: any dimension drift fails,
+and more than 0.35% materially changed pixels fails. CI uploads visual diffs
+and fresh screenshots for review.
 
-**Do not silently approve changed screenshots.** Every baseline refresh needs
-human visual review, repeatable matching hashes, and an explicit reviewed commit.
-Temporary refresh tooling must not remain in the production branch.
+**Do not silently approve changed screenshots.** Any future baseline refresh
+must include reviewed visual evidence, repeatable capture hashes and an explicit
+traceable commit. Temporary refresh tooling must not be merged into `main`.
