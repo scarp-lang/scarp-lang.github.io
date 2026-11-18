@@ -94,11 +94,11 @@ export const cliMilestones = [
   {
     tag: publishedCompiler.tag,
     sourceCommit: publishedCompiler.sourceCommit,
-    title: "Cache retention, workspace-safe snapshots and typed aggregates",
+    title: "Destructuring diagnostics, safe editor caches and checked ELF64 kernels",
     execution: "scarp exec hello.srp",
     validation: "scarp verify hello.srp",
     inspection: "scarp inspect symbols --json PROJECT_DIRECTORY",
-    additional: "Alpha.13 preserves existing CLI and manifest behavior while adding opt-in Rust syntax/semantic cache retention controls, revision eviction and workspace-generation-aware static analyses. Adds scarp init/run/project info, declarative scarp.project, scarp test with JSON reports, filters and per-test stdin, plus assert statements. Alpha.12 adds typed records/variants, checked matching, option/result and immutable lists/maps; alpha.11 exact decimal; alpha.10 --interactive, --input-file, stdout/stderr fixtures, fixed arrays and extended BigInt. Retains read_line, typed tuples, top_p, top_p_values, pearson_correlation, topk, softmax_temp, rms(vector), static symbols and opt-in Rust caches; no LSP, general native compiler CLI or stable Rust embedding ABI.",
+    additional: "Alpha.14 keeps source syntax and CLI compatibility, improves nested tuple/array/record pattern diagnostics and native verifier safety, and adds a Rust embedding-only checked-integer ELF64 object emitter. It permits live EditorCompilationCache::set_limits quotas without mutating previously issued snapshots. Alpha.13 added propagation optimizations, opt-in compiler cache eviction and workspace-safe editor snapshots; alpha.12 typed aggregates and matching; alpha.11 exact decimals; alpha.10 interactive input and fixed arrays. Declarative projects, scarp test, read_line, BigInt, numerical operators and symbol inspection remain available. No packaged general native compiler CLI, integrated LSP or stable embedding ABI.",
     evidence: publishedCompiler.release,
     fixtureTested: true,
   },
