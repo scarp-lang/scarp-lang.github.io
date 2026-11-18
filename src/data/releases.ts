@@ -1,6 +1,6 @@
 /**
  * Published release snapshot reviewed against the official GitHub release
- * and annotated tag on 17 November 2026. Not an automatically updated feed.
+ * and annotated tag on 18 November 2026. Not an automatically updated feed.
  * The website example baseline remains separately pinned in project.ts.
  */
 import { project } from "./project.ts";

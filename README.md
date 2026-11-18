@@ -81,7 +81,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
   RSS, release snapshot, and six early-theme scenarios.
 - `SCARP_BIN=/path/to/baseline/scarp npm run test:examples`: exact-output checks
   for the historical baseline. For the current published prerelease, run
-  `SCARP_BIN=/path/to/alpha13/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
+  `SCARP_BIN=/path/to/alpha14/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
   after building the separately pinned published source.
 
 ## Real-browser mobile and accessibility QA
@@ -141,7 +141,7 @@ learning paths, AI direction, community, support, contribution guidance, FAQ,
 project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
 a source-verified compatibility guide at `/compatibility/`, an evidence-linked
 published CLI migration guide at `/migration/` (covering legacy commands through the
-reviewed alpha.13 release), and a local,
+reviewed alpha.14 release), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering, curated Hindi search terms for English-language website
@@ -150,7 +150,7 @@ URL restoration during browser navigation, and the `/` or Ctrl/⌘+K shortcut
 (outside editable controls). It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs retain their historical verified compiler baseline.
 The three homepage fixtures also run with the exact pinned published
-**v0.0.6-alpha.13** compiler, with byte-identical stdout. Additional
+**v0.0.6-alpha.14** compiler, with byte-identical stdout. Additional
 published-only fixtures exercise numerical kernels, typed propagation,
 ordered map projections and schema-v1 symbol/reference inspection. The
 two compiler revisions and version-specific CLI commands are checked in
@@ -158,14 +158,16 @@ both CI and the GitHub Pages workflow. These tests do not claim universal
 language or platform compatibility.
 
 Downloads and Releases use the manually reviewed
-[Scarp v0.0.6-alpha.13 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.13),
-published 17 November 2026 from exact compiler source
-`e755fda37cdaeed29434e848cb5dd41f2f2e7eb2`, with pinned Windows x64,
+[Scarp v0.0.6-alpha.14 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.14),
+published 18 November 2026 from exact compiler source
+`43627b74af5fccccc5e233e98207413983ebafc1`, with pinned Windows x64,
 Linux x64 GNU and Apple Silicon macOS SHA-256 archive digests.
-[Release coverage](https://scarp-lang.github.io/news/alpha13-editor-caches/) describes optimized
-Option/Result forwarding, Rust compiler cache retention and workspace-aware
-editor snapshots; these are **not** an integrated LSP, new Scarp source syntax
-or a native executable compiler CLI. Earlier articles remain independent,
+[Release coverage](https://scarp-lang.github.io/news/alpha14-patterns-native/) describes
+improved nested destructuring diagnostics, live editor cache resizing and a
+restricted checked-integer ELF64 object emitter for Rust embedding. These are
+**not** a general native compilation CLI, bundled LSP, or stable embedding ABI.
+[Alpha.13 coverage](https://scarp-lang.github.io/news/alpha13-editor-caches/)
+remains an immutable history of Option/Result and workspace snapshot improvements. Earlier articles remain independent,
 immutable historical records, while the ecosystem directory has its own
 review date. This is a reviewed snapshot, not a live GitHub release feed.
 
