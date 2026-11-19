@@ -43,19 +43,20 @@ export default function DevelopmentPage() {
       <section className="wrap section prose">
         <h2>What you can use</h2>
         <p>
-          The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>{" "}
-          improves nested tuple, array and record pattern diagnostics, allows
-          Rust editor hosts to resize cache quotas, and adds a restricted checked
-          integer ELF64 object emitter. Alpha.13 previously improved typed
-          Option/Result propagation and workspace-safe snapshots; alpha.12
-          introduced records, variants, immutable lists/maps and matching;
-          alpha.11 exact decimals and alpha.10 interactive input. Numerical
-          ranking, symbol inspection and project tests remain.
-          See <a href="/news/alpha14-patterns-native/">the alpha.14 overview</a>,
-          {" "}<a href="/releases/">release comparison</a> and
+          The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
+          bounds CLI inspection inputs, charges work for equal-length string
+          comparisons, validates Rust semantic-cache revisions and expands
+          restricted checked ELF64 kernels to include shifts.
+          Alpha.14 previously improved nested pattern diagnostics, editor cache
+          quotas and checked arithmetic; alpha.13 added workspace-safe
+          snapshots, alpha.12 typed aggregates, alpha.11 exact decimals and
+          alpha.10 interactive input. Numerical ranking, symbol inspection and
+          project tests remain. Read the
+          {" "}<a href="/news/alpha15-runtime-kernels/">alpha.15 overview</a>,
+          {" "}<a href="/releases/">release comparison</a> or
           {" "}<a href="/downloads/">current packages</a>.
-          Language execution is still interpreter-backed, and the Rust
-          integration APIs are not a bundled LSP or new CLI flags.
+          Source execution remains interpreter-backed, and Rust embedding
+          APIs are not a bundled LSP or general native compiler.
         </p>
         <p>
           The published interpreter includes scalar values, typed functions and
