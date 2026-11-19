@@ -49,6 +49,7 @@ export const socials = [
 ] as const;
 
 export const news = [
+  { date: '2026-11-19', category: 'Language release', title: 'Scarp alpha.15: bounded inspections and checked ELF64 shifts', description: 'One-megabyte inspection limits, string comparison step accounting, stale semantic-cache revision safeguards and checked Rust ELF64 shift kernels.', href: '/news/alpha15-runtime-kernels/' },
   { date: '2026-11-18', category: 'Language release', title: 'Scarp alpha.14: precise patterns and checked native arithmetic', description: 'Better nested-destructuring diagnostics, safer editor cache resizing and experimental checked integer ELF64 objects through Rust embedding.', href: '/news/alpha14-patterns-native/' },
   { date: '2026-11-17', category: 'Language release', title: 'Scarp alpha.13: cache control and editor snapshot safety', description: 'Option/Result propagation reuse, adjustable Rust compiler caches, revision eviction and workspace-aware static analysis.', href: '/news/alpha13-editor-caches/' },
   { date: '2026-11-16', category: 'Language release', title: 'Scarp alpha.12: typed records, variants and collections', description: 'Typed records and variants, exhaustive matching, option/result, immutable lists/maps and a multi-file task-board example.', href: '/news/alpha12-records-collections/' },
