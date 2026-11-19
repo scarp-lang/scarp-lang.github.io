@@ -31,39 +31,38 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>More precise patterns and checked native integer kernels.</h3>
+          <h3>Bounded inspections, revision safety and checked ELF64 shifts.</h3>
           <p>
-            Scarp {publishedCompiler.tag} improves error locations for nested
-            tuple, fixed-array and record destructuring patterns, including
-            missing or duplicated commas and closing delimiters. Additional
-            source-level regression tests cover immutable pattern bindings,
-            nominal payloads and deterministic map projections.
+            Scarp {publishedCompiler.tag} rejects files larger than 1 MiB before
+            tokenization in <code>inspect tokens</code>, <code>inspect ast</code>
+            and the legacy <code>tokens</code> command. Equal-length string
+            comparisons charge one step per started 64 UTF-8 bytes, at runtime
+            and in constant evaluation. Programs near a work budget may now
+            reach it earlier.
           </p>
           <p>
-            For Rust embedding hosts, <code>EditorCompilationCache::set_limits</code>
-            updates five live retention quotas. Previously issued editor
-            snapshots and compiled programs retain their original data and
-            revisions even when the underlying cache evicts entries.
+            The Rust semantic compiler cache checks loader-supplied revisions
+            before reusing cached programs. Embedding integrations should
+            handle <code>CachedCompileError::RevisionMismatch</code>.
+            This does not add an integrated language server.
           </p>
           <p>
-            The new experimental <code>emit_elf64_checked_integer_kernel</code>
-            Rust API supports checked integer arithmetic in a restricted
-            linear-binding subset for Linux x86-64 ELF64 objects, including
-            status and source-operator span reporting on failure. It is not a
-            general native compilation CLI, and packaged programs still run
-            through the interpreter.
+            The experimental checked x86-64 ELF64 integer kernel now supports
+            left, arithmetic right and logical right shifts. Counts outside
+            0–63 yield status 3 and the failing operator's UTF-8 byte span.
+            This is a restricted Rust embedding API, not a general native
+            compilation CLI; the release packages still run the interpreter.
           </p>
           <p>
-            Alpha.13 previously improved Option/Result propagation and editor
-            snapshot safety; alpha.12 added typed aggregates and matching.
-            Existing Scarp source syntax, CLI commands and JSON schemas
-            remain compatible in alpha.14, but prerelease APIs are not stable.
+            <a href="/news/alpha14-patterns-native/">Alpha.14</a> previously
+            improved nested pattern diagnostics, cache resizing and checked
+            arithmetic kernels. Scarp source syntax and CLI commands remain
+            compatible in alpha.15, but embedding APIs are experimental.
           </p>
           <p>
-            Read the <a href="/news/alpha14-patterns-native/">alpha.14 release overview</a>,
-            {" "}<a href="/news/alpha13-editor-caches/">alpha.13 editor overview</a>,
-            {" "}<a href="/news/alpha12-records-collections/">alpha.12 aggregates</a>,
-            or the <a href={publishedCompiler.release}>authoritative release notes</a>.
+            Read the <a href="/news/alpha15-runtime-kernels/">alpha.15 release overview</a>,
+            {" "}<a href="/news/alpha14-patterns-native/">alpha.14 history</a>,
+            or <a href={publishedCompiler.release}>authoritative release notes</a>.
           </p>
           <p>
             Pre-built archives are available for Windows x64, Linux x64 GNU
@@ -121,7 +120,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version CLI changes and alpha.14 embedding compatibility,
+          version-by-version CLI changes and alpha.15 embedding compatibility,
           including project workflows and the new read-only symbol index.
         </p>
         <p>
