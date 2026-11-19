@@ -499,6 +499,14 @@ test("capture reproducible light/dark screenshots for visual review", async () =
     }, async page => {
       await page.goto(origin + view.route, { waitUntil: "networkidle" });
       await page.evaluate(() => document.fonts.ready);
+      // Full-page screenshots can include images far below the viewport.
+      // Force lazy images to load and decode so visual references do not
+      // depend on the timing of scroll-triggered image fetches.
+      await page.evaluate(async () => {
+        const images = Array.from(document.images);
+        for (const image of images) image.loading = "eager";
+        await Promise.all(images.map(image => image.decode()));
+      });
       assert.equal(await page.locator("html").getAttribute("data-theme"), view.theme);
       const screenshot = await page.screenshot({
         path: "test-results/browser/visual/" + view.name + ".png",
