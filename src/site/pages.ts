@@ -17,6 +17,7 @@ import Alpha8ProjectsAndTests from "../pages/news/alpha8-project-tests.tsx";
 import Alpha9BigIntReports from "../pages/news/alpha9-bigint-reports.tsx";
 import Alpha10InteractiveArrays from "../pages/news/alpha10-interactive-arrays.tsx";
 import Alpha11ExactDecimal from "../pages/news/alpha11-exact-decimal.tsx";
+import Alpha15RuntimeKernels from "../pages/news/alpha15-runtime-kernels.tsx";
 import Alpha14PatternsNative from "../pages/news/alpha14-patterns-native.tsx";
 import Alpha13EditorCaches from "../pages/news/alpha13-editor-caches.tsx";
 import Alpha12RecordsCollections from "../pages/news/alpha12-records-collections.tsx";
@@ -60,6 +61,7 @@ export const pages: readonly SitePage[] = [
   { path: "/support/", Component: Support },
   { path: "/search/", Component: Search },
   { path: "/news/", Component: News },
+  { path: "/news/alpha15-runtime-kernels/", Component: Alpha15RuntimeKernels },
   { path: "/news/alpha14-patterns-native/", Component: Alpha14PatternsNative },
   { path: "/news/alpha13-editor-caches/", Component: Alpha13EditorCaches },
   { path: "/news/alpha12-records-collections/", Component: Alpha12RecordsCollections },
