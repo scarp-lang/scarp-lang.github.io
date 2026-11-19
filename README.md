@@ -122,13 +122,15 @@ levels in any RGBA channel). Width/height differences always fail.
 Mismatches produce magenta-highlighted diff PNGs under
 `test-results/browser/diffs/` alongside the current screenshot.
 
-Reference screenshots in `tests/browser/baselines/` were imported from the
-successful GitHub Actions Chrome run [42160811505](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/42160811505),
-for the verified live production commit `5289b957`. **Reference files are
-never regenerated or accepted in CI**. When a design update is intentional,
-review its screenshots before explicitly updating and committing reference
-images. Hosted Chrome/font updates can introduce genuine differences and should
-also be reviewed, not silently approved.
+Reference screenshots in `tests/browser/baselines/` are pinned to the
+[reviewed alpha.15 visual evidence](tests/browser/baselines/README.md).
+Two independent Chrome captures produced byte-identical images for the
+current website; the import verified all four SHA-256 hashes and removed
+its temporary branch-only workflow. **Normal CI never regenerates or accepts
+reference screenshots**. When a design update is intentional, review the
+screenshots before explicitly updating and committing reference images.
+Hosted Chrome/font updates can introduce genuine differences and must also
+be reviewed, not silently approved.
 
 The contrast samples check solid, directly defined foreground/background pairs;
 they do not automatically audit every text pixel, overlay, or gradient.
