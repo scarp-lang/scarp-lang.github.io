@@ -64,7 +64,7 @@ export default function MigrationPage() {
         and release history, <strong>not</strong> this website's current
         executable fixture tests. The alpha.4 fixtures passed in an earlier
         website CI run; the current suite tests the baseline and the
-        separately pinned published alpha.14 compiler.
+        separately pinned published alpha.15 compiler.
         The distinct <a href="/compatibility/#project-workflow">alpha.8 project
         and test-runner integration check</a> covers a fresh project and
         separate legacy-CLI compatibility beyond the three homepage files.
@@ -216,6 +216,23 @@ export default function MigrationPage() {
         general native-code compiler CLI, or stable ABI in alpha.8.
       </p>
 
+      <h2 id="alpha15-embedding">Alpha.15 compatibility notes</h2>
+      <p>
+        <a href="/news/alpha15-runtime-kernels/">Alpha.15</a> keeps source
+        syntax, manifest formats and CLI command spellings. Inspection commands
+        <code> inspect tokens</code>, <code>inspect ast</code> and legacy
+        <code> tokens</code> reject files above 1 MiB. Equal-length string
+        equality and inequality now charge a step for each started 64 UTF-8
+        bytes, so applications with tight budgets should retest comparisons
+        and constant evaluation.
+      </p>
+      <p>
+        Rust hosts matching <code>CachedCompileError</code> must handle
+        <code> RevisionMismatch</code>. Experimental checked ELF64 kernel
+        integrations must recognize <code>CHECKED_KERNEL_INVALID_SHIFT</code>
+        and status 3 for shift counts outside 0–63. These APIs remain
+        restricted relocatable-object emitters, not a general native CLI.
+      </p>
       <h2 id="alpha14-embedding">Alpha.14 embedding compatibility</h2>
       <p>
         <a href="/news/alpha14-patterns-native/">Alpha.14</a> preserves the

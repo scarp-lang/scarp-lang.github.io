@@ -81,7 +81,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
   RSS, release snapshot, and six early-theme scenarios.
 - `SCARP_BIN=/path/to/baseline/scarp npm run test:examples`: exact-output checks
   for the historical baseline. For the current published prerelease, run
-  `SCARP_BIN=/path/to/alpha14/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
+  `SCARP_BIN=/path/to/alpha15/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
   after building the separately pinned published source.
 
 ## Real-browser mobile and accessibility QA
@@ -122,13 +122,15 @@ levels in any RGBA channel). Width/height differences always fail.
 Mismatches produce magenta-highlighted diff PNGs under
 `test-results/browser/diffs/` alongside the current screenshot.
 
-Reference screenshots in `tests/browser/baselines/` were imported from the
-successful GitHub Actions Chrome run [42160811505](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/42160811505),
-for the verified live production commit `5289b957`. **Reference files are
-never regenerated or accepted in CI**. When a design update is intentional,
-review its screenshots before explicitly updating and committing reference
-images. Hosted Chrome/font updates can introduce genuine differences and should
-also be reviewed, not silently approved.
+Reference screenshots in `tests/browser/baselines/` are pinned to the
+[reviewed alpha.15 visual evidence](tests/browser/baselines/README.md).
+Two independent Chrome captures produced byte-identical images for the
+current website; the import verified all four SHA-256 hashes and removed
+its temporary branch-only workflow. **Normal CI never regenerates or accepts
+reference screenshots**. When a design update is intentional, review the
+screenshots before explicitly updating and committing reference images.
+Hosted Chrome/font updates can introduce genuine differences and must also
+be reviewed, not silently approved.
 
 The contrast samples check solid, directly defined foreground/background pairs;
 they do not automatically audit every text pixel, overlay, or gradient.
@@ -141,7 +143,7 @@ learning paths, AI direction, community, support, contribution guidance, FAQ,
 project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
 a source-verified compatibility guide at `/compatibility/`, an evidence-linked
 published CLI migration guide at `/migration/` (covering legacy commands through the
-reviewed alpha.14 release), and a local,
+reviewed alpha.15 release), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering, curated Hindi search terms for English-language website
@@ -150,7 +152,7 @@ URL restoration during browser navigation, and the `/` or Ctrl/⌘+K shortcut
 (outside editable controls). It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs retain their historical verified compiler baseline.
 The three homepage fixtures also run with the exact pinned published
-**v0.0.6-alpha.14** compiler, with byte-identical stdout. Additional
+**v0.0.6-alpha.15** compiler, with byte-identical stdout. Additional
 published-only fixtures exercise numerical kernels, typed propagation,
 ordered map projections and schema-v1 symbol/reference inspection. The
 two compiler revisions and version-specific CLI commands are checked in
@@ -158,18 +160,19 @@ both CI and the GitHub Pages workflow. These tests do not claim universal
 language or platform compatibility.
 
 Downloads and Releases use the manually reviewed
-[Scarp v0.0.6-alpha.14 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.14),
-published 18 November 2026 from exact compiler source
-`43627b74af5fccccc5e233e98207413983ebafc1`, with pinned Windows x64,
+[Scarp v0.0.6-alpha.15 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.15),
+published 19 November 2026 from the exact annotated-tag source commit
+`a21b7b6d942bd1ca9abbbbb522f92f9c8e21e281`, with reviewed Windows x64,
 Linux x64 GNU and Apple Silicon macOS SHA-256 archive digests.
-[Release coverage](https://scarp-lang.github.io/news/alpha14-patterns-native/) describes
-improved nested destructuring diagnostics, live editor cache resizing and a
-restricted checked-integer ELF64 object emitter for Rust embedding. These are
-**not** a general native compilation CLI, bundled LSP, or stable embedding ABI.
-[Alpha.13 coverage](https://scarp-lang.github.io/news/alpha13-editor-caches/)
-remains an immutable history of Option/Result and workspace snapshot improvements. Earlier articles remain independent,
-immutable historical records, while the ecosystem directory has its own
-review date. This is a reviewed snapshot, not a live GitHub release feed.
+[Alpha.15 coverage](https://scarp-lang.github.io/news/alpha15-runtime-kernels/)
+documents inspection size limits, equal-length string-comparison work accounting,
+semantic cache revision checking, and restricted checked ELF64 shifts.
+This is **not** a general native compilation CLI, bundled LSP, or stable
+embedding ABI. [Alpha.14 coverage](https://scarp-lang.github.io/news/alpha14-patterns-native/)
+remains an immutable history of pattern-diagnostic, editor-cache and
+checked-arithmetic improvements. Earlier articles likewise remain independent
+historical records, and the ecosystem directory has its own review date.
+This is a reviewed snapshot, not a live GitHub release feed.
 
 Baseline: **v0.0.5-alpha.1**, source
 `afe8b5380c9d6c4774162e51c6c9bc8b90901671`, reviewed 1 November 2026.

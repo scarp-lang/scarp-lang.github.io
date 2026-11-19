@@ -144,9 +144,25 @@ export default function CompatibilityPage() {
         source in Linux CI. This does not certify all project CLI combinations,
         platforms or third-party code.
       </p>
-      <h2 id="alpha14-rust-apis">Alpha.14 Rust embedding API boundaries</h2>
+      <h2 id="alpha15-rust-apis">Alpha.15 inspection and Rust host boundaries</h2>
       <p>
         The pinned <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
+        retains Scarp source and CLI command syntax. Inspections reject
+        UTF-8 input files above 1 MiB; equal-length string comparisons charge
+        a step per started 64 bytes. Rust semantic cache clients must handle
+        revision mismatches, while checked ELF64 shift kernels validate
+        shift counts from 0 through 63.
+      </p>
+      <p>
+        The Linux CI fixtures on this page cover selected source execution,
+        static verification and project commands. They do <strong>not</strong>
+        verify inspection size boundaries, string work-limit edge cases,
+        Rust cache revision behavior, checked shifts or Windows/macOS binaries.
+        See <a href="/news/alpha15-runtime-kernels/">alpha.15 details and limits</a>.
+      </p>
+      <h2 id="alpha14-rust-apis">Alpha.14 Rust embedding API boundaries</h2>
+      <p>
+        The earlier <a href={project.repo + "/releases/tag/v0.0.6-alpha.14"}>alpha.14 release</a>
         preserves existing CLI behavior and adds nested destructuring diagnostic
         improvements, live editor cache quota updates and a restricted checked
         integer ELF64 object emitter for Rust hosts. The fixture suite on this

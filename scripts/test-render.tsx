@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 35);
+  assert.equal(pages.length, 36);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -570,12 +570,34 @@ test('alpha.13 announcement, release evidence, compiler limits and discoverabili
   assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + path + '</loc>'));
 });
 
+test('alpha.15 announcement, tagged source and bilingual search/feed discovery', async () => {
+  const path = '/news/alpha15-runtime-kernels/';
+  const announcement = news.find(item => item.href === path);
+  assert(announcement);
+  assert.equal(announcement.date, '2026-11-19');
+  assert.equal(news[0]?.href, path);
+  const page = findPage(path);
+  assert(page);
+  const html = renderPage(page, developmentAssets);
+  for (const token of [
+    'v0.0.6-alpha.15', 'a21b7b6d942bd1ca9abbbbb522f92f9c8e21e281',
+    '1 MiB', '64 UTF-8 bytes', 'RevisionMismatch',
+    'CHECKED_KERNEL_INVALID_SHIFT', 'interpreter',
+    '/compatibility/', '/downloads/',
+  ]) assert(html.includes(token), 'alpha.15 article missing ' + token);
+  assert(searchEntries.some(entry => entry.path === path));
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  assert(feed?.body.includes('<link>https://scarp-lang.github.io' + path + '</link>'));
+  const sitemap = await renderRequest('/sitemap.xml', developmentAssets);
+  assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + path + '</loc>'));
+});
+
 test('alpha.14 announcement, tagged source and search/feed discovery', async () => {
   const path = '/news/alpha14-patterns-native/';
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-18');
-  assert.equal(news[0]?.href, path);
+  assert.equal(news[1]?.href, path);
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);

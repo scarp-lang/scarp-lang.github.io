@@ -154,20 +154,23 @@ export default function DownloadsPage() {
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
         <p>
-          Alpha.14 improves parser error messages and source spans when nested
-          tuple, array or record destructuring patterns contain missing or
-          duplicate commas or lack closing delimiters.
+          <code>inspect tokens</code>, <code>inspect ast</code> and the legacy
+          <code> tokens</code> command now reject ordinary UTF-8 files larger
+          than 1 MiB before tokenization. Equal-length string comparisons
+          charge a step per started 64 UTF-8 bytes at runtime and during
+          constant evaluation; work-limited programs can now hit the limit sooner.
         </p>
         <p>
-          The Rust embedding API can change editor cache quotas while keeping
-          already issued snapshots intact. A new experimental Linux x86-64
-          checked-integer ELF64 emitter is also available to Rust clients, not
-          as a Scarp CLI command or general native compiler.
+          Rust hosts gain stricter semantic-cache revision checks and must handle
+          <code> CachedCompileError::RevisionMismatch</code>. Experimental
+          checked x86-64 ELF64 integer kernels add three shift operators with
+          0–63 count checking and failure status 3. These Rust APIs do not
+          provide a native compilation command or a stable ABI.
         </p>
         <p>
-          Scarp release packages still execute source programs using the interpreter.
-          See the <a href="/news/alpha14-patterns-native/">alpha.14 overview</a>,
-          {" "}<a href="/news/alpha13-editor-caches/">alpha.13 changes</a>
+          Prebuilt packages still run the interpreter. Read the
+          {" "}<a href="/news/alpha15-runtime-kernels/">alpha.15 overview</a>,
+          {" "}<a href="/news/alpha14-patterns-native/">alpha.14 history</a>
           and <a href={publishedCompiler.release}>official release notes</a>.
         </p>
         <h2>Introduced in alpha.12</h2>
@@ -184,7 +187,7 @@ export default function DownloadsPage() {
         />
         <p>
           Read the <a href="/news/alpha12-records-collections/">alpha.12 feature overview</a>
-          {" "}and the <a href={project.repo + "/tree/" + publishedCompiler.sourceCommit + "/examples/projects/task-board"}>alpha.14-tagged task-board source</a>.
+          {" "}and the <a href={project.repo + "/tree/" + publishedCompiler.sourceCommit + "/examples/projects/task-board"}>alpha.15-tagged task-board source</a>.
         </p>
         <h2>Introduced in alpha.11</h2>
         <p>

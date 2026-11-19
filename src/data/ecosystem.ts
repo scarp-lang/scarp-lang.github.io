@@ -5,7 +5,7 @@
 import { project } from "./project.ts";
 import { publishedCompiler } from "./releases.ts";
 
-export const ecosystemReviewedOn = "2026-11-18";
+export const ecosystemReviewedOn = "2026-11-19";
 
 export interface EcosystemProject {
   id: string;
@@ -28,7 +28,7 @@ export const ecosystemProjects = [
     status: "Experimental prerelease",
     version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
-    limitation: "Published v0.0.6-alpha.14 improves nested destructuring diagnostics and Rust embedding cache limits, and adds a restricted checked-integer ELF64 object emitter API. Alpha.13 improved propagation and workspace-safe snapshots; alpha.12 introduced typed records, variants and immutable lists/maps; alpha.11 exact decimals; alpha.10 interactive input and fixed arrays. CLI program execution remains interpreter-backed; general native compilation, integrated LSP, GPU runtime and stable Rust ABI are not provided.",
+    limitation: "Published v0.0.6-alpha.15 limits inspection inputs, accounts for equal-length string comparison work, guards semantic cache revisions and adds checked shifts to restricted ELF64 kernels. Alpha.14 improved nested destructuring diagnostics, Rust cache limits and the original checked integer object emitter. Alpha.13 improved propagation and workspace-safe snapshots; alpha.12 introduced typed records, variants and immutable lists/maps; alpha.11 exact decimals; alpha.10 interactive input and fixed arrays. CLI program execution remains interpreter-backed; general native compilation, integrated LSP, GPU runtime and stable Rust ABI are not provided.",
     website: `${project.repo}/releases`,
     source: project.repo,
     evidence: publishedCompiler.release,
