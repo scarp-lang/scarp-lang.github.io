@@ -52,11 +52,20 @@ export default function ArticlePage() {
         Option/Result and immutable list/map operations.
         <a href="/news/alpha13-editor-caches/"> Alpha.13</a> refined
         propagation and added cache eviction and workspace-safe snapshots.
-        The current <a href="/news/alpha14-patterns-native/">alpha.14 release</a>
+        The earlier <a href="/news/alpha14-patterns-native/">alpha.14 release</a>
         improves nested destructuring diagnostics, live editor cache resizing
         and a restricted checked-integer ELF64 emitter for Rust hosts.
         These remain implementation building blocks, not a stable ABI, bundled
         LSP or a general native compilation command.
+      </p>
+      <h2 id="published-alpha15">Published alpha.15 · Bounded inspection and checked shifts</h2>
+      <p>
+        The <a href="/news/alpha15-runtime-kernels/">published alpha.15 prerelease</a>
+        limits inspection file inputs to 1 MiB, accounts for equal-length
+        string-comparison work in 64-byte steps and validates semantic-cache
+        loader revisions. Experimental checked x86-64 ELF64 kernels add
+        checked shifts and operator-span errors. CLI execution remains
+        interpreter-backed, with no integrated LSP or general native compiler.
       </p>
       <h2 id="next-priorities">Next priorities · Reliable developer tooling</h2>
       <p>
