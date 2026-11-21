@@ -51,6 +51,39 @@ if (target === "published") {
   const publishedDirectory = resolve("src/examples/published");
   const publishedSources = (await readdir(publishedDirectory)).filter(name => name.endsWith(".srp")).sort();
   assert.deepEqual(publishedSources, [...exampleCompatibility.publishedOnlyFixtureNames].sort(), "Review new published-only fixtures before adding them");
+  const interactiveDirectory = resolve("src/examples/interactive");
+  for (const name of exampleCompatibility.interactiveFixtureNames) {
+    const source = join(interactiveDirectory, name);
+    const standardInput = await readFile(source.replace(/\.srp$/, ".stdin"), "utf8");
+    const expectedOutput = await readFile(source.replace(/\.srp$/, ".stdout"), "utf8");
+    const executed = spawnSync(executablePath, ["exec", "--interactive", source], {
+      encoding: "utf8", timeout: 15000, input: standardInput,
+    });
+    assert.equal(executed.error, undefined, name + ": " + String(executed.error));
+    assert.equal(executed.status, 0, name + ": " + executed.stderr);
+    assert.equal(executed.stdout, expectedOutput, name + ": interactive stdout mismatch");
+    assert.equal(executed.stderr, "", name + ": unexpected interactive stderr");
+    const verified = run(["verify", source]);
+    assert.equal(verified.status, 0, name + ": static verification failed: " + verified.stderr);
+    assert.equal(verified.stdout, "", name + ": verify must be silent");
+    assert.equal(verified.stderr, "", name + ": unexpected verify stderr");
+
+    // Exact lowercase true/false only; a malformed line and EOF have distinct diagnostics.
+    const malformed = spawnSync(executablePath, ["exec", "--interactive", source], {
+      encoding: "utf8", timeout: 15000, input: "maybe\n",
+    });
+    assert.equal(malformed.error, undefined, String(malformed.error));
+    assert.notEqual(malformed.status, 0, "Malformed Boolean must not succeed");
+    assert.match(malformed.stderr, /E0084/, "Wrong malformed Boolean diagnostic");
+    const missingLine = spawnSync(executablePath, ["exec", "--interactive", source], {
+      encoding: "utf8", timeout: 15000, input: "",
+    });
+    assert.equal(missingLine.error, undefined, String(missingLine.error));
+    assert.notEqual(missingLine.status, 0, "EOF without a line must not succeed");
+    assert.match(missingLine.stderr, /E0055/, "Wrong missing-input diagnostic");
+    console.log("PASS " + name + ": opt-in prompt stdout, verify, E0084 and E0055");
+  }
+
   for (const file of publishedSources) {
     const source = join(publishedDirectory, file);
     const expected = await readFile(source.replace(/\.srp$/, ".stdout"), "utf8");

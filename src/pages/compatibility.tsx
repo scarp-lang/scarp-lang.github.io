@@ -152,12 +152,15 @@ export default function CompatibilityPage() {
         <code> array_traversal.srp</code> fixture checks typed fallback
         behavior and a repeat loop. The <code>order_statistics.srp</code>
         fixture exercises alpha.16's <code>median</code> and <code>quantile</code>.
+        A separate <code>boolean_prompt.srp</code> fixture checks exact
+        opt-in interactive input, expected stdout and diagnostic codes
+        E0084 for a malformed line and E0055 for premature EOF.
         Linux CI executes and statically verifies their exact stdout, as well
         as the older documented fixtures.
       </p>
       <p>
         These tests do not exhaustively prove fallback side-effect evaluation,
-        malformed Boolean diagnostics, the entire Unicode library, or
+        all Boolean input edge cases, the entire Unicode library, or
         cross-platform archive operation. They also do not verify the
         experimental Rust ELF64 backend or embedding cache APIs.
         See <a href="/news/alpha17-arrays-input/">alpha.17</a> and

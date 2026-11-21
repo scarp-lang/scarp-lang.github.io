@@ -17,6 +17,13 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
     assert(expectedOutput.length > 0, name + " has no expected output");
   }
   assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["array_traversal.srp", "bigint_arithmetic.srp", "bigint_exact.srp", "conditional_unicode.srp", "fixed_arrays.srp", "map_projection_snapshots.srp", "nucleus_selection.srp", "order_statistics.srp", "pearson_correlation.srp", "rms.srp", "temperature_softmax.srp", "topk_scores.srp", "typed_propagation.srp"]);
+  const interactiveRoot = resolve("src/examples/interactive");
+  assert.deepEqual((await readdir(interactiveRoot)).filter(name => name.endsWith(".srp")).sort(),
+    [...exampleCompatibility.interactiveFixtureNames].sort());
+  assert.match(await readFile(join(interactiveRoot, "boolean_prompt.srp"), "utf8"), /input_boolean\(/);
+  assert.equal(await readFile(join(interactiveRoot, "boolean_prompt.stdin"), "utf8"), "true\nfalse\n");
+  assert.equal(await readFile(join(interactiveRoot, "boolean_prompt.stdout"), "utf8"),
+    "Continue (true/false)? Continue (true/false)? Continuing\nStopped\n");
   const publishedRoot = resolve("src/examples/published");
   assert.deepEqual((await readdir(publishedRoot)).filter(name => name.endsWith(".srp")).sort(),
     [...exampleCompatibility.publishedOnlyFixtureNames].sort());
