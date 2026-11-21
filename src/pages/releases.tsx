@@ -31,42 +31,36 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Bounded inspections, revision safety and checked ELF64 shifts.</h3>
+          <h3>Safer array traversal, Boolean input and typed diagnostics.</h3>
           <p>
-            Scarp {publishedCompiler.tag} rejects files larger than 1 MiB before
-            tokenization in <code>inspect tokens</code>, <code>inspect ast</code>
-            and the legacy <code>tokens</code> command. Equal-length string
-            comparisons charge one step per started 64 UTF-8 bytes, at runtime
-            and in constant evaluation. Programs near a work budget may now
-            reach it earlier.
+            Scarp {publishedCompiler.tag} introduces <code>array_len(values)</code>
+            for fixed-array traversal and <code>array_get_or(values, index, fallback)</code>
+            for checked fallback access. Direct indexing still rejects invalid
+            indices. The fallback has the array element type and is evaluated once.
           </p>
           <p>
-            The Rust semantic compiler cache checks loader-supplied revisions
-            before reusing cached programs. Embedding integrations should
-            handle <code>CachedCompileError::RevisionMismatch</code>.
-            This does not add an integrated language server.
+            <code>input_boolean(prompt)</code> accepts only lowercase
+            <code> true</code> or <code>false</code> in opt-in
+            <code> --interactive</code> mode. Invalid input produces E0084;
+            premature end of input produces E0055. Nested fixed-array type
+            diagnostics now report more focused source locations and repairs.
           </p>
           <p>
-            The experimental checked x86-64 ELF64 integer kernel now supports
-            left, arithmetic right and logical right shifts. Counts outside
-            0–63 yield status 3 and the failing operator's UTF-8 byte span.
-            This is a restricted Rust embedding API, not a general native
-            compilation CLI; the release packages still run the interpreter.
+            <a href="/news/alpha16-order-statistics/">Alpha.16</a> previously
+            introduced <code>median</code>, <code>quantile</code>, Unicode text
+            helpers, checked integer utilities and Rust embedding maintenance.
+            Experimental native code generation remains restricted to a scalar
+            subset; these new language functions run in the interpreter.
           </p>
           <p>
-            <a href="/news/alpha14-patterns-native/">Alpha.14</a> previously
-            improved nested pattern diagnostics, cache resizing and checked
-            arithmetic kernels. Scarp source syntax and CLI commands remain
-            compatible in alpha.15, but embedding APIs are experimental.
+            Read <a href="/news/alpha17-arrays-input/">the alpha.17 overview</a>,
+            {" "}<a href="/news/alpha16-order-statistics/">alpha.16 history</a>,
+            {" "}<a href="/news/alpha15-runtime-kernels/">alpha.15 history</a>
+            or <a href={publishedCompiler.release}>official release notes</a>.
           </p>
           <p>
-            Read the <a href="/news/alpha15-runtime-kernels/">alpha.15 release overview</a>,
-            {" "}<a href="/news/alpha14-patterns-native/">alpha.14 history</a>,
-            or <a href={publishedCompiler.release}>authoritative release notes</a>.
-          </p>
-          <p>
-            Pre-built archives are available for Windows x64, Linux x64 GNU
-            and macOS Apple Silicon. This is an alpha—not a stable compiler.
+            Pre-built archives cover Windows x64, Linux x64 GNU and macOS
+            Apple Silicon. This is an alpha, not a stable compiler.
           </p>
           <div className="actions">
             <a className="button primary" href="/downloads/">Download {publishedCompiler.tag} →</a>
@@ -120,7 +114,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version CLI changes and alpha.15 embedding compatibility,
+          version-by-version CLI changes and alpha.17 interpreter compatibility,
           including project workflows and the new read-only symbol index.
         </p>
         <p>

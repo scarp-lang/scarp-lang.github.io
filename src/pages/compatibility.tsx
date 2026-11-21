@@ -144,9 +144,29 @@ export default function CompatibilityPage() {
         source in Linux CI. This does not certify all project CLI combinations,
         platforms or third-party code.
       </p>
+      <h2 id="alpha17-array-input">Alpha.17 arrays and interactive Boolean input</h2>
+      <p>
+        The current <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
+        adds <code>array_len</code>, <code>array_get_or</code> and
+        opt-in <code>input_boolean</code>. The published-only
+        <code> array_traversal.srp</code> fixture checks typed fallback
+        behavior and a repeat loop. The <code>order_statistics.srp</code>
+        fixture exercises alpha.16's <code>median</code> and <code>quantile</code>.
+        Linux CI executes and statically verifies their exact stdout, as well
+        as the older documented fixtures.
+      </p>
+      <p>
+        These tests do not exhaustively prove fallback side-effect evaluation,
+        malformed Boolean diagnostics, the entire Unicode library, or
+        cross-platform archive operation. They also do not verify the
+        experimental Rust ELF64 backend or embedding cache APIs.
+        See <a href="/news/alpha17-arrays-input/">alpha.17</a> and
+        {" "}<a href="/news/alpha16-order-statistics/">alpha.16</a>
+        for behavior and version-specific source references.
+      </p>
       <h2 id="alpha15-rust-apis">Alpha.15 inspection and Rust host boundaries</h2>
       <p>
-        The pinned <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
+        The historical <a href="/news/alpha15-runtime-kernels/">alpha.15 prerelease</a>
         retains Scarp source and CLI command syntax. Inspections reject
         UTF-8 input files above 1 MiB; equal-length string comparisons charge
         a step per started 64 bytes. Rust semantic cache clients must handle

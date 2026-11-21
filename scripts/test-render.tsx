@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 36);
+  assert.equal(pages.length, 38);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -575,7 +575,7 @@ test('alpha.15 announcement, tagged source and bilingual search/feed discovery',
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-19');
-  assert.equal(news[0]?.href, path);
+  assert.equal(news[2]?.href, path);
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);
@@ -597,7 +597,7 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-18');
-  assert.equal(news[1]?.href, path);
+  assert.equal(news[3]?.href, path);
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);
@@ -612,4 +612,29 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
   assert(feed?.body.includes('<link>https://scarp-lang.github.io' + path + '</link>'));
   const sitemap = await renderRequest('/sitemap.xml', developmentAssets);
   assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + path + '</loc>'));
+});
+
+test('alpha.16 and alpha.17 release articles remain source-pinned and discoverable', async () => {
+  const articles = [
+    { path: '/news/alpha17-arrays-input/', date: '2026-11-21',
+      source: '7831a37939965f557ce746e1d86bf82d3d629f74',
+      tokens: ['v0.0.6-alpha.17', 'array_len', 'array_get_or', 'input_boolean', 'E0084', 'E0055', 'E0063'] },
+    { path: '/news/alpha16-order-statistics/', date: '2026-11-20',
+      source: '244f713b4fa48f02a98b8e3e3c11025363f35260',
+      tokens: ['v0.0.6-alpha.16', 'median', 'quantile', 'text_reverse', 'integer_gcd', 'ConstantCache'] },
+  ];
+  const feed = await renderRequest('/feed.xml', developmentAssets);
+  const sitemap = await renderRequest('/sitemap.xml', developmentAssets);
+  for (const item of articles) {
+    const page = findPage(item.path);
+    assert(page, 'Missing route ' + item.path);
+    const html = renderPage(page, developmentAssets);
+    for (const token of [...item.tokens, item.source]) assert(html.includes(token), item.path + ' missing ' + token);
+    assert(news.some(entry => entry.href === item.path && entry.date === item.date));
+    assert(searchEntries.some(entry => entry.path === item.path));
+    assert(feed?.body.includes('<link>https://scarp-lang.github.io' + item.path + '</link>'));
+    assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + item.path + '</loc>'));
+  }
+  assert.equal(news[0]?.href, articles[0]?.path);
+  assert.equal(news[1]?.href, articles[1]?.path);
 });
