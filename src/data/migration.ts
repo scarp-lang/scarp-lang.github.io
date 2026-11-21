@@ -98,7 +98,7 @@ export const cliMilestones = [
     execution: "scarp exec hello.srp",
     validation: "scarp verify hello.srp",
     inspection: "scarp inspect symbols --json PROJECT_DIRECTORY",
-    additional: "Alpha.17 adds array_len and array_get_or, exact lowercase input_boolean under --interactive, and better nested fixed-array diagnostics. Alpha.16 added median, quantile, Unicode helpers and checked integer/bit utilities. Earlier releases added typed aggregates, testable declarative projects, read_line, BigInt and numerical rms(vector), topk, softmax_temp, pearson_correlation and top_p. CLI programs still execute through the interpreter; Rust embedding caches and checked ELF64 kernels remain experimental. No LSP, general native compile CLI or stable embedding ABI",
+    additional: "Alpha.17 adds array_len and array_get_or, exact lowercase input_boolean under --interactive, and better nested fixed-array diagnostics. Alpha.16 added median, quantile, Unicode helpers and checked integer/bit utilities. Earlier releases added typed aggregates, testable declarative projects, read_line, BigInt and numerical rms(vector), topk, softmax_temp, pearson_correlation and top_p. CLI programs still execute through the interpreter; Rust embedding caches and checked ELF64 kernels remain experimental. no LSP, general native compile CLI or stable embedding ABI",
     evidence: publishedCompiler.release,
     fixtureTested: true,
   },
