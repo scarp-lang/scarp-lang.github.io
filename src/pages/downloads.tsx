@@ -154,23 +154,25 @@ export default function DownloadsPage() {
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
         <p>
-          <code>inspect tokens</code>, <code>inspect ast</code> and the legacy
-          <code> tokens</code> command now reject ordinary UTF-8 files larger
-          than 1 MiB before tokenization. Equal-length string comparisons
-          charge a step per started 64 UTF-8 bytes at runtime and during
-          constant evaluation; work-limited programs can now hit the limit sooner.
+          <code>array_len(values)</code> returns a fixed array's length for
+          <code> repeat</code> traversal. <code>array_get_or</code> supplies
+          a same-element-type fallback for out-of-range indices, evaluated
+          once even when the index is valid. Ordinary indexing still reports E0063.
         </p>
         <p>
-          Rust hosts gain stricter semantic-cache revision checks and must handle
-          <code> CachedCompileError::RevisionMismatch</code>. Experimental
-          checked x86-64 ELF64 integer kernels add three shift operators with
-          0–63 count checking and failure status 3. These Rust APIs do not
-          provide a native compilation command or a stable ABI.
+          For interactive terminal prompts, <code>input_boolean(prompt)</code>
+          accepts exact lowercase <code>true</code> or <code>false</code>
+          with <code>--interactive</code>. Malformed input raises E0084;
+          missing input raises E0055. Nested fixed-array annotation errors
+          retain focused source spans and repair guidance.
         </p>
         <p>
-          Prebuilt packages still run the interpreter. Read the
-          {" "}<a href="/news/alpha15-runtime-kernels/">alpha.15 overview</a>,
-          {" "}<a href="/news/alpha14-patterns-native/">alpha.14 history</a>
+          <a href="/news/alpha16-order-statistics/">Alpha.16</a> also added
+          interpreter <code>median</code> and <code>quantile</code>, Unicode
+          transforms and checked integer utilities. These features do not
+          expand the experimental native backend beyond restricted scalar code.
+          Read <a href="/news/alpha17-arrays-input/">the alpha.17 guide</a>,
+          {" "}<a href="/news/alpha16-order-statistics/">alpha.16 history</a>
           and <a href={publishedCompiler.release}>official release notes</a>.
         </p>
         <h2>Introduced in alpha.12</h2>
@@ -187,7 +189,7 @@ export default function DownloadsPage() {
         />
         <p>
           Read the <a href="/news/alpha12-records-collections/">alpha.12 feature overview</a>
-          {" "}and the <a href={project.repo + "/tree/" + publishedCompiler.sourceCommit + "/examples/projects/task-board"}>alpha.15-tagged task-board source</a>.
+          {" "}and the <a href={project.repo + "/tree/" + publishedCompiler.sourceCommit + "/examples/projects/task-board"}>release-tagged task-board source</a>.
         </p>
         <h2>Introduced in alpha.11</h2>
         <p>
