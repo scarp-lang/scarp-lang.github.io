@@ -16,7 +16,7 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
     assert(program.length > 0, name + " is blank");
     assert(expectedOutput.length > 0, name + " has no expected output");
   }
-  assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["bigint_arithmetic.srp", "bigint_exact.srp", "conditional_unicode.srp", "fixed_arrays.srp", "map_projection_snapshots.srp", "nucleus_selection.srp", "pearson_correlation.srp", "rms.srp", "temperature_softmax.srp", "topk_scores.srp", "typed_propagation.srp"]);
+  assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["array_traversal.srp", "bigint_arithmetic.srp", "bigint_exact.srp", "conditional_unicode.srp", "fixed_arrays.srp", "map_projection_snapshots.srp", "nucleus_selection.srp", "order_statistics.srp", "pearson_correlation.srp", "rms.srp", "temperature_softmax.srp", "topk_scores.srp", "typed_propagation.srp"]);
   const publishedRoot = resolve("src/examples/published");
   assert.deepEqual((await readdir(publishedRoot)).filter(name => name.endsWith(".srp")).sort(),
     [...exampleCompatibility.publishedOnlyFixtureNames].sort());
@@ -35,6 +35,13 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
   assert.equal((await readFile(join(publishedRoot, "bigint_arithmetic.stdout"), "utf8")).split("\n")[0], "1000000000000000000000000000000");
   assert.match(await readFile(join(publishedRoot, "bigint_exact.srp"), "utf8"), /bigint_pow\(/);
   assert.match(await readFile(join(publishedRoot, "fixed_arrays.srp"), "utf8"), /array<string, 2>/);
+  assert.match(await readFile(join(publishedRoot, "array_traversal.srp"), "utf8"), /repeat array_len\(readings\)/);
+  assert.match(await readFile(join(publishedRoot, "array_traversal.srp"), "utf8"), /array_get_or\(/);
+  assert.equal(await readFile(join(publishedRoot, "array_traversal.stdout"), "utf8"),
+    "Total: 60\nMissing reading: 0\nEmpty length: 0\n");
+  assert.match(await readFile(join(publishedRoot, "order_statistics.srp"), "utf8"), /quantile\(/);
+  assert.equal(await readFile(join(publishedRoot, "order_statistics.stdout"), "utf8"),
+    "3.0\n1.75\n4.75\n2.0\n[4.0, 1.0, 7.0, 2.0]\n");
   assert.equal(await readFile(join(publishedRoot, "bigint_exact.stdout"), "utf8"), "111111111111111111111111111111 8\n129 100000000000000000000000000000000\n18446744073709551616 6\n");
   assert.equal(await readFile(join(publishedRoot, "fixed_arrays.stdout"), "utf8"), "Scarp 3 [array: <array<integer, 2>>]\n[array: \"नमस्ते\", \"Scarp\"] true\n");
   assert.match(await readFile(join(publishedRoot, "conditional_unicode.srp"), "utf8"), /elif score >= 60/);

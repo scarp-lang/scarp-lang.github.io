@@ -94,11 +94,11 @@ export const cliMilestones = [
   {
     tag: publishedCompiler.tag,
     sourceCommit: publishedCompiler.sourceCommit,
-    title: "Destructuring diagnostics, safe editor caches and checked ELF64 kernels",
+    title: "Array traversal, Boolean prompts and bounded scalar utilities",
     execution: "scarp exec hello.srp",
     validation: "scarp verify hello.srp",
     inspection: "scarp inspect symbols --json PROJECT_DIRECTORY",
-    additional: "Alpha.14 keeps source syntax and CLI compatibility, improves nested tuple/array/record pattern diagnostics and native verifier safety, and adds a Rust embedding-only checked-integer ELF64 object emitter. It permits live EditorCompilationCache::set_limits quotas without mutating previously issued snapshots. Alpha.13 added propagation optimizations, opt-in compiler cache eviction and workspace-safe editor snapshots; alpha.12 typed aggregates and matching; alpha.11 exact decimals; alpha.10 interactive input and fixed arrays. Declarative projects, scarp test, read_line, BigInt, numerical operators and symbol inspection remain available. Retains rms(vector), topk, softmax_temp, pearson_correlation, and top_p; no LSP, general native compilation CLI, or stable embedding ABI.",
+    additional: "Alpha.17 adds array_len and array_get_or, exact lowercase input_boolean under --interactive, and better nested fixed-array diagnostics. Alpha.16 added median, quantile, Unicode helpers and checked integer/bit utilities. Earlier releases added typed aggregates, testable declarative projects, read_line, BigInt and numerical rms(vector), topk, softmax_temp, pearson_correlation and top_p. CLI programs still execute through the interpreter; Rust embedding caches and checked ELF64 kernels remain experimental. No LSP, general native compile CLI or stable embedding ABI",
     evidence: publishedCompiler.release,
     fixtureTested: true,
   },
