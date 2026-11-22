@@ -4,7 +4,7 @@ import { searchEntries, searchEntriesFor } from "../src/data/search.ts";
 import { hindiSearchAliases } from "../src/data/search-hi.ts";
 
 test("site search data contains distinct, canonical page paths", () => {
-  assert.equal(searchEntries.length, 36);
+  assert.equal(searchEntries.length, 37);
   assert.equal(new Set(searchEntries.map(entry => entry.path)).size, searchEntries.length);
   for (const entry of searchEntries) {
     assert(entry.path.startsWith("/"));
@@ -32,6 +32,8 @@ test("keywords, casing, prefixes, and multiple terms find relevant pages", () =>
   assert.equal(searchEntriesFor("topk_values")[0]?.path, "/news/alpha6-ranking-temperature/");
   assert.equal(searchEntriesFor("read_line")[0]?.path, "/news/alpha6-input-tuples/");
   assert.equal(searchEntriesFor("array_get_or")[0]?.path, "/news/alpha17-arrays-input/");
+  assert.equal(searchEntriesFor("array_set")[0]?.path, "/news/alpha18-exec-lifetime/");
+  assert.equal(searchEntriesFor("अल्फा अठारह")[0]?.path, "/news/alpha18-exec-lifetime/");
   assert.equal(searchEntriesFor("input_boolean")[0]?.path, "/news/alpha17-arrays-input/");
   assert.equal(searchEntriesFor("अल्फा सत्रह")[0]?.path, "/news/alpha17-arrays-input/");
   assert.equal(searchEntriesFor("quantile")[0]?.path, "/news/alpha16-order-statistics/");
