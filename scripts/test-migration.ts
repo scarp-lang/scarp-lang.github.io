@@ -6,7 +6,7 @@ import { project } from "../src/data/project.ts";
 import { publishedCompiler } from "../src/data/releases.ts";
 import { exampleCompatibility } from "../src/data/compatibility.ts";
 
-test("CLI migration milestones are pinned to nine published prereleases", () => {
+test("CLI migration milestones are pinned to ten published prereleases", () => {
   assert.deepEqual(cliMilestones.map(item => item.tag), [
     project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", "v0.0.6-alpha.17", publishedCompiler.tag,
   ]);
@@ -43,15 +43,16 @@ test("migration guidance preserves the runtime/static distinction", () => {
   assert(cliMilestones[3]?.additional.includes("launch DIRECTORY"));
   assert(cliMilestones[4]?.additional.includes("project") || cliMilestones[4]?.additional.includes("Project"));
   assert(cliMilestones[4]?.inspection.includes("PROJECT_DIRECTORY"));
-  assert(cliMilestones[8]?.inspection.includes("PROJECT_DIRECTORY"));
-  assert(cliMilestones[8]?.inspection.includes("symbols"));
+  assert.equal(cliMilestones[8]?.tag, "v0.0.6-alpha.17");
+  assert.equal(cliMilestones[9]?.tag, publishedCompiler.tag);
+  assert.equal(cliMilestones[9]?.execution, "scarp exec");
+  assert(cliMilestones[9]?.inspection.includes("PROJECT_DIRECTORY"));
+  assert(cliMilestones[9]?.inspection.includes("symbols"));
   assert(cliMilestones[4]?.additional.includes("no compile CLI"));
-  assert(cliMilestones[8]?.additional.includes("rms(vector)"));
-  assert(cliMilestones[8]?.additional.includes("no LSP"));
-  assert(cliMilestones[8]?.additional.includes("topk"));
-  assert(cliMilestones[8]?.additional.includes("softmax_temp"));
-  assert(cliMilestones[8]?.additional.includes("pearson_correlation"));
-  assert(cliMilestones[8]?.additional.includes("top_p"));
+  assert(cliMilestones[9]?.additional.includes("array_set"));
+  assert(cliMilestones[9]?.additional.includes("empty numerical windows"));
+  assert(cliMilestones[9]?.additional.includes("No cycle collector"));
+  assert(cliMilestones[9]?.additional.includes("No cycle collector") || cliMilestones[9]?.additional.includes("cycle collector"));
   assert.equal(cliMilestones[6]?.tag, "v0.0.6-alpha.2");
   assert.equal(new Set(cliMigrations.map(item => item.id)).size, cliMigrations.length);
   const validation = cliMigrations.find(item => item.id === "validate");
