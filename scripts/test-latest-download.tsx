@@ -87,7 +87,7 @@ test("API failures and malformed responses do not return a download URL", async 
   await assert.rejects(() => fetchLatestDownload("windows", errorFetcher), /HTTP 403/);
   const invalidFetcher = (async () => Response.json({ message: "bad data" })) as typeof fetch;
   await assert.rejects(() => fetchLatestDownload("linux", invalidFetcher), /not an array/);
-  const fetcher = (async (input: RequestInfo | URL, init?: RequestInit) => {
+  const fetcher = (async (input: string | URL, init?: RequestInit) => {
     assert.equal(String(input), releasesApiUrl);
     assert.equal(init?.cache, "no-store");
     return Response.json([older, newer]);
