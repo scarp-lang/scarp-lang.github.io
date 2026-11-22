@@ -12,7 +12,7 @@ export default function DownloadsPage() {
       description={`Download published Scarp ${publishedCompiler.tag} for Windows, Linux, or macOS with official SHA-256 checksums and version-aware first-run commands.`}
     >
       <section className="wrap page-heading">
-        <p className="eyebrow">Latest published prerelease</p>
+        <p className="eyebrow">Latest website-reviewed prerelease</p>
         <h1>Your next experiment
           <br />starts here.
         </h1>
