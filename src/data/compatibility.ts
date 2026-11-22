@@ -7,10 +7,10 @@ import { publishedCompiler } from "./releases.ts";
  * The matching source commits are checked out and executed in ci.yml/pages.yml.
  */
 export const exampleCompatibility = {
-  reviewed: "2026-11-21",
+  reviewed: "2026-11-22",
   fixtureNames: ["functions.srp", "hello.srp", "numerics.srp"],
   interactiveFixtureNames: ["boolean_prompt.srp"],
-  publishedOnlyFixtureNames: ["bigint_arithmetic.srp", "bigint_exact.srp", "map_projection_snapshots.srp", "typed_propagation.srp", "fixed_arrays.srp", "array_traversal.srp", "order_statistics.srp", "rms.srp", "topk_scores.srp", "temperature_softmax.srp", "nucleus_selection.srp", "pearson_correlation.srp", "conditional_unicode.srp"],
+  publishedOnlyFixtureNames: ["array_updates.srp", "bigint_arithmetic.srp", "bigint_exact.srp", "map_projection_snapshots.srp", "typed_propagation.srp", "fixed_arrays.srp", "array_traversal.srp", "order_statistics.srp", "rms.srp", "topk_scores.srp", "temperature_softmax.srp", "nucleus_selection.srp", "pearson_correlation.srp", "conditional_unicode.srp"],
   versions: [
     {
       tag: project.tag,

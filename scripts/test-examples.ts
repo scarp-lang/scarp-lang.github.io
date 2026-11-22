@@ -63,6 +63,14 @@ if (target === "published") {
     assert.equal(executed.status, 0, name + ": " + executed.stderr);
     assert.equal(executed.stdout, expectedOutput, name + ": interactive stdout mismatch");
     assert.equal(executed.stderr, "", name + ": unexpected interactive stderr");
+    // Alpha.18 makes `exec` interactive by default; legacy explicit flags must still work.
+    const implicit = spawnSync(executablePath, ["exec", source], {
+      encoding: "utf8", timeout: 15000, input: standardInput,
+    });
+    assert.equal(implicit.error, undefined, name + ": implicit-input " + String(implicit.error));
+    assert.equal(implicit.status, 0, name + ": implicit-input " + implicit.stderr);
+    assert.equal(implicit.stdout, expectedOutput, name + ": automatic input stdout mismatch");
+    assert.equal(implicit.stderr, "", name + ": unexpected implicit-input stderr");
     const verified = run(["verify", source]);
     assert.equal(verified.status, 0, name + ": static verification failed: " + verified.stderr);
     assert.equal(verified.stdout, "", name + ": verify must be silent");

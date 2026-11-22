@@ -24,17 +24,18 @@ interface CommandResult {
   error?: Error;
 }
 
-function command(args: string[]): CommandResult {
+function command(args: string[], options: { cwd?: string } = {}): CommandResult {
   const result = spawnSync(executable, args, {
     encoding: "utf8",
     timeout: 15000,
     maxBuffer: 1024 * 1024,
+    cwd: options.cwd,
   });
   assert.equal(result.error, undefined, args.join(" ") + ": " + String(result.error));
   return result;
 }
-function expectExit(args: string[], expectedStatus: number): CommandResult {
-  const result = command(args);
+function expectExit(args: string[], expectedStatus: number, cwd?: string): CommandResult {
+  const result = command(args, { cwd });
   assert.equal(result.status, expectedStatus, args.join(" ") +
     ": unexpected exit status; stdout=" + result.stdout + "; stderr=" + result.stderr);
   return result;
@@ -76,6 +77,22 @@ try {
   assert.equal(executedApp.stdout, alpha8ProjectWorkflow.expectedMainStdout,
     "Documented module import and executable project output diverged");
   assert.equal(executedApp.stderr, "", "Unexpected application stderr");
+  // Alpha.18 resolves a valid local manifest without a source argument.
+  const autoProject = expectExit(["exec"], 0, projectDirectory);
+  assert.equal(autoProject.stdout, alpha8ProjectWorkflow.expectedMainStdout);
+  assert.equal(autoProject.stderr, "", "Auto-resolved project emitted unexpected stderr");
+  const standalone = join(workspace, "standalone");
+  await mkdir(join(standalone, "src"), { recursive: true });
+  await writeFile(join(standalone, "main.srp"), 'print("root choice");\n', "utf8");
+  await writeFile(join(standalone, "src", "main.srp"), 'print("src choice");\n', "utf8");
+  assert.equal(expectExit(["exec"], 0, standalone).stdout, "src choice\n",
+    "No-arg exec must prioritize src/main.srp over main.srp");
+  await rm(join(standalone, "src", "main.srp"));
+  assert.equal(expectExit(["exec"], 0, standalone).stdout, "root choice\n",
+    "No-arg exec must fall back to main.srp");
+  await writeFile(join(standalone, "scarp.project"), "broken manifest\n", "utf8");
+  assert.notEqual(command(["exec"], { cwd: standalone }).status, 0,
+    "Invalid local manifest must never execute the fallback program");
 
   const metadata = expectExit(["project", "info", "--json", projectDirectory], 0);
   const info = JSON.parse(metadata.stdout) as {

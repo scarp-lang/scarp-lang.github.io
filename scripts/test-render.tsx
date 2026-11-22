@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 41);
+  assert.equal(pages.length, 42);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -575,7 +575,7 @@ test('alpha.15 announcement, tagged source and bilingual search/feed discovery',
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-19');
-  assert.equal(news[2]?.href, path);
+  assert.equal(news[3]?.href, path);
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);
@@ -597,7 +597,7 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-18');
-  assert.equal(news[3]?.href, path);
+  assert.equal(news[4]?.href, path);
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);
@@ -614,8 +614,11 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
   assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + path + '</loc>'));
 });
 
-test('alpha.16 and alpha.17 release articles remain source-pinned and discoverable', async () => {
+test('alpha.16 through alpha.18 release articles remain source-pinned and discoverable', async () => {
   const articles = [
+    { path: '/news/alpha18-exec-lifetime/', date: '2026-11-22',
+      source: '84d8de05968a488773e7c5b6eda1376d8957553c',
+      tokens: ['v0.0.6-alpha.18', 'scarp exec', 'array_set', 'Lifetime', 'E0063', 'Rust 1.74'] },
     { path: '/news/alpha17-arrays-input/', date: '2026-11-21',
       source: '7831a37939965f557ce746e1d86bf82d3d629f74',
       tokens: ['v0.0.6-alpha.17', 'array_len', 'array_get_or', 'input_boolean', 'E0084', 'E0055', 'E0063'] },
@@ -637,4 +640,5 @@ test('alpha.16 and alpha.17 release articles remain source-pinned and discoverab
   }
   assert.equal(news[0]?.href, articles[0]?.path);
   assert.equal(news[1]?.href, articles[1]?.path);
+  assert.equal(news[2]?.href, articles[2]?.path);
 });
