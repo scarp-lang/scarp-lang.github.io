@@ -16,7 +16,7 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
     assert(program.length > 0, name + " is blank");
     assert(expectedOutput.length > 0, name + " has no expected output");
   }
-  assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["array_traversal.srp", "bigint_arithmetic.srp", "bigint_exact.srp", "conditional_unicode.srp", "fixed_arrays.srp", "map_projection_snapshots.srp", "nucleus_selection.srp", "order_statistics.srp", "pearson_correlation.srp", "rms.srp", "temperature_softmax.srp", "topk_scores.srp", "typed_propagation.srp"]);
+  assert.deepEqual([...exampleCompatibility.publishedOnlyFixtureNames].sort(), ["array_traversal.srp", "array_updates.srp", "bigint_arithmetic.srp", "bigint_exact.srp", "conditional_unicode.srp", "fixed_arrays.srp", "map_projection_snapshots.srp", "nucleus_selection.srp", "order_statistics.srp", "pearson_correlation.srp", "rms.srp", "temperature_softmax.srp", "topk_scores.srp", "typed_propagation.srp"]);
   const interactiveRoot = resolve("src/examples/interactive");
   assert.deepEqual((await readdir(interactiveRoot)).filter(name => name.endsWith(".srp")).sort(),
     [...exampleCompatibility.interactiveFixtureNames].sort());
@@ -44,6 +44,8 @@ test("CI coverage is explicitly limited to the exact existing fixtures", async (
   assert.match(await readFile(join(publishedRoot, "fixed_arrays.srp"), "utf8"), /array<string, 2>/);
   assert.match(await readFile(join(publishedRoot, "array_traversal.srp"), "utf8"), /repeat array_len\(readings\)/);
   assert.match(await readFile(join(publishedRoot, "array_traversal.srp"), "utf8"), /array_get_or\(/);
+  assert.match(await readFile(join(publishedRoot, "array_updates.srp"), "utf8"), /array_set\(/);
+  assert.equal(await readFile(join(publishedRoot, "array_updates.stdout"), "utf8"), "8\n99\n3\n");
   assert.equal(await readFile(join(publishedRoot, "array_traversal.stdout"), "utf8"),
     "Total: 60\nMissing reading: 0\nEmpty length: 0\n");
   assert.match(await readFile(join(publishedRoot, "order_statistics.srp"), "utf8"), /quantile\(/);
