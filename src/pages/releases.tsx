@@ -31,33 +31,23 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Safer array traversal, Boolean input and typed diagnostics.</h3>
-          <p>
-            Scarp {publishedCompiler.tag} introduces <code>array_len(values)</code>
-            for fixed-array traversal and <code>array_get_or(values, index, fallback)</code>
-            for checked fallback access. Direct indexing still rejects invalid
-            indices. The fallback has the array element type and is evaluated once.
-          </p>
-          <p>
-            <code>input_boolean(prompt)</code> accepts only lowercase
-            <code> true</code> or <code>false</code> in opt-in
-            <code> --interactive</code> mode. Invalid input produces E0084;
-            premature end of input produces E0055. Nested fixed-array type
-            diagnostics now report more focused source locations and repairs.
-          </p>
-          <p>
-            <a href="/news/alpha16-order-statistics/">Alpha.16</a> previously
-            introduced <code>median</code>, <code>quantile</code>, Unicode text
-            helpers, checked integer utilities and Rust embedding maintenance.
-            Experimental native code generation remains restricted to a scalar
-            subset; these new language functions run in the interpreter.
-          </p>
-          <p>
-            Read <a href="/news/alpha17-arrays-input/">the alpha.17 overview</a>,
+          <h3>One-command execution, immutable arrays and Lifetime hardening.</h3>
+          <p>Scarp {publishedCompiler.tag} lets <code>scarp exec</code> run the current
+            directory's validated project, or <code>src/main.srp</code> and then
+            <code> main.srp</code>. Explicit paths remain supported. Only
+            <code> exec</code> automatically enables bounded terminal prompts;
+            a malformed manifest fails rather than running another file.</p>
+          <p>The interpreter adds pure <code>array_set</code> for immutable fixed
+            arrays. <strong>Lifetime</strong> now detaches zero-length numerical
+            windows from large backing buffers. Nonempty views can still retain
+            shared storage; this is not a cycle collector or an RSS guarantee.</p>
+          <p>Alpha.18 also strengthens interactive prompt flush retries and
+            release packaging verification. Native C11/ELF64 code generation
+            remains an experimental Rust embedding API.</p>
+          <p>Read <a href="/news/alpha18-exec-lifetime/">the alpha.18 overview</a>,
+            {" "}<a href="/news/alpha17-arrays-input/">alpha.17 history</a>,
             {" "}<a href="/news/alpha16-order-statistics/">alpha.16 history</a>,
-            {" "}<a href="/news/alpha15-runtime-kernels/">alpha.15 history</a>
-            or <a href={publishedCompiler.release}>official release notes</a>.
-          </p>
+            or <a href={publishedCompiler.release}>official release notes</a>.</p>
           <p>
             Pre-built archives cover Windows x64, Linux x64 GNU and macOS
             Apple Silicon. This is an alpha, not a stable compiler.
@@ -114,7 +104,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version CLI changes and alpha.17 interpreter compatibility,
+          version-by-version CLI changes and alpha.18 interpreter compatibility,
           including project workflows and the new read-only symbol index.
         </p>
         <p>

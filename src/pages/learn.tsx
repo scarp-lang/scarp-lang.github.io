@@ -58,7 +58,7 @@ export default function LearnPage() {
         With <strong>{publishedCompiler.tag}</strong>, statically check the
         source and then execute it:
       </p>
-      <CodeBlock filename="Terminal · published alpha.6" code={"scarp verify hello.srp\nscarp exec hello.srp"} />
+      <CodeBlock filename="Terminal · published alpha.18" code={"scarp verify hello.srp\nscarp exec hello.srp"} />
       <p>
         Expected output when executed:
       </p>
