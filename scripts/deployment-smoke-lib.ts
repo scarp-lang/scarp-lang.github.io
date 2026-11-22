@@ -75,6 +75,9 @@ export async function probeDeployment(
   const routes = [
     { path: "/", token: 'href="https://scarp-lang.github.io/"' },
     { path: "/downloads/", token: expectedTag },
+    { path: "/downloads/windows/latest/", token: 'data-latest-download="windows"' },
+    { path: "/downloads/linux/latest/", token: 'data-latest-download="linux"' },
+    { path: "/downloads/macos/latest/", token: 'data-latest-download="macos"' },
     { path: "/support/", token: "support" },
   ];
   for (const route of routes) {
