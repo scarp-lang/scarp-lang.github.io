@@ -30,10 +30,16 @@ export default function DownloadsPage() {
           <article key={item.file} className="download-card">
             <span className="eyebrow">{item.architecture}</span>
             <h2>{item.name}</h2>
-            <a className="button primary" href={publishedDownloadUrl(item.file)}>
-              Download {item.file.endsWith(".zip") ? "ZIP" : ".tar.gz"}{" "}
-              <span aria-hidden="true">↓</span>
+            <a className="button primary" href={`/downloads/${item.platform}/latest/`}>
+              Get newest Scarp for {item.name} <span aria-hidden="true">↓</span>
             </a>
+            <a className="inline-link" href={publishedDownloadUrl(item.file)}>
+              Download reviewed {publishedCompiler.tag} {item.file.endsWith(".zip") ? "ZIP" : ".tar.gz"} ↗
+            </a>
+            <p className="small muted">
+              The SHA-256 value below verifies only the reviewed {publishedCompiler.tag} archive,
+              not a newer download from the permanent link.
+            </p>
             <a className="inline-link" href={publishedDownloadUrl(item.file + ".sha256")}>
               SHA-256 file ↗
             </a>

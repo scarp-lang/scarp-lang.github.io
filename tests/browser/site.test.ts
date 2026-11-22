@@ -91,6 +91,131 @@ async function inPage(
   }
 }
 
+// All latest-download tests stub GitHub at the network boundary: never download
+// an executable or rely on live release contents during browser CI.
+const latestReleaseApiPath = "/repos/scarp-lang/scarp/releases";
+const testLatestTag = "v0.0.6-alpha.99";
+const latestPlatformAssets = {
+  windows: "x86_64-pc-windows-msvc.zip",
+  linux: "x86_64-unknown-linux-gnu.tar.gz",
+  macos: "aarch64-apple-darwin.tar.gz",
+} as const;
+type LatestBrowserPlatform = keyof typeof latestPlatformAssets;
+function latestReleaseAsset(platform: LatestBrowserPlatform, tag = testLatestTag) {
+  const file = `scarp-${tag.slice(1)}-${latestPlatformAssets[platform]}`;
+  return {
+    name: file,
+    browser_download_url: `https://github.com/scarp-lang/scarp/releases/download/${tag}/${file}`,
+    state: "uploaded",
+    size: 12345,
+  };
+}
+function latestMockRelease(platforms: LatestBrowserPlatform[]) {
+  return [{
+    tag_name: testLatestTag,
+    published_at: "2026-11-22T12:00:00Z",
+    draft: false,
+    prerelease: true,
+    assets: platforms.map(platform => latestReleaseAsset(platform)),
+  }];
+}
+async function stubLatestGitHubApi(page: Page, status: number, payload: unknown): Promise<() => number> {
+  let requests = 0;
+  await page.route(url =>
+    url.origin === "https://api.github.com" && url.pathname === latestReleaseApiPath,
+  async route => {
+    requests++;
+    await route.fulfill({
+      status,
+      contentType: "application/json; charset=utf-8",
+      headers: { "Access-Control-Allow-Origin": "*" },
+      body: JSON.stringify(payload),
+    });
+  });
+  return () => requests;
+}
+
+test("permanent platform links open the exact newest archive in a real browser", async () => {
+  for (const platform of ["windows", "linux", "macos"] as const) {
+    await inPage("latest-" + platform, { viewport: { width: 390, height: 844 } }, async page => {
+      const requestCount = await stubLatestGitHubApi(page, 200,
+        // Deliberately place the older release first to catch bad ordering.
+        [{
+          tag_name: "v0.0.6-alpha.17",
+          published_at: "2026-11-21T03:44:23Z",
+          draft: false,
+          prerelease: true,
+          assets: [latestReleaseAsset(platform, "v0.0.6-alpha.17")],
+        }, ...latestMockRelease(["windows", "linux", "macos"])]);
+      const url = latestReleaseAsset(platform).browser_download_url;
+      let assetRequests = 0;
+      await page.route(request => request.href === url, async route => {
+        assetRequests++;
+        await route.fulfill({
+          status: 200,
+          contentType: "text/html; charset=utf-8",
+          body: "<!doctype html><html><head><title>Mocked official archive URL</title></head><body>Mocked download navigation</body></html>",
+        });
+      });
+      await page.goto(origin + `/downloads/${platform}/latest/`, { waitUntil: "domcontentloaded" });
+      await page.waitForURL(url, { timeout: 8000 });
+      assert.equal(await page.title(), "Mocked official archive URL");
+      assert.equal(requestCount(), 1, "Release API fetched exactly once");
+      assert.equal(assetRequests, 1, "Only the expected release archive was requested");
+    });
+  }
+});
+
+test("missing newest architecture does not silently download an older archive", async () => {
+  await inPage("latest-architecture-missing", { viewport: { width: 390, height: 844 } }, async page => {
+    const requestCount = await stubLatestGitHubApi(page, 200, [
+      ...latestMockRelease(["windows"]),
+      {
+        tag_name: "v0.0.6-alpha.17",
+        published_at: "2026-11-21T03:44:23Z",
+        draft: false,
+        prerelease: true,
+        assets: [latestReleaseAsset("linux", "v0.0.6-alpha.17")],
+      },
+    ]);
+    await page.goto(origin + "/downloads/linux/latest/", { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() =>
+      document.querySelector("[data-latest-status]")?.textContent?.includes("has no matching linux archive yet"),
+    );
+    assert.equal(new URL(page.url()).pathname, "/downloads/linux/latest/");
+    assert.equal(requestCount(), 1);
+    assert.equal(await page.locator("[data-latest-release]").getAttribute("href"),
+      "https://github.com/scarp-lang/scarp/releases/tag/" + testLatestTag);
+    assert.equal(await page.locator("a[href$='x86_64-unknown-linux-gnu.tar.gz']").count(), 1,
+      "An independently reviewed fallback stays available");
+  });
+});
+
+test("GitHub API errors preserve an explicit and safe reviewed-download fallback", async () => {
+  await inPage("latest-api-failure", { viewport: { width: 390, height: 844 } }, async page => {
+    const requestCount = await stubLatestGitHubApi(page, 403, { message: "rate limit" });
+    await page.goto(origin + "/downloads/windows/latest/", { waitUntil: "domcontentloaded" });
+    await page.waitForFunction(() =>
+      document.querySelector("[data-latest-status]")?.textContent?.includes("Could not check GitHub Releases"),
+    );
+    assert.equal(requestCount(), 1);
+    assert.equal(new URL(page.url()).pathname, "/downloads/windows/latest/");
+    assert.equal(await page.locator("a[href$='x86_64-pc-windows-msvc.zip']").count(), 1);
+  });
+});
+
+test("latest download pages keep an understandable fallback without JavaScript", async () => {
+  await inPage("latest-no-javascript", {
+    viewport: { width: 390, height: 844 }, javaScriptEnabled: false,
+  }, async page => {
+    await page.goto(origin + "/downloads/macos/latest/", { waitUntil: "domcontentloaded" });
+    assert.equal(await page.locator("noscript").isVisible(), true);
+    assert((await page.locator("noscript").textContent() ?? "").includes("JavaScript is needed"));
+    assert.equal(await page.locator("a[href$='aarch64-apple-darwin.tar.gz']").count(), 1);
+    assert.equal(new URL(page.url()).pathname, "/downloads/macos/latest/");
+  });
+});
+
 test("mobile menu toggles, Escape restores focus, and navigation follows links", async () => {
   await inPage("mobile-navigation", { viewport: { width: 390, height: 844 } }, async page => {
     await page.goto(origin + "/", { waitUntil: "networkidle" });
