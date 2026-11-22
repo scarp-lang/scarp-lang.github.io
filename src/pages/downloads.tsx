@@ -12,7 +12,7 @@ export default function DownloadsPage() {
       description={`Download published Scarp ${publishedCompiler.tag} for Windows, Linux, or macOS with official SHA-256 checksums and version-aware first-run commands.`}
     >
       <section className="wrap page-heading">
-        <p className="eyebrow">Latest published prerelease</p>
+        <p className="eyebrow">Latest website-reviewed prerelease</p>
         <h1>Your next experiment
           <br />starts here.
         </h1>
@@ -56,6 +56,28 @@ export default function DownloadsPage() {
             </details>
           </article>
         ))}
+      </section>
+
+      <section className="wrap section prose" aria-labelledby="permanent-download-links">
+        <h2 id="permanent-download-links">Permanent latest-version links</h2>
+        <p>
+          Bookmark one URL for your platform. These links check GitHub for the most
+          recently published Scarp release, including prereleases, and open the
+          matching archive when it exists. No link needs changing for a new tag.
+        </p>
+        <ul>
+          {publishedDownloads.map(item => (
+            <li key={item.platform}>
+              <a href={`/downloads/${item.platform}/latest/`}>Latest Scarp for {item.name} ({item.architecture})</a>
+            </li>
+          ))}
+        </ul>
+        <p className="small muted">
+          Latest-version links use the live release catalogue. The checksums
+          shown on this page apply <strong>only to {publishedCompiler.tag}</strong>.
+          For a newer download, verify against the SHA-256 published with that
+          specific release. The links require JavaScript to discover a new version.
+        </p>
       </section>
 
       <section className="wrap section prose" id="verify-download">

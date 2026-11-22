@@ -13,6 +13,9 @@ function validRoutes(commit: string | null = sha): Record<string, Response> {
     "/project.json": Response.json({ website: "https://scarp-lang.github.io", latestPublished: { tag } }),
     "/": new Response('<title>Home</title><link href="https://scarp-lang.github.io/" />', { status: 200, headers: htmlType }),
     "/downloads/": new Response('<title>Downloads</title>' + tag, { status: 200, headers: htmlType }),
+    "/downloads/windows/latest/": new Response('<title>Windows</title><main data-latest-download="windows"></main>', { status: 200, headers: htmlType }),
+    "/downloads/linux/latest/": new Response('<title>Linux</title><main data-latest-download="linux"></main>', { status: 200, headers: htmlType }),
+    "/downloads/macos/latest/": new Response('<title>macOS</title><main data-latest-download="macos"></main>', { status: 200, headers: htmlType }),
     "/support/": new Response("<title>Support</title><main>support</main>", { status: 200, headers: htmlType }),
   };
 }
@@ -37,10 +40,10 @@ test("deployment marker is a strict, versioned and repository-specific contract"
     { schemaVersion: 1, repository: repositoryName, commit: sha, compilerTag: "stable" },
   ]) assert.throws(() => parseDeploymentMarker(value), /Invalid deployment marker/);
 });
-test("successful smoke test checks provenance, snapshot, and three public HTML routes", async () => {
+test("successful smoke test checks provenance, snapshot, and six public HTML routes", async () => {
   const { fetcher, seen } = mocked(validRoutes());
   await probeDeployment(sha, tag, { fetcher });
-  assert.deepEqual(seen, ["/deployment.json", "/project.json", "/", "/downloads/", "/support/"]);
+  assert.deepEqual(seen, ["/deployment.json", "/project.json", "/", "/downloads/", "/downloads/windows/latest/", "/downloads/linux/latest/", "/downloads/macos/latest/", "/support/"]);
 });
 test("stale deployment marker cannot pass even when all pages look healthy", async () => {
   const { fetcher } = mocked(validRoutes("b".repeat(40)));

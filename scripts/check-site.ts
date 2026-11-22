@@ -122,7 +122,7 @@ for (const item of downloads) {
   assert.match(item.hash, /^[0-9a-f]{64}$/);
 }
 const sitemap = await readFile(join(root, 'sitemap.xml'), 'utf8');
-for (const page of pages.filter(path => !path.endsWith('/404.html'))) {
+for (const page of pages.filter(path => !path.endsWith('/404.html') && !/\/downloads\/(?:windows|linux|macos)\/latest\/index\.html$/.test(path))) {
   const route = page.slice(root.length).replace(/index\.html$/, '');
   assert(sitemap.includes(`<loc>https://scarp-lang.github.io${route}</loc>`), `Sitemap missing ${route}`);
 }

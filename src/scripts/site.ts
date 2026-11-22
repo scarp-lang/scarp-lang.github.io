@@ -3,6 +3,7 @@ import { enhanceQuickSearch } from "./quick-search.ts";
 import { enhanceMobileNavigation } from "./mobile-navigation.ts";
 import { enhanceCodeExplorer } from "./code-explorer.ts";
 import { enhanceCopyButtons } from "./code-copy.ts";
+import { enhanceLatestDownload } from "./latest-download.ts";
 
 const announcement = document.querySelector<HTMLElement>('[data-announcement]');
 const announce = (text: string) => { if (announcement) announcement.textContent = text; };
@@ -38,3 +39,6 @@ enhanceCopyButtons(document.querySelectorAll<HTMLButtonElement>("[data-copy]"), 
 
 enhanceSiteSearch(document, window);
 enhanceQuickSearch(document, window);
+
+// Only performs a network request on a permanent latest-download route.
+enhanceLatestDownload();
