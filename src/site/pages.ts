@@ -5,6 +5,7 @@ import Development from "../pages/development.tsx";
 import Roadmap from "../pages/roadmap.tsx";
 import Releases from "../pages/releases.tsx";
 import Downloads from "../pages/downloads.tsx";
+import { WindowsLatestDownload, LinuxLatestDownload, MacosLatestDownload } from "../pages/download-latest.tsx";
 import Learn from "../pages/learn.tsx";
 import Ai from "../pages/ai.tsx";
 import Community from "../pages/community.tsx";
@@ -55,6 +56,9 @@ export const pages: readonly SitePage[] = [
   { path: "/compatibility/", Component: Compatibility },
   { path: "/migration/", Component: Migration },
   { path: "/downloads/", Component: Downloads },
+  { path: "/downloads/windows/latest/", Component: WindowsLatestDownload, noindex: true },
+  { path: "/downloads/linux/latest/", Component: LinuxLatestDownload, noindex: true },
+  { path: "/downloads/macos/latest/", Component: MacosLatestDownload, noindex: true },
   { path: "/learn/", Component: Learn },
   { path: "/ai/", Component: Ai },
   { path: "/community/", Component: Community },
