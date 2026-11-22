@@ -143,7 +143,7 @@ learning paths, AI direction, community, support, contribution guidance, FAQ,
 project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
 a source-verified compatibility guide at `/compatibility/`, an evidence-linked
 published CLI migration guide at `/migration/` (covering legacy commands through the
-reviewed alpha.17 release), and a local,
+reviewed alpha.18 release), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering, curated Hindi search terms for English-language website
@@ -152,7 +152,7 @@ URL restoration during browser navigation, and the `/` or Ctrl/⌘+K shortcut
 (outside editable controls). It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs retain their historical verified compiler baseline.
 The three homepage fixtures also run with the exact pinned published
-**v0.0.6-alpha.17** compiler, with byte-identical stdout. Additional
+**v0.0.6-alpha.18** compiler, with byte-identical stdout. Additional
 published-only fixtures exercise numerical kernels, typed propagation,
 ordered map projections, fixed-array traversal, vector quantiles, and schema-v1 symbol/reference inspection. The
 two compiler revisions and version-specific CLI commands are checked in
@@ -160,13 +160,14 @@ both CI and the GitHub Pages workflow. These tests do not claim universal
 language or platform compatibility.
 
 Downloads and Releases use the manually reviewed
-[Scarp v0.0.6-alpha.17 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.17),
-published 21 November 2026 from the exact annotated-tag source commit
-`7831a37939965f557ce746e1d86bf82d3d629f74`, with reviewed Windows x64,
+[Scarp v0.0.6-alpha.18 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.18),
+published 22 November 2026 from the exact annotated-tag source commit
+`84d8de05968a488773e7c5b6eda1376d8957553c`, with reviewed Windows x64,
 Linux x64 GNU and Apple Silicon macOS SHA-256 archive digests.
-[Alpha.17 coverage](https://scarp-lang.github.io/news/alpha17-arrays-input/)
-documents fixed-array traversal helpers, typed fallback access and interactive
-Boolean prompts. [Alpha.16 history](https://scarp-lang.github.io/news/alpha16-order-statistics/)
+[Alpha.18 coverage](https://scarp-lang.github.io/news/alpha18-exec-lifetime/)
+documents unified exec, pure array_set and Lifetime empty-view retention.
+[Alpha.17 history](https://scarp-lang.github.io/news/alpha17-arrays-input/)
+covers array traversal and Boolean prompts. [Alpha.16 history](https://scarp-lang.github.io/news/alpha16-order-statistics/)
 documents median, quantile, Unicode and checked integer utilities.
 The [historical alpha.15 article](https://scarp-lang.github.io/news/alpha15-runtime-kernels/)
 records inspection limits, string-comparison accounting and experimental kernels.

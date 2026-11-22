@@ -8,7 +8,7 @@ import { exampleCompatibility } from "../src/data/compatibility.ts";
 
 test("CLI migration milestones are pinned to nine published prereleases", () => {
   assert.deepEqual(cliMilestones.map(item => item.tag), [
-    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", publishedCompiler.tag,
+    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", "v0.0.6-alpha.17", publishedCompiler.tag,
   ]);
   assert.equal(new Set(cliMilestones.map(item => item.tag)).size, cliMilestones.length);
   for (const item of cliMilestones) {
@@ -19,7 +19,8 @@ test("CLI migration milestones are pinned to nine published prereleases", () => 
   assert.equal(cliMilestones[0]?.sourceCommit, project.source);
   assert.equal(cliMilestones[3]?.sourceCommit, "79141329176f5dce51457e90a6652902f6432135");
   assert.equal(cliMilestones[7]?.sourceCommit, "f04be0758cbce405ddcdb229699b0ff83c09d207");
-  assert.equal(cliMilestones[8]?.sourceCommit, publishedCompiler.sourceCommit);
+  assert.equal(cliMilestones[8]?.sourceCommit, "7831a37939965f557ce746e1d86bf82d3d629f74");
+  assert.equal(cliMilestones[9]?.sourceCommit, publishedCompiler.sourceCommit);
   assert.equal(migrationEvidence.publishedRelease, publishedCompiler.release);
   assert(migrationEvidence.projectWorkflow.includes(publishedCompiler.sourceCommit));
 });
