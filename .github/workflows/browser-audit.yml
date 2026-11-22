@@ -7,39 +7,6 @@ on:
 permissions:
   contents: read
 jobs:
-  # One-off maintainer-reviewed visual baseline refresh for alpha.18.
-  # Only the specifically tagged feature-branch push can run this write-scoped job.
-  refresh-alpha18-reviewed-visuals:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/feat/alpha18-release-website-sync' && contains(github.event.head_commit.message, '[refresh-alpha18-baselines]') }}
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: write
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: true
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 26
-          cache: npm
-      - run: npm ci
-      - run: npm install --no-save --package-lock=false playwright-core@1.64.1
-      - run: npm run build
-      - name: Regenerate all four reviewed visual baselines in Chrome
-        run: npm run test:browser
-        env:
-          SCARP_UPDATE_VISUAL_BASELINES: "1"
-      - name: Commit only the three reviewed release-feed screenshots
-        run: |
-          set -euo pipefail
-          git diff --name-only -- tests/browser/baselines/
-          git add tests/browser/baselines/home-desktop-light.png tests/browser/baselines/home-mobile-dark.png tests/browser/baselines/search-mobile-light.png
-          git diff --cached --quiet && { echo 'No baseline differences'; exit 1; }
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "test(visual): refresh reviewed alpha.18 news screenshots"
-          git push origin HEAD:feat/alpha18-release-website-sync
   browser-audit:
     runs-on: ubuntu-24.04
     timeout-minutes: 15

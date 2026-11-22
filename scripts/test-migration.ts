@@ -52,7 +52,6 @@ test("migration guidance preserves the runtime/static distinction", () => {
   assert(cliMilestones[9]?.additional.includes("array_set"));
   assert(cliMilestones[9]?.additional.includes("empty numerical windows"));
   assert(cliMilestones[9]?.additional.includes("No cycle collector"));
-  assert(cliMilestones[9]?.additional.includes("No cycle collector") || cliMilestones[9]?.additional.includes("cycle collector"));
   assert.equal(cliMilestones[6]?.tag, "v0.0.6-alpha.2");
   assert.equal(new Set(cliMigrations.map(item => item.id)).size, cliMigrations.length);
   const validation = cliMigrations.find(item => item.id === "validate");

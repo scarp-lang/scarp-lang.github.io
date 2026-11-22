@@ -81,7 +81,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
   RSS, release snapshot, and six early-theme scenarios.
 - `SCARP_BIN=/path/to/baseline/scarp npm run test:examples`: exact-output checks
   for the historical baseline. For the current published prerelease, run
-  `SCARP_BIN=/path/to/alpha17/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
+  `SCARP_BIN=/path/to/alpha18/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
   after building the separately pinned published source.
 
 ## Real-browser mobile and accessibility QA
@@ -123,10 +123,10 @@ Mismatches produce magenta-highlighted diff PNGs under
 `test-results/browser/diffs/` alongside the current screenshot.
 
 Reference screenshots in `tests/browser/baselines/` are pinned to the
-[reviewed alpha.17 visual evidence](tests/browser/baselines/README.md).
-Two independent Chrome captures produced byte-identical images for the
-current website; the import verified all four SHA-256 hashes and removed
-its temporary branch-only workflow. **Normal CI never regenerates or accepts
+[reviewed alpha.18 visual evidence](tests/browser/baselines/README.md).
+A reviewed alpha.18 browser capture was byte-verified against the three
+updated reference PNGs; the unchanged support screenshot retained its
+previous approved SHA-256. The temporary branch-only update job was removed. **Normal CI never regenerates or accepts
 reference screenshots**. When a design update is intentional, review the
 screenshots before explicitly updating and committing reference images.
 Hosted Chrome/font updates can introduce genuine differences and must also
