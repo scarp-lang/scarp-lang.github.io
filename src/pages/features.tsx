@@ -90,7 +90,7 @@ export default function FeaturesPage() {
         </p>
         <h2>Know the boundaries</h2>
         <p>
-          The current <a href="/news/alpha15-runtime-kernels/">alpha.15 release</a>
+          The earlier <a href="/news/alpha15-runtime-kernels/">alpha.15 release</a>
           limits inspection file sizes, charges string-comparison work,
           validates semantic cache revisions and adds checked shift kernels.
           Earlier <a href="/news/alpha14-patterns-native/">alpha.14</a>

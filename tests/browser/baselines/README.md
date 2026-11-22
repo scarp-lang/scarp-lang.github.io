@@ -1,6 +1,36 @@
 # Scarp website visual regression references
 
-## Reviewed alpha.17 release snapshots — 21 November 2026
+## Reviewed alpha.18 release snapshots — 22 November 2026
+
+The published alpha.18 release adds one first-position news card to the home
+page and a matching entry to the searchable site directory. Consequently,
+the homepage (desktop light / mobile dark) and mobile search screenshots are
+intentionally taller. The support page layout is unchanged.
+
+Three new PNG captures from the real Chrome browser QA artifacts were inspected
+for card placement, readable text, navigation, dark-mode styling, scrollable
+layout and horizontal overflow. Exact Git blob SHA-1 identities were checked
+against the generated artifact images **after** the scoped baseline-refresh
+job committed them, confirming that the reviewed captures and committed PNG
+bytes are identical. The regular browser QA workflow remains read-only.
+
+- [Alpha.18 Chrome capture and diffs](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/45036422249)
+- [One-time visual refresh, including Chrome checks](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/45036903466)
+
+| Reference PNG | Viewport | Snapshot height | Reviewed SHA-256 |
+| --- | --- | --- | --- |
+| `home-desktop-light.png` | 1280 × 800, light | 8,134px | `0ab188a82ec9687d155b167c583604c96effa27b78356f22281b647e3f399aff` |
+| `home-mobile-dark.png` | 390 × 844, dark | 13,375px | `eadda2c3ad6ffb4dce3f2c39a4806bf62bc85fbcb4af878f7754fe879a444271` |
+| `search-mobile-light.png` | 390 × 844, light | 9,200px | `84f31f5029558db1984b4e3924206474436d71a7115438b2cbcfb5579a4422cf` |
+| `support-desktop-dark.png` | 1280 × 800, dark | 4,549px (unchanged) | `aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a` |
+
+Full-page visual comparisons continue to reject dimension drift and any
+screenshot with more than 0.35% of pixels materially changed. CI never
+automatically accepts differences. The temporary write-scoped,
+feature-branch-only workflow used for this reviewed refresh was removed
+before merge.
+
+## Earlier alpha.17 release snapshots — 21 November 2026
 
 The verified Scarp alpha.17 website synchronization adds two historical
 release articles (alpha.16 and alpha.17), two new home news cards, and two

@@ -19,6 +19,7 @@ import Alpha9BigIntReports from "../pages/news/alpha9-bigint-reports.tsx";
 import Alpha10InteractiveArrays from "../pages/news/alpha10-interactive-arrays.tsx";
 import Alpha11ExactDecimal from "../pages/news/alpha11-exact-decimal.tsx";
 import Alpha17ArraysInput from "../pages/news/alpha17-arrays-input.tsx";
+import Alpha18ExecLifetime from "../pages/news/alpha18-exec-lifetime.tsx";
 import Alpha16OrderStatistics from "../pages/news/alpha16-order-statistics.tsx";
 import Alpha15RuntimeKernels from "../pages/news/alpha15-runtime-kernels.tsx";
 import Alpha14PatternsNative from "../pages/news/alpha14-patterns-native.tsx";
@@ -67,6 +68,7 @@ export const pages: readonly SitePage[] = [
   { path: "/support/", Component: Support },
   { path: "/search/", Component: Search },
   { path: "/news/", Component: News },
+  { path: "/news/alpha18-exec-lifetime/", Component: Alpha18ExecLifetime },
   { path: "/news/alpha17-arrays-input/", Component: Alpha17ArraysInput },
   { path: "/news/alpha16-order-statistics/", Component: Alpha16OrderStatistics },
   { path: "/news/alpha15-runtime-kernels/", Component: Alpha15RuntimeKernels },

@@ -130,6 +130,12 @@ export default function DownloadsPage() {
           <li>Extract the archive into a directory you control, including any bundled example files.</li>
           <li>Run the extracted interpreter's <code>version</code> command to confirm the release before creating a project.</li>
         </ol>
+        <h2>Using alpha.18 with an existing project</h2>
+        <p>From a folder containing a valid <code>scarp.project</code> or
+          <code>Scarp.project</code>, run <code>scarp exec</code>. Without a
+          manifest it checks <code>src/main.srp</code> then <code>main.srp</code>.
+          A malformed manifest is an error; arbitrary source files are never
+          selected. Existing input quotas still apply.</p>
         <h2>Declarative projects (introduced in alpha.8)</h2>
         <p>
           These commands create a new offline project with a
@@ -181,28 +187,25 @@ export default function DownloadsPage() {
           CLI commands with the new package.
         </p>
         <h2>New in {publishedCompiler.tag}</h2>
-        <p>
-          <code>array_len(values)</code> returns a fixed array's length for
-          <code> repeat</code> traversal. <code>array_get_or</code> supplies
-          a same-element-type fallback for out-of-range indices, evaluated
-          once even when the index is valid. Ordinary indexing still reports E0063.
-        </p>
-        <p>
-          For interactive terminal prompts, <code>input_boolean(prompt)</code>
-          accepts exact lowercase <code>true</code> or <code>false</code>
-          with <code>--interactive</code>. Malformed input raises E0084;
-          missing input raises E0055. Nested fixed-array annotation errors
-          retain focused source spans and repair guidance.
-        </p>
-        <p>
-          <a href="/news/alpha16-order-statistics/">Alpha.16</a> also added
-          interpreter <code>median</code> and <code>quantile</code>, Unicode
-          transforms and checked integer utilities. These features do not
-          expand the experimental native backend beyond restricted scalar code.
-          Read <a href="/news/alpha17-arrays-input/">the alpha.17 guide</a>,
+        <p><code>scarp exec</code> now runs the current project's validated
+          manifest entrypoint, otherwise <code>src/main.srp</code> or
+          <code> main.srp</code>, with no source argument. An invalid manifest
+          fails rather than silently running an arbitrary file. Explicit
+          source paths continue to work. The <code>exec</code> command enables
+          bounded interactive prompts automatically; legacy <code>run</code>
+          remains opt-in for terminal prompts.</p>
+        <CodeBlock filename="Terminal · alpha.18+" code={"scarp exec\nscarp exec src/main.srp\nscarp exec examples/array_updates.srp"} />
+        <p>Pure <code>array_set</code> creates a new immutable fixed array and
+          leaves existing snapshots unchanged. Bad indices report E0063 and
+          allocation quotas remain enforced. <strong>Lifetime</strong> begins
+          detaching empty numerical views from their original buffers; it is
+          not yet a cycle collector or a complete native memory manager.</p>
+        <p><a href="/news/alpha17-arrays-input/">Alpha.17</a> introduced
+          <code>array_len</code>, <code>array_get_or</code> and
+          <code>input_boolean</code>. Read
+          {" "}<a href="/news/alpha18-exec-lifetime/">the alpha.18 guide</a>,
           {" "}<a href="/news/alpha16-order-statistics/">alpha.16 history</a>
-          and <a href={publishedCompiler.release}>official release notes</a>.
-        </p>
+          and <a href={publishedCompiler.release}>official release notes</a>.</p>
         <h2>Introduced in alpha.12</h2>
         <p>
           Alpha.12 added typed records, tagged variants, nested destructuring,
@@ -232,8 +235,10 @@ export default function DownloadsPage() {
           Alpha.10 added opt-in interactive prompts with <code>input(prompt)</code>,
           <code>ask(prompt)</code>, <code>ask_or(prompt, fallback)</code>, typed
           numeric input and <code>try_read_line()</code>. Supply
-          <code> --interactive</code> for terminal prompts, or
-          <code> --input-file</code> for reproducible UTF-8 input.
+          <code> --interactive</code> for terminal prompts on legacy
+          <code> run</code> or pre-alpha.18 releases; alpha.18 <code>exec</code>
+          prompts automatically. Use <code> --input-file</code> for
+          reproducible UTF-8 input.
         </p>
         <CodeBlock filename="Terminal · alpha.10+" code={"scarp exec --interactive app.srp\nscarp exec --input-file DATA.txt app.srp"} />
         <p>

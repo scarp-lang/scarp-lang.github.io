@@ -64,7 +64,7 @@ export default function MigrationPage() {
         and release history, <strong>not</strong> this website's current
         executable fixture tests. The alpha.4 fixtures passed in an earlier
         website CI run; the current suite tests the baseline and the
-        separately pinned published alpha.15 compiler.
+        separately pinned published {publishedCompiler.tag} compiler.
         The distinct <a href="/compatibility/#project-workflow">alpha.8 project
         and test-runner integration check</a> covers a fresh project and
         separate legacy-CLI compatibility beyond the three homepage files.
@@ -94,6 +94,23 @@ export default function MigrationPage() {
         successful static verification guarantees successful runtime execution.
       </p>
 
+      <h2 id="alpha18-exec">Alpha.18: automatic project and source selection</h2>
+      <p>
+        In <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>,
+        <code>scarp exec</code> selects a validated local
+        <code> scarp.project</code> or legacy <code>Scarp.project</code>.
+        Without a manifest it uses <code>src/main.srp</code>, then
+        <code> main.srp</code>. An invalid manifest fails. No arbitrary
+        source or parent directory is searched; explicit paths still work.
+      </p>
+      <CodeBlock filename="Terminal · alpha.18+" code={"scarp exec\nscarp exec src/main.srp\nscarp exec examples/array_updates.srp"} />
+      <p>
+        Only <code>exec</code> enables bounded console prompts by default.
+        Legacy <code>run</code> keeps the opt-in <code>--interactive</code>
+        requirement. <code>scarp verify</code> remains static-only, and
+        pure <code>array_set</code> returns a snapshot rather than modifying
+        an indexed element. See <a href="/news/alpha18-exec-lifetime/">the release overview</a>.
+      </p>
       <h2 id="workflow">Historical alpha.4 offline project workflow</h2>
       <ol>
         <li>

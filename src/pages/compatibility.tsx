@@ -144,11 +144,29 @@ export default function CompatibilityPage() {
         source in Linux CI. This does not certify all project CLI combinations,
         platforms or third-party code.
       </p>
+      <h2 id="alpha18-coverage">Alpha.18 CLI and array-update verification</h2>
+      <p>
+        The pinned <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
+        compiler executes and verifies the
+        {" "}<a href={publishedFixtureUrl("array_updates.srp")}>array_updates.srp</a>
+        fixture. Exact output proves <code>array_set</code> returns an
+        updated snapshot while the original fixed array remains unchanged.
+        The project test checks no-argument <code>scarp exec</code>,
+        <code>src/main.srp</code> precedence, root <code>main.srp</code>
+        fallback, and malformed manifest rejection. The Boolean prompt
+        fixture runs both with and without <code>--interactive</code>.
+      </p>
+      <p>
+        These are selected Linux interpreter tests, not a proof of every
+        parser case, allocation quota or platform archive. Website CI does
+        not measure <strong>Lifetime</strong> buffer retention, cycle collection
+        or total process memory. See <a href="/news/alpha18-exec-lifetime/">release limits</a>.
+      </p>
       <h2 id="alpha17-array-input">Alpha.17 arrays and interactive Boolean input</h2>
       <p>
-        The current <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
-        adds <code>array_len</code>, <code>array_get_or</code> and
-        opt-in <code>input_boolean</code>. The published-only
+        Originally introduced in <a href="/news/alpha17-arrays-input/">alpha.17</a>,
+        <code>array_len</code>, <code>array_get_or</code> and
+        <code>input_boolean</code> remain available in the pinned compiler. The published-only
         <code> array_traversal.srp</code> fixture checks typed fallback
         behavior and a repeat loop. The <code>order_statistics.srp</code>
         fixture exercises alpha.16's <code>median</code> and <code>quantile</code>.
