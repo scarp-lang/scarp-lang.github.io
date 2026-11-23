@@ -1,19 +1,19 @@
 /**
  * Published release snapshot reviewed against the official GitHub release
- * and annotated tag on 22 November 2026. Not an automatically updated feed.
+ * and annotated tag on 23 November 2026. Not an automatically updated feed.
  * The website example baseline remains separately pinned in project.ts.
  */
 import { project } from "./project.ts";
 
-const releaseVersion = "0.0.6-alpha.18" as const;
+const releaseVersion = "0.0.6-alpha.19" as const;
 const releaseTag = `v${releaseVersion}` as const;
 
 export const publishedCompiler = {
   version: releaseVersion,
   tag: releaseTag,
-  publishedAt: "2026-11-22T14:19:01Z",
-  reviewed: "2026-11-22",
-  sourceCommit: "84d8de05968a488773e7c5b6eda1376d8957553c",
+  publishedAt: "2026-11-23T08:33:14Z",
+  reviewed: "2026-11-23",
+  sourceCommit: "e534e73a81c9500e3aef9f3d51cafa0bc7bbcf75",
   release: `${project.repo}/releases/tag/${releaseTag}`,
   status: "experimental-prerelease",
 } as const;
@@ -24,21 +24,21 @@ export const publishedDownloads = [
     platform: "windows",
     architecture: "x64 · MSVC",
     file: `scarp-${releaseVersion}-x86_64-pc-windows-msvc.zip`,
-    hash: "1dbd8e9f6dbb3e727fb765b5a1bf184f8574c8b139289269b65a7d889d60e6b0",
+    hash: "e00ec9bfd2447fc2c54ae8101933da3c6899251300711627115db5239e559023",
   },
   {
     name: "Linux",
     platform: "linux",
     architecture: "x64 · GNU",
     file: `scarp-${releaseVersion}-x86_64-unknown-linux-gnu.tar.gz`,
-    hash: "175fc419b1469e80dbf3cd7ccee273eb573a9113e27467801ef7095c064b289f",
+    hash: "e9bfb14202c0bc33a6621d7d0545482280f0296531038b34e2215fe124c0366b",
   },
   {
     name: "macOS",
     platform: "macos",
     architecture: "ARM64 · Apple Silicon",
     file: `scarp-${releaseVersion}-aarch64-apple-darwin.tar.gz`,
-    hash: "30aed1c56fc666f86dca6c08234d8ac17d9f5ee513a4270d7a65f80544dc2c52",
+    hash: "5eb73cacc13b21f40e3448310b4f9e5582935250c833108d0493b02db7f65c96",
   },
 ] as const;
 

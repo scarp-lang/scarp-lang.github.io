@@ -49,6 +49,7 @@ export const socials = [
 ] as const;
 
 export const news = [
+  { date: '2026-11-23', category: 'Language release', title: 'Scarp alpha.19: checked host callable handles', description: 'Experimental Rust function handles, export-safe selection, signature checks, deterministic ExecutionUsage receipts and HostInvocationLedger cumulative quotas; no first-class Scarp function values.', href: '/news/alpha19-host-callables/' },
   { date: '2026-11-22', category: 'Language release', title: 'Scarp alpha.18: one-command exec, Lifetime and array_set', description: 'Default-project discovery and automatic console prompts with scarp exec, persistent array_set updates, and safer empty numerical windows.', href: '/news/alpha18-exec-lifetime/' },
   { date: '2026-11-21', category: 'Language release', title: 'Scarp alpha.17: array traversal and Boolean prompts', description: 'Interpreter array_len, array_get_or with checked fallback evaluation, opt-in input_boolean and clearer nested array diagnostics.', href: '/news/alpha17-arrays-input/' },
   { date: '2026-11-20', category: 'Language release', title: 'Scarp alpha.16: order statistics and Unicode utilities', description: 'Bounded median and quantile, Unicode text operations, checked integer helpers and Rust cache/kernel maintenance.', href: '/news/alpha16-order-statistics/' },

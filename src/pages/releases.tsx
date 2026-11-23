@@ -31,22 +31,23 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>One-command execution, immutable arrays and Lifetime hardening.</h3>
-          <p>Scarp {publishedCompiler.tag} lets <code>scarp exec</code> run the current
-            directory's validated project, or <code>src/main.srp</code> and then
-            <code> main.srp</code>. Explicit paths remain supported. Only
-            <code> exec</code> automatically enables bounded terminal prompts;
-            a malformed manifest fails rather than running another file.</p>
-          <p>The interpreter adds pure <code>array_set</code> for immutable fixed
-            arrays. <strong>Lifetime</strong> now detaches zero-length numerical
-            windows from large backing buffers. Nonempty views can still retain
-            shared storage; this is not a cycle collector or an RSS guarantee.</p>
-          <p>Alpha.18 also strengthens interactive prompt flush retries and
-            release packaging verification. Native C11/ELF64 code generation
-            remains an experimental Rust embedding API.</p>
-          <p>Read <a href="/news/alpha18-exec-lifetime/">the alpha.18 overview</a>,
-            {" "}<a href="/news/alpha17-arrays-input/">alpha.17 history</a>,
-            {" "}<a href="/news/alpha16-order-statistics/">alpha.16 history</a>,
+          <h3>Checked Rust host callable handles and cumulative execution quotas.</h3>
+          <p>Scarp {publishedCompiler.tag} adds <code>TypeRegistry::accepts_callable</code>
+            and checked Rust embedding handles for named functions, including
+            positional/named argument mapping, default parameters and
+            export-aware module selection. Pure implementations may satisfy
+            impure callable requirements, but not the reverse.</p>
+          <p><code>ExecutionUsage</code> receipts and
+            <code> HostInvocationLedger</code> account for repeated host calls
+            and enforce cumulative interpreter work, call, input, output and
+            allocation limits. Completed execution remains accounted for
+            even if a host-provided output writer panics during replay.</p>
+          <p><strong>Source-level function values and closures remain unsupported.</strong>
+            Named <code>funcra</code> syntax, <code>scarp exec</code> and
+            interpreter behavior from alpha.18 remain available. This is an
+            experimental Rust embedding API, not a general native backend.</p>
+          <p>Read <a href="/news/alpha19-host-callables/">the alpha.19 overview</a>,
+            {" "}<a href="/news/alpha18-exec-lifetime/">alpha.18 interpreter history</a>,
             or <a href={publishedCompiler.release}>official release notes</a>.</p>
           <p>
             Pre-built archives cover Windows x64, Linux x64 GNU and macOS
@@ -104,7 +105,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version CLI changes and alpha.18 interpreter compatibility,
+          version-by-version CLI changes, alpha.18 interpreter behavior and alpha.19 host APIs,
           including project workflows and the new read-only symbol index.
         </p>
         <p>

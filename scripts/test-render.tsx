@@ -614,8 +614,11 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
   assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + path + '</loc>'));
 });
 
-test('alpha.16 through alpha.18 release articles remain source-pinned and discoverable', async () => {
+test('alpha.16 through alpha.19 release articles remain source-pinned and discoverable', async () => {
   const articles = [
+    { path: '/news/alpha19-host-callables/', date: '2026-11-23',
+      source: "e534e73a81c9500e3aef9f3d51cafa0bc7bbcf75",
+      tokens: ['v0.0.6-alpha.19', 'TypeRegistry::accepts_callable', 'ExecutionUsage', 'HostInvocationLedger', 'Rust embedding', 'closures', 'alpha.18'] },
     { path: '/news/alpha18-exec-lifetime/', date: '2026-11-22',
       source: '84d8de05968a488773e7c5b6eda1376d8957553c',
       tokens: ['v0.0.6-alpha.18', 'scarp exec', 'array_set', 'Lifetime', 'E0063', 'Rust 1.74'] },
