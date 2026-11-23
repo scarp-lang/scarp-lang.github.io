@@ -3,6 +3,7 @@ import CodeBlock from "../components/CodeBlock.tsx";
 import { cliMilestones, cliMigrations, migrationEvidence } from "../data/migration.ts";
 import { exampleCompatibility } from "../data/compatibility.ts";
 import { publishedCompiler } from "../data/releases.ts";
+import { project } from "../data/project.ts";
 
 export default function MigrationPage() {
   return (

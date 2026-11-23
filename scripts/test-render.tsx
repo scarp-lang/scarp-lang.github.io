@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 42);
+  assert.equal(pages.length, 43);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -575,7 +575,7 @@ test('alpha.15 announcement, tagged source and bilingual search/feed discovery',
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-19');
-  assert.equal(news[3]?.href, path);
+  assert.equal(news[4]?.href, path);
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);
@@ -597,7 +597,7 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-18');
-  assert.equal(news[4]?.href, path);
+  assert.equal(news[5]?.href, path);
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);
