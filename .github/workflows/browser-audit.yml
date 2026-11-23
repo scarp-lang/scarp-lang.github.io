@@ -7,6 +7,47 @@ on:
 permissions:
   contents: read
 jobs:
+  # One-time, exact-capture alpha.19 screenshot baseline refresh.
+  # Cannot run from pull_request, main, or an unmarked feature-branch push.
+  refresh-alpha19-reviewed-visuals:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/feat/alpha19-published-release-sync' && contains(github.event.head_commit.message, '[refresh-alpha19-baselines]') }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false playwright-core@1.64.1
+      - run: npm run build
+      - name: Reproduce all four reviewed Chrome snapshots
+        run: npm run test:browser
+        env:
+          SCARP_UPDATE_VISUAL_BASELINES: "1"
+      - name: Require byte-identical reviewed PNGs before approving baselines
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            '76ae6b20f5c06e66e23d2834778f3e2e767ee549dd0c6b2911ee2c0592a639e0  tests/browser/baselines/home-desktop-light.png' \
+            '5f3919e991ef32f2023fd6680d18ce63fa64f0bbb75eb1154996f200ca7456ed  tests/browser/baselines/home-mobile-dark.png' \
+            '23fd8e262351e31c35736076c2088a87acabacb73c73a0b557894309b4f251c8  tests/browser/baselines/search-mobile-light.png' \
+            'aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a  tests/browser/baselines/support-desktop-dark.png' | sha256sum --check
+          test "$(git diff --name-only -- tests/browser/baselines | wc -l)" -eq 3
+      - name: Commit only three reviewed screenshot files
+        run: |
+          set -euo pipefail
+          git add tests/browser/baselines/home-desktop-light.png tests/browser/baselines/home-mobile-dark.png tests/browser/baselines/search-mobile-light.png
+          git diff --cached --quiet && { echo 'No baseline differences'; exit 1; }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "test(visual): refresh verified alpha.19 screenshots"
+          git push origin HEAD:feat/alpha19-published-release-sync
   browser-audit:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
