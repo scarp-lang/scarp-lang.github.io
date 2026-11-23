@@ -3,6 +3,7 @@ import CodeBlock from "../components/CodeBlock.tsx";
 import { cliMilestones, cliMigrations, migrationEvidence } from "../data/migration.ts";
 import { exampleCompatibility } from "../data/compatibility.ts";
 import { publishedCompiler } from "../data/releases.ts";
+import { project } from "../data/project.ts";
 
 export default function MigrationPage() {
   return (
@@ -96,7 +97,7 @@ export default function MigrationPage() {
 
       <h2 id="alpha18-exec">Alpha.18: automatic project and source selection</h2>
       <p>
-        In <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>,
+        In <a href={project.repo + "/releases/tag/v0.0.6-alpha.18"}>alpha.18</a>,
         <code>scarp exec</code> selects a validated local
         <code> scarp.project</code> or legacy <code>Scarp.project</code>.
         Without a manifest it uses <code>src/main.srp</code>, then
@@ -110,6 +111,16 @@ export default function MigrationPage() {
         requirement. <code>scarp verify</code> remains static-only, and
         pure <code>array_set</code> returns a snapshot rather than modifying
         an indexed element. See <a href="/news/alpha18-exec-lifetime/">the release overview</a>.
+      </p>
+      <h2 id="alpha19-host">Alpha.19: Rust embedding, not a source-level CLI change</h2>
+      <p>
+        <a href="/news/alpha19-host-callables/">Alpha.19</a> adds checked
+        Rust host callable handles, named/default argument validation,
+        export-aware selection and cumulative host invocation quotas.
+        <code> scarp exec</code>, <code>verify</code> and named
+        <code> funcra</code> calls retain their alpha.18 behavior.
+        Scarp source cannot yet pass functions as values or construct closures.
+        Read the <a href={publishedCompiler.release}>current release notes</a>.
       </p>
       <h2 id="workflow">Historical alpha.4 offline project workflow</h2>
       <ol>

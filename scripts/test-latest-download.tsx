@@ -9,7 +9,7 @@ import {
 } from "../src/data/latest-download.ts";
 import { publishedDownloads, publishedCompiler, publishedDownloadUrl } from "../src/data/releases.ts";
 
-const tag = "v0.0.6-alpha.18";
+const tag = "v0.0.6-alpha.19";
 const published = (name: string, date: string, assets: unknown[]) =>
   ({ tag_name: name, published_at: date, draft: false, prerelease: true, assets });
 const urlFor = (name: string, file: string) =>
@@ -18,10 +18,10 @@ const asset = (platform: keyof typeof latestDownloadPlatforms, name = tag) => {
   const file = `scarp-${name.slice(1)}-${latestDownloadPlatforms[platform].suffix}`;
   return { name: file, browser_download_url: urlFor(name, file), state: "uploaded", size: 12345 };
 };
-const newer = published(tag, "2026-11-22T12:00:00Z",
+const newer = published(tag, "2026-11-23T08:33:14Z",
   [asset("windows"), asset("linux"), asset("macos")]);
-const olderTag = "v0.0.6-alpha.17";
-const older = published(olderTag, "2026-11-21T03:44:23Z",
+const olderTag = "v0.0.6-alpha.18";
+const older = published(olderTag, "2026-11-22T14:19:01Z",
   [asset("windows", olderTag), asset("linux", olderTag), asset("macos", olderTag)]);
 
 test("stable permanent routes are valid, noindex pages with explicit reviewed fallbacks", () => {
@@ -60,7 +60,7 @@ test("select newest published prerelease by publication timestamp, not API array
 
 test("latest missing architecture must not silently download an older release", () => {
   assert.deepEqual(selectLatestDownload([
-    published(tag, "2026-11-22T12:00:00Z", [asset("windows")]), older,
+    published(tag, "2026-11-23T08:33:14Z", [asset("windows")]), older,
   ], "linux"), {
     kind: "missing", tag, releaseUrl: `${githubReleasesUrl}/tag/${tag}`,
   });

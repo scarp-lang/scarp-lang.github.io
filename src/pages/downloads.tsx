@@ -130,7 +130,7 @@ export default function DownloadsPage() {
           <li>Extract the archive into a directory you control, including any bundled example files.</li>
           <li>Run the extracted interpreter's <code>version</code> command to confirm the release before creating a project.</li>
         </ol>
-        <h2>Using alpha.18 with an existing project</h2>
+        <h2>Running existing projects (alpha.18 and later)</h2>
         <p>From a folder containing a valid <code>scarp.project</code> or
           <code>Scarp.project</code>, run <code>scarp exec</code>. Without a
           manifest it checks <code>src/main.srp</code> then <code>main.srp</code>.
@@ -186,8 +186,19 @@ export default function DownloadsPage() {
           has separate instructions pinned to {project.tag}; do not use its old
           CLI commands with the new package.
         </p>
-        <h2>New in {publishedCompiler.tag}</h2>
-        <p><code>scarp exec</code> now runs the current project's validated
+        <h2>New in {publishedCompiler.tag}: Rust embedding</h2>
+        <p>
+          The published alpha.19 release adds <code>TypeRegistry::accepts_callable</code>,
+          checked Rust host handles for named <code>funcra</code> functions, export-aware
+          module selection, and <code>ExecutionUsage</code> /
+          <code>HostInvocationLedger</code> for cumulative host execution limits.
+          These APIs are <strong>not</strong> first-class Scarp function values,
+          closures, arbitrary indirect calls, or a native compiler CLI.
+          Read the <a href="/news/alpha19-host-callables/">alpha.19 guide</a>
+          and the <a href={publishedCompiler.release}>official alpha.19 notes</a>.
+        </p>
+        <h2>Introduced in alpha.18: execution and immutable arrays</h2>
+        <p><code>scarp exec</code> runs the current project's validated
           manifest entrypoint, otherwise <code>src/main.srp</code> or
           <code> main.srp</code>, with no source argument. An invalid manifest
           fails rather than silently running an arbitrary file. Explicit
@@ -205,7 +216,7 @@ export default function DownloadsPage() {
           <code>input_boolean</code>. Read
           {" "}<a href="/news/alpha18-exec-lifetime/">the alpha.18 guide</a>,
           {" "}<a href="/news/alpha16-order-statistics/">alpha.16 history</a>
-          and <a href={publishedCompiler.release}>official release notes</a>.</p>
+          and <a href={project.repo + "/releases/tag/v0.0.6-alpha.18"}>alpha.18 release notes</a>.</p>
         <h2>Introduced in alpha.12</h2>
         <p>
           Alpha.12 added typed records, tagged variants, nested destructuring,

@@ -6,9 +6,9 @@ import { project } from "../src/data/project.ts";
 import { publishedCompiler } from "../src/data/releases.ts";
 import { exampleCompatibility } from "../src/data/compatibility.ts";
 
-test("CLI migration milestones are pinned to ten published prereleases", () => {
+test("CLI migration milestones are pinned to eleven published prereleases", () => {
   assert.deepEqual(cliMilestones.map(item => item.tag), [
-    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", "v0.0.6-alpha.17", publishedCompiler.tag,
+    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", "v0.0.6-alpha.17", "v0.0.6-alpha.18", publishedCompiler.tag,
   ]);
   assert.equal(new Set(cliMilestones.map(item => item.tag)).size, cliMilestones.length);
   for (const item of cliMilestones) {
@@ -20,7 +20,8 @@ test("CLI migration milestones are pinned to ten published prereleases", () => {
   assert.equal(cliMilestones[3]?.sourceCommit, "79141329176f5dce51457e90a6652902f6432135");
   assert.equal(cliMilestones[7]?.sourceCommit, "f04be0758cbce405ddcdb229699b0ff83c09d207");
   assert.equal(cliMilestones[8]?.sourceCommit, "7831a37939965f557ce746e1d86bf82d3d629f74");
-  assert.equal(cliMilestones[9]?.sourceCommit, publishedCompiler.sourceCommit);
+  assert.equal(cliMilestones[9]?.sourceCommit, "84d8de05968a488773e7c5b6eda1376d8957553c");
+  assert.equal(cliMilestones[10]?.sourceCommit, publishedCompiler.sourceCommit);
   assert.equal(migrationEvidence.publishedRelease, publishedCompiler.release);
   assert(migrationEvidence.projectWorkflow.includes(publishedCompiler.sourceCommit));
 });
@@ -44,14 +45,18 @@ test("migration guidance preserves the runtime/static distinction", () => {
   assert(cliMilestones[4]?.additional.includes("project") || cliMilestones[4]?.additional.includes("Project"));
   assert(cliMilestones[4]?.inspection.includes("PROJECT_DIRECTORY"));
   assert.equal(cliMilestones[8]?.tag, "v0.0.6-alpha.17");
-  assert.equal(cliMilestones[9]?.tag, publishedCompiler.tag);
-  assert.equal(cliMilestones[9]?.execution, "scarp exec");
-  assert(cliMilestones[9]?.inspection.includes("PROJECT_DIRECTORY"));
-  assert(cliMilestones[9]?.inspection.includes("symbols"));
+  assert.equal(cliMilestones[9]?.tag, "v0.0.6-alpha.18");
+  assert.equal(cliMilestones[10]?.tag, publishedCompiler.tag);
+  assert.equal(cliMilestones[10]?.execution, "scarp exec");
+  assert(cliMilestones[10]?.inspection.includes("PROJECT_DIRECTORY"));
+  assert(cliMilestones[10]?.inspection.includes("symbols"));
   assert(cliMilestones[4]?.additional.includes("no compile CLI"));
   assert(cliMilestones[9]?.additional.includes("array_set"));
   assert(cliMilestones[9]?.additional.includes("empty numerical windows"));
   assert(cliMilestones[9]?.additional.includes("No cycle collector"));
+  assert(cliMilestones[10]?.additional.includes("TypeRegistry::accepts_callable"));
+  assert(cliMilestones[10]?.additional.includes("HostInvocationLedger"));
+  assert(cliMilestones[10]?.additional.includes("No first-class source-level function values"));
   assert.equal(cliMilestones[6]?.tag, "v0.0.6-alpha.2");
   assert.equal(new Set(cliMigrations.map(item => item.id)).size, cliMigrations.length);
   const validation = cliMigrations.find(item => item.id === "validate");
