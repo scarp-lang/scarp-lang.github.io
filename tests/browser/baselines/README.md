@@ -1,6 +1,37 @@
 # Scarp website visual regression references
 
-## Reviewed alpha.18 release snapshots — 22 November 2026
+## Reviewed alpha.19 release snapshots — 23 November 2026
+
+The published alpha.19 release adds a first-position news card and a new
+search result. This changes the full-page homepage and search screenshot
+heights; the support page stays pixel-identical to its prior baseline.
+The browser QA generated full-page Chrome images using the established
+light/dark viewports and static production build.
+
+The generated captures were inspected for typography, page flow, new release
+card placement, dark/light contrast, navigation, and mobile readability.
+A single branch-only, commit-message-gated refresh job reproduced **all four
+PNG files byte-for-byte against SHA-256 values from that inspected capture**,
+committed only the three changed baseline images, and then was removed
+before merge. Independent Git blob SHA-1 recomputation confirmed the
+commit contains the same bytes as the reviewed artifact.
+
+- [Original reviewed alpha.19 browser screenshots](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/45140894942)
+- [Scoped exact-hash baseline refresh (successful)](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/45141667422)
+
+| Reference PNG | Viewport | Snapshot height | Reviewed SHA-256 |
+| --- | --- | --- | --- |
+| `home-desktop-light.png` | 1280 × 800, light | 8,157px | `76ae6b20f5c06e66e23d2834778f3e2e767ee549dd0c6b2911ee2c0592a639e0` |
+| `home-mobile-dark.png` | 390 × 844, dark | 13,727px | `5f3919e991ef32f2023fd6680d18ce63fa64f0bbb75eb1154996f200ca7456ed` |
+| `search-mobile-light.png` | 390 × 844, light | 9,483px | `23fd8e262351e31c35736076c2088a87acabacb73c73a0b557894309b4f251c8` |
+| `support-desktop-dark.png` | 1280 × 800, dark | 4,549px (unchanged) | `aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a` |
+
+No visual threshold was relaxed. Normal browser validation remains
+**read-only**, with dimension drift rejected and a maximum of 0.35% materially
+changed pixels. The temporary job used to regenerate approved images
+must not be included in production workflows.
+
+## Earlier reviewed alpha.18 snapshots — 22 November 2026
 
 The published alpha.18 release adds one first-position news card to the home
 page and a matching entry to the searchable site directory. Consequently,

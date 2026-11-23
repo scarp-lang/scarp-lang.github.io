@@ -123,10 +123,11 @@ Mismatches produce magenta-highlighted diff PNGs under
 `test-results/browser/diffs/` alongside the current screenshot.
 
 Reference screenshots in `tests/browser/baselines/` are pinned to the
-[reviewed alpha.18 visual evidence](tests/browser/baselines/README.md).
-A reviewed alpha.18 browser capture was byte-verified against the three
-updated reference PNGs; the unchanged support screenshot retained its
-previous approved SHA-256. The temporary branch-only update job was removed. **Normal CI never regenerates or accepts
+[reviewed alpha.19 visual evidence](tests/browser/baselines/README.md).
+Three screenshots were regenerated only after Chrome captures had been visually
+reviewed; every committed PNG was verified byte-for-byte against those captures.
+The unchanged support screenshot retained its approved SHA-256. The temporary
+write-scoped refresh job was removed. **Normal CI never regenerates or accepts
 reference screenshots**. When a design update is intentional, review the
 screenshots before explicitly updating and committing reference images.
 Hosted Chrome/font updates can introduce genuine differences and must also
