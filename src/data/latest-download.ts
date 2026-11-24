@@ -33,28 +33,40 @@ function isRecord(value: unknown): value is Record<string, unknown> {
  */
 export function selectLatestDownload(payload: unknown, platform: LatestPlatform): LatestDownloadResolution {
   if (!Array.isArray(payload)) throw new Error("GitHub releases response is not an array");
+  if (!isLatestPlatform(platform)) throw new Error("Unsupported download platform");
   const releases = payload.filter((value): value is Record<string, unknown> => {
     if (!isRecord(value) || value.draft !== false ||
         typeof value.tag_name !== "string" ||
         !/^v\d+\.\d+\.\d+(?:-[0-9A-Za-z][0-9A-Za-z.-]*)?$/.test(value.tag_name) ||
         typeof value.published_at !== "string" ||
         !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/.test(value.published_at)) return false;
-    return Number.isFinite(Date.parse(value.published_at));
+    const timestamp = Date.parse(value.published_at);
+    // Date.parse normalizes impossible calendar dates (e.g. February 30).
+    return Number.isFinite(timestamp) &&
+      new Date(timestamp).toISOString() === value.published_at.replace(/Z$/, ".000Z");
   }).sort((a, b) => Date.parse(b.published_at as string) - Date.parse(a.published_at as string));
   const release = releases[0];
   if (!release) return { kind: "none" };
 
   const tag = release.tag_name as string;
+  // Equal publication timestamps and duplicate tags are ambiguous. Do not
+  // let API ordering determine which binary a permanent URL downloads.
+  if (releases.slice(1).some(candidate =>
+    candidate.published_at === release.published_at || candidate.tag_name === tag)) {
+    throw new Error("Ambiguous latest published Scarp release");
+  }
   const releaseUrl = `${githubReleasesUrl}/tag/${tag}`;
   const filename = `scarp-${tag.slice(1)}-${latestDownloadPlatforms[platform].suffix}`;
   const url = `https://github.com/scarp-lang/scarp/releases/download/${tag}/${filename}`;
   const assets = Array.isArray(release.assets) ? release.assets : [];
-  const found = assets.some(asset =>
-    isRecord(asset) && asset.name === filename &&
-    asset.browser_download_url === url &&
-    (asset.state === undefined || asset.state === "uploaded") &&
-    (asset.size === undefined || (typeof asset.size === "number" && asset.size > 0))
-  );
+  const matches = assets.filter(asset => isRecord(asset) && asset.name === filename);
+  const candidate = matches[0];
+  // A duplicate name is ambiguous even when one entry has the expected URL.
+  // Require the complete metadata provided by GitHub for an uploaded asset.
+  const found = matches.length === 1 && isRecord(candidate) &&
+    candidate.browser_download_url === url && candidate.state === "uploaded" &&
+    typeof candidate.size === "number" && Number.isSafeInteger(candidate.size) &&
+    candidate.size > 0;
   return found ? { kind: "ready", tag, filename, url, releaseUrl } :
     { kind: "missing", tag, releaseUrl };
 }
