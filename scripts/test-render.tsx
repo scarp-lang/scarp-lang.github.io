@@ -14,7 +14,7 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 43);
+  assert.equal(pages.length, 44);
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -614,8 +614,11 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
   assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + path + '</loc>'));
 });
 
-test('alpha.16 through alpha.19 release articles remain source-pinned and discoverable', async () => {
+test('alpha.16 through alpha.20 release articles remain source-pinned and discoverable', async () => {
   const articles = [
+    { path: '/news/alpha20-native-decimal-tuples/', date: '2026-11-24',
+      source: 'b1a9347f93540fdf95b0ddecba4adc55a3b4bb98',
+      tokens: ['v0.0.6-alpha.20', 'ELF64', '0.1d', 'lexicographic', 'scarp.project', 'scarp_checked_integer_function'] },
     { path: '/news/alpha19-host-callables/', date: '2026-11-23',
       source: "e534e73a81c9500e3aef9f3d51cafa0bc7bbcf75",
       tokens: ['v0.0.6-alpha.19', 'TypeRegistry::accepts_callable', 'ExecutionUsage', 'HostInvocationLedger', 'Rust embedding', 'closures', 'alpha.18'] },

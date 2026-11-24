@@ -164,28 +164,42 @@ try {
   // Static verification checks types; the false assertion fails only at runtime.
   expectExit(["verify", join(testsDir, "failure.srp")], 0);
 
-  // Real legacy regression: new alpha.8+ packages must still create, verify,
-  // execute and inspect the old Scarp.project format without converting it.
+  // Alpha.20 create now uses the same canonical v2 scaffolding as init.
+  const createdDirectory = join(workspace, "created-calculator");
+  expectExit(["create", createdDirectory], 0);
+  const createdManifest = await readFile(join(createdDirectory, "scarp.project"), "utf8");
+  assert.equal(createdManifest, alpha8ProjectWorkflow.manifestSource.replace('"calculator"', '"created-calculator"'));
+  expectExit(["verify", createdDirectory], 0);
+  expectExit(["launch", createdDirectory], 0);
+  const createdMetadata = JSON.parse(
+    expectExit(["project", "info", "--json", createdDirectory], 0).stdout,
+  ) as { schema_version: number; name: string; manifest: string; format: string };
+  assert.deepEqual([createdMetadata.schema_version, createdMetadata.name,
+    createdMetadata.manifest, createdMetadata.format],
+    [1, "created-calculator", "scarp.project", "v2"]);
+
+  // Use a real legacy v1 fixture; create no longer generates this format.
   const legacyDirectory = join(workspace, "legacy-calculator");
-  expectExit(["create", legacyDirectory], 0);
-  const legacyManifest = await readFile(join(legacyDirectory, "Scarp.project"), "utf8");
-  assert(legacyManifest.includes("scarp-project: 1"), "Expected legacy v1 manifest");
+  await mkdir(join(legacyDirectory, "src"), { recursive: true });
+  const legacyManifest = "scarp-project: 1\nname: legacy-calculator\nentry: src/main.srp\n";
+  await writeFile(join(legacyDirectory, "Scarp.project"), legacyManifest, "utf8");
+  await writeFile(join(legacyDirectory, "src", "main.srp"), 'print("legacy");\n', "utf8");
   expectExit(["verify", legacyDirectory], 0);
-  expectExit(["launch", legacyDirectory], 0);
+  assert.equal(expectExit(["launch", legacyDirectory], 0).stdout, "legacy\n");
   const legacyMetadata = JSON.parse(
     expectExit(["project", "info", "--json", legacyDirectory], 0).stdout,
   ) as { schema_version: number; name: string; manifest: string; format: string };
-  assert.deepEqual(
-    [legacyMetadata.schema_version, legacyMetadata.name,
-      legacyMetadata.manifest, legacyMetadata.format],
-    [1, "legacy-calculator", "Scarp.project", "legacy-v1"],
-  );
-  // A modern initializer must refuse an existing legacy OR modern project.
-  expectExit(["init", legacyDirectory], 1);
-  expectExit(["init", projectDirectory], 1);
+  assert.deepEqual([legacyMetadata.schema_version, legacyMetadata.name, legacyMetadata.format],
+    [1, "legacy-calculator", "legacy-v1"]);
+  assert.match(legacyMetadata.manifest, /^scarp\.project$/i);
+  for (const directory of [legacyDirectory, projectDirectory, createdDirectory]) {
+    expectExit(["init", directory], 1);
+    expectExit(["create", directory], 1);
+  }
   assert.equal(await readFile(join(legacyDirectory, "Scarp.project"), "utf8"),
-    legacyManifest, "Failed init must leave legacy manifest unchanged");
-  console.log("Verified legacy project create/verify/launch/info and no-overwrite init.");
+    legacyManifest, "Failed scaffolding must leave legacy manifest unchanged");
+  assert.equal(await readFile(join(createdDirectory, "scarp.project"), "utf8"), createdManifest);
+  console.log("Verified canonical v2 create and legacy v1 verify/launch/info; no-overwrite scaffolding.");
   console.log("Verified Scarp " + publishedCompiler.tag +
     ": copy-ready manifest, source-module import and exact application stdout;" +
     " init/verify/run/info; empty-suite guard; isolated UTF-8 input;" +

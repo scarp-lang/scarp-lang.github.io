@@ -81,7 +81,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
   RSS, release snapshot, and six early-theme scenarios.
 - `SCARP_BIN=/path/to/baseline/scarp npm run test:examples`: exact-output checks
   for the historical baseline. For the current published prerelease, run
-  `SCARP_BIN=/path/to/alpha19/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
+  `SCARP_BIN=/path/to/alpha20/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
   after building the separately pinned published source.
 
 ## Real-browser mobile and accessibility QA
@@ -144,7 +144,7 @@ learning paths, AI direction, community, support, contribution guidance, FAQ,
 project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
 a source-verified compatibility guide at `/compatibility/`, an evidence-linked
 published CLI migration guide at `/migration/` (covering legacy commands through the
-reviewed alpha.19 release), and a local,
+reviewed alpha.20 release), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering, curated Hindi search terms for English-language website
@@ -153,7 +153,7 @@ URL restoration during browser navigation, and the `/` or Ctrl/⌘+K shortcut
 (outside editable controls). It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs retain their historical verified compiler baseline.
 The three homepage fixtures also run with the exact pinned published
-**v0.0.6-alpha.19** compiler, subject to the published-source CI checks, with byte-identical stdout. Additional
+**v0.0.6-alpha.20** compiler, subject to the published-source CI checks, with byte-identical stdout. Additional
 published-only fixtures exercise numerical kernels, typed propagation,
 ordered map projections, fixed-array traversal, vector quantiles, and schema-v1 symbol/reference inspection. The
 two compiler revisions and version-specific CLI commands are checked in
@@ -161,10 +161,11 @@ both CI and the GitHub Pages workflow. These tests do not claim universal
 language or platform compatibility.
 
 Downloads and Releases use the manually reviewed
-[Scarp v0.0.6-alpha.19 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.19),
-published 23 November 2026 from the exact annotated-tag source commit
-`84d8de05968a488773e7c5b6eda1376d8957553c`, with reviewed Windows x64,
+[Scarp v0.0.6-alpha.20 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.6-alpha.20),
+published 24 November 2026 from the exact annotated-tag source commit
+`b1a9347f93540fdf95b0ddecba4adc55a3b4bb98`, with reviewed Windows x64,
 Linux x64 GNU and Apple Silicon macOS SHA-256 archive digests.
+[Alpha.20 coverage](https://scarp-lang.github.io/news/alpha20-native-decimal-tuples/) describes the restricted native integer emitter, exact decimal literals, tuple operations and canonical project scaffolding.
 [Alpha.19 coverage](https://scarp-lang.github.io/news/alpha19-host-callables/)
 documents Rust-only checked callable handles and host quotas; the [historical alpha.18 guide](https://scarp-lang.github.io/news/alpha18-exec-lifetime/) covers unified exec, pure array_set and Lifetime empty-view retention.
 [Alpha.17 history](https://scarp-lang.github.io/news/alpha17-arrays-input/)
