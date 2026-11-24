@@ -31,23 +31,22 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Checked Rust host callable handles and cumulative execution quotas.</h3>
-          <p>Scarp {publishedCompiler.tag} adds <code>TypeRegistry::accepts_callable</code>
-            and checked Rust embedding handles for named functions, including
-            positional/named argument mapping, default parameters and
-            export-aware module selection. Pure implementations may satisfy
-            impure callable requirements, but not the reverse.</p>
-          <p><code>ExecutionUsage</code> receipts and
-            <code> HostInvocationLedger</code> account for repeated host calls
-            and enforce cumulative interpreter work, call, input, output and
-            allocation limits. Completed execution remains accounted for
-            even if a host-provided output writer panics during replay.</p>
-          <p><strong>Source-level function values and closures remain unsupported.</strong>
-            Named <code>funcra</code> syntax, <code>scarp exec</code> and
-            interpreter behavior from alpha.18 remain available. This is an
-            experimental Rust embedding API, not a general native backend.</p>
-          <p>Read <a href="/news/alpha19-host-callables/">the alpha.19 overview</a>,
-            {" "}<a href="/news/alpha18-exec-lifetime/">alpha.18 interpreter history</a>,
+          <h3>Checked native integer functions, decimal literals and tuple operations.</h3>
+          <p>Scarp {publishedCompiler.tag} expands the experimental Rust ELF64
+            emitter to pure functions with one to six integer parameters on
+            Linux x86-64 System V. Checked arithmetic, integer and Boolean
+            locals, short-circuit logic and early integer returns are supported
+            within this restricted native subset.</p>
+          <p>Interpreter additions include exact decimal literals such as
+            <code> 0.1d</code>, persistent replacement of constant-index tuple
+            members and lexicographic ordering for compatible numeric tuples.
+            New projects use <code>scarp.project</code>; the legacy filename
+            remains readable. Host string quotas now include nested composites.</p>
+          <p><strong>The CLI still interprets Scarp source.</strong> Native loops,
+            calls, contracts, defaults and heap-backed values remain outside
+            this subset. There is no general native compile CLI or stable ABI.</p>
+          <p>Read <a href="/news/alpha20-native-decimal-tuples/">the alpha.20 overview</a>,
+            {" "}<a href="/news/alpha19-host-callables/">alpha.19 host API history</a>,
             or <a href={publishedCompiler.release}>official release notes</a>.</p>
           <p>
             Pre-built archives cover Windows x64, Linux x64 GNU and macOS
@@ -105,7 +104,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version CLI changes, alpha.18 interpreter behavior and alpha.19 host APIs,
+          version-by-version CLI changes, alpha.18 interpreter behavior and alpha.19–20 host APIs,
           including project workflows and the new read-only symbol index.
         </p>
         <p>

@@ -186,17 +186,20 @@ export default function DownloadsPage() {
           has separate instructions pinned to {project.tag}; do not use its old
           CLI commands with the new package.
         </p>
-        <h2>New in {publishedCompiler.tag}: Rust embedding</h2>
+        <h2>New in {publishedCompiler.tag}: native integer functions and exact literals</h2>
         <p>
-          The published alpha.19 release adds <code>TypeRegistry::accepts_callable</code>,
-          checked Rust host handles for named <code>funcra</code> functions, export-aware
-          module selection, and <code>ExecutionUsage</code> /
-          <code>HostInvocationLedger</code> for cumulative host execution limits.
-          These APIs are <strong>not</strong> first-class Scarp function values,
-          closures, arbitrary indirect calls, or a native compiler CLI.
-          Read the <a href="/news/alpha19-host-callables/">alpha.19 guide</a>
-          and the <a href={publishedCompiler.release}>official alpha.19 notes</a>.
+          The experimental Rust embedding API emits deterministic Linux x86-64
+          ELF64 objects for pure functions with one to six integer parameters.
+          This is not a native compilation command or a cross-platform native ABI.
+          Interpreter changes include <code>0.1d</code> decimal literals,
+          persistent constant-index tuple replacement and numeric tuple ordering.
+          New projects use <code>scarp.project</code>; legacy manifests remain readable.
+          Nested string payloads now count toward cumulative host quotas.
+          Read the <a href="/news/alpha20-native-decimal-tuples/">alpha.20 guide</a> and
+          the <a href={publishedCompiler.release}>official alpha.20 notes</a>.
         </p>
+        <p>For the earlier Rust callable handles and execution receipts, see
+          <a href="/news/alpha19-host-callables/"> the alpha.19 guide</a>.</p>
         <h2>Introduced in alpha.18: execution and immutable arrays</h2>
         <p><code>scarp exec</code> runs the current project's validated
           manifest entrypoint, otherwise <code>src/main.srp</code> or
