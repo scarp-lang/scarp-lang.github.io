@@ -8,7 +8,8 @@ permissions:
   actions: read
 jobs:
   refresh:
-    if: github.event.head_commit.message == 'chore(visuals): apply reviewed v0.0.7-alpha.1 captures' && github.repository == 'scarp-lang/scarp-lang.github.io'
+    if: >-
+      github.event.head_commit.message == 'chore(visuals): apply reviewed v0.0.7-alpha.1 captures' && github.repository == 'scarp-lang/scarp-lang.github.io'
     permissions:
       contents: write
       actions: read
