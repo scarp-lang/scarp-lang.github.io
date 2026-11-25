@@ -1,10 +1,17 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { searchEntries, searchEntriesFor } from "../src/data/search.ts";
+import { news } from "../src/data/project.ts";
 import { hindiSearchAliases } from "../src/data/search-hi.ts";
 
 test("site search data contains distinct, canonical page paths", () => {
-  assert.equal(searchEntries.length, 38);
+  const corePaths = [
+    "/", "/ecosystem/", "/features/", "/development/", "/roadmap/", "/compatibility/",
+    "/migration/", "/releases/", "/downloads/", "/learn/", "/ai/", "/community/",
+    "/contribute/", "/faq/", "/support/", "/news/",
+  ];
+  assert.deepEqual(searchEntries.map(entry => entry.path).sort(),
+    [...corePaths, ...news.map(item => item.href)].sort());
   assert.equal(new Set(searchEntries.map(entry => entry.path)).size, searchEntries.length);
   for (const entry of searchEntries) {
     assert(entry.path.startsWith("/"));
@@ -66,6 +73,13 @@ test("keywords, casing, prefixes, and multiple terms find relevant pages", () =>
   assert.equal(searchEntriesFor("module import")[0]?.path, "/news/source-modules/");
   assert.equal(searchEntriesFor("bug report")[0]?.path, "/support/");
   assert.equal(searchEntriesFor("ARTIFICIAL INTELLIGENCE")[0]?.path, "/ai/");
+});
+
+test("new release functions and Hindi native-loop alias are discoverable", () => {
+  const route = "/news/v007-alpha1-native-loops/";
+  for (const query of ["array_concat", "softplus", "integer_hcf", "नेटिव लूप"]) {
+    assert(searchEntriesFor(query).some(entry => entry.path === route), query);
+  }
 });
 
 test("Hindi aliases cover the entire published page directory without orphan paths", () => {

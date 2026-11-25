@@ -120,8 +120,16 @@ export default function MigrationPage() {
         <code> scarp exec</code>, <code>verify</code> and named
         <code> funcra</code> calls retain their alpha.18 behavior.
         Scarp source cannot yet pass functions as values or construct closures.
-        Read the <a href={publishedCompiler.release}>current release notes</a>.
+        Read the <a href={project.repo + "/releases/tag/v0.0.6-alpha.19"}>historical release notes</a>.
       </p>
+      <h2 id="alpha20-projects">Alpha.20: one canonical project initializer</h2>
+      <p>Both <code>scarp create</code> and <code>scarp init</code> now generate
+        declarative <code>scarp.project</code> v2 projects and reject existing destinations.
+        Legacy <code>Scarp.project</code> files remain readable. The native integer
+        emitter is still Rust-only; <code>scarp exec</code> interprets source.
+        See <a href="/news/alpha20-native-decimal-tuples/">alpha.20 release details</a>.</p>
+      <h2 id="v007-alpha1">v0.0.7-alpha.1: interpreter and native API boundaries</h2>
+      <p><code>scarp exec</code> remains interpreter-backed. The experimental Rust ELF64 API now accepts up to 16 required integer arguments and bounded loop constructs; general native calls and executable linking are not supported. Existing project entrypoint discovery remains unchanged. See <a href="/news/v007-alpha1-native-loops/">the release overview</a>.</p>
       <h2 id="workflow">Historical alpha.4 offline project workflow</h2>
       <ol>
         <li>
@@ -167,11 +175,12 @@ export default function MigrationPage() {
 
       <h2 id="alpha8-projects">Upgrade to declarative projects in alpha.8</h2>
       <p>
-        Starting with <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>,
+        Starting with alpha.8,
         <code> scarp init</code> creates a fresh declarative
         <code> scarp.project</code> manifest. Earlier projects with
         <code> Scarp.project</code> and the
-        <code> create</code>/<code>launch</code> commands are still supported.
+        <code> create</code>/<code>launch</code> commands are still supported;
+        alpha.20 changes new <code>create</code> scaffolding to the same v2 format as init.
         Do not attempt a conversion by merely renaming the old
         <code> Scarp.project</code> file: the new format has different syntax
         and stricter validation.

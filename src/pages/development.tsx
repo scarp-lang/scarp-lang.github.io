@@ -44,15 +44,14 @@ export default function DevelopmentPage() {
         <h2>What you can use</h2>
         <p>
           The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
-          bounds CLI inspection inputs, charges work for equal-length string
-          comparisons, validates Rust semantic-cache revisions and expands
-          restricted checked ELF64 kernels to include shifts.
+          adds bounded native counted repeats and nested loop control, reusable interpreter frames, fixed-array concatenation, variadic integer GCD/HCF/LCM and stable vector softplus. Its experimental x86-64 ELF64 Rust API supports pure integer functions with up to 16 required integer arguments. Alpha.20 added decimal literals, tuple operations and canonical lowercase project scaffolding; alpha.19 introduced checked host handles;
+          alpha.15 bounded CLI inspections and expanded checked shift kernels.
           Alpha.14 previously improved nested pattern diagnostics, editor cache
           quotas and checked arithmetic; alpha.13 added workspace-safe
           snapshots, alpha.12 typed aggregates, alpha.11 exact decimals and
           alpha.10 interactive input. Numerical ranking, symbol inspection and
           project tests remain. Read the
-          {" "}<a href="/news/alpha15-runtime-kernels/">alpha.15 overview</a>,
+          {" "}<a href="/news/v007-alpha1-native-loops/">v0.0.7-alpha.1 overview</a>,
           {" "}<a href="/releases/">release comparison</a> or
           {" "}<a href="/downloads/">current packages</a>.
           Source execution remains interpreter-backed, and Rust embedding

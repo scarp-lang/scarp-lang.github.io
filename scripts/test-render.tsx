@@ -14,7 +14,16 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 43);
+  const coreRoutes = [
+    '/', '/features/', '/ecosystem/', '/development/', '/roadmap/', '/releases/',
+    '/compatibility/', '/migration/', '/downloads/', '/downloads/windows/latest/',
+    '/downloads/linux/latest/', '/downloads/macos/latest/', '/learn/', '/ai/',
+    '/community/', '/contribute/', '/faq/', '/support/', '/search/', '/news/', '/404.html',
+  ];
+  // Keep all required pages and every historical news article registered.
+  // Adding a release should not require incrementing a magic page count.
+  assert.deepEqual(pages.map(page => page.path).sort(),
+    [...coreRoutes, ...news.map(item => item.href)].sort());
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
@@ -575,7 +584,6 @@ test('alpha.15 announcement, tagged source and bilingual search/feed discovery',
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-19');
-  assert.equal(news[4]?.href, path);
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);
@@ -597,7 +605,6 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
   const announcement = news.find(item => item.href === path);
   assert(announcement);
   assert.equal(announcement.date, '2026-11-18');
-  assert.equal(news[5]?.href, path);
   const page = findPage(path);
   assert(page);
   const html = renderPage(page, developmentAssets);
@@ -614,8 +621,12 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
   assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + path + '</loc>'));
 });
 
-test('alpha.16 through alpha.19 release articles remain source-pinned and discoverable', async () => {
+test('recent release articles remain source-pinned and discoverable', async () => {
   const articles = [
+    { path: '/news/v007-alpha1-native-loops/', date: '2026-11-25', source: '996bd5b83c8cb26e98637563729f67bdacc61cd4', tokens: ['v0.0.7-alpha.1', 'ELF64', '16', 'array_concat', 'integer_gcd', 'integer_hcf', 'integer_lcm', 'softplus', 'scarp exec'] },
+    { path: '/news/alpha20-native-decimal-tuples/', date: '2026-11-24',
+      source: 'b1a9347f93540fdf95b0ddecba4adc55a3b4bb98',
+      tokens: ['v0.0.6-alpha.20', 'ELF64', '0.1d', 'lexicographic', 'scarp.project', 'scarp_checked_integer_function'] },
     { path: '/news/alpha19-host-callables/', date: '2026-11-23',
       source: "e534e73a81c9500e3aef9f3d51cafa0bc7bbcf75",
       tokens: ['v0.0.6-alpha.19', 'TypeRegistry::accepts_callable', 'ExecutionUsage', 'HostInvocationLedger', 'Rust embedding', 'closures', 'alpha.18'] },
@@ -642,6 +653,7 @@ test('alpha.16 through alpha.19 release articles remain source-pinned and discov
     assert(sitemap?.body.includes('<loc>https://scarp-lang.github.io' + item.path + '</loc>'));
   }
   assert.equal(news[0]?.href, articles[0]?.path);
-  assert.equal(news[1]?.href, articles[1]?.path);
-  assert.equal(news[2]?.href, articles[2]?.path);
+  for (let i = 1; i < articles.length; i++) {
+    assert(news.findIndex(entry => entry.href === articles[i]!.path) > news.findIndex(entry => entry.href === articles[i - 1]!.path));
+  }
 });

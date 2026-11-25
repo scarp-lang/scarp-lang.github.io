@@ -186,17 +186,10 @@ export default function DownloadsPage() {
           has separate instructions pinned to {project.tag}; do not use its old
           CLI commands with the new package.
         </p>
-        <h2>New in {publishedCompiler.tag}: Rust embedding</h2>
-        <p>
-          The published alpha.19 release adds <code>TypeRegistry::accepts_callable</code>,
-          checked Rust host handles for named <code>funcra</code> functions, export-aware
-          module selection, and <code>ExecutionUsage</code> /
-          <code>HostInvocationLedger</code> for cumulative host execution limits.
-          These APIs are <strong>not</strong> first-class Scarp function values,
-          closures, arbitrary indirect calls, or a native compiler CLI.
-          Read the <a href="/news/alpha19-host-callables/">alpha.19 guide</a>
-          and the <a href={publishedCompiler.release}>official alpha.19 notes</a>.
-        </p>
+        <h2>New in {publishedCompiler.tag}: native loops and numerical operations</h2>
+        <p>The experimental x86-64 ELF64 Rust API supports pure integer functions with up to 16 required integer arguments, counted repeats and nested loop control. This is not a native compilation command or stable ABI. The interpreter adds frame reuse, <code>array_concat</code>, variadic integer GCD/HCF/LCM and stable vector <code>softplus</code>. New projects use <code>scarp.project</code>; legacy manifests remain readable. Read <a href="/news/v007-alpha1-native-loops/">the new release guide</a> and <a href={publishedCompiler.release}>official release notes</a>.</p>
+        <p>For the earlier Rust callable handles and execution receipts, see
+          <a href="/news/alpha19-host-callables/"> the alpha.19 guide</a>.</p>
         <h2>Introduced in alpha.18: execution and immutable arrays</h2>
         <p><code>scarp exec</code> runs the current project's validated
           manifest entrypoint, otherwise <code>src/main.srp</code> or
