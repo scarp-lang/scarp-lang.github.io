@@ -123,7 +123,7 @@ Mismatches produce magenta-highlighted diff PNGs under
 `test-results/browser/diffs/` alongside the current screenshot.
 
 Reference screenshots in `tests/browser/baselines/` are pinned to the
-[reviewed alpha.19 visual evidence](tests/browser/baselines/README.md).
+[reviewed v0.0.7-alpha.1 visual evidence](tests/browser/baselines/README.md).
 Three screenshots were regenerated only after Chrome captures had been visually
 reviewed; every committed PNG was verified byte-for-byte against those captures.
 The unchanged support screenshot retained its approved SHA-256. The temporary

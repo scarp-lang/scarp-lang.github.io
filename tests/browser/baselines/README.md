@@ -6,7 +6,7 @@ The alpha.20 and v0.0.7-alpha.1 announcements add two news cards and two
 search directory entries relative to the reviewed alpha.19 baseline.
 All four captures from [Chrome browser QA run 45643537277](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/45643537277)
 were inspected for placement, wrapping, light/dark layout and mobile readability.
-All other 14 browser tests passed in that run. The support snapshot is byte-identical
+All other 14 browser tests passed in that run. A second independent [Chrome run 45644929727](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/45644929727) produced byte-identical copies of all four PNGs. [Refresh run 45645239526](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/45645239526) succeeded and removed its temporary workflow; Git blob SHA-1 values from commit `4d1fb929668981e523e5de96e6ebe2bb1d3e249c` were independently recomputed from the reviewed artifact and matched for all four files. The support snapshot is byte-identical
 to the existing reference. The branch-only refresh verifies the exact artifact
 SHA-256 digests before copying three images; normal browser QA remains read-only
 and its 0.35% pixel threshold and dimension checks are unchanged.
