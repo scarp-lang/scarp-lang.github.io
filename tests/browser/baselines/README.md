@@ -1,5 +1,23 @@
 # Scarp website visual regression references
 
+## Reviewed v0.0.7-alpha.1 release snapshots — 25 November 2026
+
+The alpha.20 and v0.0.7-alpha.1 announcements add two news cards and two
+search directory entries relative to the reviewed alpha.19 baseline.
+All four captures from [Chrome browser QA run 45643537277](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/45643537277)
+were inspected for placement, wrapping, light/dark layout and mobile readability.
+All other 14 browser tests passed in that run. The support snapshot is byte-identical
+to the existing reference. The branch-only refresh verifies the exact artifact
+SHA-256 digests before copying three images; normal browser QA remains read-only
+and its 0.35% pixel threshold and dimension checks are unchanged.
+
+| Reference PNG | Viewport | Snapshot height | Reviewed SHA-256 |
+| --- | --- | --- | --- |
+| `home-desktop-light.png` | 1280 × 800, light | 8,515px | `7e7060fdcf1d3f739b724645b7850155fb6865955e4531f306ec730651b82f10` |
+| `home-mobile-dark.png` | 390 × 844, dark | 14,440px | `58c5033bfbe7f8be1149b4bee517cf55885bf14b532463ded772f1e581b2db7f` |
+| `search-mobile-light.png` | 390 × 844, light | 9,984px | `3e6ccfe52af3b25d29f232a1ff766e32902af47b40e150462829ab3540b496cc` |
+| `support-desktop-dark.png` | 1280 × 800, dark | 4,549px (unchanged) | `aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a` |
+
 ## Reviewed alpha.19 release snapshots — 23 November 2026
 
 The published alpha.19 release adds a first-position news card and a new
