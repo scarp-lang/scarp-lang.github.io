@@ -14,7 +14,16 @@ import { exampleCompatibility } from '../src/data/compatibility.ts';
 import { cliMilestones, cliMigrations, migrationEvidence } from '../src/data/migration.ts';
 
 test('every registered page renders a complete, distinct static document', () => {
-  assert.equal(pages.length, 44);
+  const coreRoutes = [
+    '/', '/features/', '/ecosystem/', '/development/', '/roadmap/', '/releases/',
+    '/compatibility/', '/migration/', '/downloads/', '/downloads/windows/latest/',
+    '/downloads/linux/latest/', '/downloads/macos/latest/', '/learn/', '/ai/',
+    '/community/', '/contribute/', '/faq/', '/support/', '/search/', '/news/', '/404.html',
+  ];
+  // Keep all required pages and every historical news article registered.
+  // Adding a release should not require incrementing a magic page count.
+  assert.deepEqual(pages.map(page => page.path).sort(),
+    [...coreRoutes, ...news.map(item => item.href)].sort());
   assert.equal(new Set(pages.map(page => page.path)).size, pages.length);
   assert.equal(new Set(pages.map(outputPath)).size, pages.length);
   for (const page of pages) {
