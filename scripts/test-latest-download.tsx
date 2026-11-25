@@ -95,3 +95,45 @@ test("API failures and malformed responses do not return a download URL", async 
   const success = await fetchLatestDownload("macos", fetcher);
   assert.equal(success.kind, "ready");
 });
+
+test("calendar-invalid timestamps cannot outrank a real release", () => {
+  const invalid = published("v0.0.7-alpha.1", "2026-11-31T08:00:00Z", []);
+  const result = selectLatestDownload([invalid, newer], "windows");
+  assert.equal(result.kind, "ready");
+  if (result.kind === "ready") assert.equal(result.tag, tag);
+});
+
+test("equal timestamps and duplicate release tags fail closed", () => {
+  const simultaneous = published("v0.0.7-alpha.1", newer.published_at, []);
+  for (const payload of [[newer, simultaneous], [simultaneous, newer],
+    [newer, { ...newer, published_at: older.published_at }]]) {
+    assert.throws(() => selectLatestDownload(payload, "windows"), /Ambiguous latest/);
+  }
+});
+
+test("duplicate asset names and incomplete upload metadata never redirect", () => {
+  const valid = asset("windows");
+  const invalidAssets = [
+    [valid, valid],
+    [valid, { ...valid, browser_download_url: "https://example.org/file.zip" }],
+    [{ ...valid, state: "starter" }],
+    [{ ...valid, state: undefined }],
+    [{ ...valid, size: undefined }],
+    [{ ...valid, size: 0 }],
+    [{ ...valid, size: -1 }],
+    [{ ...valid, size: 0.5 }],
+    [{ ...valid, size: Number.MAX_SAFE_INTEGER + 1 }],
+  ];
+  for (const assets of invalidAssets) {
+    assert.deepEqual(selectLatestDownload([
+      published(tag, newer.published_at, assets), older,
+    ], "windows"), {
+      kind: "missing", tag, releaseUrl: `${githubReleasesUrl}/tag/${tag}`,
+    });
+  }
+});
+
+test("unknown runtime platform cannot construct an asset filename", () => {
+  assert.throws(() => selectLatestDownload([newer], "__proto__" as never),
+    /Unsupported download platform/);
+});

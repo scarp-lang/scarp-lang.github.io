@@ -6,9 +6,9 @@ import { project } from "../src/data/project.ts";
 import { publishedCompiler } from "../src/data/releases.ts";
 import { exampleCompatibility } from "../src/data/compatibility.ts";
 
-test("CLI migration milestones are pinned to twelve published prereleases", () => {
+test("CLI migration milestones are pinned to thirteen published prereleases", () => {
   assert.deepEqual(cliMilestones.map(item => item.tag), [
-    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", "v0.0.6-alpha.17", "v0.0.6-alpha.18", "v0.0.6-alpha.19", publishedCompiler.tag,
+    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", "v0.0.6-alpha.17", "v0.0.6-alpha.18", "v0.0.6-alpha.19", "v0.0.6-alpha.20", publishedCompiler.tag,
   ]);
   assert.equal(new Set(cliMilestones.map(item => item.tag)).size, cliMilestones.length);
   for (const item of cliMilestones) {
@@ -22,7 +22,7 @@ test("CLI migration milestones are pinned to twelve published prereleases", () =
   assert.equal(cliMilestones[8]?.sourceCommit, "7831a37939965f557ce746e1d86bf82d3d629f74");
   assert.equal(cliMilestones[9]?.sourceCommit, "84d8de05968a488773e7c5b6eda1376d8957553c");
   assert.equal(cliMilestones[10]?.sourceCommit, "e534e73a81c9500e3aef9f3d51cafa0bc7bbcf75");
-  assert.equal(cliMilestones[11]?.sourceCommit, publishedCompiler.sourceCommit);
+  assert.equal(cliMilestones[12]?.sourceCommit, publishedCompiler.sourceCommit);
   assert.equal(migrationEvidence.publishedRelease, publishedCompiler.release);
   assert(migrationEvidence.projectWorkflow.includes(publishedCompiler.sourceCommit));
 });
@@ -48,7 +48,7 @@ test("migration guidance preserves the runtime/static distinction", () => {
   assert.equal(cliMilestones[8]?.tag, "v0.0.6-alpha.17");
   assert.equal(cliMilestones[9]?.tag, "v0.0.6-alpha.18");
   assert.equal(cliMilestones[10]?.tag, "v0.0.6-alpha.19");
-  assert.equal(cliMilestones[11]?.tag, publishedCompiler.tag);
+  assert.equal(cliMilestones[12]?.tag, publishedCompiler.tag);
   assert(cliMilestones[11]?.additional.includes("declarative scarp.project v2"));
   assert.equal(cliMilestones[10]?.execution, "scarp exec");
   assert(cliMilestones[10]?.inspection.includes("PROJECT_DIRECTORY"));

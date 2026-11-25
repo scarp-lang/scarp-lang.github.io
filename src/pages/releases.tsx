@@ -31,23 +31,11 @@ export default function ReleasesPage() {
           <h2>{publishedCompiler.tag}</h2>
         </div>
         <div className="prose">
-          <h3>Checked native integer functions, decimal literals and tuple operations.</h3>
-          <p>Scarp {publishedCompiler.tag} expands the experimental Rust ELF64
-            emitter to pure functions with one to six integer parameters on
-            Linux x86-64 System V. Checked arithmetic, integer and Boolean
-            locals, short-circuit logic and early integer returns are supported
-            within this restricted native subset.</p>
-          <p>Interpreter additions include exact decimal literals such as
-            <code> 0.1d</code>, persistent replacement of constant-index tuple
-            members and lexicographic ordering for compatible numeric tuples.
-            New projects use <code>scarp.project</code>; the legacy filename
-            remains readable. Host string quotas now include nested composites.</p>
-          <p><strong>The CLI still interprets Scarp source.</strong> Native loops,
-            calls, contracts, defaults and heap-backed values remain outside
-            this subset. There is no general native compile CLI or stable ABI.</p>
-          <p>Read <a href="/news/alpha20-native-decimal-tuples/">the alpha.20 overview</a>,
-            {" "}<a href="/news/alpha19-host-callables/">alpha.19 host API history</a>,
-            or <a href={publishedCompiler.release}>official release notes</a>.</p>
+          <h3>Bounded native loops, frame reuse and numerical operations.</h3>
+          <p>The experimental x86-64 ELF64 Rust API supports pure integer functions with up to 16 required integer arguments, scalar conditional expressions, counted repeats and nested loop control. Bounded execution tracks work and preserves source spans for diagnostics.</p>
+          <p>The interpreter reuses bounded frame buffers while returned immutable values remain valid. <code>array_concat</code> joins fixed arrays with matching element types. <code>integer_gcd</code>, <code>integer_hcf</code> and <code>integer_lcm</code> accept 2–1024 integers, and vector <code>softplus</code> handles finite inputs stably.</p>
+          <p><strong>The CLI still interprets Scarp source.</strong> General native calls, executable linking and a native compilation CLI remain outside this release; the ABI is provisional.</p>
+          <p>Read <a href="/news/v007-alpha1-native-loops/">the v0.0.7-alpha.1 overview</a>,{" "}<a href="/news/alpha20-native-decimal-tuples/">alpha.20 history</a>, or <a href={publishedCompiler.release}>official release notes</a>.</p>
           <p>
             Pre-built archives cover Windows x64, Linux x64 GNU and macOS
             Apple Silicon. This is an alpha, not a stable compiler.
@@ -104,7 +92,7 @@ export default function ReleasesPage() {
         <p>
           To update scripts and existing programs, read the{" "}
           <a href="/migration/">published CLI migration guide</a> for the
-          version-by-version CLI changes, alpha.18 interpreter behavior and alpha.19–20 host APIs,
+          version-by-version CLI changes, alpha.18 interpreter behavior and the newer native and host APIs,
           including project workflows and the new read-only symbol index.
         </p>
         <p>

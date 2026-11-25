@@ -128,6 +128,8 @@ export default function MigrationPage() {
         Legacy <code>Scarp.project</code> files remain readable. The native integer
         emitter is still Rust-only; <code>scarp exec</code> interprets source.
         See <a href="/news/alpha20-native-decimal-tuples/">alpha.20 release details</a>.</p>
+      <h2 id="v007-alpha1">v0.0.7-alpha.1: interpreter and native API boundaries</h2>
+      <p><code>scarp exec</code> remains interpreter-backed. The experimental Rust ELF64 API now accepts up to 16 required integer arguments and bounded loop constructs; general native calls and executable linking are not supported. Existing project entrypoint discovery remains unchanged. See <a href="/news/v007-alpha1-native-loops/">the release overview</a>.</p>
       <h2 id="workflow">Historical alpha.4 offline project workflow</h2>
       <ol>
         <li>

@@ -186,18 +186,8 @@ export default function DownloadsPage() {
           has separate instructions pinned to {project.tag}; do not use its old
           CLI commands with the new package.
         </p>
-        <h2>New in {publishedCompiler.tag}: native integer functions and exact literals</h2>
-        <p>
-          The experimental Rust embedding API emits deterministic Linux x86-64
-          ELF64 objects for pure functions with one to six integer parameters.
-          This is not a native compilation command or a cross-platform native ABI.
-          Interpreter changes include <code>0.1d</code> decimal literals,
-          persistent constant-index tuple replacement and numeric tuple ordering.
-          New projects use <code>scarp.project</code>; legacy manifests remain readable.
-          Nested string payloads now count toward cumulative host quotas.
-          Read the <a href="/news/alpha20-native-decimal-tuples/">alpha.20 guide</a> and
-          the <a href={publishedCompiler.release}>official alpha.20 notes</a>.
-        </p>
+        <h2>New in {publishedCompiler.tag}: native loops and numerical operations</h2>
+        <p>The experimental x86-64 ELF64 Rust API supports pure integer functions with up to 16 required integer arguments, counted repeats and nested loop control. This is not a native compilation command or stable ABI. The interpreter adds frame reuse, <code>array_concat</code>, variadic integer GCD/HCF/LCM and stable vector <code>softplus</code>. New projects use <code>scarp.project</code>; legacy manifests remain readable. Read <a href="/news/v007-alpha1-native-loops/">the new release guide</a> and <a href={publishedCompiler.release}>official release notes</a>.</p>
         <p>For the earlier Rust callable handles and execution receipts, see
           <a href="/news/alpha19-host-callables/"> the alpha.19 guide</a>.</p>
         <h2>Introduced in alpha.18: execution and immutable arrays</h2>
