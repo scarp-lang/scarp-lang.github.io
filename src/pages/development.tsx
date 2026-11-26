@@ -98,6 +98,50 @@ export default function DevelopmentPage() {
             output. It is not a purely static type checker.
           </li>
         </ul>
+        <h2 id="systems-programming">Systems programming: evidence and direction</h2>
+        <p>
+          Scarp aims to grow toward low-level and systems programming, including
+          eventual operating-system and kernel research. This is a development
+          direction, not a claim that an operating system can already be built
+          with the published compiler. The evidence below is limited to{" "}
+          <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>.
+        </p>
+        <h3>Experimental foundations available today</h3>
+        <ul>
+          <li>Checked signed integer arithmetic and bitwise operations, with
+            explicit failure reporting in the experimental native kernel API.</li>
+          <li>Compiler-owned x86-64 ELF64 relocatable object emission for a
+            restricted pure scalar subset through Rust host APIs; counted loops
+            and nested loop control are covered by the current release.</li>
+          <li>Lifetime scope retirement and immutable shared storage in the
+            interpreter, with bounded reuse of completed function frame buffers.</li>
+        </ul>
+        <p>
+          See the pinned{" "}
+          <a href={`${project.repo}/blob/${publishedCompiler.sourceCommit}/docs/native-elf64.md`}>native object design</a>
+          {" "}and{" "}
+          <a href={`${project.repo}/blob/${publishedCompiler.sourceCommit}/docs/memory-lifetimes.md`}>Lifetime design</a>.
+          The native object API targets x86-64 ELF64 even when the compiler runs
+          on Windows or macOS. It is not a portable executable toolchain.
+        </p>
+        <h3>Proposed engineering gates for kernel development</h3>
+        <ol>
+          <li>Specify fixed-width integers, addressable memory and explicit
+            layout/alignment rules with independently tested ABI contracts.</li>
+          <li>Define a freestanding target model, native calls, relocations,
+            linking and runtime-independent entry points.</li>
+          <li>Define safe boundaries for external pointers, allocation,
+            volatile access and hardware-facing operations.</li>
+          <li>Qualify an isolated emulator-based boot demonstration with
+            reproducible builds, diagnostics and documented target limits.</li>
+        </ol>
+        <p>
+          None of these proposed gates is a shipped feature or a promised
+          release date. In particular, there is no supported kernel-build CLI,
+          general native executable linking or complete native memory manager.
+          <code>scarp exec</code> continues to use the interpreter. Work budgets
+          are not wall-clock guarantees, total memory limits or a security sandbox.
+        </p>
         <h2>Next development priorities</h2>
         <p>
           Read-only symbol navigation and constant-expression work have
