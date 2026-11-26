@@ -657,3 +657,14 @@ test('recent release articles remain source-pinned and discoverable', async () =
     assert(news.findIndex(entry => entry.href === articles[i]!.path) > news.findIndex(entry => entry.href === articles[i - 1]!.path));
   }
 });
+
+test('systems programming section distinguishes published evidence from proposed gates', () => {
+  const page = findPage('/development/');
+  assert(page);
+  const html = renderPage(page, developmentAssets);
+  assert(html.includes('id="systems-programming"'));
+  assert(html.includes('Proposed engineering gates for kernel development'));
+  assert(html.includes('no supported kernel-build CLI'));
+  assert(html.includes(`${project.repo}/blob/${publishedCompiler.sourceCommit}/docs/native-elf64.md`));
+  assert(html.includes(`${project.repo}/blob/${publishedCompiler.sourceCommit}/docs/memory-lifetimes.md`));
+});
