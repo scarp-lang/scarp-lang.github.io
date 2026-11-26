@@ -49,10 +49,11 @@ export async function probeDeployment(
     const response = await fetcher(url.toString(), {
       headers: { "Cache-Control": "no-cache", Pragma: "no-cache" },
       signal: AbortSignal.timeout(20_000),
+      redirect: "error",
     });
     if (response.status !== 200) throw new Error(`${path}: expected HTTP 200, received ${response.status}`);
     const contentType = response.headers.get("content-type") ?? "";
-    if (!contentType.toLowerCase().includes(expectedType)) {
+    if (contentType.split(";", 1)[0].trim().toLowerCase() !== expectedType) {
       throw new Error(`${path}: unexpected content type ${contentType}`);
     }
     return response.text();
@@ -82,6 +83,10 @@ export async function probeDeployment(
   ];
   for (const route of routes) {
     const html = await get(route.path, "text/html");
+    const marker = `<meta name="scarp-build-commit" content="${expectedCommit}"/>`;
+    if (!html.includes(marker)) {
+      throw new Error(`${route.path}: missing or stale HTML build commit (expected ${expectedCommit})`);
+    }
     if (!html.includes("<title>") || !html.includes(route.token)) {
       throw new Error(`${route.path}: missing expected site content`);
     }
