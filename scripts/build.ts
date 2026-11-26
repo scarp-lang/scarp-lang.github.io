@@ -47,10 +47,15 @@ const assets: SiteAssets = {
   globalStyle: await stylesheet("global"),
   supportStyle: await stylesheet("support"),
 };
+const commit = process.env.GITHUB_SHA ?? null;
+assert(commit === null || /^[0-9a-f]{40}$/.test(commit), "GITHUB_SHA must be a 40-character commit");
 for (const page of pages) {
   const path = join("dist", outputPath(page));
   await mkdir(dirname(path), { recursive: true });
-  await writeFile(path, renderPage(page, assets));
+  const html = renderPage(page, assets);
+  assert(html.includes("<head>"), `Missing HTML head for ${page.path}`);
+  const provenance = commit === null ? "" : `<meta name="scarp-build-commit" content="${commit}"/>`;
+  await writeFile(path, html.replace("<head>", "<head>" + provenance));
 }
 for (const route of dataRoutes) {
   await writeFile(
@@ -58,8 +63,6 @@ for (const route of dataRoutes) {
     await route.create().text(),
   );
 }
-const commit = process.env.GITHUB_SHA ?? null;
-assert(commit === null || /^[0-9a-f]{40}$/.test(commit), "GITHUB_SHA must be a 40-character commit");
 await writeFile("dist/deployment.json", JSON.stringify({
   schemaVersion: 1,
   repository: "scarp-lang/scarp-lang.github.io",
