@@ -86,7 +86,7 @@ test("API failures and malformed responses do not return a download URL", async 
   const errorFetcher = (async () => new Response("rate limit", { status: 403 })) as typeof fetch;
   await assert.rejects(() => fetchLatestDownload("windows", errorFetcher), /HTTP 403/);
   const invalidFetcher = (async () => Response.json({ message: "bad data" })) as typeof fetch;
-  await assert.rejects(() => fetchLatestDownload("linux", invalidFetcher), /not an array/);
+  await assert.rejects(() => fetchLatestDownload("linux", invalidFetcher), /Invalid GitHub releases page/);
   const fetcher = (async (input: string | URL, init?: RequestInit) => {
     assert.equal(String(input), releasesApiUrl);
     assert.equal(init?.cache, "no-store");
@@ -136,4 +136,67 @@ test("duplicate asset names and incomplete upload metadata never redirect", () =
 test("unknown runtime platform cannot construct an asset filename", () => {
   assert.throws(() => selectLatestDownload([newer], "__proto__" as never),
     /Unsupported download platform/);
+});
+
+
+test("complete catalogue considers releases published after their creation page", async () => {
+  const firstPage = Array.from({ length: 100 }, (_, index) => ({
+    ...published(`v0.0.4-alpha.${index + 1}`, older.published_at, []),
+    draft: true,
+  }));
+  firstPage[0] = older;
+  const seen: string[] = [];
+  let sharedSignal: AbortSignal | null | undefined;
+  const fetcher = (async (input: string | URL, init?: RequestInit) => {
+    seen.push(String(input));
+    if (seen.length === 1) sharedSignal = init?.signal;
+    else assert.equal(init?.signal, sharedSignal, "Pagination must share one timeout");
+    assert.equal(init?.cache, "no-store");
+    return Response.json(seen.length === 1 ? firstPage : [newer]);
+  }) as typeof fetch;
+  const selected = await fetchLatestDownload("windows", fetcher);
+  assert.equal(selected.kind, "ready");
+  if (selected.kind === "ready") assert.equal(selected.tag, tag);
+  assert.deepEqual(seen, [releasesApiUrl, releasesApiUrl + "&page=2"]);
+});
+
+test("a missing asset on a later-published release never falls back to a first-page binary", async () => {
+  let calls = 0;
+  const firstPage = Array.from({ length: 100 }, () => ({ draft: true }));
+  firstPage[0] = older;
+  const fetcher = (async () => Response.json(++calls === 1
+    ? firstPage : [published(tag, newer.published_at, [asset("linux")])])) as typeof fetch;
+  assert.deepEqual(await fetchLatestDownload("windows", fetcher), {
+    kind: "missing", tag, releaseUrl: `${githubReleasesUrl}/tag/${tag}`,
+  });
+  assert.equal(calls, 2);
+});
+
+test("a failed or malformed later catalogue page cannot return an older binary", async () => {
+  for (const failure of [
+    new Response("rate limited", { status: 429 }),
+    Response.json({ message: "unexpected object" }),
+    Response.json(Array.from({ length: 101 }, () => ({ draft: true }))),
+  ]) {
+    const firstPage = Array.from({ length: 100 }, () => ({ draft: true }));
+    firstPage[0] = older;
+    let calls = 0;
+    const fetcher = (async () => ++calls === 1
+      ? Response.json(firstPage) : failure) as typeof fetch;
+    await assert.rejects(() => fetchLatestDownload("windows", fetcher),
+      /HTTP 429|Invalid GitHub releases page/);
+    assert.equal(calls, 2);
+  }
+});
+
+test("bounded pagination fails closed instead of selecting an incomplete catalogue", async () => {
+  let calls = 0;
+  const firstPage = Array.from({ length: 100 }, () => ({ draft: true }));
+  firstPage[0] = older;
+  const fetcher = (async () => {
+    calls++;
+    return Response.json(firstPage);
+  }) as typeof fetch;
+  await assert.rejects(() => fetchLatestDownload("windows", fetcher), /bounded lookup/);
+  assert.equal(calls, 10);
 });
