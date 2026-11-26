@@ -9,7 +9,9 @@ export const latestDownloadPlatforms = {
 } as const;
 
 export type LatestPlatform = keyof typeof latestDownloadPlatforms;
-export const releasesApiUrl = "https://api.github.com/repos/scarp-lang/scarp/releases?per_page=30";
+const releasePageSize = 100;
+const maxReleasePages = 10;
+export const releasesApiUrl = `https://api.github.com/repos/scarp-lang/scarp/releases?per_page=${releasePageSize}`;
 export const githubReleasesUrl = "https://github.com/scarp-lang/scarp/releases";
 
 export function isLatestPlatform(value: string | null): value is LatestPlatform {
@@ -75,11 +77,27 @@ export async function fetchLatestDownload(
   platform: LatestPlatform,
   fetcher: typeof fetch = fetch,
 ): Promise<LatestDownloadResolution> {
-  const response = await fetcher(releasesApiUrl, {
-    headers: { Accept: "application/vnd.github+json" },
-    cache: "no-store",
-    signal: AbortSignal.timeout(12_000),
-  });
-  if (!response.ok) throw new Error(`Release lookup failed (HTTP ${response.status})`);
-  return selectLatestDownload(await response.json() as unknown, platform);
+  if (!isLatestPlatform(platform)) throw new Error("Unsupported download platform");
+  // The GitHub catalogue is ordered by creation, not necessarily publication.
+  // An old draft can be published after newer-created releases. Read every
+  // page before ranking publication dates; never pick from a partial catalogue.
+  const signal = AbortSignal.timeout(12_000);
+  const releases: unknown[] = [];
+  for (let page = 1; page <= maxReleasePages; page++) {
+    const url = new URL(releasesApiUrl);
+    if (page > 1) url.searchParams.set("page", String(page));
+    const response = await fetcher(url.toString(), {
+      headers: { Accept: "application/vnd.github+json" },
+      cache: "no-store",
+      signal,
+    });
+    if (!response.ok) throw new Error(`Release lookup failed (HTTP ${response.status})`);
+    const payload: unknown = await response.json();
+    if (!Array.isArray(payload) || payload.length > releasePageSize) {
+      throw new Error("Invalid GitHub releases page");
+    }
+    releases.push(...payload);
+    if (payload.length < releasePageSize) return selectLatestDownload(releases, platform);
+  }
+  throw new Error("Release catalogue exceeds the bounded lookup; visit GitHub Releases directly");
 }
