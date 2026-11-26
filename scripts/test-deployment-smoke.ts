@@ -7,22 +7,28 @@ import { publishedCompiler } from "../src/data/releases.ts";
 const tag = publishedCompiler.tag;
 const htmlType = { "content-type": "text/html; charset=utf-8" };
 const jsonType = { "content-type": "application/json; charset=utf-8" };
+const htmlMarker = `<meta name="scarp-build-commit" content="${sha}"/>`;
+function htmlPage(body: string): Response {
+  return new Response(htmlMarker + body, { status: 200, headers: htmlType });
+}
 function validRoutes(commit: string | null = sha): Record<string, Response> {
   return {
     "/deployment.json": Response.json({ schemaVersion: 1, repository: repositoryName, commit, compilerTag: tag }),
     "/project.json": Response.json({ website: "https://scarp-lang.github.io", latestPublished: { tag } }),
-    "/": new Response('<title>Home</title><link href="https://scarp-lang.github.io/" />', { status: 200, headers: htmlType }),
-    "/downloads/": new Response('<title>Downloads</title>' + tag, { status: 200, headers: htmlType }),
-    "/downloads/windows/latest/": new Response('<title>Windows</title><main data-latest-download="windows"></main>', { status: 200, headers: htmlType }),
-    "/downloads/linux/latest/": new Response('<title>Linux</title><main data-latest-download="linux"></main>', { status: 200, headers: htmlType }),
-    "/downloads/macos/latest/": new Response('<title>macOS</title><main data-latest-download="macos"></main>', { status: 200, headers: htmlType }),
-    "/support/": new Response("<title>Support</title><main>support</main>", { status: 200, headers: htmlType }),
+    "/": htmlPage('<title>Home</title><link href="https://scarp-lang.github.io/" />'),
+    "/downloads/": htmlPage('<title>Downloads</title>' + tag),
+    "/downloads/windows/latest/": htmlPage('<title>Windows</title><main data-latest-download="windows"></main>'),
+    "/downloads/linux/latest/": htmlPage('<title>Linux</title><main data-latest-download="linux"></main>'),
+    "/downloads/macos/latest/": htmlPage('<title>macOS</title><main data-latest-download="macos"></main>'),
+    "/support/": htmlPage("<title>Support</title><main>support</main>"),
   };
 }
 function mocked(routes: Record<string, Response>) {
   const seen: string[] = [];
-  const fetcher = (async (input: string | URL) => {
+  const fetcher = (async (input: string | URL, init?: RequestInit) => {
+    assert.equal(init?.redirect, "error");
     const url = new URL(String(input));
+    assert.equal(url.searchParams.get("deploy-check"), sha);
     seen.push(url.pathname);
     return routes[url.pathname]?.clone() ?? new Response("Not found", { status: 404, headers: htmlType });
   }) as typeof fetch;
@@ -79,4 +85,22 @@ test("polling never reports success when the CDN continues serving an old commit
     attempts: 2, pauseMs: 0, sleep: async () => { sleeps++; },
   }), /failed after 2 attempts/);
   assert.equal(sleeps, 1);
+});
+
+test("fresh JSON cannot hide a stale or unmarked HTML route", async () => {
+  for (const marker of ["", htmlMarker.replace(sha, "b".repeat(40))]) {
+    const routes = validRoutes();
+    routes["/downloads/windows/latest/"] = new Response(
+      marker + '<title>Windows</title><main data-latest-download="windows"></main>',
+      { headers: htmlType },
+    );
+    await assert.rejects(() => probeDeployment(sha, tag, mocked(routes)), /missing or stale HTML build commit/);
+  }
+});
+test("an unrelated media type containing text/html is rejected", async () => {
+  const routes = validRoutes();
+  routes["/downloads/"] = new Response(htmlMarker + "<title>Downloads</title>" + tag, {
+    headers: { "content-type": "text/html-extra; charset=utf-8" },
+  });
+  await assert.rejects(() => probeDeployment(sha, tag, mocked(routes)), /unexpected content type/);
 });
