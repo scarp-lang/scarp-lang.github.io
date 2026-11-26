@@ -131,3 +131,9 @@ test("quick search uses existing ranking and encodes only local directory links"
   assert.equal(searchDirectoryHref("मदद"), "/search/?q=%E0%A4%AE%E0%A4%A6%E0%A4%A6");
   assert.equal(searchDirectoryHref("a&redirect=https://example.com"), "/search/?q=a%26redirect%3Dhttps%3A%2F%2Fexample.com");
 });
+
+test("systems programming roadmap is discoverable in English and Hindi", () => {
+  for (const query of ["operating system", "freestanding", "kernel", "सिस्टम प्रोग्रामिंग", "ऑपरेटिंग सिस्टम", "कर्नेल"]) {
+    assert(searchEntriesFor(query).some(entry => entry.path === "/development/"), query);
+  }
+});
