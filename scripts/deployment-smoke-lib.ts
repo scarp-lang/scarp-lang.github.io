@@ -53,7 +53,7 @@ export async function probeDeployment(
     });
     if (response.status !== 200) throw new Error(`${path}: expected HTTP 200, received ${response.status}`);
     const contentType = response.headers.get("content-type") ?? "";
-    if (contentType.split(";", 1)[0].trim().toLowerCase() !== expectedType) {
+    if ((contentType.split(";", 1)[0] ?? "").trim().toLowerCase() !== expectedType) {
       throw new Error(`${path}: unexpected content type ${contentType}`);
     }
     return response.text();
