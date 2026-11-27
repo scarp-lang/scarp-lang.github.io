@@ -130,6 +130,10 @@ export default function MigrationPage() {
         See <a href="/news/alpha20-native-decimal-tuples/">alpha.20 release details</a>.</p>
       <h2 id="v007-alpha1">v0.0.7-alpha.1: interpreter and native API boundaries</h2>
       <p><code>scarp exec</code> remains interpreter-backed. The experimental Rust ELF64 API now accepts up to 16 required integer arguments and bounded loop constructs; general native calls and executable linking are not supported. Existing project entrypoint discovery remains unchanged. See <a href="/news/v007-alpha1-native-loops/">the release overview</a>.</p>
+      <h2 id="v007-alpha2">v0.0.7-alpha.2: experimental native object CLI</h2>
+      <p>The <code>scarp native-object</code> command emits restricted x86-64 ELF64 relocatable objects, with an explicit target and a new output path. Bounded direct calls are supported; linking requires external tooling. See <a href={project.repo + "/blob/v0.0.7-alpha.2/docs/native-object-output.md"}>the pinned command reference</a>. Continue to use <code>scarp exec</code> for ordinary interpreted execution.</p>
+      <h2 id="v007-alpha3">v0.0.7-alpha.3: generics and bounded native aggregate locals</h2>
+      <p>Generic <code>funcra</code> declarations support bounded specialization and contextual inference, with generic Option and Result payloads. Native integer entries can call concrete integer specializations and use flat integer or Boolean aggregate locals. String concatenation, repetition, raw literals and multiline literals expand interpreter syntax. Check the <a href={publishedCompiler.release}>published release notes</a> before relying on experimental features.</p>
       <h2 id="workflow">Historical alpha.4 offline project workflow</h2>
       <ol>
         <li>
