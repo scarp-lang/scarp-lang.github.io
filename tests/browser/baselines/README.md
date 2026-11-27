@@ -1,5 +1,27 @@
 # Scarp website visual regression references
 
+## Reviewed v0.0.7-alpha.3 release snapshots — 27 November 2026
+
+The new alpha.3 announcement and search entry intentionally extend the desktop
+and mobile homepage and mobile search directory. All four captures from
+[Chrome QA run 46016208125](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/46016208125)
+were inspected, including the new release-card placement and wrapping.
+The other 14 browser tests passed. The support screenshot is byte-identical
+to the previous reference. The branch-only exact-hash refresh
+[run 46017006271](https://github.com/scarp-lang/scarp-lang.github.io/actions/runs/46017006271)
+verified all four SHA-256 digests, then committed only the three changed PNGs
+at `e2bcfe1c58513b4af6d6066cef9be74c084856d5`. Independent Git blob SHA-1
+recomputation from the downloaded review artifact matched all four tree entries.
+The temporary refresh workflow is removed; normal QA is read-only with its
+unchanged 0.35% pixel threshold and strict dimension checks.
+
+| Reference PNG | Viewport | Snapshot height | Reviewed SHA-256 |
+| --- | --- | --- | --- |
+| `home-desktop-light.png` | 1280 × 800, light | 8,828px | `59ffe7cbfd443a00bb4fa27df85d9294eb7cbcf4eaebe3f85a26f638b29e631d` |
+| `home-mobile-dark.png` | 390 × 844, dark | 14,797px | `745be334d428c73e85839a3dd27e778353c701693b98aef656f21b48b54f40bd` |
+| `search-mobile-light.png` | 390 × 844, light | 10,246px | `b0e8f44bf842cb1e341e9c8b350d76ad8992abd014d312728a3535161a8c1099` |
+| `support-desktop-dark.png` | 1280 × 800, dark | 4,549px (unchanged) | `aa137f21abe266bd89c50b02d494e6bbfe0686d389fe81a482c551b342b5aa0a` |
+
 ## Reviewed v0.0.7-alpha.1 release snapshots — 25 November 2026
 
 The alpha.20 and v0.0.7-alpha.1 announcements add two news cards and two
