@@ -8,20 +8,21 @@ permissions:
   contents: write
 jobs:
   refresh:
-    if: github.repository == 'scarp-lang/scarp-lang.github.io' && github.ref == 'refs/heads/website-alpha3-release-sync' && github.event.head_commit.message == 'Stage exact reviewed alpha.3 visual references'
+    if: github.repository == 'scarp-lang/scarp-lang.github.io' && github.ref == 'refs/heads/website-alpha3-release-sync' && github.event.head_commit.message == 'Retry exact visual reference refresh with parent history'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           ref: website-alpha3-release-sync
+          fetch-depth: 2
       - name: Verify parent and download the exact reviewed capture
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
-          test "$(git rev-parse HEAD^)" = "37dff856f9031e5da5027ce928461c92755c2027"
+          test "$(git rev-parse HEAD^)" = "943f0e99581db68819fe40de0c0bde650271d065"
           mkdir -p "$RUNNER_TEMP/alpha3-review"
           gh run download 46016208125 --repo scarp-lang/scarp-lang.github.io --name browser-visual-review --dir "$RUNNER_TEMP/alpha3-review"
           cd "$RUNNER_TEMP/alpha3-review"
