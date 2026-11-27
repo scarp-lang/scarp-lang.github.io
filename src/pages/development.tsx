@@ -51,7 +51,8 @@ export default function DevelopmentPage() {
           snapshots, alpha.12 typed aggregates, alpha.11 exact decimals and
           alpha.10 interactive input. Numerical ranking, symbol inspection and
           project tests remain. Read the
-          {" "}<a href="/news/v007-alpha1-native-loops/">v0.0.7-alpha.1 overview</a>,
+          {" "}<a href="/news/v007-alpha3-generics-native/">v0.0.7-alpha.3 overview</a>,
+          {" "}<a href="/news/v007-alpha1-native-loops/">historical alpha.1 overview</a>,
           {" "}<a href="/releases/">release comparison</a> or
           {" "}<a href="/downloads/">current packages</a>.
           Source execution remains interpreter-backed, and Rust embedding

@@ -35,7 +35,7 @@ export default function ReleasesPage() {
           <p>Alpha.3 adds bounded generic <code>funcra</code> specialization, explicit type arguments, contextual inference and generic Option and Result payloads. The experimental native integer backend can call concrete integer specializations.</p>
           <p>Flat fixed arrays, tuples and records with integer or Boolean components are supported as private native stack locals. Checked constant folding retains errors, source spans and work accounting. Strings gain bounded concatenation and repetition, raw literals and multiline literals; function completion improves interpreter value retirement.</p>
           <p><strong><code>scarp exec</code> still interprets Scarp source.</strong> Since alpha.2, <code>scarp native-object</code> can emit experimental x86-64 ELF64 relocatable objects for an external linker. This is not a general executable compiler or stable ABI.</p>
-          <p>Read <a href="/news/v007-alpha1-native-loops/">the historical v0.0.7-alpha.1 overview</a>,{" "}<a href="/news/alpha20-native-decimal-tuples/">alpha.20 history</a>, or <a href={publishedCompiler.release}>official release notes</a>.</p>
+          <p>Read <a href="/news/v007-alpha3-generics-native/">the alpha.3 release overview</a>,{" "}<a href="/news/v007-alpha1-native-loops/">the historical v0.0.7-alpha.1 overview</a>,{" "}<a href="/news/alpha20-native-decimal-tuples/">alpha.20 history</a>, or <a href={publishedCompiler.release}>official release notes</a>.</p>
           <p>
             Pre-built archives cover Windows x64, Linux x64 GNU and macOS
             Apple Silicon. This is an alpha, not a stable compiler.

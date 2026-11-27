@@ -103,10 +103,10 @@ export default function FeaturesPage() {
           <a href="/news/alpha12-records-collections/"> Alpha.12</a>
           added records, variants, option/result and immutable lists/maps
           in the interpreter; <a href="/news/alpha11-exact-decimal/">alpha.11</a>
-          introduced exact decimal arithmetic. A general native compilation
-          command, package manager, user-defined generics, general tensor
-          engine, GPU execution and automatic differentiation remain outside
-          those releases. Execution budgets do not measure total process memory
+          introduced exact decimal arithmetic. The current alpha.3 prerelease supports
+          bounded generic functions, but a general native executable compiler,
+          package manager, general tensor engine, GPU execution and automatic
+          differentiation remain outside the published capabilities. Execution budgets do not measure total process memory
           or form a security sandbox. The source snippets above use
           the pinned older example baseline; for alpha.15 use the
           <a href="/compatibility/">compiler-backed compatibility coverage</a>.
