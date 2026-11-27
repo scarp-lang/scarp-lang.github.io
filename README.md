@@ -81,7 +81,7 @@ project JSON. Existing page URLs and the root GitHub Pages base are retained.
   RSS, release snapshot, and six early-theme scenarios.
 - `SCARP_BIN=/path/to/baseline/scarp npm run test:examples`: exact-output checks
   for the historical baseline. For the current published prerelease, run
-  `SCARP_BIN=/path/to/v0.0.7-alpha.1/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
+  `SCARP_BIN=/path/to/v0.0.7-alpha.3/scarp SCARP_EXAMPLE_TARGET=published npm run test:examples`
   after building the separately pinned published source.
 
 ## Real-browser mobile and accessibility QA
@@ -123,7 +123,7 @@ Mismatches produce magenta-highlighted diff PNGs under
 `test-results/browser/diffs/` alongside the current screenshot.
 
 Reference screenshots in `tests/browser/baselines/` are pinned to the
-[reviewed v0.0.7-alpha.1 visual evidence](tests/browser/baselines/README.md).
+[reviewed v0.0.7-alpha.3 visual evidence](tests/browser/baselines/README.md).
 Three screenshots were regenerated only after Chrome captures had been visually
 reviewed; every committed PNG was verified byte-for-byte against those captures.
 The unchanged support screenshot retained its approved SHA-256. The temporary
@@ -144,7 +144,7 @@ learning paths, AI direction, community, support, contribution guidance, FAQ,
 project news, an evidence-linked Scarp ecosystem directory at `/ecosystem/`,
 a source-verified compatibility guide at `/compatibility/`, an evidence-linked
 published CLI migration guide at `/migration/` (covering legacy commands through the
-reviewed v0.0.7-alpha.1 release), and a local,
+reviewed v0.0.7-alpha.3 release), and a local,
 privacy-friendly site search at `/search/`.
 Search also works as a complete page directory without JavaScript; with JavaScript,
 it supports live filtering, curated Hindi search terms for English-language website
@@ -153,7 +153,7 @@ URL restoration during browser navigation, and the `/` or Ctrl/⌘+K shortcut
 (outside editable controls). It is a **reviewed snapshot**, not a live compiler feed.
 The featured website programs retain their historical verified compiler baseline.
 The three homepage fixtures also run with the exact pinned published
-**v0.0.7-alpha.1** compiler, subject to the published-source CI checks, with byte-identical stdout. Additional
+**v0.0.7-alpha.3** compiler in published-source CI, which requires byte-identical stdout. Additional
 published-only fixtures exercise numerical kernels, typed propagation,
 ordered map projections, fixed-array traversal, vector quantiles, and schema-v1 symbol/reference inspection. The
 two compiler revisions and version-specific CLI commands are checked in
@@ -161,10 +161,11 @@ both CI and the GitHub Pages workflow. These tests do not claim universal
 language or platform compatibility.
 
 Downloads and Releases use the manually reviewed
-[Scarp v0.0.7-alpha.1 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.7-alpha.1),
-published 25 November 2026 from the exact tagged source commit
-`996bd5b83c8cb26e98637563729f67bdacc61cd4`, with reviewed Windows x64,
+[Scarp v0.0.7-alpha.3 prerelease](https://github.com/scarp-lang/scarp/releases/tag/v0.0.7-alpha.3),
+published 27 November 2026 from the exact tagged source commit
+`44a3bb0a91e67570e46ce058a3f6211f8e5db0f5`, with reviewed Windows x64,
 Linux x64 GNU and Apple Silicon macOS SHA-256 archive digests.
+[v0.0.7-alpha.3 coverage](https://scarp-lang.github.io/news/v007-alpha3-generics-native/) explains generic specialization, string operators and private native aggregate locals. Alpha.2 introduced experimental relocatable ELF64 output through the native-object CLI; ordinary exec remains interpreter-backed.
 [v0.0.7-alpha.1 coverage](https://scarp-lang.github.io/news/v007-alpha1-native-loops/) explains bounded native loops, reusable interpreter frames and numerical operations.
 [Alpha.20 coverage](https://scarp-lang.github.io/news/alpha20-native-decimal-tuples/) describes the restricted native integer emitter, exact decimal literals, tuple operations and canonical project scaffolding.
 [Alpha.19 coverage](https://scarp-lang.github.io/news/alpha19-host-callables/)

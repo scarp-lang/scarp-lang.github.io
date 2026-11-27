@@ -6,10 +6,10 @@ import { ecosystemProjects } from "../src/data/ecosystem.ts";
 
 test("latest public prerelease is separate from the verified website baseline", () => {
   assert.equal(project.tag, "v0.0.5-alpha.1");
-  assert.equal(publishedCompiler.tag, "v0.0.7-alpha.1");
+  assert.equal(publishedCompiler.tag, "v0.0.7-alpha.3");
   assert.notEqual(project.source, publishedCompiler.sourceCommit);
-  assert.equal(publishedCompiler.reviewed, "2026-11-25");
-  assert.equal(publishedCompiler.publishedAt, "2026-11-25T11:47:52Z");
+  assert.equal(publishedCompiler.reviewed, "2026-11-27");
+  assert.equal(publishedCompiler.publishedAt, "2026-11-27T12:32:43Z");
   assert.match(publishedCompiler.sourceCommit, /^[0-9a-f]{40}$/);
   assert(publishedCompiler.release.endsWith("/" + publishedCompiler.tag));
   assert.equal(publishedCompiler.status, "experimental-prerelease");
@@ -21,9 +21,9 @@ test("latest public prerelease is separate from the verified website baseline", 
 
 test("all three public archive SHA-256 digests and links match the release", () => {
   const expected = new Map([
-    ["scarp-0.0.7-alpha.1-x86_64-pc-windows-msvc.zip", "371eeabd1b35e9e3530ce44f13d90f376972b0650df9d41ce79a41c814875924"],
-    ["scarp-0.0.7-alpha.1-x86_64-unknown-linux-gnu.tar.gz", "f034432f46c12720b74ec303446fb46ecef483abdc942bcb9eaca41ea349cb5c"],
-    ["scarp-0.0.7-alpha.1-aarch64-apple-darwin.tar.gz", "63697cb53224cf0a22a38a28ae7887b8c694979d54ee780dc0639f1057409909"],
+    ["scarp-0.0.7-alpha.3-x86_64-pc-windows-msvc.zip", "b92da1ab3f2c0e57daee46b494c66f67165843e8b4040aad02262062a2bbe310"],
+    ["scarp-0.0.7-alpha.3-x86_64-unknown-linux-gnu.tar.gz", "61de8af415f9e9650c3d6865f1821eba799a6fab45e8ff57bc5f4a115f82b989"],
+    ["scarp-0.0.7-alpha.3-aarch64-apple-darwin.tar.gz", "7bc234c84b7d21ff359ff2440d5bd179b8c2c3a5105c7cd2e2af7faceb1b2e4e"],
   ]);
   assert.equal(publishedDownloads.length, 3);
   assert.equal(new Set(publishedDownloads.map(item => item.file)).size, 3);
@@ -31,9 +31,9 @@ test("all three public archive SHA-256 digests and links match the release", () 
     assert.equal(item.hash, expected.get(item.file), item.file);
     assert(item.file.startsWith("scarp-" + publishedCompiler.version + "-"), item.file);
     assert.match(item.hash, /^[0-9a-f]{64}$/);
-    assert.equal(publishedDownloadUrl(item.file), "https://github.com/scarp-lang/scarp/releases/download/v0.0.7-alpha.1/" + item.file);
+    assert.equal(publishedDownloadUrl(item.file), "https://github.com/scarp-lang/scarp/releases/download/v0.0.7-alpha.3/" + item.file);
     assert(publishedDownloadUrl(item.file + ".sha256").endsWith(item.file + ".sha256"));
   }
   assert.equal(downloads.length, 3, "Preserve older baseline machine-readable archives");
-  assert(publishedDownloadUrl("SHA256SUMS").endsWith("/v0.0.7-alpha.1/SHA256SUMS"));
+  assert(publishedDownloadUrl("SHA256SUMS").endsWith("/v0.0.7-alpha.3/SHA256SUMS"));
 });

@@ -44,14 +44,15 @@ export default function DevelopmentPage() {
         <h2>What you can use</h2>
         <p>
           The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
-          adds bounded native counted repeats and nested loop control, reusable interpreter frames, fixed-array concatenation, variadic integer GCD/HCF/LCM and stable vector softplus. Its experimental x86-64 ELF64 Rust API supports pure integer functions with up to 16 required integer arguments. Alpha.20 added decimal literals, tuple operations and canonical lowercase project scaffolding; alpha.19 introduced checked host handles;
+          adds bounded generic functions, contextual inference, generic Option and Result payloads, bounded string operators and raw and multiline literals. The experimental native integer backend supports concrete integer specializations and flat fixed arrays, tuples and records as private stack locals. Alpha.2 introduced the native-object CLI for relocatable x86-64 ELF64 objects; alpha.1 introduced bounded native loops, reusable interpreter frames and additional numerical operations. Alpha.20 added decimal literals, tuple operations and canonical lowercase project scaffolding; alpha.19 introduced checked host handles;
           alpha.15 bounded CLI inspections and expanded checked shift kernels.
           Alpha.14 previously improved nested pattern diagnostics, editor cache
           quotas and checked arithmetic; alpha.13 added workspace-safe
           snapshots, alpha.12 typed aggregates, alpha.11 exact decimals and
           alpha.10 interactive input. Numerical ranking, symbol inspection and
           project tests remain. Read the
-          {" "}<a href="/news/v007-alpha1-native-loops/">v0.0.7-alpha.1 overview</a>,
+          {" "}<a href="/news/v007-alpha3-generics-native/">v0.0.7-alpha.3 overview</a>,
+          {" "}<a href="/news/v007-alpha1-native-loops/">historical alpha.1 overview</a>,
           {" "}<a href="/releases/">release comparison</a> or
           {" "}<a href="/downloads/">current packages</a>.
           Source execution remains interpreter-backed, and Rust embedding
@@ -75,15 +76,15 @@ export default function DevelopmentPage() {
         <h2>Known limitations</h2>
         <ul>
           <li>
-            Programs are interpreted; there is no native-code generation
-            command.
+            Ordinary program execution is interpreted. The experimental native-object
+            command emits restricted x86-64 ELF64 relocatable objects, not executables.
           </li>
           <li>
             Source imports are bounded and relative. Runtime module globals and
             re-exports need further milestones.
           </li>
           <li>
-            The latest published interpreter supports bounded records, variants, lists and maps; native backend support for aggregates remains limited. User-defined generics, a broad standard library and package manager are not available.
+            The latest published interpreter supports bounded records, variants, lists and maps; native backend support for aggregates remains limited. Bounded user-defined generic functions are available; unrestricted generic types, a broad standard library and package manager are not established.
           </li>
           <li>
             There is no general tensor engine, automatic differentiation, or GPU
@@ -111,8 +112,8 @@ export default function DevelopmentPage() {
           <li>Checked signed integer arithmetic and bitwise operations, with
             explicit failure reporting in the experimental native kernel API.</li>
           <li>Compiler-owned x86-64 ELF64 relocatable object emission for a
-            restricted pure scalar subset through Rust host APIs; counted loops
-            and nested loop control are covered by the current release.</li>
+            restricted integer subset through Rust host APIs and native-object;
+            bounded calls, loops and private flat aggregate locals are supported.</li>
           <li>Lifetime scope retirement and immutable shared storage in the
             interpreter, with bounded reuse of completed function frame buffers.</li>
         </ul>
@@ -147,7 +148,7 @@ export default function DevelopmentPage() {
           Read-only symbol navigation and constant-expression work have
           progressed beyond the original alpha.1 baseline. Further editor
           integration, an integrated language server, language conformance
-          and user-defined generics require separate implementation and tests.
+          and expanded generic coverage require separate implementation and tests.
           Alpha.13 provides workspace-aware editor snapshot primitives, not an
           end-to-end editor server.{" "}
           <a href="/roadmap/">Explore the longer path toward v1.0.0</a>.

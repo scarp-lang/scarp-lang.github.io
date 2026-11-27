@@ -186,8 +186,8 @@ export default function DownloadsPage() {
           has separate instructions pinned to {project.tag}; do not use its old
           CLI commands with the new package.
         </p>
-        <h2>New in {publishedCompiler.tag}: native loops and numerical operations</h2>
-        <p>The experimental x86-64 ELF64 Rust API supports pure integer functions with up to 16 required integer arguments, counted repeats and nested loop control. This is not a native compilation command or stable ABI. The interpreter adds frame reuse, <code>array_concat</code>, variadic integer GCD/HCF/LCM and stable vector <code>softplus</code>. New projects use <code>scarp.project</code>; legacy manifests remain readable. Read <a href="/news/v007-alpha1-native-loops/">the new release guide</a> and <a href={publishedCompiler.release}>official release notes</a>.</p>
+        <h2>New in {publishedCompiler.tag}: generics, strings and native locals</h2>
+        <p>Alpha.3 adds bounded generic function specialization, contextual type inference, generic Option and Result payloads, bounded string concatenation and repetition, raw and multiline literals. The experimental native integer backend supports flat fixed arrays, tuples and records as private stack locals, plus concrete integer specializations. Since alpha.2, <code>scarp native-object</code> emits relocatable x86-64 ELF64 objects for external linking; <code>scarp exec</code> remains interpreter-backed. New projects use <code>scarp.project</code>. Read <a href="/news/v007-alpha3-generics-native/">the alpha.3 release guide</a>, <a href="/news/v007-alpha1-native-loops/">the historical alpha.1 guide</a> and <a href={publishedCompiler.release}>official release notes</a>.</p>
         <p>For the earlier Rust callable handles and execution receipts, see
           <a href="/news/alpha19-host-callables/"> the alpha.19 guide</a>.</p>
         <h2>Introduced in alpha.18: execution and immutable arrays</h2>

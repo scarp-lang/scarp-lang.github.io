@@ -20,6 +20,7 @@ import Alpha10InteractiveArrays from "../pages/news/alpha10-interactive-arrays.t
 import Alpha11ExactDecimal from "../pages/news/alpha11-exact-decimal.tsx";
 import Alpha17ArraysInput from "../pages/news/alpha17-arrays-input.tsx";
 import Alpha18ExecLifetime from "../pages/news/alpha18-exec-lifetime.tsx";
+import V007Alpha3 from "../pages/news/v007-alpha3-generics-native.tsx";
 import V007Alpha1 from "../pages/news/v007-alpha1-native-loops.tsx";
 import Alpha20NativeDecimalTuples from "../pages/news/alpha20-native-decimal-tuples.tsx";
 import Alpha19HostCallables from "../pages/news/alpha19-host-callables.tsx";
@@ -71,6 +72,7 @@ export const pages: readonly SitePage[] = [
   { path: "/support/", Component: Support },
   { path: "/search/", Component: Search },
   { path: "/news/", Component: News },
+  { path: "/news/v007-alpha3-generics-native/", Component: V007Alpha3 },
   { path: "/news/v007-alpha1-native-loops/", Component: V007Alpha1 },
   { path: "/news/alpha20-native-decimal-tuples/", Component: Alpha20NativeDecimalTuples },
   { path: "/news/alpha19-host-callables/", Component: Alpha19HostCallables },

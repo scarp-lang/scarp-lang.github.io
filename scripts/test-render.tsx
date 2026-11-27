@@ -623,6 +623,7 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
 
 test('recent release articles remain source-pinned and discoverable', async () => {
   const articles = [
+    { path: '/news/v007-alpha3-generics-native/', date: '2026-11-27', source: '44a3bb0a91e67570e46ce058a3f6211f8e5db0f5', tokens: ['v0.0.7-alpha.3', 'funcra', 'Option', 'Result', 'native-object', 'ELF64', 'scarp exec'] },
     { path: '/news/v007-alpha1-native-loops/', date: '2026-11-25', source: '996bd5b83c8cb26e98637563729f67bdacc61cd4', tokens: ['v0.0.7-alpha.1', 'ELF64', '16', 'array_concat', 'integer_gcd', 'integer_hcf', 'integer_lcm', 'softplus', 'scarp exec'] },
     { path: '/news/alpha20-native-decimal-tuples/', date: '2026-11-24',
       source: 'b1a9347f93540fdf95b0ddecba4adc55a3b4bb98',
@@ -667,4 +668,19 @@ test('systems programming section distinguishes published evidence from proposed
   assert(html.includes('no supported kernel-build CLI'));
   assert(html.includes(`${project.repo}/blob/${publishedCompiler.sourceCommit}/docs/native-elf64.md`));
   assert(html.includes(`${project.repo}/blob/${publishedCompiler.sourceCommit}/docs/memory-lifetimes.md`));
+});
+
+
+test('current release entry points link the alpha.3 article and preserve interpreter boundary', () => {
+  for (const path of ['/releases/', '/downloads/', '/development/', '/features/']) {
+    const page = findPage(path);
+    assert(page, path);
+    const html = renderPage(page, developmentAssets);
+    assert(html.includes('href="/news/v007-alpha3-generics-native/"'), path);
+  }
+  const faq = findPage('/faq/');
+  assert(faq);
+  const html = renderPage(faq, developmentAssets);
+  assert(html.includes('scarp native-object'));
+  assert(html.includes('scarp exec'));
 });
