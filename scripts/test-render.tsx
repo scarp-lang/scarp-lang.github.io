@@ -623,6 +623,7 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
 
 test('recent release articles remain source-pinned and discoverable', async () => {
   const articles = [
+    { path: '/news/v007-alpha3-generics-native/', date: '2026-11-27', source: '44a3bb0a91e67570e46ce058a3f6211f8e5db0f5', tokens: ['v0.0.7-alpha.3', 'funcra', 'Option', 'Result', 'native-object', 'ELF64', 'scarp exec'] },
     { path: '/news/v007-alpha1-native-loops/', date: '2026-11-25', source: '996bd5b83c8cb26e98637563729f67bdacc61cd4', tokens: ['v0.0.7-alpha.1', 'ELF64', '16', 'array_concat', 'integer_gcd', 'integer_hcf', 'integer_lcm', 'softplus', 'scarp exec'] },
     { path: '/news/alpha20-native-decimal-tuples/', date: '2026-11-24',
       source: 'b1a9347f93540fdf95b0ddecba4adc55a3b4bb98',

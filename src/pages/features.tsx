@@ -88,6 +88,8 @@ export default function FeaturesPage() {
           their <a href="/news/alpha6-ranking-temperature/">version-specific examples</a>.
           They do not add a native compilation CLI or a training framework.
         </p>
+        <h2>Published v0.0.7-alpha.3 additions</h2>
+        <p>Bounded generic functions support explicit type arguments, contextual inference and generic Option and Result payloads. String concatenation and repetition, raw and multiline literals are supported. The experimental native integer subset supports private flat fixed arrays, tuples and records as stack locals. See <a href="/news/v007-alpha3-generics-native/">the release overview</a> for evidence and limits.</p>
         <h2>Know the boundaries</h2>
         <p>
           The earlier <a href="/news/alpha15-runtime-kernels/">alpha.15 release</a>

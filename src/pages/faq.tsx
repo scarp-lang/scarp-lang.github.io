@@ -26,8 +26,7 @@ export default function ArticlePage() {
       </h2>
       <p>
         The current Rust implementation lexes, parses, resolves, and interprets
-        Scarp programs. It does not generate native code for <code>.srp</code>{" "}
-        programs. There is no <code>scarp compile</code> CLI command.
+        Scarp programs through <code>scarp exec</code>. The experimental <code>scarp native-object</code> command emits restricted x86-64 ELF64 relocatable objects for an external linker. There is no general <code>scarp compile</code> executable-generation command or stable native ABI.
       </p>
       <h2 id={"where-can-i-try-it"}>Where can I try it?</h2>
       <p>

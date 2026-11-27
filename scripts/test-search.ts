@@ -137,3 +137,9 @@ test("systems programming roadmap is discoverable in English and Hindi", () => {
     assert(searchEntriesFor(query).some(entry => entry.path === "/development/"), query);
   }
 });
+
+ test("alpha.3 generic features and Hindi aliases are discoverable", () => {
+  for (const query of ["generic specialization", "contextual inference", "जेनेरिक फंक्शन"]) {
+    assert(searchEntriesFor(query).some(entry => entry.path === "/news/v007-alpha3-generics-native/"), query);
+  }
+});

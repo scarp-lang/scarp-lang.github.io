@@ -42,7 +42,7 @@ export default function LearnPage() {
       </ol>
       <p className="small muted">
         Keep the archive's bundled files together. The published package is
-        an interpreter, not an installer or a native-code compiler.
+        an archive containing the CLI, not a one-click installer. Use exec for interpreted execution; experimental native-object output is separate from this quickstart.
         Building from source is also possible using the{" "}
         <a href={project.repo + "/tree/" + publishedCompiler.sourceCommit}>
           exact published Rust source

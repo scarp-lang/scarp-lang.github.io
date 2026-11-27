@@ -81,8 +81,8 @@ export default function ArticlePage() {
       <p>The source roadmap then calls for:</p>
       <ol>
         <li>Explicit constant-expression and library organization design.</li>
-        <li>Expand released record/variant capabilities, user-defined generics and callable values.</li>
-        <li>A compiler backend and developer tooling.</li>
+        <li>Expand released record/variant capabilities, bounded generic functions and callable values.</li>
+        <li>Expand the experimental native object backend and developer tooling toward a complete toolchain.</li>
         <li>Domain-specific libraries.</li>
       </ol>
       <p>
