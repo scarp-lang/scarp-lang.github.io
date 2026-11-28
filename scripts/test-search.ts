@@ -143,3 +143,10 @@ test("systems programming roadmap is discoverable in English and Hindi", () => {
     assert(searchEntriesFor(query).some(entry => entry.path === "/news/v007-alpha3-generics-native/"), query);
   }
 });
+
+
+test("alpha.4 release is discoverable in English and Hindi", () => {
+  for (const query of ["native recursion", "file-backed BigInt", "scarp bigint", "रिकर्शन", "बड़े पूर्णांक"]) {
+    assert(searchEntriesFor(query).some(entry => entry.path === "/news/v007-alpha4-recursion-bigint/"), query);
+  }
+});

@@ -623,6 +623,7 @@ test('alpha.14 announcement, tagged source and search/feed discovery', async () 
 
 test('recent release articles remain source-pinned and discoverable', async () => {
   const articles = [
+    { path: '/news/v007-alpha4-recursion-bigint/', date: '2026-11-28', source: 'e620bdcb512fbe909b08f1b4cc625865e4cdf339', tokens: ['v0.0.7-alpha.4', 'mutual recursion', '32 integer or Boolean leaves', 'scarp bigint', 'ELF64', 'scarp exec'] },
     { path: '/news/v007-alpha3-generics-native/', date: '2026-11-27', source: '44a3bb0a91e67570e46ce058a3f6211f8e5db0f5', tokens: ['v0.0.7-alpha.3', 'funcra', 'Option', 'Result', 'native-object', 'ELF64', 'scarp exec'] },
     { path: '/news/v007-alpha1-native-loops/', date: '2026-11-25', source: '996bd5b83c8cb26e98637563729f67bdacc61cd4', tokens: ['v0.0.7-alpha.1', 'ELF64', '16', 'array_concat', 'integer_gcd', 'integer_hcf', 'integer_lcm', 'softplus', 'scarp exec'] },
     { path: '/news/alpha20-native-decimal-tuples/', date: '2026-11-24',
@@ -671,12 +672,12 @@ test('systems programming section distinguishes published evidence from proposed
 });
 
 
-test('current release entry points link the alpha.3 article and preserve interpreter boundary', () => {
+test('current release entry points link the alpha.4 article and preserve interpreter boundary', () => {
   for (const path of ['/releases/', '/downloads/', '/development/', '/features/']) {
     const page = findPage(path);
     assert(page, path);
     const html = renderPage(page, developmentAssets);
-    assert(html.includes('href="/news/v007-alpha3-generics-native/"'), path);
+    assert(html.includes('href="/news/v007-alpha4-recursion-bigint/"'), path);
   }
   const faq = findPage('/faq/');
   assert(faq);
