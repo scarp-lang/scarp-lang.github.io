@@ -28,7 +28,7 @@ export const ecosystemProjects = [
     status: "Experimental prerelease",
     version: publishedCompiler.tag,
     summary: "The official Rust interpreter, language implementation, CLI, and release source.",
-    limitation: "Published alpha.3 adds bounded generic specialization, bounded strings and private flat native aggregate locals. Alpha.2 introduced experimental native-object emission for x86-64 ELF64 relocatable objects. CLI program execution remains interpreter-backed; general native executable compilation, integrated LSP, GPU runtime and stable Rust ABI are not provided.",
+    limitation: "Published alpha.4 adds bounded native recursion, nested private aggregates, contextual generic inference and experimental file-backed BigInt arithmetic. Alpha.2 introduced experimental native-object emission for x86-64 ELF64 relocatable objects. CLI program execution remains interpreter-backed; general native executable compilation, integrated LSP, GPU runtime and stable Rust ABI are not provided.",
     website: `${project.repo}/releases`,
     source: project.repo,
     evidence: publishedCompiler.release,

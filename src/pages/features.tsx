@@ -88,8 +88,8 @@ export default function FeaturesPage() {
           their <a href="/news/alpha6-ranking-temperature/">version-specific examples</a>.
           They do not add a native compilation CLI or a training framework.
         </p>
-        <h2>Published v0.0.7-alpha.3 additions</h2>
-        <p>Bounded generic functions support explicit type arguments, contextual inference and generic Option and Result payloads. String concatenation and repetition, raw and multiline literals are supported. The experimental native integer subset supports private flat fixed arrays, tuples and records as stack locals. See <a href="/news/v007-alpha3-generics-native/">the release overview</a> for evidence and limits.</p>
+        <h2>Published v0.0.7-alpha.4 additions</h2>
+        <p>Contextual generic inference now propagates through nested calls. The experimental native entry API supports bounded recursion and nested private aggregates with up to 32 integer or Boolean leaves per value. The experimental scarp bigint command offers bounded file-backed exact arithmetic. See <a href="/news/v007-alpha4-recursion-bigint/">the release overview</a> for evidence and limits.</p>
         <h2>Know the boundaries</h2>
         <p>
           The earlier <a href="/news/alpha15-runtime-kernels/">alpha.15 release</a>
@@ -103,7 +103,7 @@ export default function FeaturesPage() {
           <a href="/news/alpha12-records-collections/"> Alpha.12</a>
           added records, variants, option/result and immutable lists/maps
           in the interpreter; <a href="/news/alpha11-exact-decimal/">alpha.11</a>
-          introduced exact decimal arithmetic. The current alpha.3 prerelease supports
+          introduced exact decimal arithmetic. The current alpha.4 prerelease supports
           bounded generic functions, but a general native executable compiler,
           package manager, general tensor engine, GPU execution and automatic
           differentiation remain outside the published capabilities. Execution budgets do not measure total process memory

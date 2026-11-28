@@ -49,6 +49,7 @@ export const socials = [
 ] as const;
 
 export const news = [
+  { date: '2026-11-28', category: 'Language release', title: 'Scarp v0.0.7-alpha.4: bounded native recursion and file-backed BigInt', description: 'Bounded native recursion, nested frame aggregates, contextual inference and file-backed exact arithmetic.', href: '/news/v007-alpha4-recursion-bigint/' },
   { date: '2026-11-27', category: 'Language release', title: 'Scarp v0.0.7-alpha.3: generics, strings and native aggregate locals', description: 'Bounded generic functions, contextual inference, string operators and literals, private flat native aggregate locals and interpreter value retirement.', href: '/news/v007-alpha3-generics-native/' },
   { date: '2026-11-25', category: 'Language release', title: 'Scarp v0.0.7-alpha.1: native loops and numerical operations', description: 'Experimental ELF64 integer functions with up to 16 arguments, bounded loops, reusable interpreter frames, fixed-array concatenation and variadic GCD/LCM.', href: '/news/v007-alpha1-native-loops/' },
   { date: '2026-11-24', category: 'Language release', title: 'Scarp alpha.20: native integer functions, decimal literals and tuples', description: 'Experimental Rust ELF64 integer function emission, exact decimal literals, persistent tuple replacement and numeric ordering, lowercase project manifests and nested host string quotas.', href: '/news/alpha20-native-decimal-tuples/' },

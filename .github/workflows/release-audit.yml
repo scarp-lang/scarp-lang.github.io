@@ -8,6 +8,8 @@ on:
       - 'src/data/ecosystem.ts'
       - 'scripts/audit-release.ts'
       - 'scripts/release-audit-lib.ts'
+      - 'scripts/release-audit-transport.ts'
+      - 'scripts/test-release-audit-transport.ts'
       - 'scripts/test-release-audit.ts'
       - '.github/workflows/release-audit.yml'
   schedule:

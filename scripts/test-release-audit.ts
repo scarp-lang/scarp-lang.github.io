@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import "./test-release-audit-transport.ts";
 import {
   assertArchiveMatches, assertManifestMatches, assertSidecarMatches,
   digestBytes, parseChecksums, resolvePublishedTag, validatePublicationIndex,

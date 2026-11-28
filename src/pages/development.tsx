@@ -44,14 +44,14 @@ export default function DevelopmentPage() {
         <h2>What you can use</h2>
         <p>
           The current public <a href={publishedCompiler.release}>{publishedCompiler.tag}</a>
-          adds bounded generic functions, contextual inference, generic Option and Result payloads, bounded string operators and raw and multiline literals. The experimental native integer backend supports concrete integer specializations and flat fixed arrays, tuples and records as private stack locals. Alpha.2 introduced the native-object CLI for relocatable x86-64 ELF64 objects; alpha.1 introduced bounded native loops, reusable interpreter frames and additional numerical operations. Alpha.20 added decimal literals, tuple operations and canonical lowercase project scaffolding; alpha.19 introduced checked host handles;
+          adds bounded native recursion, nested private aggregate locals, contextual generic inference and experimental file-backed BigInt arithmetic. The public native ABI remains integer-only. Alpha.2 introduced the native-object CLI for relocatable x86-64 ELF64 objects; alpha.1 introduced bounded native loops, reusable interpreter frames and additional numerical operations. Alpha.20 added decimal literals, tuple operations and canonical lowercase project scaffolding; alpha.19 introduced checked host handles;
           alpha.15 bounded CLI inspections and expanded checked shift kernels.
           Alpha.14 previously improved nested pattern diagnostics, editor cache
           quotas and checked arithmetic; alpha.13 added workspace-safe
           snapshots, alpha.12 typed aggregates, alpha.11 exact decimals and
           alpha.10 interactive input. Numerical ranking, symbol inspection and
           project tests remain. Read the
-          {" "}<a href="/news/v007-alpha3-generics-native/">v0.0.7-alpha.3 overview</a>,
+          {" "}<a href="/news/v007-alpha4-recursion-bigint/">v0.0.7-alpha.4 overview</a>,
           {" "}<a href="/news/v007-alpha1-native-loops/">historical alpha.1 overview</a>,
           {" "}<a href="/releases/">release comparison</a> or
           {" "}<a href="/downloads/">current packages</a>.
@@ -113,7 +113,7 @@ export default function DevelopmentPage() {
             explicit failure reporting in the experimental native kernel API.</li>
           <li>Compiler-owned x86-64 ELF64 relocatable object emission for a
             restricted integer subset through Rust host APIs and native-object;
-            bounded calls, loops and private flat aggregate locals are supported.</li>
+            bounded calls, loops, self and mutual recursion, and private nested aggregate locals are supported; each aggregate value has at most 32 integer or Boolean leaves.</li>
           <li>Lifetime scope retirement and immutable shared storage in the
             interpreter, with bounded reuse of completed function frame buffers.</li>
         </ul>

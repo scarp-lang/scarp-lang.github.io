@@ -6,9 +6,9 @@ import { project } from "../src/data/project.ts";
 import { publishedCompiler } from "../src/data/releases.ts";
 import { exampleCompatibility } from "../src/data/compatibility.ts";
 
-test("CLI migration milestones are pinned to fifteen published prereleases", () => {
+test("CLI migration milestones are pinned to sixteen published prereleases", () => {
   assert.deepEqual(cliMilestones.map(item => item.tag), [
-    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", "v0.0.6-alpha.17", "v0.0.6-alpha.18", "v0.0.6-alpha.19", "v0.0.6-alpha.20", "v0.0.7-alpha.1", "v0.0.7-alpha.2", publishedCompiler.tag,
+    project.tag, "v0.0.5-alpha.2", "v0.0.5-alpha.3", "v0.0.5-alpha.4", "v0.0.5-alpha.5", "v0.0.6-alpha.1", "v0.0.6-alpha.2", "v0.0.6-alpha.4", "v0.0.6-alpha.17", "v0.0.6-alpha.18", "v0.0.6-alpha.19", "v0.0.6-alpha.20", "v0.0.7-alpha.1", "v0.0.7-alpha.2", "v0.0.7-alpha.3", publishedCompiler.tag,
   ]);
   assert.equal(new Set(cliMilestones.map(item => item.tag)).size, cliMilestones.length);
   for (const item of cliMilestones) {
@@ -22,11 +22,13 @@ test("CLI migration milestones are pinned to fifteen published prereleases", () 
   assert.equal(cliMilestones[8]?.sourceCommit, "7831a37939965f557ce746e1d86bf82d3d629f74");
   assert.equal(cliMilestones[9]?.sourceCommit, "84d8de05968a488773e7c5b6eda1376d8957553c");
   assert.equal(cliMilestones[10]?.sourceCommit, "e534e73a81c9500e3aef9f3d51cafa0bc7bbcf75");
-  assert.equal(cliMilestones[14]?.sourceCommit, publishedCompiler.sourceCommit);
+  assert.equal(cliMilestones[15]?.sourceCommit, publishedCompiler.sourceCommit);
   assert.equal(cliMilestones[12]?.sourceCommit, "996bd5b83c8cb26e98637563729f67bdacc61cd4");
   assert.equal(cliMilestones[13]?.sourceCommit, "638dc4c227f34f1c660be66834bcc0cbdb22dec8");
   assert.match(cliMilestones[13].additional, /native-object/);
+  assert.equal(cliMilestones[14]?.sourceCommit, "44a3bb0a91e67570e46ce058a3f6211f8e5db0f5");
   assert.match(cliMilestones[14].additional, /generic specialization/);
+  assert.match(cliMilestones[15].additional, /scarp bigint/);
   assert.equal(migrationEvidence.publishedRelease, publishedCompiler.release);
   assert(migrationEvidence.projectWorkflow.includes(publishedCompiler.sourceCommit));
 });
@@ -52,7 +54,7 @@ test("migration guidance preserves the runtime/static distinction", () => {
   assert.equal(cliMilestones[8]?.tag, "v0.0.6-alpha.17");
   assert.equal(cliMilestones[9]?.tag, "v0.0.6-alpha.18");
   assert.equal(cliMilestones[10]?.tag, "v0.0.6-alpha.19");
-  assert.equal(cliMilestones[14]?.tag, publishedCompiler.tag);
+  assert.equal(cliMilestones[15]?.tag, publishedCompiler.tag);
   assert(cliMilestones[11]?.additional.includes("declarative scarp.project v2"));
   assert.equal(cliMilestones[10]?.execution, "scarp exec");
   assert(cliMilestones[10]?.inspection.includes("PROJECT_DIRECTORY"));
